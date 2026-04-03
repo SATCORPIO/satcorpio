@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Orbitron } from "next/font/google";
+import { ClientProviders } from "./ClientProviders";
 import "./globals.css";
 
 const orbitron = Orbitron({
@@ -34,7 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${orbitron.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#050A0F] text-white antialiased">
-        {children}
+        <ClientProviders>
+          {children}
+        </ClientProviders>
       </body>
     </html>
   );

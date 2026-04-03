@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import React from "react";
+import { useClientCore } from "@/app/ClientProviders";
 
 interface SpatialCardProps {
   id: string;
@@ -32,12 +33,20 @@ export function SpatialCard({
   isActive, 
   onHover 
 }: SpatialCardProps) {
+  const { playHover, playClick } = useClientCore();
+
   return (
-    <Link href={href}>
+    <Link href={href} onClick={() => playClick()}>
       <motion.div
         className={`nav-card spatial-panel ${isActive ? "active" : ""} ${status === "LOCKED" ? "locked" : ""}`}
-        onMouseEnter={onHover}
-        onTap={onHover}
+        onMouseEnter={() => {
+          onHover();
+          playHover();
+        }}
+        onTap={() => {
+          onHover();
+          playClick();
+        }}
         whileHover={{ 
           scale: 1.05, 
           y: -20, 

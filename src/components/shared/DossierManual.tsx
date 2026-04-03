@@ -1,8 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LucideIcon } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useClientCore } from "@/app/ClientProviders";
+import { GlitchText } from "@/components/shared/GlitchText";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface DossierItem {
   id: string;
@@ -28,17 +34,34 @@ export function DossierManual({
   terminalPrefix,
   anchorId 
 }: DossierManualProps) {
+  const { playHover, playClick, registerVisit } = useClientCore();
   const [activeId, setActiveId] = useState(items[0]?.id);
   const [suffix, setSuffix] = useState<string | null>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const isIntersecting = useRef(false);
 
   useEffect(() => {
     setSuffix((Math.floor(Math.random() * 900) + 100).toString());
+    registerVisit(activeId);
   }, [activeId]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top 70%",
+        onEnter: () => {
+          isIntersecting.current = true;
+        },
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   const activeItem = items.find(i => i.id === activeId) || items[0];
 
   return (
-    <section id={anchorId} className="dossier-section">
+    <section id={anchorId} className="dossier-section" ref={containerRef}>
       <div className="dossier-header">
         <div className="dossier-line" />
         <h2 className="dossier-title">{sectionTitle}</h2>
@@ -57,12 +80,16 @@ export function DossierManual({
               const Icon = node.icon;
               const isActive = activeId === node.id;
               return (
-                <button
-                  key={node.id}
-                  className={`sidebar-item ${isActive ? "active" : ""}`}
-                  onClick={() => setActiveId(node.id)}
-                  style={{ "--item-color": node.color } as React.CSSProperties}
-                >
+                  <button
+                    key={node.id}
+                    className={`sidebar-item ${isActive ? "active" : ""}`}
+                    onClick={() => {
+                       setActiveId(node.id);
+                       playClick();
+                    }}
+                    onMouseEnter={() => playHover()}
+                    style={{ "--item-color": node.color } as React.CSSProperties}
+                  >
                   <div className="item-icon-box">
                     <Icon size={14} className="item-icon" />
                   </div>
@@ -104,7 +131,9 @@ export function DossierManual({
               </div>
 
               <div className="viewport-body">
-                <div className="data-readout" style={{ color: activeItem.color }}>{`> UPLINK ESTABLISHED... DECRYPTING [${activeItem.id.toUpperCase()}_DATA]`}</div>
+                <div className="data-readout" style={{ color: activeItem.color }}>
+                  {`> UPLINK ESTABLISHED... DECRYPTING [${activeItem.id.toUpperCase()}_DATA]`}
+                </div>
                 <ul className="viewport-list">
                   {activeItem.items.map((item, idx) => (
                     <motion.li 
@@ -114,9 +143,12 @@ export function DossierManual({
                       transition={{ delay: 0.2 + idx * 0.05 }}
                       style={{ borderLeft: `2px solid ${activeItem.color}66` }}
                       className="terminal-li"
+                      onMouseEnter={() => playHover()}
                     >
                       <span className="li-index" style={{ color: activeItem.color }}>{`[${(idx + 1).toString().padStart(2, '0')}]`}</span>
-                      <span className="li-text">{item}</span>
+                      <span className="li-text">
+                        <GlitchText text={item} active={true} />
+                      </span>
                     </motion.li>
                   ))}
                 </ul>
