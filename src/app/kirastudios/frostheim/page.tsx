@@ -9,6 +9,7 @@ import {
   Activity, Layers, Fingerprint, Radio 
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 /* ═══ Snow Canvas ═══ */
 function SnowCanvas() {
@@ -128,15 +129,12 @@ export default function FrostheimPage() {
                 <Play size={14} /> VIEW ARCHIVE FOOTAGE
               </button>
               
-              <motion.a 
+              <DiscordButton 
                 href="https://discord.gg/R9Axsm7JfN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-discord spatial-panel"
-                whileHover={{ scale: 1.02 }}
-              >
-                <MessageSquare size={14} /> JOIN WAR-CHIEF DISCORD
-              </motion.a>
+                variant="blue"
+                label="JOIN WAR-CHIEF DISCORD"
+                subLabel="FROSTHEIM // THE NORTH"
+              />
             </div>
           </motion.div>
 
@@ -382,13 +380,7 @@ export default function FrostheimPage() {
         }
         .cta-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
 
-        .cta-discord {
-          display: flex; align-items: center; justify-content: center; gap: 12px;
-          padding: 16px; color: #FFF; text-decoration: none;
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          background: rgba(125, 211, 252, 0.05); border: 1px solid rgba(125, 211, 252, 0.15);
-        }
-        .cta-discord:hover { background: rgba(125, 211, 252, 0.15); border-color: var(--c2-cyan); }
+        /* ── Discord Button Component Handles Styling ── */
 
         .panel-header {
           display: flex; align-items: center; gap: 12px; margin-bottom: 24px;

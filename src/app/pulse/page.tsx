@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronDown, Video, Scissors, TrendingUp, Share2, RadioReceiver, ShoppingBag, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 import { dossierData as masterDossier } from "@/data/dossier";
 
 /* ═══ Pulse Dossier Data ═══ */
@@ -164,22 +165,12 @@ export default function PulsePage() {
             </div>
           </motion.div>
 
-          <motion.a 
-            href="https://discord.gg/RmpHjJsSBC" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="discord-link-premium spatial-panel"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1.0 }}
-          >
-            <div className="dl-glow" />
-            <MessageSquare size={18} className="cyan-glow" />
-            <div className="dl-content">
-              <span className="dl-main">INITIALIZE BROADCAST SIGNAL</span>
-              <span className="dl-sub">PULSE // THE GRID</span>
-            </div>
-          </motion.a>
+          <DiscordButton 
+            href="https://discord.gg/RmpHjJsSBC"
+            variant="cyan"
+            label="INITIALIZE BROADCAST SIGNAL"
+            subLabel="PULSE // THE GRID"
+          />
 
           <motion.div 
             className="scroll-indicator"
@@ -376,52 +367,7 @@ export default function PulsePage() {
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-        /* ── Discord Button ── */
-        .discord-link-premium {
-          display: flex; align-items: center; gap: 16px;
-          padding: 16px 28px; border-radius: 4px;
-          text-decoration: none; color: #22D3EE;
-          background: rgba(34, 211, 238, 0.03); 
-          border: 1px solid rgba(34, 211, 238, 0.2);
-          backdrop-filter: blur(10px);
-          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative; overflow: hidden;
-          z-index: 100;
-        }
-        .discord-link-premium:hover {
-          color: #FFF; background: rgba(34, 211, 238, 0.1);
-          border-color: #22D3EE; box-shadow: 0 0 40px rgba(34, 211, 238, 0.2);
-          transform: translateY(-2px);
-        }
-        .dl-glow {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at center, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
-          opacity: 0;
-          transition: opacity 400ms;
-        }
-        .discord-link-premium:hover .dl-glow { opacity: 1; }
-        
-        .dl-content {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 2px;
-        }
-        .dl-main {
-          font-family: var(--font-tactical);
-          font-size: 13px;
-          font-weight: 800;
-          letter-spacing: 2px;
-          line-height: 1;
-        }
-        .dl-sub {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 1px;
-          color: rgba(34, 211, 238, 0.5);
-        }
-        .cyan-glow { filter: drop-shadow(0 0 8px #22D3EE); }
+        /* ── Discord Button Component Handles Styling ── */
 
         /* ── Dossier Section ── */
         .dossier-section {

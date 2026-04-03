@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 function PopulationTelemetry() {
   const [pop, setPop] = useState(0);
@@ -96,16 +97,12 @@ export default function DysunsArkPage() {
             </div>
           </div>
           
-          <motion.a 
+          <DiscordButton 
             href="https://discord.gg/R9Axsm7JfN"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="discord-btn spatial-panel"
-            whileHover={{ scale: 1.05 }}
-          >
-            <MessageSquare size={14} />
-            <span>JOIN SOLAR COMMAND</span>
-          </motion.a>
+            variant="red"
+            label="JOIN SOLAR COMMAND"
+            subLabel="DYSUN // THE STAR"
+          />
         </header>
 
         <div className="dashboard-grid">
@@ -302,13 +299,7 @@ export default function DysunsArkPage() {
         .st-main { font-family: var(--font-tactical); font-size: 12px; font-weight: 700; color: var(--c2-amber); letter-spacing: 1px; }
         .st-sub { font-size: 9px; letter-spacing: 1px; color: rgba(255, 255, 255, 0.3); }
 
-        .discord-btn {
-          display: flex; align-items: center; gap: 12px;
-          padding: 12px 24px; color: #FFF; text-decoration: none;
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          background: rgba(245, 158, 11, 0.05); border-color: rgba(245, 158, 11, 0.2);
-        }
-        .discord-btn:hover { background: rgba(245, 158, 11, 0.15); border-color: var(--c2-amber); }
+        /* ── Discord Button Component Handles Styling ── */
 
         .dashboard-grid {
           display: grid;

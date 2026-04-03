@@ -9,6 +9,7 @@ import {
   MessageSquare, Fingerprint, Layers, Cpu 
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 /* ═══ Animated Counter ═══ */
 function AnimatedStat({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -103,15 +104,12 @@ export default function NamtarPage() {
                 <Play size={14} /> ARCHIVE FOOTAGE
               </button>
               
-              <motion.a 
+              <DiscordButton 
                 href="https://discord.gg/mypZpPsPeb"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-discord spatial-panel"
-                whileHover={{ scale: 1.02 }}
-              >
-                <MessageSquare size={14} /> JOIN ABYSSAL CHAT
-              </motion.a>
+                variant="amber"
+                label="JOIN ABYSSAL CHAT"
+                subLabel="NAMTAR // THE DEEP"
+              />
             </div>
           </div>
 
@@ -355,13 +353,7 @@ export default function NamtarPage() {
         }
         .cta-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
 
-        .cta-discord {
-          display: flex; align-items: center; gap: 12px;
-          padding: 16px 24px; color: #FFF; text-decoration: none;
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          background: rgba(217, 119, 6, 0.05); border-color: rgba(217, 119, 6, 0.2);
-        }
-        .cta-discord:hover { background: rgba(217, 119, 6, 0.15); border-color: var(--c2-cyan); }
+        /* ── Discord Button Handled by Component ── */
 
         .survival-hud { width: 340px; padding: 32px; flex-shrink: 0; }
         .panel-header {

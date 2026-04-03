@@ -9,6 +9,7 @@ import {
   Layers, Fingerprint, Zap, Radio, ChevronRight
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 /* ═══ Solar Ember Canvas ═══ */
 function SolarCanvas() {
@@ -129,15 +130,12 @@ export default function DysunPage() {
                 <Play size={14} /> MOD OVERVIEW
               </button>
               
-              <motion.a 
+              <DiscordButton 
                 href="https://discord.gg/R9Axsm7JfN"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-discord spatial-panel"
-                whileHover={{ scale: 1.02 }}
-              >
-                <MessageSquare size={14} /> JOIN SOLAR COMMAND
-              </motion.a>
+                variant="red"
+                label="JOIN SOLAR COMMAND"
+                subLabel="DYSUN // THE STAR"
+              />
             </div>
           </div>
 
@@ -371,13 +369,7 @@ export default function DysunPage() {
         }
         .cta-secondary:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
 
-        .cta-discord {
-          display: flex; align-items: center; justify-content: center; gap: 12px;
-          padding: 16px 24px; color: #FFF; text-decoration: none;
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.15);
-        }
-        .cta-discord:hover { background: rgba(245, 158, 11, 0.15); border-color: var(--c2-amber); }
+        /* ── Discord Button Component Handles Styling ── */
 
         .thermal-hud { width: 340px; padding: 32px; flex-shrink: 0; }
         .panel-header {

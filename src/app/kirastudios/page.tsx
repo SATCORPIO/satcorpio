@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 const realms = [
   {
@@ -60,22 +61,13 @@ export default function KiraPage() {
             </div>
             <h1 className="title" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>KI-RA STUDIOS</h1>
             
-            <motion.a 
+            <DiscordButton 
               href="https://discord.gg/mypZpPsPeb"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="discord-link-premium spatial-panel"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-            >
-              <div className="dl-glow" />
-              <MessageSquare size={18} />
-              <div className="dl-content">
-                <span className="dl-main">JOIN CREATIVE OPS</span>
-                <span className="dl-sub">KIRA // STUDIO CHANNEL</span>
-              </div>
-            </motion.a>
+              variant="amber"
+              label="JOIN CREATIVE OPS"
+              subLabel="KIRA // STUDIO CHANNEL"
+              className="mt-6"
+            />
 
           </motion.div>
 
@@ -270,57 +262,7 @@ export default function KiraPage() {
           font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ── Discord Button ── */
-        .discord-link-premium {
-          display: inline-flex;
-          align-items: center;
-          gap: 16px;
-          padding: 14px 28px;
-          border-radius: 4px;
-          text-decoration: none;
-          color: #FFF;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          backdrop-filter: blur(10px);
-          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
-          margin-top: 24px;
-          position: relative;
-          overflow: hidden;
-        }
-        .discord-link-premium:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: #FFF;
-          box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-          transform: translateY(-2px);
-        }
-        .dl-glow {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-          opacity: 0;
-          transition: opacity 400ms;
-        }
-        .discord-link-premium:hover .dl-glow { opacity: 1; }
-        
-        .dl-content {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 2px;
-        }
-        .dl-main {
-          font-family: var(--font-tactical);
-          font-size: 13px;
-          font-weight: 800;
-          letter-spacing: 2.5px;
-          line-height: 1;
-        }
-        .dl-sub {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 1px;
-          color: rgba(255, 255, 255, 0.5);
-        }
+        .mt-6 { margin-top: 24px; }
 
 
 

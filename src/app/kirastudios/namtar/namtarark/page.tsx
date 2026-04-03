@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 function RaidSimulation() {
   const [raids, setRaids] = useState<{ id: string; target: string; intensity: number; attackers: number }[]>([]);
@@ -131,16 +132,12 @@ export default function NamtarArkPage() {
             </div>
           </div>
           
-          <motion.a 
+          <DiscordButton 
             href="https://discord.gg/mypZpPsPeb"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="discord-btn spatial-panel"
-            whileHover={{ scale: 1.05 }}
-          >
-            <MessageSquare size={14} />
-            <span>JOIN FACTION</span>
-          </motion.a>
+            variant="amber"
+            label="JOIN FACTION"
+            subLabel="NAMTAR // INFRASTRUCTURE"
+          />
         </header>
 
         <div className="dashboard-grid">
@@ -371,13 +368,7 @@ export default function NamtarArkPage() {
         .st-main { font-family: var(--font-tactical); font-size: 12px; font-weight: 700; color: var(--c2-green); letter-spacing: 1px; }
         .st-sub { font-size: 9px; letter-spacing: 1px; color: rgba(255, 255, 255, 0.3); }
 
-        .discord-btn {
-          display: flex; align-items: center; gap: 12px;
-          padding: 12px 24px; color: #FFF; text-decoration: none;
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          background: rgba(0, 168, 255, 0.05); border-color: rgba(0, 168, 255, 0.2);
-        }
-        .discord-btn:hover { background: rgba(0, 168, 255, 0.15); border-color: var(--c2-cyan); }
+        /* ── Discord Button Component Handles Styling ── */
 
         .dashboard-grid {
           display: grid;

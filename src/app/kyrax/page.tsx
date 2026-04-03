@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, Brain, Cpu, Network, Zap, Boxes, ChevronDown, BrainCircuit, Users, Clapperboard, Radar, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
+import { DiscordButton } from "@/components/shared/DiscordButton";
 
 
 /* ═══ Kyrax Dossier Data ═══ */
@@ -133,22 +134,13 @@ export default function KyraxPage() {
             <ChevronDown size={18} className="bounce-arrow" />
           </motion.div>
 
-          <motion.a 
-            href="https://discord.gg/KqphHMq6vS" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="discord-link-premium spatial-panel"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 2.0 }}
-          >
-            <div className="dl-glow" />
-            <MessageSquare size={18} className="discord-icon" />
-            <div className="dl-content">
-              <span className="dl-main">CONNECT NEURAL INTERFACE</span>
-              <span className="dl-sub">KYRAX // NEURAL NETWORK</span>
-            </div>
-          </motion.a>
+          <DiscordButton 
+            href="https://discord.gg/KqphHMq6vS"
+            variant="purple"
+            label="CONNECT NEURAL INTERFACE"
+            subLabel="KYRAX // NEURAL NETWORK"
+            className="discord-link-absolute"
+          />
 
         </div>
       </section>
@@ -319,62 +311,12 @@ export default function KyraxPage() {
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-        /* ── Discord Button ── */
-        .discord-link-premium {
+        /* ── Discord Button Positioning ── */
+        .discord-link-absolute {
           position: absolute;
           bottom: 12%;
           left: 5%;
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 16px 28px;
-          border-radius: 6px;
-          text-decoration: none;
-          color: #E879F9;
-          background: rgba(168, 85, 247, 0.03);
-          border: 1px solid rgba(168, 85, 247, 0.2);
-          backdrop-filter: blur(10px);
-          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
           z-index: 100;
-          overflow: hidden;
-        }
-        .discord-link-premium:hover {
-          background: rgba(168, 85, 247, 0.1);
-          border-color: #A855F7;
-          box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
-          transform: translateY(-2px);
-        }
-        .dl-glow {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
-          opacity: 0;
-          transition: opacity 400ms;
-        }
-        .discord-link-premium:hover .dl-glow { opacity: 1; }
-        
-        .dl-content {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 2px;
-        }
-        .dl-main {
-          font-family: var(--font-tactical);
-          font-size: 13px;
-          font-weight: 800;
-          letter-spacing: 2px;
-          line-height: 1;
-        }
-        .dl-sub {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 1px;
-          color: rgba(168, 85, 247, 0.5);
-        }
-        .discord-icon {
-          filter: drop-shadow(0 0 8px #E879F9);
-          color: #E879F9;
         }
 
         /* ── Dossier Section ── */
