@@ -1,6 +1,8 @@
 import * as Tone from 'tone';
 
 let isInitialized = false;
+const GLOBAL_MUTE = true; // Set to true to disable all sounds globally
+
 let ambientSynth: Tone.NoiseSynth | null = null;
 let clickSynth: Tone.MembraneSynth | null = null;
 let hoverSynth: Tone.MetalSynth | null = null;
@@ -8,7 +10,7 @@ let filter: Tone.Filter | null = null;
 
 export const AudioEngine = {
   async init() {
-    if (isInitialized) return;
+    if (isInitialized || GLOBAL_MUTE) return;
     
     await Tone.start();
     console.log("Audio Context Started");

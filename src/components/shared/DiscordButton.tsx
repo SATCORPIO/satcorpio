@@ -15,8 +15,8 @@ interface DiscordButtonProps {
 
 export function DiscordButton({
   href,
-  label = "ESTABLISH MISSION UPLINK",
-  subLabel = "SATCORP // MISSION CONTROL",
+  label = "JOIN DISCORD",
+  subLabel = "COMMUNITY",
   variant = "default",
   className = "",
 }: DiscordButtonProps) {
@@ -25,45 +25,45 @@ export function DiscordButton({
   const themes = {
     default: {
       primary: "var(--c2-green, #00FF41)",
-      bg: "rgba(0, 255, 65, 0.03)",
-      border: "rgba(0, 255, 65, 0.2)",
-      hoverBg: "rgba(0, 255, 65, 0.1)",
-      glow: "rgba(0, 255, 65, 0.2)",
+      bg: "rgba(0, 255, 65, 0.9)",
+      border: "rgba(0, 255, 65, 0.4)",
+      hoverBg: "rgba(0, 255, 65, 1)",
+      glow: "rgba(0, 255, 65, 0.4)",
     },
     amber: {
-      primary: "var(--namtar-amber, #D97706)",
-      bg: "rgba(217, 119, 6, 0.03)",
-      border: "rgba(217, 119, 6, 0.2)",
-      hoverBg: "rgba(217, 119, 6, 0.12)",
-      glow: "rgba(217, 119, 6, 0.25)",
+      primary: "#D97706",
+      bg: "rgba(217, 119, 6, 0.9)",
+      border: "rgba(217, 119, 6, 0.4)",
+      hoverBg: "rgba(217, 119, 6, 1)",
+      glow: "rgba(217, 119, 6, 0.4)",
     },
     blue: {
-      primary: "var(--ue5-blue, #00A8FF)",
-      bg: "rgba(0, 168, 255, 0.03)",
-      border: "rgba(0, 168, 255, 0.2)",
-      hoverBg: "rgba(0, 168, 255, 0.12)",
-      glow: "rgba(0, 168, 255, 0.3)",
+      primary: "#00A8FF",
+      bg: "rgba(0, 168, 255, 0.9)",
+      border: "rgba(0, 168, 255, 0.4)",
+      hoverBg: "rgba(0, 168, 255, 1)",
+      glow: "rgba(0, 168, 255, 0.4)",
     },
     red: {
-      primary: "var(--c2-red, #EF4444)",
-      bg: "rgba(239, 68, 68, 0.03)",
-      border: "rgba(239, 68, 68, 0.2)",
-      hoverBg: "rgba(239, 68, 68, 0.1)",
-      glow: "rgba(239, 68, 68, 0.25)",
+      primary: "#EF4444",
+      bg: "rgba(239, 68, 68, 0.9)",
+      border: "rgba(239, 68, 68, 0.4)",
+      hoverBg: "rgba(239, 68, 68, 1)",
+      glow: "rgba(239, 68, 68, 0.4)",
     },
     cyan: {
-      primary: "var(--pulse-cyan, #00F5FF)",
-      bg: "rgba(0, 245, 255, 0.03)",
-      border: "rgba(0, 245, 255, 0.2)",
-      hoverBg: "rgba(0, 245, 255, 0.1)",
-      glow: "rgba(0, 245, 255, 0.25)",
+      primary: "#00F5FF",
+      bg: "rgba(0, 245, 255, 0.9)",
+      border: "rgba(0, 245, 255, 0.4)",
+      hoverBg: "rgba(0, 245, 255, 1)",
+      glow: "rgba(0, 245, 255, 0.4)",
     },
     purple: {
       primary: "#A855F7",
-      bg: "rgba(168, 85, 247, 0.03)",
-      border: "rgba(168, 85, 247, 0.2)",
-      hoverBg: "rgba(168, 85, 247, 0.12)",
-      glow: "rgba(168, 85, 247, 0.3)",
+      bg: "rgba(168, 85, 247, 0.9)",
+      border: "rgba(168, 85, 247, 0.4)",
+      hoverBg: "rgba(168, 85, 247, 1)",
+      glow: "rgba(168, 85, 247, 0.4)",
     },
   };
 
@@ -92,7 +92,7 @@ export function DiscordButton({
 
       <div className="uplink-main">
         <div className="icon-box">
-          <MessageSquare size={20} className="main-icon" />
+          <MessageSquare size={20} className="main-icon pulse-icon" />
           <Radio size={12} className="sub-icon pulse-anim" />
         </div>
         
@@ -108,9 +108,9 @@ export function DiscordButton({
           display: flex;
           flex-direction: column;
           gap: 12px;
-          padding: 20px 28px;
+          padding: 16px 24px;
           text-decoration: none;
-          color: ${currentTheme.primary};
+          color: white;
           background: ${currentTheme.bg};
           border: 1px solid ${currentTheme.border};
           backdrop-filter: blur(12px);
@@ -136,11 +136,11 @@ export function DiscordButton({
             ${currentTheme.primary}44,
             transparent
           );
-          height: 20%;
+          height: 100%;
           width: 100%;
-          opacity: 0.1;
+          opacity: 0.05;
           pointer-events: none;
-          animation: scan-vertical 3s linear infinite;
+          animation: scan-vertical 4s linear infinite;
         }
 
         .uplink-glow {
@@ -244,6 +244,15 @@ export function DiscordButton({
         @keyframes ping-ring {
           0% { transform: scale(1); opacity: 0.8; }
           100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .pulse-icon {
+          animation: pulse-icon-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-icon-glow {
+          0%, 100% { filter: drop-shadow(0 0 4px ${currentTheme.primary}); transform: scale(1); }
+          50% { filter: drop-shadow(0 0 12px ${currentTheme.primary}); transform: scale(1.05); }
         }
 
         .pulse-anim {

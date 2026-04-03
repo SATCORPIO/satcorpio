@@ -4,7 +4,9 @@ import Link from "next/link";
 import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { DossierManual } from "@/components/shared/DossierManual";
 import { DiscordButton } from "@/components/shared/DiscordButton";
+import { TerminalSquare, MonitorSmartphone, Network, Video } from "lucide-react";
 
 const realms = [
   {
@@ -29,6 +31,64 @@ const realms = [
     bgImage: "/dysuns_dark.png"
   }
 ];
+ 
+const kiraDossier = [
+  {
+    id: "core",
+    title: "CORE IDENTITY",
+    subtitle: "Operator Value",
+    icon: TerminalSquare,
+    items: [
+      "End-to-end problem solver bridging design, automation, branding, and systems",
+      "Translates vague ideas into deployable assets (web/brand/workflow/media)",
+      "High-performance workstation driven delivery (RTX workflows/rapid iteration)",
+      "Client-first concierge model: clarity → scope → execution → polish"
+    ],
+    color: "#00FF41"
+  },
+  {
+    id: "brand",
+    title: "BRAND SYSTEMS",
+    subtitle: "Visual & Platform Architecture",
+    icon: Palette,
+    items: [
+      "Brand foundation & full identity systems",
+      "Modular design frameworks built for scalability",
+      "Wordmark/logotype design (minimalist/luxury/modern)",
+      "Color doctrine & typography systems rules",
+      "Asset systems engineered for long-term growth"
+    ],
+    color: "#A855F7"
+  },
+  {
+    id: "motion",
+    title: "MOTION DESIGN",
+    subtitle: "Advanced Animation Systems",
+    icon: Video,
+    items: [
+      "Kinetic typography, logo reveals, explainer animations",
+      "Complex particle systems, fluid simulations, 3D motion graphics",
+      "Character rigging & 2D/3D animation pipelines",
+      "Tools: After Effects, Cinema 4D, Blender, Lottie, Rive, GSAP"
+    ],
+    color: "#FF006E"
+  },
+  {
+    id: "web",
+    title: "WEB & UI",
+    subtitle: "Frontend Architecture",
+    icon: MonitorSmartphone,
+    items: [
+      "Landing pages & scalable portals",
+      "Responsive design systems",
+      "Interactive elements & animation",
+      "Hosting & deployment strategy",
+      "HTML, CSS, JS, GSAP, Vanta.js, React"
+    ],
+    color: "#38BDF8"
+  }
+];
+
 
 
 export default function KiraPage() {
@@ -64,8 +124,7 @@ export default function KiraPage() {
             <DiscordButton 
               href="https://discord.gg/mypZpPsPeb"
               variant="amber"
-              label="JOIN CREATIVE OPS"
-              subLabel="KIRA // STUDIO CHANNEL"
+              label="KI-RA DISCORD"
               className="mt-6"
             />
 
@@ -118,8 +177,23 @@ export default function KiraPage() {
               );
             })}
           </div>
+          <motion.div 
+            className="scroll-indicator"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
+            onClick={() => document.getElementById('kira-dossier')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <ChevronDown size={18} className="bounce-arrow" />
+          </motion.div>
         </div>
       </section>
+
+      <DossierManual 
+        items={kiraDossier}
+        sectionTitle="CREATIVE BRANCH"
+        sectionSubtitle="STUDIO OPERATIONS & VISUAL ARCHITECTURE"
+        terminalPrefix="KIRA"
+        anchorId="kira-dossier"
+      />
 
       <footer className="kira-footer spatial-panel">
         <span>KI-RA © {new Date().getFullYear()} — SATCORP CREATIVE</span>
@@ -262,7 +336,19 @@ export default function KiraPage() {
           font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
         }
 
+
+        .scroll-indicator {
+          margin-top: 60px;
+          display: flex; flex-direction: column; align-items: center; gap: 8px;
+          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+          color: rgba(255, 255, 255, 0.4); cursor: pointer; transition: color 300ms;
+        }
+        .scroll-indicator:hover { color: #F59E0B; }
+        .bounce-arrow { animation: bounce-y 2s infinite; }
+        @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
         .mt-6 { margin-top: 24px; }
+
 
 
 

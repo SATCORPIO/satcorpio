@@ -100,8 +100,7 @@ export default function DysunsArkPage() {
           <DiscordButton 
             href="https://discord.gg/R9Axsm7JfN"
             variant="red"
-            label="JOIN SOLAR COMMAND"
-            subLabel="DYSUN // THE STAR"
+            label="DYSUN ARK DISCORD"
           />
         </header>
 
@@ -124,7 +123,6 @@ export default function DysunsArkPage() {
               </div>
             </div>
              <div className="ad-visual">
-                <img src="/KYRAX764764.gif" alt="Thermal Anomaly" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '50%', border: '2px solid var(--c2-amber)', filter: 'drop-shadow(0 0 20px rgba(245,158,11,0.5))' }} />
                 <div className="thermal-pips">
                    <div className="pip" />
                    <div className="pip" />

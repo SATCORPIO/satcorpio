@@ -91,7 +91,19 @@ export default function SatcorpHome() {
 
       {/* ─── BANNER HEADER ─── */}
       <div className="banner-header">
-        <Image src="/004.png" alt="SATCORP Banner" width={1920} height={400} priority className="banner-img" />
+        <Image 
+          src="/004.png" 
+          alt="SATCORP Banner" 
+          width={1400} 
+          height={380} 
+          priority 
+          className="banner-img"
+          style={{ 
+            width: '100%',
+            height: 'auto',
+            display: 'block'
+          }}
+        />
       </div>
 
 
@@ -152,6 +164,7 @@ export default function SatcorpHome() {
 
         <DiscordButton 
           href="https://discord.gg/KqphHMq6vS"
+          label="SATCORP DISCORD"
           className="discord-link-absolute"
         />
 
@@ -186,16 +199,16 @@ export default function SatcorpHome() {
           position: relative;
           z-index: 100;
           width: 100%;
-          max-width: 1200px;
-          margin: 20px auto 0;
-          padding: 0 20px;
+          max-width: 1400px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
           animation: fade-in 1s ease-out;
+          padding: 0 10px; /* Slight padding for mobile */
         }
         .banner-img {
           width: 100%;
           height: auto;
-          display: block;
-          object-fit: contain;
           filter: drop-shadow(0 0 30px rgba(0,255,65,0.15));
         }
         @keyframes fade-in {
@@ -341,7 +354,7 @@ export default function SatcorpHome() {
           .vh-title { font-size: 22px; letter-spacing: 2px; }
         }
         @media (max-width: 768px) {
-          .topbar { flex-direction: column; gap: 16px; padding: 20px; }
+          .banner-header { padding: 0 16px; margin-top: 10px; }
           .hud-footer { flex-direction: column; gap: 8px; text-align: center; margin: 0 10px 10px; padding: 12px 16px; }
           .cards-spatial { flex-direction: column; align-items: center; }
           .nav-card { width: 100%; max-width: 400px; height: 320px; }

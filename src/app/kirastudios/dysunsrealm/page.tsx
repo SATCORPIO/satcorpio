@@ -133,8 +133,7 @@ export default function DysunPage() {
               <DiscordButton 
                 href="https://discord.gg/R9Axsm7JfN"
                 variant="red"
-                label="JOIN SOLAR COMMAND"
-                subLabel="DYSUN // THE STAR"
+                label="DYSUN DISCORD"
               />
             </div>
           </div>

@@ -135,8 +135,7 @@ export default function NamtarArkPage() {
           <DiscordButton 
             href="https://discord.gg/mypZpPsPeb"
             variant="amber"
-            label="JOIN FACTION"
-            subLabel="NAMTAR // INFRASTRUCTURE"
+            label="NAMTAR ARK DISCORD"
           />
         </header>
 

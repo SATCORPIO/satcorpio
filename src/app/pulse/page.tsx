@@ -106,7 +106,7 @@ export default function PulsePage() {
     <main className="pulse film-grain">
       {/* ─── Cybernetic Background ─── */}
       <div className="bg-pulse">
-        <Image src="/pulse_cyber.png" alt="Pulse Cybernetic Studio" fill priority style={{ objectFit: 'cover' }} />
+        <Image src="/pulse_radio.png" alt="Pulse Radio Hub" fill priority style={{ objectFit: 'cover' }} />
         <div className="bg-scanline" />
         <div className="bg-vignette" />
       </div>
@@ -129,7 +129,13 @@ export default function PulsePage() {
             <div className="badge spatial-panel cyber-border">
               <span className="cyan-blink" /> BROADCAST PROTOCOLS
             </div>
-            <h1 className="title">PULSE</h1>
+            <Image
+              src="/file_000000006e7061faa7eeea560cc41296.png"
+              alt="PULSE"
+              width={400}
+              height={120}
+              style={{ objectFit: 'contain', filter: 'drop-shadow(0 0 40px rgba(34, 211, 238, 0.4))' }}
+            />
             <p className="subtitle">ELITE BROADCAST ARCHITECTURE & LIVE OPERATIONS</p>
           </motion.div>
 
@@ -143,33 +149,12 @@ export default function PulsePage() {
             cinematic post-production pipelines, and automated syndication hubs for the modern broadcast era.
           </motion.p>
           
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.8 }}
-            style={{ width: '100%', maxWidth: '900px', display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '24px' }}
-          >
-            <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)', aspectRatio: '16/9' }}>
-               <Image src="/pulse_radio.png" alt="Pulse Radio Hub" fill style={{ objectFit: 'cover' }} />
-            </div>
-            <div style={{ width: '200px', flexShrink: 0, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)'}}>
-               <Image src="/075.png" alt="Cyber Visual" fill style={{ objectFit: 'cover' }} />
-            </div>
-            <div style={{ width: '120px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)' }}>
-                    <Image src="/file_000000006e7061faa7eeea560cc41296.png" alt="Asset" fill style={{ objectFit: 'cover' }} />
-                </div>
-                <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)' }}>
-                    <Image src="/file_000000007e78622fb81e236a8644294d.png" alt="Asset" fill style={{ objectFit: 'cover' }} />
-                </div>
-            </div>
-          </motion.div>
+
 
           <DiscordButton 
             href="https://discord.gg/RmpHjJsSBC"
             variant="cyan"
-            label="INITIALIZE BROADCAST SIGNAL"
-            subLabel="PULSE // THE GRID"
+            label="PULSE DISCORD"
           />
 
           <motion.div 
@@ -382,7 +367,10 @@ export default function PulsePage() {
           display: flex; justify-content: space-between; align-items: center;
           font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px;
           color: rgba(34, 211, 238, 0.5); border-color: rgba(34, 211, 238, 0.2);
-          background: rgba(2, 6, 10, 0.8);
+          background: linear-gradient(135deg, rgba(2, 6, 10, 0.9), rgba(2, 6, 10, 0.95)), 
+                      url('/file_000000007e78622fb81e236a8644294d.png');
+          background-size: cover;
+          background-position: center;
           border-radius: 2px; position: relative; z-index: 100;
         }
         .system-perf { display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.4); }

@@ -112,14 +112,7 @@ export default function AnuPage() {
             Translates vague ideas into deployable assets with high-performance operator protocols.
           </motion.p>
           
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            style={{ width: '100%', maxWidth: '800px', position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(234,179,8,0.2)', marginBottom: '40px' }}
-          >
-            <Image src="/kyrax-wolf.png" alt="ANU Asset" width={800} height={300} style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }} />
-          </motion.div>
+
 
 
           <motion.div 
@@ -133,8 +126,7 @@ export default function AnuPage() {
           <DiscordButton 
             href="https://discord.gg/KqphHMq6vS"
             variant="amber"
-            label="COMMENCE TACTICAL COMMS"
-            subLabel="ANU // SECURE CHANNEL"
+            label="ANU DISCORD"
             className="discord-link-absolute"
           />
 

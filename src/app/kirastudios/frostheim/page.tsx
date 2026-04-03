@@ -132,8 +132,7 @@ export default function FrostheimPage() {
               <DiscordButton 
                 href="https://discord.gg/R9Axsm7JfN"
                 variant="blue"
-                label="JOIN WAR-CHIEF DISCORD"
-                subLabel="FROSTHEIM // THE NORTH"
+                label="FROSTHEIM DISCORD"
               />
             </div>
           </motion.div>

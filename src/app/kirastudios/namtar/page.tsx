@@ -107,8 +107,7 @@ export default function NamtarPage() {
               <DiscordButton 
                 href="https://discord.gg/mypZpPsPeb"
                 variant="amber"
-                label="JOIN ABYSSAL CHAT"
-                subLabel="NAMTAR // THE DEEP"
+                label="NAMTAR DISCORD"
               />
             </div>
           </div>
