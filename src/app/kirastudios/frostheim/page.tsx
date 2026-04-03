@@ -84,7 +84,6 @@ export default function FrostheimPage() {
       </div>
       <div className="bg-vignette" />
       <div className="noise-overlay" />
-      <div className="scanline-overlay" />
       <SnowCanvas />
 
       <nav className="tactical-nav">
@@ -247,7 +246,6 @@ export default function FrostheimPage() {
                <div className="df-item"><Activity size={10} /> SCANNING...</div>
             </div>
             
-            <div className="db-scan-overlay" />
           </motion.div>
 
           {/* Infrastructure Layer */}
@@ -305,11 +303,6 @@ export default function FrostheimPage() {
           position: fixed; inset: 0; z-index: 2; pointer-events: none;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
           opacity: 0.05;
-        }
-        .scanline-overlay {
-          position: fixed; inset: 0; z-index: 2; pointer-events: none;
-          background: linear-gradient(to bottom, transparent 50%, rgba(125, 211, 252, 0.02) 50.1%);
-          background-size: 100% 4px;
         }
         .snow-canvas { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
 

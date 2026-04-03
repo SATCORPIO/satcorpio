@@ -66,7 +66,6 @@ export default function DysunsArkPage() {
           className="bg-image"
           style={{ objectFit: "cover", filter: "brightness(0.5) contrast(1.2)" }}
         />
-        <div className="radial-glow" />
         <div className="noise-overlay" />
       </div>
 
@@ -229,10 +228,6 @@ export default function DysunsArkPage() {
         }
 
         .telemetry-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-        .radial-glow {
-          position: absolute; inset: 0;
-          background: radial-gradient(circle at 50% -20%, rgba(245, 158, 11, 0.1), transparent 70%);
-        }
         .grid-overlay {
           position: absolute; inset: 0;
           background-image: 

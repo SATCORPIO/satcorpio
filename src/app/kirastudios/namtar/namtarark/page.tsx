@@ -36,7 +36,6 @@ export default function NamtarArkPage() {
           className="bg-image"
           style={{ objectFit: "cover", filter: "brightness(0.4) contrast(1.2)" }}
         />
-        <div className="radial-glow" />
         <div className="noise-overlay" />
         <div className="scanline-overlay" />
       </div>
@@ -101,7 +100,6 @@ export default function NamtarArkPage() {
                    <div className="pip" />
                    <div className="pip" />
                 </div>
-                <div className="visual-scan">SURVEY_ACTIVE</div>
              </div>
           </div>
 
@@ -189,10 +187,6 @@ export default function NamtarArkPage() {
         }
 
         .telemetry-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-        .radial-glow {
-          position: absolute; inset: 0;
-          background: radial-gradient(circle at 50% -20%, rgba(255, 184, 48, 0.1), transparent 70%);
-        }
         .noise-overlay {
           position: absolute; inset: 0;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -292,7 +286,6 @@ export default function NamtarArkPage() {
         .promo-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; position: relative; }
         .thermal-pips { display: flex; gap: 8px; }
         .pip { width: 6px; height: 6px; background: var(--c2-amber); border-radius: 50%; animation: pulse-glow 2s infinite; }
-        .visual-scan { font-family: var(--font-mono); font-size: 9px; color: var(--c2-amber); letter-spacing: 2px; opacity: 0.5; }
 
         .metrics-panel { padding: 32px; }
         .m-list { display: flex; flex-direction: column; gap: 20px; }

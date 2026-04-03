@@ -100,7 +100,6 @@ export default function KiraPage() {
         <Image src="/kirastudios_ue5.png" alt="Ki-Ra Studios" fill priority className="bg-image" style={{ objectFit: "cover" }} />
       </div>
       <div className="bg-vignette" />
-      <div className="glass-spheres" />
 
       <nav className="kira-nav">
         <Link href="/" className="back-link spatial-panel">
@@ -219,15 +218,6 @@ export default function KiraPage() {
         .bg-vignette {
           position: fixed; inset: 0; z-index: 1;
           background: radial-gradient(circle at 50% 50%, transparent 20%, #030508 95%);
-        }
-        .glass-spheres {
-          position: fixed;
-          inset: 0;
-          background-image: 
-            radial-gradient(circle at 15% 50%, rgba(245,158,11,0.05) 0%, transparent 20%),
-            radial-gradient(circle at 85% 30%, rgba(245,158,11,0.06) 0%, transparent 25%);
-          filter: blur(40px);
-          z-index: 1;
         }
 
         .kira-nav {

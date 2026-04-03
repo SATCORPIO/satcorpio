@@ -92,8 +92,6 @@ export default function SatcorpHome() {
         />
       </div>
       <div className="hub-dim" />
-      <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.12) 0%, rgba(0,255,65,0.06) 30%, rgba(0,255,65,0.02) 60%, transparent 80%)', top: '-10%', left: '-10%', position: 'fixed' }} />
-      <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(6,182,212,0.05) 30%, rgba(6,182,212,0.02) 60%, transparent 80%)', bottom: '-20%', right: '-10%', position: 'fixed' }} />
 
       {/* ─── BANNER HEADER ─── */}
       <div className="banner-header">

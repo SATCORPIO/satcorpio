@@ -91,20 +91,6 @@ body {
   pointer-events: none;
 }
 
-/* Cinematic lighting flares (Volumetric effects) */
-.volumetric-flare {
-  position: absolute;
-  width: 80vw;
-  height: 80vh;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: screen;
-  /* Refined multi-stop transparency for ultra-smooth falloff without relying on heavy blur */
-  opacity: 0.8;
-  filter: blur(80px);
-  will-change: transform, opacity;
-}
 
 /* Chromatic Aberration Text */
 .chromatic-text {
@@ -142,10 +128,6 @@ body {
   50% { opacity: 0.5; filter: drop-shadow(0 0 2px currentColor); }
 }
 
-@keyframes scan-line {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
 
 @keyframes slow-pan {
   0%, 100% { transform: scale(1.05) translate(0, 0); }
