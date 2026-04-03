@@ -6,28 +6,6 @@ import { ChevronLeft, Brain, Cpu, Network, Zap, Boxes, ChevronDown, BrainCircuit
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
 
-const systems = [
-  {
-    title: "AI-ENHANCED WORKFLOWS",
-    desc: "Prompt engineering, rapid concept iteration, and custom AI operational agents inside already-defined corporate systems.",
-    icon: Zap,
-  },
-  {
-    title: "MULTI-AGENT ORCHESTRATION",
-    desc: "Crew-based AI teams, autonomous task delegation, memory persistence, and human-in-the-loop oversight dashboards.",
-    icon: Network,
-  },
-  {
-    title: "GENERATIVE MOTION",
-    desc: "Text-to-video, brand-consistent character generation, voice cloning, and emotional delivery integrations.",
-    icon: Boxes,
-  },
-  {
-    title: "AUTONOMOUS RESEARCH",
-    desc: "Deep-dive market agents, trend prediction mapping, and real-time news sentiment analysis with live dashboarding.",
-    icon: Cpu,
-  },
-];
 
 /* ═══ Kyrax Dossier Data ═══ */
 const dossierData = [
@@ -133,52 +111,31 @@ export default function KyraxPage() {
             to accelerate workflow efficiency across the SATCORP ecosystem.
           </motion.p>
 
-          <div className="systems-grid">
-            {systems.map((sys, i) => {
-              const Icon = sys.icon;
-              return (
-                <motion.div 
-                  key={i} 
-                  className="sys-card spatial-panel"
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 1 + i * 0.15 }}
-                  whileHover={{ scale: 1.03, boxShadow: '0 0 30px rgba(168, 85, 247, 0.2)' }}
-                >
-                  <div className="sys-hacker-line" />
-                  <div className="sys-header">
-                    <div className="sys-icon-wrap">
-                      <Icon size={20} strokeWidth={1.5} />
-                    </div>
-                    <span className="sys-title">{sys.title}</span>
-                  </div>
-                  <p className="sys-desc">{sys.desc}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-
           <motion.div 
             className="scroll-indicator"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
             onClick={scrollToDossier}
           >
-            <span>AI CONCIERGE DOSSIER</span>
-            <ChevronDown size={14} className="bounce-arrow" />
+            <ChevronDown size={18} className="bounce-arrow" />
           </motion.div>
 
           <motion.a 
             href="https://discord.gg/KqphHMq6vS" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="discord-link spatial-panel"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="discord-link-premium spatial-panel"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2.0 }}
           >
-            <MessageSquare size={14} className="discord-icon" />
-            <span className="dl-text">JOIN NEURAL NETWORK</span>
+            <div className="dl-glow" />
+            <MessageSquare size={18} className="discord-icon" />
+            <div className="dl-content">
+              <span className="dl-main">CONNECT NEURAL INTERFACE</span>
+              <span className="dl-sub">KYRAX // NEURAL NETWORK</span>
+            </div>
           </motion.a>
+
         </div>
       </section>
 
@@ -349,34 +306,61 @@ export default function KyraxPage() {
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
         /* ── Discord Button ── */
-        .discord-link {
+        .discord-link-premium {
           position: absolute;
           bottom: 12%;
           left: 5%;
           display: flex;
           align-items: center;
-          gap: 10px;
-          padding: 12px 20px;
+          gap: 16px;
+          padding: 16px 28px;
           border-radius: 6px;
           text-decoration: none;
           color: #E879F9;
-          font-family: var(--font-mono);
-          font-size: 11px;
-          letter-spacing: 2px;
-          border-color: rgba(168, 85, 247, 0.2);
-          background: rgba(168, 85, 247, 0.05);
+          background: rgba(168, 85, 247, 0.03);
+          border: 1px solid rgba(168, 85, 247, 0.2);
+          backdrop-filter: blur(10px);
           transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
           z-index: 100;
+          overflow: hidden;
         }
-        .discord-link:hover {
-          color: white;
-          background: rgba(168, 85, 247, 0.2);
+        .discord-link-premium:hover {
+          background: rgba(168, 85, 247, 0.1);
           border-color: #A855F7;
-          box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+          box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
           transform: translateY(-2px);
+        }
+        .dl-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity 400ms;
+        }
+        .discord-link-premium:hover .dl-glow { opacity: 1; }
+        
+        .dl-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
+        .dl-main {
+          font-family: var(--font-tactical);
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 2px;
+          line-height: 1;
+        }
+        .dl-sub {
+          font-family: var(--font-mono);
+          font-size: 9px;
+          letter-spacing: 1px;
+          color: rgba(168, 85, 247, 0.5);
         }
         .discord-icon {
           filter: drop-shadow(0 0 8px #E879F9);
+          color: #E879F9;
         }
 
         /* ── Dossier Section ── */

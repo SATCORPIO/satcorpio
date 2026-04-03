@@ -117,22 +117,26 @@ export default function AnuPage() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
             onClick={scrollToDossier}
           >
-            <span>OPERATOR DOSSIER</span>
-            <ChevronDown size={14} className="bounce-arrow" />
+            <ChevronDown size={18} className="bounce-arrow" />
           </motion.div>
 
           <motion.a 
             href="https://discord.gg/KqphHMq6vS" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="discord-link spatial-panel"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
+            className="discord-link-premium spatial-panel"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.8, duration: 0.8 }}
           >
-            <MessageSquare size={14} className="discord-icon" />
-            <span className="dl-text">JOIN PROTOCOL</span>
+            <div className="dl-glow" />
+            <MessageSquare size={18} className="discord-icon" />
+            <div className="dl-content">
+              <span className="dl-main">COMMENCE TACTICAL COMMS</span>
+              <span className="dl-sub">ANU // SECURE CHANNEL</span>
+            </div>
           </motion.a>
+
         </div>
       </section>
 
@@ -288,34 +292,61 @@ export default function AnuPage() {
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
         /* ── Discord Button ── */
-        .discord-link {
+        .discord-link-premium {
           position: absolute;
-          bottom: 15%;
-          right: 5%;
+          bottom: 12%;
+          right: 4%;
           display: flex;
           align-items: center;
-          gap: 10px;
-          padding: 12px 20px;
+          gap: 16px;
+          padding: 16px 28px;
           border-radius: 4px;
           text-decoration: none;
           color: #EAB308;
-          font-family: var(--font-mono);
-          font-size: 11px;
-          letter-spacing: 2px;
-          border-color: rgba(234, 179, 8, 0.2);
-          background: rgba(234, 179, 8, 0.05);
+          background: rgba(234, 179, 8, 0.03);
+          border: 1px solid rgba(234, 179, 8, 0.2);
+          backdrop-filter: blur(10px);
           transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
           z-index: 100;
+          overflow: hidden;
         }
-        .discord-link:hover {
-          color: white;
-          background: rgba(234, 179, 8, 0.2);
+        .discord-link-premium:hover {
+          background: rgba(234, 179, 8, 0.1);
           border-color: #EAB308;
-          box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
+          box-shadow: 0 0 40px rgba(234, 179, 8, 0.2);
           transform: translateY(-2px);
+        }
+        .dl-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(234, 179, 8, 0.15) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity 400ms;
+        }
+        .discord-link-premium:hover .dl-glow { opacity: 1; }
+        
+        .dl-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
+        .dl-main {
+          font-family: var(--font-tactical);
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 2px;
+          line-height: 1;
+        }
+        .dl-sub {
+          font-family: var(--font-mono);
+          font-size: 9px;
+          letter-spacing: 1px;
+          color: rgba(234, 179, 8, 0.5);
         }
         .discord-icon {
           filter: drop-shadow(0 0 8px #EAB308);
+          color: #EAB308;
         }
 
         /* ── Dossier Section ── */

@@ -3,123 +3,33 @@
 import Link from "next/link";
 import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
-import { DossierManual } from "@/components/shared/DossierManual";
 
 const realms = [
   {
     title: "NAMTAR",
     desc: "Deep-ocean tactical interface and abyssal node monitoring systems.",
     icon: Anchor,
-    href: "/kirastudios/namtar"
+    href: "/kirastudios/namtar",
+    bgImage: "/namtar_survival.png"
   },
   {
     title: "FROSTHEIM",
     desc: "Arctic data preservation and sub-zero core infrastructure protocols.",
     icon: Snowflake,
-    href: "/kirastudios/frostheim"
+    href: "/kirastudios/frostheim",
+    bgImage: "/frostheim_viking.png"
   },
   {
-    title: "DYSUN's REALM",
+    title: "DYSUN'S REALM",
     desc: "Solar-thermal energy management and orbital relay synchronization.",
     icon: Sun,
-    href: "/kirastudios/dysunsrealm"
+    href: "/kirastudios/dysunsrealm",
+    bgImage: "/dysuns_dark.png"
   }
 ];
 
-/* ═══ Ki-Ra Dossier Data ═══ */
-const dossierData = [
-  {
-    id: "gamedev",
-    title: "GAME DEVELOPMENT",
-    subtitle: "World-Building Design",
-    icon: Gamepad2,
-    colSpan: 2, 
-    items: [
-      "Real-time engine workflows (Unity / Unreal Engine 5)",
-      "Gameplay programming, QOL MODs, and asset optimization",
-      "Environment prototyping, blockouts, and vertical slice builds",
-      "UI/HUD systems and cross-platform (PC/Mobile/WebGL) development",
-      "Tools: Blender, Unity, Unreal Engine, Substance Painter"
-    ],
-    color: "#FFFFFF"
-  },
-  {
-    id: "narrative",
-    title: "NARRATIVE DESIGN",
-    subtitle: "Interactive Storytelling Systems",
-    icon: FileText,
-    colSpan: 1,
-    items: [
-      "Branching dialogue trees",
-      "Lore bibles & faction backstories",
-      "Quest system design",
-      "Tools: Twine, Yarn Spinner, World Anvil"
-    ],
-    color: "#D1D5DB"
-  },
-  {
-    id: "procedural",
-    title: "PROCEDURAL WORLD GEN",
-    subtitle: "Dynamic Pipelines",
-    icon: Database,
-    colSpan: 1,
-    items: [
-      "Terrain & ecosystem generation",
-      "Dynamic NPC behaviors & events",
-      "Runtime optimization & seeds",
-      "Tools: Houdini, PCG, Geo Nodes"
-    ],
-    color: "#9CA3AF"
-  },
-  {
-    id: "xr",
-    title: "XR PROTOTYPING",
-    subtitle: "VR/AR/XR Experiences",
-    icon: Headset,
-    colSpan: 1,
-    items: [
-      "Full XR scene builds & spatial UI",
-      "Hand tracking & locomotion logic",
-      "Cross-device deployment (Quest)",
-      "Tools: XR Interaction Toolkit, OpenXR"
-    ],
-    color: "#E5E7EB"
-  },
-  {
-    id: "audio",
-    title: "AUDIO ARCHITECTURE",
-    subtitle: "Immersive Sound Systems",
-    icon: Music,
-    colSpan: 2,
-    items: [
-      "Adaptive music & dynamic audio engines",
-      "Foley, voice direction, soundscape design",
-      "Spatial audio (3D/ambisonics)",
-      "Tools: FMOD, Wwise, Reaper, ElevenLabs",
-      "Complete audio banks + implementation guides"
-    ],
-    color: "#F3F4F6"
-  },
-  {
-    id: "economy",
-    title: "LIVE-SERVICE OPS",
-    subtitle: "Game Economy & Balancing",
-    icon: Coins,
-    colSpan: 1,
-    items: [
-      "Economy design (currencies, sinks)",
-      "Meta systems with data-driven tuning",
-      "Live-ops event frameworks",
-      "Player retention & churn analysis"
-    ],
-    color: "#6B7280"
-  }
-];
 
 export default function KiraPage() {
-  const scrollToDossier = () => {
-    document.getElementById('kira-dossier')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <main className="kira film-grain">
@@ -152,14 +62,19 @@ export default function KiraPage() {
               href="https://discord.gg/mypZpPsPeb"
               target="_blank"
               rel="noopener noreferrer"
-              className="discord-btn spatial-panel"
+              className="discord-link-premium spatial-panel"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
             >
-              <MessageSquare size={14} />
-              <span>JOIN CREATIVE DISCORD</span>
+              <div className="dl-glow" />
+              <MessageSquare size={18} />
+              <div className="dl-content">
+                <span className="dl-main">JOIN CREATIVE OPS</span>
+                <span className="dl-sub">KIRA // STUDIO CHANNEL</span>
+              </div>
             </motion.a>
+
           </motion.div>
 
           <motion.p 
@@ -183,7 +98,20 @@ export default function KiraPage() {
                   transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
                   whileHover={{ scale: 1.02, y: -4, borderColor: 'rgba(255, 255, 255, 0.4)' }}
                 >
-                  <Link href={realm.href} className="cap-card spatial-panel" style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+                  <Link 
+                    href={realm.href} 
+                    className="cap-card spatial-panel" 
+                    style={{ 
+                      textDecoration: 'none', 
+                      display: 'block', 
+                      height: '100%',
+                      backgroundImage: `linear-gradient(to bottom, rgba(5,5,10,0.4) 0%, rgba(5,5,10,0.95) 100%), url(${realm.bgImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}
+                  >
                     <div className="cap-header">
                       <div className="cap-icon-box">
                         <Icon size={20} className="cap-icon" strokeWidth={1.5} />
@@ -196,25 +124,8 @@ export default function KiraPage() {
               );
             })}
           </div>
-
-          <motion.div 
-            className="scroll-indicator"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
-            onClick={scrollToDossier}
-          >
-            <span>TASK FORCE DOSSIER</span>
-            <ChevronDown size={14} className="bounce-arrow" />
-          </motion.div>
         </div>
       </section>
-
-      <DossierManual 
-        items={dossierData}
-        sectionTitle="TASK FORCE BRANCH"
-        sectionSubtitle="WORLD-BUILDING & EXPERIENTIAL SYSTEMS DOSSIER"
-        terminalPrefix="KIRA"
-        anchorId="kira-dossier"
-      />
 
       <footer className="kira-footer spatial-panel">
         <span>KI-RA © {new Date().getFullYear()} — SATCORP CREATIVE</span>
@@ -360,48 +271,58 @@ export default function KiraPage() {
           font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
         }
 
-        .discord-btn {
+        /* ── Discord Button ── */
+        .discord-link-premium {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          padding: 12px 24px;
+          gap: 16px;
+          padding: 14px 28px;
           border-radius: 4px;
           text-decoration: none;
           color: #FFF;
-          font-family: var(--font-mono);
-          font-size: 11px;
-          letter-spacing: 2px;
-          border-color: rgba(255, 255, 255, 0.1);
-          background: rgba(255, 255, 255, 0.05);
-          transition: all 300ms;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(10px);
+          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
           margin-top: 24px;
+          position: relative;
+          overflow: hidden;
         }
-        .discord-btn:hover {
-          background: rgba(255, 255, 255, 0.15);
+        .discord-link-premium:hover {
+          background: rgba(255, 255, 255, 0.1);
           border-color: #FFF;
-          box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+          box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+          transform: translateY(-2px);
+        }
+        .dl-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity 400ms;
+        }
+        .discord-link-premium:hover .dl-glow { opacity: 1; }
+        
+        .dl-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
+        .dl-main {
+          font-family: var(--font-tactical);
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 2.5px;
+          line-height: 1;
+        }
+        .dl-sub {
+          font-family: var(--font-mono);
+          font-size: 9px;
+          letter-spacing: 1px;
+          color: rgba(255, 255, 255, 0.5);
         }
 
-        .scroll-indicator {
-          margin-top: 60px;
-          display: flex; flex-direction: column; align-items: center; gap: 8px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
-          color: rgba(255, 255, 255, 0.4); cursor: pointer; transition: color 300ms;
-        }
-        .scroll-indicator:hover { color: #FFF; }
-        .bounce-arrow { animation: bounce-y 2s infinite; }
-
-        @keyframes bounce-y {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(5px); }
-        }
-
-        /* ── Dossier Section ── */
-        .dossier-section {
-          position: relative; z-index: 10;
-          padding: 100px 40px;
-          background: linear-gradient(180deg, transparent, rgba(5,5,6,0.95) 200px);
-        }
 
 
         .kira-footer {
