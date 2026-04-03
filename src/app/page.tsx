@@ -92,16 +92,16 @@ export default function SatcorpHome() {
         />
       </div>
       <div className="hub-dim" />
-      <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.1) 0%, transparent 70%)', top: '10%', left: '20%', position: 'fixed' }} />
-      <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)', bottom: '10%', right: '10%', position: 'fixed' }} />
+      <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.12) 0%, rgba(0,255,65,0.06) 30%, rgba(0,255,65,0.02) 60%, transparent 80%)', top: '-10%', left: '-10%', position: 'fixed' }} />
+      <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(6,182,212,0.05) 30%, rgba(6,182,212,0.02) 60%, transparent 80%)', bottom: '-20%', right: '-10%', position: 'fixed' }} />
 
       {/* ─── BANNER HEADER ─── */}
       <div className="banner-header">
         <Image 
           src="/004cc.PNG" 
           alt="SATCORP Banner" 
-          width={1024} 
-          height={1024} 
+          width={800} 
+          height={270} 
           priority 
           className="banner-img"
         />
@@ -204,19 +204,19 @@ export default function SatcorpHome() {
           margin: 0 auto;
           display: flex;
           justify-content: center;
-          animation: fade-in 1s ease-out;
-          padding: 0 10px; 
-          max-height: 320px; /* Refined for better vertical density */
-          overflow: hidden;
+          animation: fade-in 1.2s cubic-bezier(0.2, 0, 0.2, 1);
+          padding: 0 40px; 
+          max-height: 280px; 
+          margin-top: 20px;
+          overflow: visible; /* Let the shadow spill naturally */
         }
         .banner-img {
-          width: auto;
-          height: 100%;
-          max-height: 300px; 
-          max-width: 100%;
+          width: 100%;
+          height: auto;
+          max-width: 800px; 
           display: block;
           object-fit: contain;
-          filter: drop-shadow(0 0 30px rgba(0,255,65,0.15));
+          filter: drop-shadow(0 0 40px rgba(0,255,65,0.2));
         }
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(-10px); }

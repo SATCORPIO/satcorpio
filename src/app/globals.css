@@ -94,13 +94,16 @@ body {
 /* Cinematic lighting flares (Volumetric effects) */
 .volumetric-flare {
   position: absolute;
-  width: 60vw;
-  height: 60vh;
+  width: 80vw;
+  height: 80vh;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(120px);
   z-index: 0;
   mix-blend-mode: screen;
+  /* Refined multi-stop transparency for ultra-smooth falloff without relying on heavy blur */
+  opacity: 0.8;
+  filter: blur(80px);
+  will-change: transform, opacity;
 }
 
 /* Chromatic Aberration Text */
