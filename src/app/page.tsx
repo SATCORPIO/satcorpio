@@ -83,7 +83,13 @@ export default function SatcorpHome() {
     <main className="home film-grain">
       {/* ─── Volumetric Background (Fixed for parallax illusion) ─── */}
       <div className="hub-bg">
-        <Image src="/globe_tactical.png" alt="Tactical Globe" fill priority style={{ objectFit: 'cover', opacity: 0.6 }} />
+        <Image 
+          src="/globe_tactical.png" 
+          alt="Tactical Globe" 
+          fill 
+          priority 
+          style={{ objectFit: 'contain', opacity: 0.6 }} 
+        />
       </div>
       <div className="hub-dim" />
       <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.1) 0%, transparent 70%)', top: '10%', left: '20%', position: 'fixed' }} />
@@ -92,23 +98,18 @@ export default function SatcorpHome() {
       {/* ─── BANNER HEADER ─── */}
       <div className="banner-header">
         <Image 
-          src="/004.png" 
+          src="/004cc.PNG" 
           alt="SATCORP Banner" 
-          width={1400} 
-          height={380} 
+          width={1024} 
+          height={1024} 
           priority 
           className="banner-img"
-          style={{ 
-            width: '100%',
-            height: 'auto',
-            display: 'block'
-          }}
         />
       </div>
 
 
       {/* ─── Spatial Hub (Viewport 1) ─── */}
-      <section className="spatial-hub" style={{ minHeight: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
+      <section className="spatial-hub" style={{ minHeight: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
 
 
         {/* ─── Floating Cards 3D Wheel ─── */}
@@ -204,11 +205,17 @@ export default function SatcorpHome() {
           display: flex;
           justify-content: center;
           animation: fade-in 1s ease-out;
-          padding: 0 10px; /* Slight padding for mobile */
+          padding: 0 10px; 
+          max-height: 320px; /* Refined for better vertical density */
+          overflow: hidden;
         }
         .banner-img {
-          width: 100%;
-          height: auto;
+          width: auto;
+          height: 100%;
+          max-height: 300px; 
+          max-width: 100%;
+          display: block;
+          object-fit: contain;
           filter: drop-shadow(0 0 30px rgba(0,255,65,0.15));
         }
         @keyframes fade-in {
