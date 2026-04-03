@@ -231,6 +231,45 @@ body {
 .wheel-container:active {
   cursor: grabbing;
 }
+/* Navigation Arrows */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  color: var(--c2-green);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
+}
+.nav-arrow:hover {
+  background: rgba(0, 255, 65, 0.1);
+  border-color: var(--c2-green);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+.nav-arrow.prev { left: 40px; }
+.nav-arrow.next { right: 40px; }
+
+.wheel-container:hover .nav-arrow {
+  opacity: 0.5;
+  pointer-events: auto;
+}
+.wheel-container:hover .nav-arrow:hover {
+  opacity: 1;
+}
+
 .wheel-track {
   display: flex;
   gap: 40px;

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown } from "lucide-react";
-import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
 import Image from "next/image";
 
 import { TacticalHeader } from "@/components/shared/TacticalHeader";
@@ -18,8 +18,8 @@ export default function SatcorpHome() {
   const trackRef = useRef<HTMLDivElement>(null);
   
   // Base speed for auto-scroll (px per frame at 60fps)
-  // Higher = faster. 3.5 provides a very snappy tech feel.
-  const baseSpeed = 3.5; 
+  // Low value (0.8) for smooth cinematic glide. 
+  const baseSpeed = 0.8; 
 
   useAnimationFrame((t, delta) => {
     if (isPaused || !trackRef.current) return;
@@ -37,6 +37,40 @@ export default function SatcorpHome() {
     }
     x.set(nextX);
   });
+
+  const handlePrev = () => {
+    if (!trackRef.current) return;
+    setIsPaused(true);
+    const halfWidth = trackRef.current.scrollWidth / 2;
+    const currentX = x.get();
+    animate(x, currentX + 380, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      onComplete: () => {
+        setIsPaused(false);
+        const newX = x.get();
+        x.set(((newX % halfWidth) - halfWidth) % halfWidth);
+      }
+    });
+  };
+
+  const handleNext = () => {
+    if (!trackRef.current) return;
+    setIsPaused(true);
+    const halfWidth = trackRef.current.scrollWidth / 2;
+    const currentX = x.get();
+    animate(x, currentX - 380, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      onComplete: () => {
+        setIsPaused(false);
+        const newX = x.get();
+        x.set(((newX % halfWidth) - halfWidth) % halfWidth);
+      }
+    });
+  };
 
   const scrollToDossier = () => {
     document.getElementById('dossier')?.scrollIntoView({ behavior: 'smooth' });
@@ -61,6 +95,13 @@ export default function SatcorpHome() {
 
         {/* ─── Floating Cards 3D Wheel ─── */}
         <div className="wheel-container">
+          <button className="nav-arrow prev" onClick={handlePrev} aria-label="Previous card">
+            <ChevronLeft size={28} />
+          </button>
+          <button className="nav-arrow next" onClick={handleNext} aria-label="Next card">
+            <ChevronRight size={28} />
+          </button>
+          
           <motion.div 
             className="wheel-track" 
             ref={trackRef}
