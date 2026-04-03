@@ -7,6 +7,7 @@ interface ClientContextType {
   audioReady: boolean;
   playHover: () => void;
   playClick: () => void;
+  playUplink: () => void;
   registerVisit: (sectionId: string) => void;
   getInsights: () => { [key: string]: number };
 }
@@ -15,6 +16,7 @@ const ClientContext = createContext<ClientContextType>({
   audioReady: false,
   playHover: () => {},
   playClick: () => {},
+  playUplink: () => {},
   registerVisit: () => {},
   getInsights: () => ({}),
 });
@@ -72,6 +74,9 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
       playHover: () => audioReady && AudioEngine.playHover(),
       playClick: () => {
         if(audioReady) AudioEngine.playClick();
+      },
+      playUplink: () => {
+        if(audioReady) AudioEngine.playUplink();
       },
       registerVisit,
       getInsights,

@@ -130,6 +130,10 @@ export default function DysunPage() {
                 <Play size={14} /> MOD OVERVIEW
               </button>
               
+              <Link href="/namtarsurvey" className="cta-secondary spatial-panel" style={{ color: "var(--c2-amber)", borderColor: "rgba(245, 158, 11, 0.3)" }}>
+                <Activity size={14} /> CALIBRATION SURVEY
+              </Link>
+              
               <DiscordButton 
                 href="https://discord.gg/R9Axsm7JfN"
                 variant="red"

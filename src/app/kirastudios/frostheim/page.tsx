@@ -129,6 +129,10 @@ export default function FrostheimPage() {
                 <Play size={14} /> VIEW ARCHIVE FOOTAGE
               </button>
               
+              <Link href="/namtarsurvey" className="cta-secondary spatial-panel" style={{ color: "var(--c2-cyan)", borderColor: "rgba(147, 197, 253, 0.3)" }}>
+                <Snowflake size={14} /> CALIBRATION SURVEY
+              </Link>
+              
               <DiscordButton 
                 href="https://discord.gg/R9Axsm7JfN"
                 variant="blue"

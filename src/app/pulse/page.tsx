@@ -126,17 +126,15 @@ export default function PulsePage() {
             className="hero-header"
             style={{ perspective: 1000 }}
           >
-            <div className="badge spatial-panel cyber-border">
-              <span className="cyan-blink" /> BROADCAST PROTOCOLS
-            </div>
+            <p className="subtitle">ELITE BROADCAST ARCHITECTURE & LIVE OPERATIONS</p>
             <Image
               src="/file_000000006e7061faa7eeea560cc41296.png"
               alt="PULSE"
-              width={400}
-              height={120}
+              width={800}
+              height={240}
+              className="hero-logo"
               style={{ objectFit: 'contain', filter: 'drop-shadow(0 0 40px rgba(34, 211, 238, 0.4))' }}
             />
-            <p className="subtitle">ELITE BROADCAST ARCHITECTURE & LIVE OPERATIONS</p>
           </motion.div>
 
           <motion.p 
@@ -293,8 +291,17 @@ export default function PulsePage() {
         }
 
         .subtitle {
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 8px;
-          color: rgba(34, 211, 238, 0.7);
+          font-family: var(--font-mono); font-size: 14px; letter-spacing: 8px;
+          color: rgba(34, 211, 238, 0.9);
+          margin-bottom: 8px;
+          text-transform: uppercase;
+        }
+
+        .hero-logo {
+          max-width: 800px;
+          width: 90%;
+          height: auto;
+          filter: drop-shadow(0 0 50px rgba(34, 211, 238, 0.3));
         }
 
         .desc {
@@ -384,8 +391,8 @@ export default function PulsePage() {
         @media (max-width: 768px) {
           .services-grid { grid-template-columns: 1fr; gap: 16px; }
           .bento-grid { grid-template-columns: 1fr; }
-          .title { font-size: 52px; letter-spacing: 8px; }
-          .subtitle { font-size: 9px; letter-spacing: 5px; }
+          .subtitle { font-size: 10px; letter-spacing: 4px; margin-bottom: 12px; }
+          .hero-logo { width: 100%; max-width: 500px; }
           .pulse-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
           .hero { padding: 60px 16px 40px; }
           .pulse-nav { padding: 16px; }

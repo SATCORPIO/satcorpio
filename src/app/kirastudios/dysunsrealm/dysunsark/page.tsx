@@ -119,6 +119,9 @@ export default function DysunsArkPage() {
               </p>
               <div className="ad-cta">
                 <button className="btn-tactical amber-btn">REGISTER FOR UPDATES</button>
+                <Link href="/namtarsurvey" className="btn-tactical amber-btn" style={{ textDecoration: 'none' }}>
+                  SURVIVOR SURVEY
+                </Link>
                 <div className="eta">ETA: Q4 2026</div>
               </div>
             </div>

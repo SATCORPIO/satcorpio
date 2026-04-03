@@ -1,16 +1,17 @@
 import * as Tone from 'tone';
 
 let isInitialized = false;
-const GLOBAL_MUTE = true; // Set to true to disable all sounds globally
+let globalMute = false; // System-wide mute control
 
 let ambientSynth: Tone.NoiseSynth | null = null;
 let clickSynth: Tone.MembraneSynth | null = null;
 let hoverSynth: Tone.MetalSynth | null = null;
+let uplinkSynth: Tone.PolySynth | null = null;
 let filter: Tone.Filter | null = null;
 
 export const AudioEngine = {
   async init() {
-    if (isInitialized || GLOBAL_MUTE) return;
+    if (isInitialized || globalMute) return;
     
     await Tone.start();
     console.log("Audio Context Started");
@@ -74,11 +75,29 @@ export const AudioEngine = {
       volume: -10
     }).connect(reverb);
 
+    // Mechanical Uplink Sound
+    uplinkSynth = new Tone.PolySynth(Tone.Synth, {
+      oscillator: { type: "square" },
+      envelope: {
+        attack: 0.01,
+        decay: 0.1,
+        sustain: 0.3,
+        release: 1,
+      },
+      volume: -15
+    }).connect(reverb);
+
     isInitialized = true;
   },
 
+  setMute(mute: boolean) {
+    globalMute = mute;
+    if (mute) this.stopHum();
+    else this.startHum();
+  },
+
   startHum() {
-    if (!isInitialized || !ambientSynth) return;
+    if (!isInitialized || !ambientSynth || globalMute) return;
     ambientSynth.triggerAttack();
   },
 
@@ -88,12 +107,19 @@ export const AudioEngine = {
   },
 
   playHover() {
-    if (!isInitialized || !hoverSynth) return;
+    if (!isInitialized || !hoverSynth || globalMute) return;
     hoverSynth.triggerAttackRelease("32n", Tone.now());
   },
 
   playClick() {
-    if (!isInitialized || !clickSynth) return;
+    if (!isInitialized || !clickSynth || globalMute) return;
     clickSynth.triggerAttackRelease("C2", "8n");
+  },
+
+  playUplink() {
+    if (!isInitialized || !uplinkSynth || globalMute) return;
+    const now = Tone.now();
+    uplinkSynth.triggerAttackRelease(["C4", "E4", "G4"], "16n", now);
+    uplinkSynth.triggerAttackRelease(["C5", "E5", "G5"], "16n", now + 0.1);
   }
 };
