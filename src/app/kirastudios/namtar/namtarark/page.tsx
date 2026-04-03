@@ -2,482 +2,911 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { 
-  ChevronLeft, Server, Activity, Users, Shield, Cpu, Database, 
-  AlertCircle, MapPin, Radio, Wifi, Radiation, MessageSquare, 
-  Zap, Fingerprint, ExternalLink 
-} from "lucide-react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { DiscordButton } from "@/components/shared/DiscordButton";
+import { ChevronLeft } from "lucide-react";
 
-function RaidSimulation() {
-  const [raids, setRaids] = useState<{ id: string; target: string; intensity: number; attackers: number }[]>([]);
-
-  useEffect(() => {
-    const locations = ["SECTOR-7 SLUMS", "ABANDONED SILO", "CRATER LAKE", "RADIATION ZONE B", "RUINED OVERPASS"];
-    
-    const interval = setInterval(() => {
-      if (Math.random() > 0.7) {
-        setRaids(prev => {
-          const newRaid = {
-            id: `ACT-${Math.floor(Math.random() * 9000) + 1000}`,
-            target: locations[Math.floor(Math.random() * locations.length)],
-            intensity: Math.floor(Math.random() * 100),
-            attackers: Math.floor(Math.random() * 40) + 5
-          };
-          const next = [newRaid, ...prev].slice(0, 4);
-          return next;
-        });
-      }
-    }, 3000);
-
-    setRaids([
-      { id: "ACT-4021", target: "SECTOR-7 SLUMS", intensity: 84, attackers: 23 },
-      { id: "ACT-2199", target: "CRATER LAKE", intensity: 41, attackers: 8 }
-    ]);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="raid-sim">
-      <div className="sim-header">
-        <AlertCircle size={12} className="pulse-icon f-red" />
-        <span>ACTIVE RAID DETECTIONS</span>
-      </div>
-      <div className="raid-list">
-        {raids.map(r => (
-          <motion.div 
-            key={r.id} 
-            className="raid-item"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <div className="r-left">
-              <span className="r-id">{r.id}</span>
-              <span className="r-target">{r.target}</span>
-            </div>
-            <div className="r-right">
-              <span className="r-att"><Users size={10} style={{ display: "inline", marginRight: "4px" }} />{r.attackers} HOSTILES</span>
-              <div className="r-intensity-bar">
-                <div className="r-fill" style={{ width: `${r.intensity}%`, background: r.intensity > 70 ? "var(--c2-red)" : "var(--c2-amber)" }} />
-              </div>
-            </div>
-          </motion.div>
-        ))}
-        {raids.length === 0 && <div className="no-raids">NO ACTIVE RAIDS DETECTED</div>}
-      </div>
-
-       <style jsx>{`
-        .raid-sim { font-family: var(--font-mono); }
-        .sim-header { display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 2px; color: var(--c2-red); margin-bottom: 24px; font-weight: 700; }
-        .raid-list { display: flex; flex-direction: column; gap: 8px; }
-        .raid-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(239, 68, 68, 0.05); border-left: 2px solid var(--c2-red); border-radius: 0 4px 4px 0; }
-        .r-left { display: flex; flex-direction: column; gap: 4px; }
-        .r-id { font-size: 9px; color: rgba(239, 68, 68, 0.7); letter-spacing: 1px; }
-        .r-target { font-size: 11px; color: #FFF; font-weight: 700; letter-spacing: 1px; }
-        .r-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; width: 120px; }
-        .r-att { font-size: 9px; color: rgba(255, 255, 255, 0.4); }
-        .r-intensity-bar { width: 100%; height: 2px; background: rgba(0, 0, 0, 0.5); border-radius: 1px; overflow: hidden; }
-        .r-fill { height: 100%; transition: width 0.5s ease; }
-        .no-raids { font-size: 11px; color: rgba(255, 255, 255, 0.2); letter-spacing: 2px; text-align: center; padding: 20px; }
-        .f-red { color: var(--c2-red); }
-      `}</style>
-    </div>
-  );
-}
+const msgs = [
+  "Survivor detected. I'm KYRAX — SATCORP's AI interface. Your calibration data shapes the NAMTAR server. Choose carefully.",
+  "KYRAX note: The T-Rex outside is not currently a threat. Focus on the survey.",
+  "I've cross-referenced 4,731 ARK server configurations. Your preferences refine the optimal NAMTAR parameters.",
+  "KYRAX TIP: Multi-select questions allow more than one answer. Don't hold back.",
+  "Rain intensity correlating with server population demand. Coincidence? Probably. Finish the survey.",
+  "Detecting dino activity 3km north. Raptor pack, medium threat. You should probably wrap this up.",
+  "Long-term calibration requires full disclosure. Don't skip the open-response fields, Survivor.",
+  "Almost complete. The NAMTAR gates await your transmission.",
+];
 
 export default function NamtarArkPage() {
+  const [kyraxOn, setKyraxOn] = useState(true);
+  const [kyraxMsgIndex, setKyraxMsgIndex] = useState(0);
+  const [formData, setFormData] = useState<any>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitErr, setSubmitErr] = useState("");
+
+  useEffect(() => {
+    if (!kyraxOn) return;
+    const interval = setInterval(() => {
+      setKyraxMsgIndex((prev) => (prev + 1) % msgs.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [kyraxOn]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = e.target as HTMLInputElement;
+    const { name, value, type, checked } = target;
+
+    if (type === "checkbox") {
+      setFormData((prev: any) => {
+        const currentVals = prev[name] || [];
+        if (checked) {
+          return { ...prev, [name]: [...currentVals, value] };
+        } else {
+          return { ...prev, [name]: currentVals.filter((v: string) => v !== value) };
+        }
+      });
+    } else {
+      setFormData((prev: any) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleRating = (val: string) => {
+    setFormData((prev: any) => ({ ...prev, q25: val }));
+  };
+
+  // Progress logic
+  const checkFields = ['q1', 'q2', 'q3', 'q5', 'q8', 'q10', 'q11', 'q21', 'q25', 'q26'];
+  const filledCount = checkFields.filter(f => {
+    const val = formData[f];
+    if (Array.isArray(val)) return val.length > 0;
+    return !!val && String(val).trim() !== "";
+  }).length;
+  const progPct = Math.round((filledCount / checkFields.length) * 100);
+
+  const handleSubmit = async () => {
+    const hook = formData.webhookUrl?.trim();
+    if (!hook || !hook.startsWith('https://discord.com/api/webhooks/')) {
+        setSubmitErr('⚠ Please enter a valid Discord Webhook URL.');
+        return;
+    }
+    if (!formData.q1?.trim()) {
+        setSubmitErr('⚠ Survivor Name is required.');
+        return;
+    }
+
+    setSubmitErr("");
+    setIsSubmitting(true);
+
+    const payloadFields = [
+      { name: "Survivor Name", value: formData.q1 || "—" },
+      { name: "Platform", value: formData.q2 || "—" },
+      { name: "Play Time Per Week", value: formData.q3 || "—" },
+      { name: "Playstyle", value: (formData.q4 || []).join(", ") || "—" },
+      { name: "Server Mode", value: formData.q5 || "—" },
+      { name: "Offline Raid Protection", value: formData.q6 || "—" },
+      { name: "Wipe Schedule", value: formData.q7 || "—" },
+      { name: "Map Type", value: formData.q8 || "—" },
+      { name: "Cluster Maps", value: (formData.q8maps || []).join(", ") || "—" },
+      { name: "Custom Map", value: formData.q8custom || "—" },
+      { name: "Starting Map", value: formData.q9 || "—" },
+      { name: "Starting Map (other)", value: formData.q9otherval || "—" },
+      { name: "Harvest Rates", value: formData.q10 || "—" },
+      { name: "Harvest Rate Custom", value: formData.q10custval || "—" },
+      { name: "Taming Speed", value: formData.q11 || "—" },
+      { name: "Breeding", value: formData.q12 || "—" },
+      { name: "XP Rate", value: formData.q13 || "—" },
+      { name: "Imprint Settings", value: (formData.q14 || []).join(", ") || "—" },
+      { name: "Difficulty", value: formData.q15 || "—" },
+      { name: "QoL Features", value: (formData.q16 || []).join(", ") || "—" },
+      { name: "Mandatory QoL", value: formData.q16open || "—" },
+      { name: "Mod Load", value: formData.q17 || "—" },
+      { name: "Mod Categories", value: (formData.q18 || []).join(", ") || "—" },
+      { name: "Specific Mods", value: formData.q18mods || "—" },
+      { name: "Economy Participation", value: (formData.q19 || []).join(", ") || "—" },
+      { name: "World Design", value: (formData.q20 || []).join(", ") || "—" },
+      { name: "Community Size", value: formData.q21 || "—" },
+      { name: "Rule Strictness", value: formData.q22 || "—" },
+      { name: "Long-Term Retention", value: formData.q23 || "—" },
+      { name: "Server Exit Reasons", value: formData.q24 || "—" },
+      { name: "Interest Rating (1-10)", value: formData.q25 || "—" },
+      { name: "Join at Launch", value: formData.q26 || "—" },
+      { name: "Final Notes", value: formData.q27 || "—" },
+      { name: "Elite Experience", value: (formData.q28 || []).join(", ") || "—" },
+    ];
+
+    const fieldsData = payloadFields.map(f => ({
+        name: `▸ ${f.name}`, 
+        value: String(f.value).slice(0, 1024) || "—", 
+        inline: false
+    }));
+
+    const chunks = [];
+    for (let i = 0; i < fieldsData.length; i += 20) {
+        chunks.push(fieldsData.slice(i, i + 20));
+    }
+
+    const payloads = chunks.map((ch, idx) => ({
+      username: 'KYRAX // SATCORP AI',
+      embeds: [{
+        title: idx === 0 ? '🦖 NAMTAR — SURVIVOR CALIBRATION SURVEY' : `🦖 NAMTAR SURVEY — PART ${idx + 1}`,
+        description: idx === 0
+          ? `**Survivor:** ${formData.q1}\n**Platform:** ${formData.q2 || "—"}\n*Transmission via KYRAX — SATCORP AI*\n───────────────`
+          : `*Continued — Part ${idx + 1}*`,
+        color: 0xFF6B1A,
+        fields: ch,
+        footer: { text: `Ki-Ra Studios • NAMTAR Calibration • ${new Date().toUTCString()}` }
+      }]
+    }));
+
+    let ok = true;
+    for (const p of payloads) {
+      try {
+        const r = await fetch(hook, {
+            method: 'POST', 
+            headers: { 'Content-Type': 'application/json' }, 
+            body: JSON.stringify(p)
+        });
+        if (!r.ok) ok = false;
+      } catch (e) {
+        ok = false;
+      }
+    }
+
+    setIsSubmitting(false);
+    if (ok) {
+        setIsSubmitted(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        setSubmitErr('⚠ Transmission failed. Verify your webhook URL and try again.');
+    }
+  };
+
   return (
-    <main className="namtar-ark film-grain">
-      {/* Immersive Background */}
-      <div className="telemetry-bg">
+    <main className="namtar-ark">
+      {/* Background */}
+      <div className="world-bg">
         <Image 
-          src="/namtar_survival.png" 
-          alt="Namtar Survival Protocol" 
+          src="/namtar_trex_survival.png" 
+          alt="Namtar Trex Background" 
           fill 
           priority 
           className="bg-image"
-          style={{ objectFit: "cover", filter: "brightness(0.5) contrast(1.2)" }}
+          style={{ objectFit: "cover", objectPosition: "center top", filter: "brightness(0.65) contrast(1.1)" }}
         />
-        <div className="radial-glow" />
-        <div className="noise-overlay" />
+        <div className="scanlines"></div>
       </div>
 
+      {/* Nav */}
       <nav className="tactical-nav">
-        <Link href="/kirastudios/namtar" className="nav-btn spatial-panel">
-          <ChevronLeft size={14} /> <span className="btn-text">NAMTAR SURVIVAL HQ</span>
+        <Link href="/kirastudios/namtar" className="nav-btn panel">
+          <ChevronLeft size={14} /> <span>NAMTAR HQ</span>
         </Link>
       </nav>
 
-      <div className="hub-container">
-        <header className="hub-header spatial-panel">
-          <div className="badge-neural">
-            <Server size={10} className="pulse-icon f-cyan" /> 
-            <span className="badge-text">INFRASTRUCTURE LAYER // ASA_HOSTING</span>
+      {/* Kyrax Wrap */}
+      <div className="kyrax-wrap">
+        {kyraxOn && (
+          <div className="kyrax-card">
+            <span id="kyraxText" key={kyraxMsgIndex} className="fade-in-text">
+              {msgs[kyraxMsgIndex]}
+            </span>
           </div>
-          
-          <div className="header-titles">
-            <div className="status-badge">RESERVE_STATUS: ACTIVE</div>
-            <h1 className="title">NAMTAR CLUSTER</h1>
-            <p className="subtitle">ASA DEDICATED HOSTING // COMING SOON</p>
-          </div>
-
-          <div className="status-indicator">
-            <Shield size={16} className="active-icon" />
-            <div className="status-text">
-              <span className="st-main">DDOS SHIELD ACTIVE</span>
-              <span className="st-sub">Traffic securely routed through SATCORP</span>
-            </div>
-          </div>
-          
-          <DiscordButton 
-            href="https://discord.gg/mypZpPsPeb"
-            variant="amber"
-            label="NAMTAR ARK DISCORD"
-          />
-        </header>
-
-        <div className="dashboard-grid">
-          {/* ADVERTISEMENT PANEL */}
-          <div className="ad-box spatial-panel">
-            <div className="ad-content">
-              <div className="ad-header">
-                <Radio size={14} className="f-cyan" />
-                <span className="ad-tag">DEPLOYMENT NOTICE</span>
-              </div>
-              <h2 className="ad-title">HIGH-PERFORMANCE ASA SERVERS</h2>
-              <p className="ad-desc">
-                The Namtar Ark cluster is currently undergoing stress testing. 
-                Dedicated 128hz tick-rate hosting with extreme survival parameters.
-              </p>
-              <div className="ad-cta">
-                <button className="btn-tactical">NOTIFY ON DEPLOYMENT</button>
-                <div className="eta">ESTIMATED ETA: Q3 2026</div>
-              </div>
-            </div>
-             <div className="ad-visual">
-                <Cpu size={80} className="f-cyan-o" />
-                <div className="data-pips">
-                   <div className="pip" />
-                   <div className="pip" />
-                   <div className="pip" />
-                </div>
-             </div>
-          </div>
-
-          {/* Main Server Specs */}
-          <div className="main-specs spatial-panel">
-            <h3 className="panel-title"><Cpu size={14} /> PROJECTED HARDWARE METRICS</h3>
-            <div className="spec-readouts">
-              <div className="s-readout">
-                <Cpu size={24} className="sr-icon" />
-                <div className="sr-data">
-                  <span className="sr-val">128hz</span>
-                  <span className="sr-lbl">TICK RATE</span>
-                </div>
-              </div>
-              <div className="s-sep" />
-              <div className="s-readout">
-                <Database size={24} className="sr-icon" />
-                <div className="sr-data">
-                  <span className="sr-val">NVME GEN5</span>
-                  <span className="sr-lbl">STORAGE LAYER</span>
-                </div>
-              </div>
-              <div className="s-sep" />
-              <div className="s-readout">
-                <Wifi size={24} className="sr-icon" />
-                <div className="sr-data">
-                  <span className="sr-val">ASA</span>
-                  <span className="sr-lbl">CROSS-PLAY</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Map Radiation Zones - Specific to Namtar */}
-          <div className="radiations-panel spatial-panel">
-            <h3 className="panel-title"><Radiation size={14} /> TOXICITY ZONES // LIVE DATA</h3>
-            <div className="zone-grid">
-              {[
-                { name: "CRATER ZERO", rad: "7.4 THz", cap: "LETHAL", color: "var(--c2-red)" },
-                { name: "WASTELAND EDGE", rad: "1.2 THz", cap: "WARNING", color: "var(--c2-amber)" },
-                { name: "UNDERGROUND BUNKER", rad: "0.1 THz", cap: "SAFE", color: "var(--c2-green)" }
-              ].map(z => (
-                <div key={z.name} className="zone-card">
-                  <MapPin size={12} style={{ color: z.color }} />
-                  <div className="z-info">
-                    <span className="z-name">{z.name}</span>
-                    <span className="z-rad">{z.rad}</span>
-                  </div>
-                  <span className="z-cap" style={{ color: z.color }}>{z.cap}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RAID SIMULATION */}
-          <div className="raid-panel spatial-panel">
-            <RaidSimulation />
-          </div>
-
-          {/* Cross-play Nodes */}
-          <div className="nodes-panel spatial-panel">
-            <h3 className="panel-title"><Wifi size={14} /> NETWORK BACKBONE</h3>
-            <div className="node-list">
-              <div className="node-item">
-                <div className="node-icon online" />
-                <span className="ni-name">STEAM GLOBAL</span>
-                <span className="ni-ping">4ms</span>
-              </div>
-              <div className="node-item">
-                <div className="node-icon online" />
-                <span className="ni-name">XBOX NETWORK</span>
-                <span className="ni-ping">12ms</span>
-              </div>
-              <div className="node-item">
-                <div className="node-icon online" />
-                <span className="ni-name">PSN GATEWAY</span>
-                <span className="ni-ping">18ms</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* System Info */}
-          <div className="system-panel spatial-panel">
-            <h3 className="panel-title"><Fingerprint size={14} /> COMMANDER AUTH</h3>
-             <div className="sys-items">
-                <div className="sys-item">
-                    <span className="si-lbl">ENCRYPTION</span>
-                    <span className="si-val f-cyan">AES-256</span>
-                </div>
-                <div className="sys-item">
-                    <span className="si-lbl">VERSION</span>
-                    <span className="si-val">NMT_v4.2.1</span>
-                </div>
-                <div className="sys-item">
-                    <Link href="/kirastudios/namtar" className="si-link">
-                        VIEW BRIEFING <ExternalLink size={10} />
-                    </Link>
-                </div>
-             </div>
-          </div>
-
+        )}
+        <div className="kyrax-orb" onClick={() => setKyraxOn(!kyraxOn)} title="Toggle KYRAX">
+          <div className="orb-ring" style={{ animationDelay: "0s" }}></div>
+          <div className="orb-ring" style={{ animationDelay: "0.7s" }}></div>
+          <div className="orb-ring" style={{ animationDelay: "1.4s" }}></div>
+          <div className="orb-core">🤖</div>
         </div>
       </div>
 
-      <footer className="namtar-footer spatial-panel">
-        <div className="f-inner">
-           <span>NAMTAR © {new Date().getFullYear()} — INFRASTRUCTURE ARCHIVE</span>
-           <span className="separator">//</span>
-           <span className="f-cyan">SYSTEM MONITORING ACTIVE</span>
-        </div>
-      </footer>
+      {/* Progress HUD */}
+      {!isSubmitted && (
+         <div className="hud-top">
+            <div className="hud-logo">KI-RA STUDIOS ◆ NAMTAR</div>
+            <div className="hud-progress-wrap">
+                <div className="hud-progress-label">
+                    <span>CALIBRATION PROGRESS</span>
+                    <span>{progPct}%</span>
+                </div>
+                <div className="hud-bar-track">
+                    <div className="hud-bar-fill" style={{ width: \`\${progPct}%\` }}></div>
+                </div>
+            </div>
+         </div>
+      )}
 
-      <style jsx>{`
+      <div className="page-wrap">
+        {!isSubmitted ? (
+          <div className="survey-container">
+            <header className="site-header">
+                <div className="studio-tag">⬡ Ki-Ra Studios ⬡ SatCorp Systems ⬡</div>
+                <div className="main-title">NAMTAR</div>
+                <div className="sub-game">ARK: Survival Ascended</div>
+                <div className="title-rule"><div className="title-rule-gem">◆</div></div>
+                <div className="survey-label">Survivor Registration &amp; Server Calibration Survey</div>
+            </header>
+
+            <div className="webhook-box">
+                <label>⚙ DISCORD WEBHOOK URL — REQUIRED FOR SUBMISSION</label>
+                <input 
+                  type="url" 
+                  className="ark-input" 
+                  name="webhookUrl"
+                  placeholder="https://discord.com/api/webhooks/..." 
+                  onChange={handleChange}
+                />
+                <small>Paste your Discord channel webhook URL. Every answer will be transmitted directly to that channel upon submission.</small>
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+              {/* SEC 1 */}
+              <div className="panel">
+                <div className="corner-br"></div>
+                <div className="rivets"><div className="rivet"/><div className="rivet"/><div className="rivet"/></div>
+                <div className="sec-head">
+                    <span className="sec-num">[ SECTION I ]</span>
+                    <span className="sec-title">Survivor Profile</span>
+                    <div className="sec-line"></div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">1. Survivor Name (Gamertag) <em>required</em></label>
+                    <input type="text" className="ark-input" name="q1" placeholder="Enter your gamertag..." onChange={handleChange} required />
+                </div>
+                <div className="q-block">
+                    <label className="q-label">2. Platform <em>select one</em></label>
+                    <div className="opts cols2">
+                        {['PC (Steam)', 'Xbox', 'PlayStation'].map(val => (
+                            <label className="opt" key={val}>
+                                <input type="radio" name="q2" value={val} onChange={handleChange} /> {val}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">3. Average Play Time Per Week <em>select one</em></label>
+                    <div className="opts cols2">
+                        {['1–5 hrs', '5–15 hrs', '15–30 hrs', '30+ hrs'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q3" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">4. Playstyle <em>select all that apply</em></label>
+                    <div className="opts">
+                        {['Solo', 'Small Tribe (2–5)', 'Large Tribe (6+)', 'PvE', 'PvP', 'Breeder', 'Explorer', 'Hybrid'].map(val => (
+                             <label className="opt" key={val}><input type="checkbox" name="q4" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+              </div>
+
+              {/* SEC 2 */}
+              <div className="panel">
+                <div className="corner-br"></div>
+                <div className="rivets"><div className="rivet"/><div className="rivet"/><div className="rivet"/></div>
+                <div className="sec-head">
+                    <span className="sec-num">[ SECTION II ]</span>
+                    <span className="sec-title">Server Type Preference</span>
+                    <div className="sec-line"></div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">5. Server Mode Preference <em>select one</em></label>
+                    <div className="opts">
+                        {['PvE', 'PvP', 'PvPvE Zones', 'Seasonal Wipe PvP', 'Long-Term Persistent'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q5" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                {['PvP', 'PvPvE Zones', 'Seasonal Wipe PvP'].includes(formData.q5) && (
+                   <>
+                    <div className="q-block Sub">
+                        <label className="q-label">6. Offline Raid Protection (ORP)? <em>if PvP</em></label>
+                        <div className="opts">
+                            {['None', '1 hour offline', '4 hours', '12 hours', '24 hours'].map(val => (
+                                <label className="opt" key={val}><input type="radio" name="q6" value={val} onChange={handleChange}/> {val}</label>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="q-block Sub">
+                        <label className="q-label">7. Wipe Schedule Preference <em>if PvP</em></label>
+                        <div className="opts">
+                            {['No Wipes', '3 Months', '6 Months', '1 Year', 'Seasonal Campaign Format'].map(val => (
+                                <label className="opt" key={val}><input type="radio" name="q7" value={val} onChange={handleChange}/> {val}</label>
+                            ))}
+                        </div>
+                    </div>
+                   </>
+                )}
+                
+                <div className="q-block">
+                    <label className="q-label">8. Single map or cluster? <em>select one</em></label>
+                    <div className="opts cols1">
+                        <label className="opt"><input type="radio" name="q8" value="Single map" onChange={handleChange}/> Single map (one world, easier)</label>
+                        <label className="opt"><input type="radio" name="q8" value="Cluster" onChange={handleChange}/> Cluster (multiple maps, transfers allowed)</label>
+                    </div>
+                    {formData.q8 === 'Cluster' && (
+                        <div className="sub-q show">
+                            <label className="q-label" style={{ fontSize: '12px' }}>Which maps to include?</label>
+                            <div className="opts">
+                                {['The Island', 'Scorched Earth', 'Aberration', 'Extinction', 'The Center', 'Ragnarok', 'Custom mod map'].map(val => (
+                                    <label className="opt" key={val}><input type="checkbox" name="q8maps" value={val} onChange={handleChange}/> {val}</label>
+                                ))}
+                            </div>
+                            <div style={{ marginTop: '12px' }}>
+                                <input type="text" className="ark-input" name="q8custom" placeholder="Suggest custom map..." onChange={handleChange}/>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="q-block">
+                    <label className="q-label">9. Preferred Starting Map</label>
+                    <div className="opts">
+                        {['The Island', 'Scorched Earth', 'The Center', 'Other'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q9" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                    {formData.q9 === 'Other' && (
+                        <div className="sub-q show">
+                             <input type="text" className="ark-input" name="q9otherval" placeholder="Specify map..." onChange={handleChange}/>
+                        </div>
+                    )}
+                </div>
+              </div>
+
+              {/* SEC 3 */}
+              <div className="panel">
+                <div className="corner-br"></div>
+                <div className="rivets"><div className="rivet"/><div className="rivet"/><div className="rivet"/></div>
+                <div className="sec-head">
+                    <span className="sec-num">[ SECTION III ]</span>
+                    <span className="sec-title">Rate Preferences</span>
+                    <div className="sec-line"></div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">10. Harvest Rates</label>
+                    <div className="opts">
+                        {['Official (1x)', '2x', '3x', '5x', '10x', 'Custom'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q10" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                    {formData.q10 === 'Custom' && (
+                        <div className="sub-q show">
+                             <input type="text" className="ark-input" name="q10custval" placeholder="Specify..." onChange={handleChange}/>
+                        </div>
+                    )}
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">11. Taming Speed</label>
+                    <div className="opts">
+                        {['Official', '2x', '3x', '5x', '10x'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q11" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">12. Breeding</label>
+                    <div className="opts">
+                        {['Official', '5x', '10x', '20x', 'Fast but Balanced'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q12" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">13. XP Rate</label>
+                    <div className="opts">
+                        {['Official', '2x', '3x', '5x', 'Fast Progression'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q13" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">14. Imprint Settings Preference</label>
+                    <div className="opts">
+                        {['Full imprint achievable solo', 'Fast maturation'].map(val => (
+                             <label className="opt" key={val}><input type="checkbox" name="q14" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">15. Difficulty (Wild Dino Levels)</label>
+                    <div className="opts">
+                        {['Official (150)', '180', '200+', 'Custom'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q15" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+              </div>
+
+               {/* SEC 4 */}
+              <div className="panel">
+                <div className="corner-br"></div>
+                <div className="rivets"><div className="rivet"/><div className="rivet"/><div className="rivet"/></div>
+                <div className="sec-head">
+                    <span className="sec-num">[ SECTION IV ]</span>
+                    <span className="sec-title">Quality of Life</span>
+                    <div className="sec-line"></div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">16. QoL Features</label>
+                    <div className="opts">
+                        {["Stack Size (larger stacks)", "Auto Engram Unlock", "Auto Learn Engrams Per Level", "Death Recovery Token", "Cryopods Adjusted", "Custom Drops", "Boosted Weight", "Offline Raid Protection (PvP)", "Structure Pickup Anytime", "Element Transfer Enabled", "Infinite Respecs", "Faster Crop Growth (5x+)", "No Diseases"].map(val => (
+                             <label className="opt" key={val}><input type="checkbox" name="q16" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">Mandatory QoL features for you? <em>open response</em></label>
+                    <textarea className="ark-input" name="q16open" placeholder="Type your response..." onChange={handleChange}></textarea>
+                </div>
+              </div>
+
+              {/* SEC 5, 6, 7, 8, 9 */}
+               <div className="panel">
+                <div className="corner-br"></div>
+                <div className="rivets"><div className="rivet"/><div className="rivet"/><div className="rivet"/></div>
+                <div className="sec-head">
+                    <span className="sec-num">[ SECTION V ]</span>
+                    <span className="sec-title">Mods & Systems</span>
+                    <div className="sec-line"></div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">17. Mod Load Preference</label>
+                    <div className="opts">
+                        {['Light Modded (5–10 mods)', 'Medium Modded (10–20 mods)', 'Heavily Modded (20+)', 'Vanilla+ (minimal changes)'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q17" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">18. Mod Interest Categories</label>
+                    <div className="opts">
+                        {['Building Expansion Mods', 'Dino Expansion Mods', 'Cosmetic Armor/Skins', 'Advanced Tek Mods', 'Automation Mods', 'Economy/Trading System', 'Custom Bosses', 'Map Additions'].map(val => (
+                             <label className="opt" key={val}><input type="checkbox" name="q18" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">19. Economy & Events Active Participation</label>
+                    <div className="opts">
+                        {['Player-driven economy', 'Server currency', 'Admin shop', 'Black Market events', 'Arena tournaments', 'Bounty system', 'Lore-based world events', 'Server-wide invasion events', 'Structured factions aligned with NAMTAR lore'].map(val => (
+                             <label className="opt" key={val}><input type="checkbox" name="q19" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <label className="q-label">21. Preferred Community Size</label>
+                    <div className="opts cols2">
+                        {['20–30 players', '~50 players', '100+ players'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q21" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                <div className="q-block">
+                    <textarea className="ark-input" name="q23" placeholder="What keeps you on a server long-term?" onChange={handleChange}></textarea>
+                </div>
+              </div>
+
+               {/* FINAL SEC */}
+               <div className="panel">
+                <div className="corner-br"></div>
+                <div className="rivets"><div className="rivet"/><div className="rivet"/><div className="rivet"/></div>
+                <div className="sec-head">
+                    <span className="sec-num">[ SECTION X ]</span>
+                    <span className="sec-title">Final Calibration</span>
+                    <div className="sec-line"></div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">25. Rate your interest in the NAMTAR Ark server <em>1–10</em></label>
+                    <div className="rating-row">
+                        {[1,2,3,4,5,6,7,8,9,10].map(v => (
+                             <button type="button" key={v} className={\`r-btn \${formData.q25 == v ? 'on' : ''}\`} onClick={() => handleRating(v.toString())}>{v}</button>
+                        ))}
+                    </div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">26. Would you join at launch?</label>
+                    <div className="opts cols2">
+                        {['Yes', 'Maybe', 'No'].map(val => (
+                             <label className="opt" key={val}><input type="radio" name="q26" value={val} onChange={handleChange}/> {val}</label>
+                        ))}
+                    </div>
+                </div>
+                 <div className="q-block">
+                    <label className="q-label">27. Final Transmission</label>
+                    <textarea className="ark-input" name="q27" placeholder="Anything else you want Ki-Ra Studios to know?" onChange={handleChange}></textarea>
+                </div>
+              </div>
+
+              {/* Submit */}
+              <div className="submit-zone">
+                {submitErr && <div className="err-msg show">{submitErr}</div>}
+                <button type="button" className={\`btn-submit \${isSubmitting ? 'loading' : ''}\`} onClick={handleSubmit}>
+                   {isSubmitting ? '⟳ TRANSMITTING...' : '▸ TRANSMIT CALIBRATION DATA ◂'}
+                </button>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div className="ty-wrap">
+              <div style={{ fontSize: "64px", marginBottom: "20px", filter: "drop-shadow(0 0 18px rgba(0,212,200,0.6))" }}>🦕</div>
+              <div className="ty-kira">KI-RA STUDIOS ⬡ NAMTAR</div>
+              <div className="ty-title">NAMTAR</div>
+              <div className="ty-sub">ARK: Survival Ascended</div>
+
+              <div className="ty-signal">⬡ SURVIVOR TRANSMISSION RECEIVED ⬡</div>
+
+              <div className="ty-body">
+                Thank you for completing our survey. Your input will be a great help to the
+                <strong style={{ color: "var(--ark-amber)" }}> Ki-Ra Studios </strong> team as we calibrate the upcoming
+                <strong style={{ color: "var(--ark-teal)" }}> NAMTAR server experience</strong>.
+              </div>
+
+              <div className="ty-box teal">
+                <div className="ty-box-title">YOUR VOICE DIRECTLY SHAPES</div>
+                <ul className="ty-list">
+                  <li>Server rates</li>
+                  <li>Mods &amp; world systems</li>
+                  <li>PvP / PvE balance</li>
+                  <li>Events &amp; long-term progression</li>
+                </ul>
+              </div>
+
+              <div className="sep"></div>
+
+              <div className="ty-box amber">
+                <div className="ty-box-title">🎁 SURVIVOR REWARD CONFIRMED</div>
+                <div style={{ fontSize: "13px", color: "var(--ark-text)", lineHeight: "1.7" }}>
+                  With the completion of this survey you will receive a complimentary
+                  <strong style={{ color: "var(--ark-amber)" }}> Starter Kit </strong> after launch.<br />
+                  Details will be announced inside the community channels prior to deployment.
+                </div>
+              </div>
+
+              <div className="sep"></div>
+
+              <div className="ty-box discord">
+                <div className="ty-box-title">📡 STAY CONNECTED — NAMTAR DISCORD</div>
+                <a href="https://discord.gg/mypZpPsPeb" target="_blank" rel="noreferrer" className="disc-btn">⬡ JOIN NAMTAR DISCORD</a>
+              </div>
+          </div>
+        )}
+      </div>
+
+      <style jsx global>{\`
         .namtar-ark {
-          --c2-cyan: #D97706;
-          --c2-green: #84CC16;
-          --c2-red: #EF4444;
-          --c2-amber: #F59E0B;
-          --bg-dark: #070605;
-          --surface-neural: #120e0a;
-          --glass-border: rgba(217, 119, 6, 0.15);
-
-          background: var(--bg-dark);
-          font-family: var(--font-body);
-          color: #F8FAFC;
-          min-height: 100vh;
-          position: relative;
-          padding-bottom: 60px;
-          overflow-x: hidden;
+            --ark-orange:  #FF6B1A;
+            --ark-amber:   #FFB830;
+            --ark-teal:    #00D4C8;
+            --ark-cyan:    #00FFFF;
+            --ark-dark:    #050A0F;
+            --ark-panel:   rgba(4,12,18,0.88);
+            --ark-border:  rgba(0,212,200,0.28);
+            --ark-text:    #C8E6EA;
+            --ark-muted:   #5A8A96;
+            --hlna-glow:   #7DF9FF;
+            --hlna-pink:   #FF6EC7;
+            --danger:      #FF3A3A;
+            --success:     #39FF14;
+            
+            background: #020B05;
+            color: var(--ark-text);
+            font-family: var(--font-body), sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .telemetry-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-        .radial-glow {
-          position: absolute; inset: 0;
-          background: radial-gradient(circle at 50% -20%, rgba(0, 168, 255, 0.1), transparent 70%);
+        .world-bg {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
         }
-        .grid-overlay {
-          position: absolute; inset: 0;
-          background-image: 
-            linear-gradient(rgba(0, 168, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 168, 255, 0.03) 1px, transparent 1px);
-          background-size: 40px 40px;
-        }
-        .noise-overlay {
-          position: absolute; inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-          opacity: 0.05;
+        
+        .scanlines {
+            position: absolute; inset: 0; z-index: 2; pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 3px,
+                rgba(0,180,160,0.02) 3px, rgba(0,180,160,0.02) 4px
+            );
         }
 
-        .tactical-nav { position: absolute; top: 24px; left: 32px; z-index: 200; }
+        .tactical-nav {
+            position: absolute; top: 24px; left: 32px; z-index: 200;
+        }
+        
         .nav-btn {
-          display: flex; align-items: center; gap: 12px;
-          padding: 10px 20px; text-decoration: none;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
-          color: rgba(255, 255, 255, 0.6); transition: all 300ms;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 20px; text-decoration: none;
+            font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6); transition: all 300ms;
         }
-        .nav-btn:hover { color: var(--c2-cyan); border-color: var(--c2-cyan); }
+        .nav-btn:hover { color: var(--ark-teal); border-color: var(--ark-teal); }
 
-        .spatial-panel {
-          background: var(--surface-neural);
-          border: 1px solid var(--glass-border);
-          border-radius: 4px;
-          backdrop-filter: blur(32px) saturate(1.8);
-          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        .hud-top {
+            position: sticky; top: 0; z-index: 50;
+            padding: 12px 32px;
+            background: rgba(2,8,5,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,200,150,0.15);
+            display: flex; align-items: center; gap: 16px;
         }
-
-        .hub-container {
-          position: relative; z-index: 10;
-          max-width: 1300px; margin: 0 auto;
-          padding: 100px 32px 40px;
+        .hud-logo {
+            font-family: 'Orbitron', var(--font-tactical), sans-serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: var(--ark-amber);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
-
-        .hub-header {
-          display: flex; align-items: center; justify-content: space-between;
-          padding: 32px 40px; margin-bottom: 24px;
+        .hud-progress-wrap { flex: 1; }
+        .hud-progress-label {
+            display: flex; justify-content: space-between;
+            font-family: var(--font-mono), monospace;
+            font-size: 9px; color: var(--ark-muted);
+            letter-spacing: 1px; margin-bottom: 4px;
         }
-
-        .badge-neural {
-          display: flex; align-items: center; gap: 12px;
-          padding: 8px 16px; background: rgba(0, 168, 255, 0.05);
-          border: 1px solid rgba(0, 168, 255, 0.1); border-radius: 2px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--c2-cyan);
+        .hud-bar-track {
+            height: 3px;
+            background: rgba(0,212,200,0.1);
+            border-radius: 2px; overflow: hidden;
         }
-        .f-cyan { color: var(--c2-cyan); }
-
-        .header-titles { text-align: center; }
-        .status-badge { 
-          font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; 
-          color: var(--c2-green); margin-bottom: 8px;
+        .hud-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00A896, var(--ark-teal), var(--ark-amber));
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.23,1,0.32,1);
+            position: relative;
         }
-        .title {
-          font-family: var(--font-tactical); font-size: 42px;
-          font-weight: 800; letter-spacing: 4px; color: #FFF; line-height: 1; margin-bottom: 12px;
-          text-shadow: 0 0 30px rgba(0, 168, 255, 0.3);
-        }
-        .subtitle { font-family: var(--font-mono); font-size: 11px; letter-spacing: 4px; color: rgba(255, 255, 255, 0.4); }
-
-        .status-indicator { display: flex; align-items: center; gap: 16px; }
-        .active-icon { color: var(--c2-green); filter: drop-shadow(0 0 10px var(--c2-green)); }
-        .status-text { display: flex; flex-direction: column; gap: 2px; }
-        .st-main { font-family: var(--font-tactical); font-size: 12px; font-weight: 700; color: var(--c2-green); letter-spacing: 1px; }
-        .st-sub { font-size: 9px; letter-spacing: 1px; color: rgba(255, 255, 255, 0.3); }
-
-        /* ── Discord Button Component Handles Styling ── */
-
-        .dashboard-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 24px;
+        .hud-bar-fill::after {
+            content: '';
+            position: absolute; right: 0; top: -2px;
+            width: 6px; height: 7px;
+            background: var(--ark-amber);
+            border-radius: 1px;
+            box-shadow: 0 0 6px var(--ark-amber);
         }
 
-        .panel-title {
-          display: flex; align-items: center; gap: 12px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4);
-          padding-bottom: 20px; margin-bottom: 24px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .panel-title svg { color: var(--c2-cyan); }
-
-        /* Ad Box */
-        .ad-box { grid-column: span 2; padding: 48px; display: grid; grid-template-columns: 1fr 200px; gap: 40px; border-color: rgba(0, 168, 255, 0.2); }
-        .ad-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-        .ad-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; color: var(--c2-cyan); font-weight: 700; }
-        .ad-title { font-family: var(--font-tactical); font-size: 24px; font-weight: 800; letter-spacing: 2px; margin-bottom: 16px; color: #FFF; }
-        .ad-desc { font-size: 14px; line-height: 1.8; color: rgba(148, 163, 184, 0.6); margin-bottom: 32px; }
-        .ad-cta { display: flex; align-items: center; gap: 24px; }
-        .btn-tactical {
-          padding: 14px 28px; background: transparent; color: var(--c2-cyan);
-          border: 1px solid rgba(0, 168, 255, 0.3); border-radius: 2px;
-          font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          text-transform: uppercase; cursor: pointer; transition: all 300ms;
-        }
-        .btn-tactical:hover { background: rgba(0, 168, 255, 0.1); border-color: var(--c2-cyan); }
-        .eta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.2); }
-        .ad-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-        .f-cyan-o { color: var(--c2-cyan); opacity: 0.1; filter: blur(2px); }
-        .data-pips { display: flex; gap: 8px; margin-top: 24px; }
-        .pip { width: 6px; height: 6px; background: var(--c2-cyan); border-radius: 50%; animation: pulse-glow 2s infinite; }
-        .pip:nth-child(2) { animation-delay: 0.3s; }
-        .pip:nth-child(3) { animation-delay: 0.6s; }
-
-        /* Specs */
-        .main-specs { grid-column: span 1; padding: 32px; }
-        .spec-readouts { display: flex; flex-direction: column; gap: 24px; }
-        .s-readout { display: flex; align-items: center; gap: 20px; }
-        .sr-icon { color: var(--c2-cyan); opacity: 0.6; }
-        .sr-data { display: flex; flex-direction: column; }
-        .sr-val { font-family: var(--font-tactical); font-size: 20px; color: #FFF; font-weight: 700; }
-        .sr-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.3); }
-
-        /* Zones */
-        .radiations-panel { padding: 32px; }
-        .zone-grid { display: flex; flex-direction: column; gap: 16px; }
-        .zone-card {
-          display: flex; align-items: center; gap: 16px;
-          padding: 16px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 2px;
-        }
-        .z-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-        .z-name { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: #FFF; letter-spacing: 1px; }
-        .z-rad { font-family: var(--font-mono); font-size: 11px; color: rgba(255, 255, 255, 0.3); }
-        .z-cap { font-family: var(--font-tactical); font-size: 10px; font-weight: 700; text-align: right; min-width: 70px; }
-
-        /* Raid */
-        .raid-panel { grid-column: span 2; padding: 32px; }
-
-        /* Nodes */
-        .nodes-panel { padding: 32px; }
-        .node-list { display: flex; flex-direction: column; gap: 16px; }
-        .node-item { display: flex; align-items: center; gap: 16px; padding: 12px; background: rgba(255, 255, 255, 0.02); border-radius: 2px; }
-        .node-icon { width: 8px; height: 8px; border-radius: 50%; }
-        .node-icon.online { background: var(--c2-green); box-shadow: 0 0 10px var(--c2-green); }
-        .ni-name { font-family: var(--font-mono); font-size: 10px; font-weight: 700; color: #FFF; flex: 1; letter-spacing: 1px; }
-        .ni-ping { font-family: var(--font-tactical); font-size: 11px; color: var(--c2-green); }
-
-        /* System */
-        .system-panel { grid-column: span 1; padding: 32px; }
-        .sys-items { display: flex; flex-direction: column; gap: 16px; }
-        .sys-item { display: flex; justify-content: space-between; align-items: center; }
-        .si-lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.3); }
-        .si-val { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #FFF; }
-        .si-link { 
-            display: flex; align-items: center; gap: 8px; margin-top: 8px;
-            font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px;
-            color: var(--c2-cyan); text-decoration: none; 
-        }
-        .si-link:hover { text-decoration: underline; }
-
-        .namtar-footer {
-          margin: 40px 32px 0; padding: 24px;
-        }
-        .f-inner { display: flex; align-items: center; justify-content: center; gap: 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.3); }
-        .separator { opacity: 0.2; }
-
-        @keyframes pulse-glow {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
+        .page-wrap {
+            position: relative; z-index: 10;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 80px 20px 80px;
         }
 
-        @media (max-width: 1200px) {
-          .hub-header { flex-direction: column; gap: 40px; text-align: center; }
-          .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-          .ad-box { grid-column: span 2; }
-          .status-indicator { justify-content: center; }
+        .site-header { text-align: center; margin-bottom: 40px; }
+        .studio-tag {
+            font-family: var(--font-mono), monospace;
+            font-size: 10px; letter-spacing: 7px;
+            color: var(--ark-amber); opacity: 0.75;
+            text-transform: uppercase; margin-bottom: 14px;
+        }
+        .main-title {
+            font-family: 'Orbitron', var(--font-tactical), sans-serif;
+            font-size: clamp(56px, 12vw, 108px);
+            font-weight: 900; line-height: 0.85;
+            letter-spacing: 8px;
+            background: linear-gradient(145deg, #FFD060 0%, #FF7A20 45%, #CC2200 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 40px rgba(255,100,20,0.45));
+        }
+        .sub-game {
+            font-family: 'Orbitron', var(--font-tactical), sans-serif;
+            font-size: clamp(10px, 2vw, 14px);
+            letter-spacing: 7px; color: var(--ark-teal);
+            margin-top: 10px; text-transform: uppercase;
+        }
+        .title-rule {
+            display: flex; align-items: center; gap: 16px;
+            margin: 28px auto 0; max-width: 580px;
+        }
+        .title-rule::before, .title-rule::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--ark-teal), transparent);
+            opacity: 0.5;
+        }
+        .title-rule-gem { color: var(--ark-amber); font-size: 18px; filter: drop-shadow(0 0 6px var(--ark-amber)); }
+        .survey-label {
+            margin-top: 18px;
+            font-family: 'Orbitron', var(--font-tactical), sans-serif;
+            font-size: clamp(10px, 1.8vw, 13px);
+            letter-spacing: 5px; color: var(--ark-teal);
+            text-transform: uppercase;
         }
 
-        @media (max-width: 768px) {
-          .dashboard-grid { grid-template-columns: 1fr; }
-          .ad-box, .main-specs, .radiations-panel, .raid-panel, .nodes-panel, .system-panel { grid-column: span 1; }
-          .ad-box { grid-template-columns: 1fr; padding: 32px; }
-          .ad-visual { display: none; }
-          .hub-container { padding: 80px 16px 40px; }
-          .title { font-size: 32px; }
+        .webhook-box {
+            background: rgba(0,20,10,0.75);
+            border: 1px solid rgba(0,212,200,0.25);
+            border-radius: 4px;
+            padding: 18px 22px;
+            margin-bottom: 26px;
+            backdrop-filter: blur(8px);
+            position: relative;
         }
-      `}</style>
+        .webhook-box label {
+            font-family: var(--font-mono), monospace;
+            font-size: 10px; letter-spacing: 3px;
+            color: var(--ark-teal); display: block; margin-bottom: 10px;
+        }
+        .webhook-box small {
+            display: block; margin-top: 8px;
+            font-size: 11px; color: var(--ark-muted);
+            font-family: var(--font-mono), monospace; line-height: 1.6;
+        }
+
+        .panel {
+            background: var(--ark-panel);
+            border: 1px solid var(--ark-border);
+            border-radius: 3px;
+            padding: 28px 30px;
+            margin-bottom: 22px;
+            position: relative;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+        }
+        .panel::before {
+            content: '';
+            position: absolute; top:0; left:0; right:0; height:2px;
+            background: linear-gradient(90deg, transparent 0%, var(--ark-teal) 30%, var(--ark-orange) 70%, transparent 100%);
+            opacity: 0.7;
+        }
+        .panel::after {
+            content: ''; position: absolute; top:0; left:0;
+            width:18px; height:18px;
+            border-top: 2px solid var(--ark-teal);
+            border-left: 2px solid var(--ark-teal);
+        }
+        .corner-br {
+            position: absolute; bottom:0; right:0;
+            width:18px; height:18px;
+            border-bottom: 2px solid rgba(255,107,26,0.6);
+            border-right:  2px solid rgba(255,107,26,0.6);
+        }
+        .rivets { position: absolute; top:8px; right:14px; display: flex; gap: 5px; }
+        .rivet {
+            width:5px; height:5px; border-radius:50%;
+            background: rgba(0,212,200,0.3);
+            box-shadow: 0 0 3px rgba(0,212,200,0.5);
+        }
+
+        .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+        .sec-num { font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: 2px; color: var(--ark-amber); }
+        .sec-title { font-family: 'Orbitron', var(--font-tactical), sans-serif; font-size: 14px; font-weight: 700; color: var(--ark-teal); letter-spacing: 3px; text-transform: uppercase; }
+        .sec-line { flex:1; height:1px; background: linear-gradient(90deg, rgba(0,212,200,0.4), transparent); }
+
+        .q-block { margin-bottom: 26px; }
+        .q-label {
+            display: block; font-weight: 600; font-size: 13px; color: var(--ark-amber);
+            margin-bottom: 11px; letter-spacing: 0.5px;
+        }
+        .q-label em { font-style: normal; font-weight: 400; font-size: 11px; color: var(--ark-muted); margin-left: 8px; font-family: var(--font-mono), monospace; }
+
+        .ark-input {
+            width: 100%; background: rgba(0,18,10,0.8);
+            border: 1px solid rgba(0,180,150,0.2); border-radius: 3px;
+            padding: 11px 15px; color: var(--ark-text);
+            font-family: var(--font-mono), monospace; font-size: 13px; outline: none;
+            transition: all 0.25s;
+        }
+        .ark-input:focus {
+            border-color: var(--ark-teal); background: rgba(0,28,18,0.9);
+            box-shadow: 0 0 14px rgba(0,212,200,0.12);
+        }
+        textarea.ark-input { min-height: 88px; resize: vertical; line-height: 1.65; }
+
+        .opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 7px; }
+        .opts.cols2 { grid-template-columns: repeat(auto-fill, minmax(155px,1fr)); }
+        .opts.cols1 { grid-template-columns: 1fr; }
+
+        .opt {
+            display: flex; align-items: center; gap: 10px; padding: 9px 13px;
+            background: rgba(0,18,10,0.6); border: 1px solid rgba(0,180,140,0.12);
+            border-radius: 3px; cursor: pointer; transition: all 0.18s ease;
+            font-size: 13px; color: var(--ark-text); user-select: none;
+        }
+        .opt:hover { border-color: rgba(0,212,200,0.38); color: var(--ark-cyan); }
+
+        .opt input[type="radio"], .opt input[type="checkbox"] {
+            appearance: none; flex-shrink:0; width:13px; height:13px;
+            border: 1px solid var(--ark-muted); border-radius: 2px; cursor: pointer;
+            position: relative; transition: all 0.18s;
+        }
+        .opt input[type="radio"] { border-radius:50%; }
+        .opt input:checked {
+            background: var(--ark-teal); border-color: var(--ark-teal);
+            box-shadow: 0 0 8px rgba(0,212,200,0.55);
+        }
+        .opt:has(input:checked) {
+            border-color: rgba(0,212,200,0.5); background: rgba(0,212,200,0.07); color: var(--ark-cyan);
+        }
+
+        .sub-q { margin-top:14px; padding:16px; background: rgba(0,12,8,0.5); border-left: 2px solid rgba(0,212,200,0.3); }
+
+        .rating-row { display:flex; gap:6px; flex-wrap:wrap; }
+        .r-btn {
+            width:42px; height:42px; background: rgba(0,18,10,0.8);
+            border: 1px solid rgba(0,180,140,0.2); border-radius: 3px; color: var(--ark-muted);
+            font-family: 'Orbitron', var(--font-tactical), sans-serif; font-size: 13px; font-weight:700;
+            cursor:pointer; transition:all 0.18s; display:flex; align-items:center; justify-content:center;
+        }
+        .r-btn:hover, .r-btn.on {
+            background: rgba(255,184,48,0.12); border-color: var(--ark-amber);
+            color: var(--ark-amber); box-shadow: 0 0 10px rgba(255,184,48,0.28);
+        }
+
+        .submit-zone { text-align:center; padding:48px 20px 20px; }
+        .btn-submit {
+            font-family: 'Orbitron', var(--font-tactical), sans-serif; font-size: 14px; font-weight:700;
+            letter-spacing: 4px; text-transform: uppercase; padding: 17px 56px;
+            background: linear-gradient(135deg, rgba(255,107,26,0.12), rgba(255,184,48,0.08));
+            border: 2px solid var(--ark-orange); color: var(--ark-amber); border-radius: 3px;
+            cursor: pointer; position:relative; overflow:hidden; transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            box-shadow: 0 0 28px rgba(255,107,26,0.45); transform: translateY(-2px); border-color: var(--ark-amber);
+        }
+        .btn-submit.loading { pointer-events:none; opacity:0.65; }
+
+        .err-msg { font-family:var(--font-mono),monospace; font-size:12px; color:var(--danger); margin-bottom:14px; display:none; }
+        .err-msg.show { display:block; }
+
+        /* Kyrax */
+        .kyrax-wrap { position:fixed; bottom:28px; right:28px; z-index:200; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+        .kyrax-card {
+            background: rgba(0,4,12,0.96); border: 1px solid var(--hlna-glow);
+            border-radius: 14px 14px 4px 14px; padding: 13px 16px; max-width:255px;
+            font-family:var(--font-mono),monospace; font-size: 12px; color: var(--hlna-glow); line-height:1.55;
+            box-shadow: 0 0 22px rgba(125,249,255,0.18);
+        }
+        .kyrax-card::before { content:'KYRAX  ◆  SATCORP AI'; display:block; font-size:9px; letter-spacing:2px; color:var(--hlna-pink); margin-bottom:6px; }
+        .fade-in-text { animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .kyrax-orb { width:68px; height:68px; border-radius:50%; position:relative; cursor:pointer; animation: orbFloat 3s ease-in-out infinite; }
+        @keyframes orbFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        .orb-core {
+            position:absolute; inset:4px; border-radius:50%;
+            background: radial-gradient(circle at 38% 35%, rgba(200,255,255,0.5) 0%, rgba(0,60,100,0.6) 100%);
+            border: 2px solid rgba(125,249,255,0.7); display:flex; align-items:center; justify-content:center;
+            font-size:26px; box-shadow: 0 0 20px rgba(125,249,255,0.5);
+        }
+        .orb-ring {
+            position:absolute; inset:0; border-radius:50%; border: 1px solid rgba(125,249,255,0.25);
+            animation: ringExpand 2.2s ease-out infinite;
+        }
+        @keyframes ringExpand { 0% { transform:scale(1); opacity:0.6; } 100% { transform:scale(1.9); opacity:0; } }
+
+        /* TY Page */
+        .ty-wrap { max-width:700px; margin:0 auto; padding:60px 20px; text-align:center; animation: fadeIn 1s ease; }
+        .ty-kira { font-family:var(--font-mono),monospace; font-size:10px; letter-spacing:6px; color:var(--ark-amber); margin-bottom:10px; }
+        .ty-title { font-family:'Orbitron',var(--font-tactical),sans-serif; font-size: clamp(36px,8vw,72px); font-weight:900; letter-spacing:5px; background: linear-gradient(135deg, var(--ark-teal), var(--ark-cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter: drop-shadow(0 0 22px rgba(0,212,200,0.5)); margin-bottom:6px; }
+        .ty-sub { font-family:'Orbitron',var(--font-tactical),sans-serif; font-size:12px; letter-spacing:5px; color:var(--ark-orange); margin-bottom:36px; }
+        .ty-signal { font-family:var(--font-mono),monospace; font-size:17px; color:var(--success); margin:24px 0; animation: blink 1.6s ease-in-out infinite; }
+        @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.35} }
+        .ty-body { font-size:14px; line-height:1.75; max-width:620px; margin:0 auto 24px; }
+        .ty-box { border-radius:4px; padding:22px; margin:20px auto; max-width:580px; }
+        .ty-box.amber { background:rgba(255,184,48,0.05); border:1px solid rgba(255,184,48,0.28); }
+        .ty-box.teal { background:rgba(0,212,200,0.05); border:1px solid rgba(0,212,200,0.25); }
+        .ty-box.discord { background:rgba(88,101,242,0.08); border:1px solid rgba(88,101,242,0.35); }
+        .ty-box-title { font-family:'Orbitron',var(--font-tactical),sans-serif; font-size:12px; letter-spacing:3px; margin-bottom:12px; }
+        .ty-box.amber .ty-box-title { color:var(--ark-amber); }
+        .ty-box.teal  .ty-box-title { color:var(--ark-teal);  }
+        .ty-box.discord .ty-box-title { color:#7289DA; }
+        .ty-list { list-style:none; text-align:left; }
+        .ty-list li { padding:4px 0 4px 20px; position:relative; font-size:13px; }
+        .ty-list li::before { content:'▸'; position:absolute; left:0; color:var(--ark-teal); }
+        .disc-btn { display:inline-block; background:#5865F2; color:#fff; text-decoration:none; padding:11px 24px; border-radius:4px; font-family:'Orbitron',var(--font-tactical),sans-serif; font-size:11px; letter-spacing:2px; font-weight:700; margin:5px; transition:all 0.2s; }
+        .disc-btn:hover { background:#4752C4; transform:translateY(-2px); box-shadow:0 5px 18px rgba(88,101,242,0.38); }
+        .sep { height:1px; background:linear-gradient(90deg,transparent,rgba(0,212,200,0.2),transparent); margin:22px 0; }
+
+        @media(max-width:600px){
+            .opts{grid-template-columns:1fr 1fr;}
+            .panel{padding:18px 14px;}
+            .kyrax-wrap{bottom:14px;right:14px;}
+            .kyrax-card{max-width:200px;font-size:11px;}
+            .hud-logo{display:none;}
+        }
+      \`}</style>
     </main>
   );
 }
