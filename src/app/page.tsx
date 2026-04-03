@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import Image from "next/image";
 
 import { TacticalHeader } from "@/components/shared/TacticalHeader";
@@ -12,6 +12,31 @@ import { navLinks, dossierData } from "@/data/dossier";
 
 export default function SatcorpHome() {
   const [activeNav, setActiveNav] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  
+  const x = useMotionValue(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  
+  // Base speed for auto-scroll (px per frame at 60fps)
+  // Higher = faster. 3.5 provides a very snappy tech feel.
+  const baseSpeed = 3.5; 
+
+  useAnimationFrame((t, delta) => {
+    if (isPaused || !trackRef.current) return;
+    
+    const currentX = x.get();
+    const halfWidth = trackRef.current.scrollWidth / 2;
+    
+    // Smooth frame-rate independent movement
+    const moveBy = baseSpeed * (delta / 16.67); 
+    let nextX = currentX - moveBy;
+    
+    // Seamless loop reset (Modular arithmetic)
+    if (nextX <= -halfWidth) {
+      nextX += halfWidth;
+    }
+    x.set(nextX);
+  });
 
   const scrollToDossier = () => {
     document.getElementById('dossier')?.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +61,25 @@ export default function SatcorpHome() {
 
         {/* ─── Floating Cards 3D Wheel ─── */}
         <div className="wheel-container">
-          <div className="wheel-track">
+          <motion.div 
+            className="wheel-track" 
+            ref={trackRef}
+            style={{ x, animation: 'none' }}
+            drag="x"
+            onDragStart={() => setIsPaused(true)}
+            onDragEnd={(e, info) => {
+              setIsPaused(false);
+              // Handle loop reset after drag if necessary
+              const halfWidth = trackRef.current ? trackRef.current.scrollWidth / 2 : 0;
+              if (halfWidth > 0) {
+                const currentX = x.get();
+                x.set(((currentX % halfWidth) - halfWidth) % halfWidth);
+              }
+            }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => !isPaused && setIsPaused(false)} /* Check if dragging? */
+            whileTap={{ cursor: 'grabbing' }}
+          >
             {/* Double the cards for seamless loop */}
             {[...navLinks, ...navLinks].map((n, i) => (
               <div key={`${n.id}-${i}`} className="wheel-item">
@@ -48,7 +91,7 @@ export default function SatcorpHome() {
                 />
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <motion.div 

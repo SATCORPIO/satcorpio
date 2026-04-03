@@ -58,3 +58,11 @@ Thumbs.db
 # --- DEBUG ---
 *-debug.log*
 *-error.log*
+
+# --- MANUAL OVERRIDES ---
+AGENTS.md
+CLAUDE.md
+design-system/satcorp/MASTER.md
+.github/
+
+

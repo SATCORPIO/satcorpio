@@ -226,6 +226,10 @@ body {
   z-index: 100; /* Ensure it's above globes */
   mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  cursor: grab;
+}
+.wheel-container:active {
+  cursor: grabbing;
 }
 .wheel-track {
   display: flex;
@@ -233,7 +237,7 @@ body {
   padding: 60px 40px;
   width: max-content;
   transform-style: preserve-3d;
-  animation: wheel-scroll 40s linear infinite;
+  animation: wheel-scroll 15s linear infinite;
 }
 .wheel-container:hover .wheel-track {
   animation-play-state: paused;
