@@ -8,7 +8,6 @@ import {
   AlertCircle, ChevronRight, MessageSquare, Zap
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 
 export default function NamtarArkPage() {
   const [pop, setPop] = useState(0);
@@ -67,11 +66,6 @@ export default function NamtarArkPage() {
             </div>
           </div>
           
-          <DiscordButton 
-            href="https://discord.gg/mypZpPsPeb"
-            variant="amber"
-            label="NAMTAR DISCORD"
-          />
         </header>
 
         <div className="dashboard-grid">
@@ -88,9 +82,6 @@ export default function NamtarArkPage() {
                 on rates, mods, and rules is critical to our survival protocol.
               </p>
               <div className="promo-cta">
-                <Link href="/namtarsurvey" className="btn-tactical amber-btn">
-                  START CALIBRATION SURVEY <ChevronRight size={14} />
-                </Link>
                 <div className="eta">EST. DEPLOYMENT: Q4 2026</div>
               </div>
             </div>

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ChevronLeft, UserCircle, Briefcase, FileText, DollarSign, LayoutDashboard, Database, ChevronDown, CheckCircle, RefreshCw, Landmark, Scale, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 
 
 /* ═══ ANU Dossier Data ═══ */
@@ -112,9 +111,6 @@ export default function AnuPage() {
             Translates vague ideas into deployable assets with high-performance operator protocols.
           </motion.p>
           
-
-
-
           <motion.div 
             className="scroll-indicator"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
@@ -122,13 +118,6 @@ export default function AnuPage() {
           >
             <ChevronDown size={18} className="bounce-arrow" />
           </motion.div>
-
-          <DiscordButton 
-            href="https://discord.gg/KqphHMq6vS"
-            variant="amber"
-            label="ANU DISCORD"
-            className="discord-link-absolute"
-          />
 
         </div>
       </section>
@@ -283,14 +272,6 @@ export default function AnuPage() {
         .scroll-indicator:hover { color: #EAB308; }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-
-        /* ── Discord Button Positioning ── */
-        .discord-link-absolute {
-          position: absolute;
-          bottom: 12%;
-          right: 4%;
-          z-index: 100;
-        }
 
         /* ── Dossier Section ── */
         .dossier-section {

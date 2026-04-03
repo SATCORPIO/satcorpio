@@ -9,7 +9,6 @@ import {
   MessageSquare, Fingerprint, Layers, Cpu 
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 
 /* ═══ Animated Counter ═══ */
 function AnimatedStat({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -104,15 +103,6 @@ export default function NamtarPage() {
                 <Play size={14} /> ARCHIVE FOOTAGE
               </button>
               
-              <Link href="/namtarsurvey" className="cta-secondary spatial-panel" style={{ color: "var(--c2-amber)", borderColor: "rgba(255,184,48,0.3)" }}>
-                <FileText size={14} /> SURVIVOR SURVEY
-              </Link>
-              
-              <DiscordButton 
-                href="https://discord.gg/mypZpPsPeb"
-                variant="amber"
-                label="NAMTAR DISCORD"
-              />
             </div>
           </div>
 

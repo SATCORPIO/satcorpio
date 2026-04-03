@@ -7,7 +7,6 @@ import Image from "next/image";
 
 import { SpatialCard } from "@/components/shared/SpatialCard";
 import { DossierManual } from "@/components/shared/DossierManual";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 import { navLinks, dossierData } from "@/data/dossier";
 import { useClientCore } from "@/app/ClientProviders";
 
@@ -160,12 +159,6 @@ export default function SatcorpHome() {
         >
           <ChevronDown size={18} className="bounce-arrow" />
         </motion.div>
-
-        <DiscordButton 
-          href="https://discord.gg/KqphHMq6vS"
-          label="SATCORP DISCORD"
-          className="discord-link-absolute"
-        />
 
       </section>
 
@@ -322,14 +315,6 @@ export default function SatcorpHome() {
         .scroll-indicator:hover { color: var(--c2-green); }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-
-        /* ── Discord Button Positioning ── */
-        .discord-link-absolute {
-          position: absolute;
-          bottom: 120px;
-          right: 40px;
-          z-index: 100;
-        }
 
         /* ── Footer ── */
         .hud-footer {

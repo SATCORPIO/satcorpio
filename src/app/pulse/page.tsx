@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ChevronLeft, ChevronDown, Video, Scissors, TrendingUp, Share2, RadioReceiver, ShoppingBag, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 import { dossierData as masterDossier } from "@/data/dossier";
 
 /* ═══ Pulse Dossier Data ═══ */
@@ -149,11 +148,7 @@ export default function PulsePage() {
           
 
 
-          <DiscordButton 
-            href="https://discord.gg/RmpHjJsSBC"
-            variant="cyan"
-            label="PULSE DISCORD"
-          />
+
 
           <motion.div 
             className="scroll-indicator"

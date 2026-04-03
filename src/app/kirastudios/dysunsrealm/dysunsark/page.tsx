@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 
 function PopulationTelemetry() {
   const [pop, setPop] = useState(0);
@@ -96,11 +95,6 @@ export default function DysunsArkPage() {
             </div>
           </div>
           
-          <DiscordButton 
-            href="https://discord.gg/R9Axsm7JfN"
-            variant="red"
-            label="DYSUN ARK DISCORD"
-          />
         </header>
 
         <div className="dashboard-grid">
@@ -118,9 +112,6 @@ export default function DysunsArkPage() {
               </p>
               <div className="ad-cta">
                 <button className="btn-tactical amber-btn">REGISTER FOR UPDATES</button>
-                <Link href="/namtarsurvey" className="btn-tactical amber-btn" style={{ textDecoration: 'none' }}>
-                  SURVIVOR SURVEY
-                </Link>
                 <div className="eta">ETA: Q4 2026</div>
               </div>
             </div>

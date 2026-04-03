@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { DiscordButton } from "@/components/shared/DiscordButton";
+
 
 /* ─── HELPER COMPONENTS ─────────────────────────── */
 
@@ -381,11 +381,12 @@ export default function NamtarSurveyPage() {
                         <p>With the completion of this survey, you will receive a complimentary <strong>Starter Kit</strong> after launch. Details will be announced inside the community channels prior to deployment.</p>
                     </div>
                     <div className="ty-discord-panel panel">
-                        <h3>📡 STAY CONNECTED</h3>
-                        <p>Join the NAMTAR community for launch updates and loot drops:</p>
-                         <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                              <DiscordButton href="https://discord.gg/x3eYkTb68X" label="NAMTAR DISCORD" variant="cyan" />
-                              <DiscordButton href="https://discord.gg/KqphHMq6vS" label="SATCORP HUD" variant="amber" />
+                        <h3>📡 TRANSMISSION COMPLETE</h3>
+                        <p>Your data has been successfully integrated into the Namtar calibration matrix. Return to the main terminal to continue operations.</p>
+                         <div style={{ marginTop: '20px' }}>
+                              <Link href="/" className="ty-shape" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                                 ◀ RETURN TO HUB
+                              </Link>
                          </div>
                     </div>
                 </div>

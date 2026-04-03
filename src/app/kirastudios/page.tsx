@@ -5,7 +5,6 @@ import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layer
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { DossierManual } from "@/components/shared/DossierManual";
-import { DiscordButton } from "@/components/shared/DiscordButton";
 import { TerminalSquare, MonitorSmartphone, Network, Video } from "lucide-react";
 
 const realms = [
@@ -119,13 +118,6 @@ export default function KiraPage() {
               <span className="dot" style={{ background: '#F59E0B', boxShadow: '0 0 8px #F59E0B' }} /> CREATIVE DIRECTION
             </div>
             <h1 className="title" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>KI-RA STUDIOS</h1>
-            
-            <DiscordButton 
-              href="https://discord.gg/mypZpPsPeb"
-              variant="amber"
-              label="KI-RA DISCORD"
-              className="mt-6"
-            />
 
           </motion.div>
 
@@ -337,7 +329,7 @@ export default function KiraPage() {
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-        .mt-6 { margin-top: 24px; }
+        .bounce-arrow { animation: bounce-y 2s infinite; }
 
 
 
