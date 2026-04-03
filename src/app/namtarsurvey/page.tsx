@@ -244,15 +244,14 @@ export default function NamtarSurveyPage() {
         const sectionMap: any = {
             'q1':'Survivor Name', 'q2':'Platform', 'q3':'Play Time/Week', 'q4':'Playstyle',
             'q5':'Server Mode', 'q6':'ORP Preference', 'q7':'Wipe Schedule', 'q8':'Map Setup',
-            'q8-maps':'Cluster Maps', 'q8-custom-map':'Custom Map Suggestion', 'q9':'Starting Map', 'q9-other':'Starting Map (Other)',
-            'q10':'Harvest Rates', 'q10-custom':'Harvest Custom', 'q11':'Taming Speed', 'q12':'Breeding',
+            'q9':'Starting Map', 'q9-other':'Starting Map (Other)',
+            'q10':'Harvest Rates', 'q11':'Taming Speed', 'q12':'Breeding Speed',
             'q13':'XP Rate', 'q14':'Imprint Settings', 'q15':'Dino Difficulty',
-            'q16':'QoL Features', 'q16-open':'QoL Mandatory',
-            'q17':'Mod Volume', 'q18':'Mod Categories', 'q18-open':'Specific Mods',
+            'q16':'QoL Features', 'q17':'Mod Volume', 'q18':'Mod Categories',
             'q19':'Economy Participation', 'q20':'World Events',
             'q21':'Community Size', 'q22':'Rule Strictness',
-            'q23':'Stays Long-Term For', 'q24':'Leaves Server For',
-            'q25':'Interest Rating (1–10)', 'q26':'Join At Launch?', 'q27':'Additional Comments',
+            'q23':'Long-Term Engagement', 'q24':'Leaving Factors',
+            'q25':'Interest Rating (1-10)', 'q26':'Join At Launch?', 'q27':'Additional Comments',
             'q-bonus':'Elite Credentials'
         };
 
@@ -463,16 +462,72 @@ export default function NamtarSurveyPage() {
                                 ))}
                             </div>
                         </div>
-                         <div className="section-header">
-                            <div className="section-num">SECTION II</div><div className="section-title">Playstyle & Rates</div><div className="section-line"></div>
+                        <div className="section-header">
+                            <div className="section-num">SECTION II</div><div className="section-title">Gameplay Preferences</div><div className="section-line"></div>
                         </div>
                         <div className="question-card panel">
-                             <div className="q-label">QUESTION 04</div><div className="q-text">Playstyle (Multi-select):</div>
-                             <div className="options-grid">
+                            <div className="q-label">QUESTION 04</div><div className="q-text">Playstyle (Multi-select):</div>
+                            <div className="options-grid">
                                 {['Solo', 'Small Tribe', 'PvE', 'PvP', 'Breeder'].map(v => (
                                     <button key={v} type="button" className={`opt-btn ${formData.q4?.includes(v) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q4', v, true)}>{v}</button>
                                 ))}
-                             </div>
+                            </div>
+                        </div>
+                        <div className="question-card panel">
+                            <div className="q-label">QUESTION 05</div><div className="q-text">Server Mode:</div>
+                            <div className="options-grid">
+                                {['PvE Only', 'PvP Only', 'ORP PvP Cluster'].map(v => (
+                                    <button key={v} type="button" className={`opt-btn ${formData.q5 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q5', v)}>{v}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="section-header">
+                            <div className="section-num">SECTION III</div><div className="section-title">Server Rates & Progression</div><div className="section-line"></div>
+                        </div>
+                        <div className="question-card panel">
+                            <div className="q-label">QUESTION 10</div><div className="q-text">Harvest Rates:</div>
+                            <div className="options-grid">
+                                {['1x (Vanilla)', '2x (Standard)', '3x (Balanced)', '5x (Fast)'].map(v => (
+                                    <button key={v} type="button" className={`opt-btn ${formData.q10 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q10', v)}>{v}</button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="question-card panel">
+                            <div className="q-label">QUESTION 11</div><div className="q-text">Taming Speed:</div>
+                            <div className="options-grid">
+                                {['1x', '2x', '3x', '5x', 'Instatame'].map(v => (
+                                    <button key={v} type="button" className={`opt-btn ${formData.q11 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q11', v)}>{v}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="section-header">
+                            <div className="section-num">SECTION IV</div><div className="section-title">Modding & QoL</div><div className="section-line"></div>
+                        </div>
+                        <div className="question-card panel">
+                            <div className="q-label">QUESTION 16</div><div className="q-text">Key QoL Features (Multi-select):</div>
+                            <div className="options-grid">
+                                {['Stack Sizes', 'Infinite Pickup', 'Cross-Map Chat', 'Solo Farm', 'Custom Crafting'].map(v => (
+                                    <button key={v} type="button" className={`opt-btn ${formData.q16?.includes(v) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q16', v, true)}>{v}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="section-header">
+                            <div className="section-num">SECTION V</div><div className="section-title">Final Calibration</div><div className="section-line"></div>
+                        </div>
+                        <div className="question-card panel">
+                            <div className="q-label">QUESTION 26</div><div className="q-text">Do you plan to join at launch?</div>
+                            <div className="options-grid">
+                                {['Yes', 'Maybe', 'No'].map(v => (
+                                    <button key={v} type="button" className={`opt-btn ${formData.q26 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q26', v)}>{v}</button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="question-card panel">
+                            <div className="q-label">QUESTION 27</div><div className="q-text">Additional Comments:</div>
+                            <textarea className="ark-input" name="q27" style={{ height: '100px', resize: 'none' }} placeholder="Any other thoughts for the team?" onChange={handleInputChange as any}></textarea>
                         </div>
                         
                         <div className="question-card panel">

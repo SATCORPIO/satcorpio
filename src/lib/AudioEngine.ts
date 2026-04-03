@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 
 let isInitialized = false;
-let globalMute = false; // System-wide mute control
+let globalMute = true; // System-wide mute control
 
 let ambientSynth: Tone.NoiseSynth | null = null;
 let clickSynth: Tone.MembraneSynth | null = null;
