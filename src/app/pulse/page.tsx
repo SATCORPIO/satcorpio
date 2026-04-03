@@ -141,6 +141,28 @@ export default function PulsePage() {
             Architecting the next generation of digital signal transmission. We build high-fidelity creator environments, 
             cinematic post-production pipelines, and automated syndication hubs for the modern broadcast era.
           </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.8 }}
+            style={{ width: '100%', maxWidth: '900px', display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '24px' }}
+          >
+            <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)', aspectRatio: '16/9' }}>
+               <Image src="/pulse_radio.png" alt="Pulse Radio Hub" fill style={{ objectFit: 'cover' }} />
+            </div>
+            <div style={{ width: '200px', flexShrink: 0, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)'}}>
+               <Image src="/075.png" alt="Cyber Visual" fill style={{ objectFit: 'cover' }} />
+            </div>
+            <div style={{ width: '120px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)' }}>
+                    <Image src="/file_000000006e7061faa7eeea560cc41296.png" alt="Asset" fill style={{ objectFit: 'cover' }} />
+                </div>
+                <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(34,211,238,0.2)' }}>
+                    <Image src="/file_000000007e78622fb81e236a8644294d.png" alt="Asset" fill style={{ objectFit: 'cover' }} />
+                </div>
+            </div>
+          </motion.div>
 
           <motion.a 
             href="https://discord.gg/RmpHjJsSBC" 

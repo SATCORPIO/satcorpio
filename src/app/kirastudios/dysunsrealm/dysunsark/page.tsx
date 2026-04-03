@@ -8,6 +8,7 @@ import {
   MessageSquare
 } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 function PopulationTelemetry() {
   const [pop, setPop] = useState(0);
@@ -56,8 +57,15 @@ export default function DysunsArkPage() {
     <main className="dysun-ark film-grain">
       {/* Immersive Background */}
       <div className="telemetry-bg">
+        <Image 
+          src="/KYRAX738383737.png" 
+          alt="Dysun Ark Telemetry" 
+          fill 
+          priority 
+          className="bg-image"
+          style={{ objectFit: "cover", filter: "brightness(0.5) contrast(1.2)" }}
+        />
         <div className="radial-glow" />
-        <div className="grid-overlay" />
         <div className="noise-overlay" />
       </div>
 
@@ -119,7 +127,7 @@ export default function DysunsArkPage() {
               </div>
             </div>
              <div className="ad-visual">
-                <Flame size={80} className="f-amber-o" />
+                <img src="/KYRAX764764.gif" alt="Thermal Anomaly" style={{ width: '120px', height: '120px', objectFit: 'cover', borderRadius: '50%', border: '2px solid var(--c2-amber)', filter: 'drop-shadow(0 0 20px rgba(245,158,11,0.5))' }} />
                 <div className="thermal-pips">
                    <div className="pip" />
                    <div className="pip" />

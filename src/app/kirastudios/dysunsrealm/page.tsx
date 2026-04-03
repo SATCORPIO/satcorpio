@@ -72,12 +72,12 @@ export default function DysunPage() {
       {/* Immersive Background */}
       <div className="hero-bg">
         <Image 
-          src="/dysun_asa_command.webp" 
-          alt="Dysun Solar Command" 
+          src="/009.png" 
+          alt="Dysuns Realm Solar" 
           fill 
           priority 
           className="bg-image"
-          style={{ objectFit: "cover" }} 
+          style={{ objectFit: "cover", filter: "brightness(0.6) contrast(1.1)" }}
         />
       </div>
       <div className="bg-vignette" />
@@ -235,6 +235,9 @@ export default function DysunPage() {
                 volcanic ecosystem. Survival requires specific gear designed 
                 to withstand temperatures exceeding 1000°K.
               </p>
+              <div style={{ marginTop: '24px', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(245,158,11,0.2)' }}>
+                <Image src="/Dysark5.png" alt="Solar Concept" width={800} height={400} style={{ width: '100%', height: 'auto', display: 'block' }} />
+              </div>
             </div>
 
             <div className="tech-stack spatial-panel">

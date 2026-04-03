@@ -53,12 +53,12 @@ export default function NamtarPage() {
       {/* Immersive Background */}
       <div className="hero-bg">
         <Image 
-          src="/namtar_abyssal_terminal.webp" 
-          alt="Namtar Abyssal Terminal" 
+          src="/namtar_survival.png" 
+          alt="Namtar Survival Protocol" 
           fill 
           priority 
           className="bg-image"
-          style={{ objectFit: "cover" }} 
+          style={{ objectFit: "cover", filter: "brightness(0.5) contrast(1.2)" }}
         />
       </div>
       <div className="bg-vignette" />
@@ -180,6 +180,10 @@ export default function NamtarPage() {
                 wastes. And somewhere beneath the rubble, the NAMTAR Protocol awaits
                 — a technology older than human civilization.
               </p>
+              
+              <div style={{ marginTop: '24px', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <Image src="/namtar_survival.png" alt="Namtar Concept" width={800} height={400} style={{ width: '100%', height: 'auto', display: 'block' }} />
+              </div>
             </div>
 
             <div className="stat-grid">
@@ -242,13 +246,13 @@ export default function NamtarPage() {
 
       <style jsx>{`
         .namtar {
-          --c2-cyan: #00A8FF;
-          --c2-green: #00FF41;
+          --c2-cyan: #D97706; /* Shifted to Amber for survival vibe */
+          --c2-green: #84CC16; /* Grungy green */
           --c2-red: #EF4444;
           --c2-amber: #F59E0B;
-          --bg-dark: #030508;
-          --surface-neural: #070C11;
-          --glass-border: rgba(255, 255, 255, 0.08);
+          --bg-dark: #070605; /* Warmer dark */
+          --surface-neural: #120e0a;
+          --glass-border: rgba(217, 119, 6, 0.15);
 
           background: var(--bg-dark);
           font-family: var(--font-body);
@@ -273,7 +277,7 @@ export default function NamtarPage() {
         }
         .scanline-overlay {
           position: fixed; inset: 0; z-index: 2; pointer-events: none;
-          background: linear-gradient(to bottom, transparent 50%, rgba(0, 168, 255, 0.02) 50.1%);
+          background: linear-gradient(to bottom, transparent 50%, rgba(217, 119, 6, 0.03) 50.1%);
           background-size: 100% 4px;
         }
 
@@ -337,11 +341,11 @@ export default function NamtarPage() {
         .btn-tactical {
           display: flex; align-items: center; gap: 12px;
           padding: 16px 32px; background: transparent; color: var(--c2-cyan);
-          border: 1px solid rgba(0, 168, 255, 0.3); border-radius: 4px;
+          border: 1px solid rgba(217, 119, 6, 0.3); border-radius: 4px;
           font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
           text-transform: uppercase; cursor: pointer; transition: all 300ms; text-decoration: none;
         }
-        .btn-tactical:hover { background: rgba(0, 168, 255, 0.1); border-color: var(--c2-cyan); box-shadow: 0 0 20px rgba(0, 168, 255, 0.2); }
+        .btn-tactical:hover { background: rgba(217, 119, 6, 0.1); border-color: var(--c2-cyan); box-shadow: 0 0 20px rgba(217, 119, 6, 0.2); }
 
         .cta-secondary {
           display: flex; align-items: center; gap: 12px;
@@ -355,9 +359,9 @@ export default function NamtarPage() {
           display: flex; align-items: center; gap: 12px;
           padding: 16px 24px; color: #FFF; text-decoration: none;
           font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px;
-          background: rgba(0, 168, 255, 0.05); border-color: rgba(0, 168, 255, 0.2);
+          background: rgba(217, 119, 6, 0.05); border-color: rgba(217, 119, 6, 0.2);
         }
-        .cta-discord:hover { background: rgba(0, 168, 255, 0.15); border-color: var(--c2-cyan); }
+        .cta-discord:hover { background: rgba(217, 119, 6, 0.15); border-color: var(--c2-cyan); }
 
         .survival-hud { width: 340px; padding: 32px; flex-shrink: 0; }
         .panel-header {

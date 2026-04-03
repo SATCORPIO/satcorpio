@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const realms = [
   {
@@ -33,11 +34,12 @@ export default function KiraPage() {
 
   return (
     <main className="kira film-grain">
-      {/* ─── Parallax Background ─── */}
-      <div className="bg-kira">
-        <div className="bg-gradient" />
-        <div className="glass-spheres" />
+      {/* ─── Immersive Background ─── */}
+      <div className="hero-bg">
+        <Image src="/kirastudios_ue5.png" alt="Ki-Ra Studios" fill priority className="bg-image" style={{ objectFit: "cover" }} />
       </div>
+      <div className="bg-vignette" />
+      <div className="glass-spheres" />
 
       <nav className="kira-nav">
         <Link href="/" className="back-link spatial-panel">
@@ -53,10 +55,10 @@ export default function KiraPage() {
             transition={{ duration: 1 }}
             className="hero-header"
           >
-            <div className="badge spatial-panel">
-              <span className="dot" /> CREATIVE DIRECTION
+            <div className="badge spatial-panel" style={{ borderColor: 'rgba(245, 158, 11, 0.3)' }}>
+              <span className="dot" style={{ background: '#F59E0B', boxShadow: '0 0 8px #F59E0B' }} /> CREATIVE DIRECTION
             </div>
-            <h1 className="title">KI-RA STUDIOS</h1>
+            <h1 className="title" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>KI-RA STUDIOS</h1>
             
             <motion.a 
               href="https://discord.gg/mypZpPsPeb"
@@ -146,23 +148,20 @@ export default function KiraPage() {
           overflow-x: hidden;
         }
 
-        .bg-kira {
-          position: fixed;
-          inset: 0;
-          z-index: 0;
-        }
-        .bg-gradient {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at 50% 0%, #1A1A1E 0%, #000000 70%);
+        .hero-bg { position: fixed; inset: 0; z-index: 0; opacity: 0.6; }
+        .bg-image { filter: brightness(0.6) contrast(1.1) saturate(1.2); }
+        .bg-vignette {
+          position: fixed; inset: 0; z-index: 1;
+          background: radial-gradient(circle at 50% 50%, transparent 20%, #030508 95%);
         }
         .glass-spheres {
-          position: absolute;
+          position: fixed;
           inset: 0;
           background-image: 
-            radial-gradient(circle at 15% 50%, rgba(255,255,255,0.03) 0%, transparent 20%),
-            radial-gradient(circle at 85% 30%, rgba(255,255,255,0.04) 0%, transparent 25%);
+            radial-gradient(circle at 15% 50%, rgba(245,158,11,0.05) 0%, transparent 20%),
+            radial-gradient(circle at 85% 30%, rgba(245,158,11,0.06) 0%, transparent 25%);
           filter: blur(40px);
+          z-index: 1;
         }
 
         .kira-nav {
@@ -178,7 +177,7 @@ export default function KiraPage() {
           transition: all 300ms;
           border-color: rgba(255, 255, 255, 0.15);
         }
-        .back-link:hover { color: #FFF; background: rgba(255, 255, 255, 0.05); }
+        .back-link:hover { color: #F59E0B; background: rgba(245, 158, 11, 0.05); border-color: #F59E0B; }
 
         .hero {
           min-height: 90vh;

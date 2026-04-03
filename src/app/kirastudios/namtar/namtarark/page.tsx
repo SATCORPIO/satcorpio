@@ -8,6 +8,7 @@ import {
   Zap, Fingerprint, ExternalLink 
 } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 function RaidSimulation() {
   const [raids, setRaids] = useState<{ id: string; target: string; intensity: number; attackers: number }[]>([]);
@@ -91,8 +92,15 @@ export default function NamtarArkPage() {
     <main className="namtar-ark film-grain">
       {/* Immersive Background */}
       <div className="telemetry-bg">
+        <Image 
+          src="/namtar_survival.png" 
+          alt="Namtar Survival Protocol" 
+          fill 
+          priority 
+          className="bg-image"
+          style={{ objectFit: "cover", filter: "brightness(0.5) contrast(1.2)" }}
+        />
         <div className="radial-glow" />
-        <div className="grid-overlay" />
         <div className="noise-overlay" />
       </div>
 
@@ -274,13 +282,13 @@ export default function NamtarArkPage() {
 
       <style jsx>{`
         .namtar-ark {
-          --c2-cyan: #00A8FF;
-          --c2-green: #00FF41;
+          --c2-cyan: #D97706;
+          --c2-green: #84CC16;
           --c2-red: #EF4444;
           --c2-amber: #F59E0B;
-          --bg-dark: #030508;
-          --surface-neural: #070C11;
-          --glass-border: rgba(255, 255, 255, 0.08);
+          --bg-dark: #070605;
+          --surface-neural: #120e0a;
+          --glass-border: rgba(217, 119, 6, 0.15);
 
           background: var(--bg-dark);
           font-family: var(--font-body);

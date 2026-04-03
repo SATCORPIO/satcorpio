@@ -72,7 +72,14 @@ export default function FrostheimPage() {
     <main className="frost film-grain">
       {/* Immersive Background */}
       <div className="hero-bg">
-        <Image src="/frostheim_arctic_hub.webp" alt="Frostheim Arctic Hub" fill priority className="bg-image" style={{ objectFit: "cover" }} />
+        <Image 
+          src="/frostheim_viking.png" 
+          alt="Frostheim Viking Hub" 
+          fill 
+          priority 
+          className="bg-image"
+          style={{ objectFit: "cover", filter: "brightness(0.6) contrast(1.1)" }}
+        />
       </div>
       <div className="bg-vignette" />
       <div className="noise-overlay" />
@@ -269,13 +276,13 @@ export default function FrostheimPage() {
 
       <style jsx>{`
         .frost {
-          --c2-cyan: #7DD3FC;
-          --c2-green: #00FF41;
-          --c2-red: #EF4444;
-          --c2-amber: #F59E0B;
-          --bg-dark: #030508;
-          --surface-neural: #070C11;
-          --glass-border: rgba(255, 255, 255, 0.08);
+          --c2-cyan: #93C5FD; /* Shifted to Frosty Blue for Viking Vibe */
+          --c2-green: #34D399; /* Cold mint green */
+          --c2-red: #F87171;
+          --c2-amber: #FCA5A5; /* Shifted to pale red instead of warm amber */
+          --bg-dark: #020617; /* Deep slate */
+          --surface-neural: #0F172A;
+          --glass-border: rgba(147, 197, 253, 0.15);
 
           background: var(--bg-dark);
           font-family: var(--font-body);

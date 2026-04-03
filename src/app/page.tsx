@@ -8,9 +8,8 @@ import Image from "next/image";
 import { TacticalHeader } from "@/components/shared/TacticalHeader";
 import { SpatialCard } from "@/components/shared/SpatialCard";
 import { DossierManual } from "@/components/shared/DossierManual";
-import { NeuralGrid } from "@/components/shared/NeuralGrid";
-import { useClientCore } from "@/app/ClientProviders";
 import { navLinks, dossierData } from "@/data/dossier";
+import { useClientCore } from "@/app/ClientProviders";
 
 export default function SatcorpHome() {
   const { playHover, playClick } = useClientCore();
@@ -83,7 +82,9 @@ export default function SatcorpHome() {
   return (
     <main className="home film-grain">
       {/* ─── Volumetric Background (Fixed for parallax illusion) ─── */}
-      <NeuralGrid />
+      <div className="hub-bg">
+        <Image src="/globe_tactical.png" alt="Tactical Globe" fill priority style={{ objectFit: 'cover', opacity: 0.6 }} />
+      </div>
       <div className="hub-dim" />
       <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.1) 0%, transparent 70%)', top: '10%', left: '20%', position: 'fixed' }} />
       <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)', bottom: '10%', right: '10%', position: 'fixed' }} />
@@ -97,10 +98,10 @@ export default function SatcorpHome() {
 
         {/* ─── Floating Cards 3D Wheel ─── */}
         <div className="wheel-container">
-          <button className="nav-arrow prev" onClick={() => { handlePrev(); playClick(); }} onMouseEnter={() => playHover()} aria-label="Previous card">
+          <button className="nav-arrow prev" onClick={() => { playClick(); handlePrev(); }} onMouseEnter={playHover} aria-label="Previous card">
             <ChevronLeft size={28} />
           </button>
-          <button className="nav-arrow next" onClick={() => { handleNext(); playClick(); }} onMouseEnter={() => playHover()} aria-label="Next card">
+          <button className="nav-arrow next" onClick={() => { playClick(); handleNext(); }} onMouseEnter={playHover} aria-label="Next card">
             <ChevronRight size={28} />
           </button>
           
@@ -141,6 +142,7 @@ export default function SatcorpHome() {
           className="scroll-indicator"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 1 }}
           onClick={scrollToDossier}
+          onMouseEnter={playHover}
         >
           <ChevronDown size={18} className="bounce-arrow" />
         </motion.div>
@@ -153,8 +155,8 @@ export default function SatcorpHome() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.2 }}
-          onMouseEnter={() => playHover()}
-          onClick={() => playClick()}
+          onClick={playClick}
+          onMouseEnter={playHover}
         >
           <div className="dl-glow" />
           <MessageSquare size={18} className="discord-icon" />

@@ -110,6 +110,20 @@ export default function KyraxPage() {
             Deploying multi-agent networks and autonomous operational intelligence 
             to accelerate workflow efficiency across the SATCORP ecosystem.
           </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 1 }}
+            style={{ width: '100%', maxWidth: '800px', display: 'flex', gap: '16px', justifyContent: 'center' }}
+          >
+            <div style={{ flex: 1, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(168,85,247,0.2)', aspectRatio: '16/9' }}>
+               <Image src="/kyrax_ultrarealistic_1775186474360.png" alt="Kyrax Operator" fill style={{ objectFit: 'cover' }} />
+            </div>
+            <div style={{ width: '180px', flexShrink: 0, position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(168,85,247,0.2)', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+               <Image src="/KYRAX_67646758LOGO.png" alt="Kyrax Emblem" width={120} height={120} style={{ objectFit: 'contain' }} />
+            </div>
+          </motion.div>
 
           <motion.div 
             className="scroll-indicator"
