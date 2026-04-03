@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, Snowflake, Wind, Mountain, Swords, Map, Thermometer, Shield, Target, Play, ShieldAlert } from "lucide-react";
+import { ChevronLeft, Snowflake, Wind, Mountain, Swords, Map, Thermometer, Shield, Target, Play, ShieldAlert, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 /* ═══ Snow Canvas ═══ */
@@ -103,6 +103,18 @@ export default function FrostheimPage() {
               <button className="cta-secondary">
                 <Play size={14} /> PLAY ARCHIVE FOOTAGE
               </button>
+              
+              <motion.a 
+                href="https://discord.gg/R9Axsm7JfN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-discord spatial-panel"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <MessageSquare size={14} /> JOIN WAR-CHIEF DISCORD
+              </motion.a>
             </div>
           </div>
 
@@ -313,6 +325,18 @@ export default function FrostheimPage() {
           transition: all 200ms;
         }
         .cta-secondary:hover { border-color: rgba(125, 211, 252, 0.5); background: rgba(125, 211, 252, 0.05); }
+
+        .cta-discord {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          font-family: var(--font-tactical); font-size: 11px; letter-spacing: 2px;
+          padding: 16px; border-radius: 4px; text-decoration: none;
+          background: rgba(125, 211, 252, 0.05); border: 1px solid rgba(125, 211, 252, 0.15); 
+          color: #7DD3FC; transition: all 300ms;
+        }
+        .cta-discord:hover {
+          background: rgba(125, 211, 252, 0.15); color: #FFF;
+          border-color: #7DD3FC; box-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
+        }
 
         .panel-header {
           display: flex; align-items: center; gap: 8px;

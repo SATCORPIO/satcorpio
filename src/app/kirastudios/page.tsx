@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins } from "lucide-react";
+import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
 
@@ -147,6 +147,19 @@ export default function KiraPage() {
               <span className="dot" /> CREATIVE DIRECTION
             </div>
             <h1 className="title">KI-RA STUDIOS</h1>
+            
+            <motion.a 
+              href="https://discord.gg/mypZpPsPeb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="discord-btn spatial-panel"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              <MessageSquare size={14} />
+              <span>JOIN CREATIVE DISCORD</span>
+            </motion.a>
           </motion.div>
 
           <motion.p 
@@ -345,6 +358,28 @@ export default function KiraPage() {
         }
         .cap-desc {
           font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
+        }
+
+        .discord-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 24px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: #FFF;
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 2px;
+          border-color: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.05);
+          transition: all 300ms;
+          margin-top: 24px;
+        }
+        .discord-btn:hover {
+          background: rgba(255, 255, 255, 0.15);
+          border-color: #FFF;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .scroll-indicator {

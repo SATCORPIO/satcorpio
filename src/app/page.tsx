@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
 import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
 import Image from "next/image";
 
@@ -143,6 +143,19 @@ export default function SatcorpHome() {
           <span>OPERATIONAL DOSSIER</span>
           <ChevronDown size={14} className="bounce-arrow" />
         </motion.div>
+
+        <motion.a 
+          href="https://discord.gg/KqphHMq6vS" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="discord-link spatial-panel"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.2 }}
+        >
+          <MessageSquare size={14} className="discord-icon" />
+          <span className="dl-text">JOIN MISSION CONTROL</span>
+        </motion.a>
       </section>
 
       <DossierManual 
@@ -271,6 +284,37 @@ export default function SatcorpHome() {
         .scroll-indicator:hover { color: var(--c2-green); }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+        /* ── Discord Button ── */
+        .discord-link {
+          position: absolute;
+          bottom: 120px;
+          right: 40px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 20px;
+          border-radius: 8px;
+          text-decoration: none;
+          color: var(--c2-green);
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 2px;
+          border-color: rgba(0, 255, 65, 0.15);
+          background: rgba(0, 255, 65, 0.05);
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 100;
+        }
+        .discord-link:hover {
+          color: white;
+          background: rgba(0, 255, 65, 0.2);
+          border-color: var(--c2-green);
+          box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+          transform: translateY(-2px);
+        }
+        .discord-icon {
+          filter: drop-shadow(0 0 5px var(--c2-green));
+        }
 
         /* ── Footer ── */
         .hud-footer {

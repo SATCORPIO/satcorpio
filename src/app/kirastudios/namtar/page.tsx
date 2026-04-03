@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, AlertTriangle, Heart, Zap, Skull, Droplets, Shield, Radiation, Play, ChevronRight, FileText, Crosshair, Activity } from "lucide-react";
+import { ChevronLeft, AlertTriangle, Heart, Zap, Skull, Droplets, Shield, Radiation, Play, ChevronRight, FileText, Crosshair, Activity, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 /* ═══ Animated Counter ═══ */
@@ -86,6 +86,18 @@ export default function NamtarPage() {
               <button className="cta-secondary">
                 <Play size={14} /> PLAY ARCHIVE
               </button>
+              
+              <motion.a 
+                href="https://discord.gg/mypZpPsPeb"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-discord spatial-panel"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.0 }}
+              >
+                <MessageSquare size={14} /> JOIN ABYSSAL CHAT
+              </motion.a>
             </div>
           </div>
 
@@ -275,6 +287,18 @@ export default function NamtarPage() {
           transition: all 200ms;
         }
         .cta-secondary:hover { border-color: #D97706; background: rgba(217, 119, 6, 0.05); }
+
+        .cta-discord {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          font-family: var(--font-tactical); font-size: 11px; letter-spacing: 2px;
+          padding: 16px 24px; border-radius: 4px; text-decoration: none;
+          background: rgba(217, 119, 6, 0.03); border: 1px solid rgba(217, 119, 6, 0.2); 
+          color: #D97706; transition: all 300ms;
+        }
+        .cta-discord:hover {
+          background: rgba(217, 119, 6, 0.15); color: #FFF;
+          border-color: #D97706; box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
+        }
 
         .survival-hud { padding: 24px; width: 320px; flex-shrink: 0; }
         .panel-header {

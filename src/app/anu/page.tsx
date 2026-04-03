@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, UserCircle, Briefcase, FileText, DollarSign, LayoutDashboard, Database, ChevronDown, CheckCircle, RefreshCw, Landmark, Scale } from "lucide-react";
+import { ChevronLeft, UserCircle, Briefcase, FileText, DollarSign, LayoutDashboard, Database, ChevronDown, CheckCircle, RefreshCw, Landmark, Scale, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
 
@@ -120,6 +120,19 @@ export default function AnuPage() {
             <span>OPERATOR DOSSIER</span>
             <ChevronDown size={14} className="bounce-arrow" />
           </motion.div>
+
+          <motion.a 
+            href="https://discord.gg/KqphHMq6vS" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="discord-link spatial-panel"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.8 }}
+          >
+            <MessageSquare size={14} className="discord-icon" />
+            <span className="dl-text">JOIN PROTOCOL</span>
+          </motion.a>
         </div>
       </section>
 
@@ -273,6 +286,37 @@ export default function AnuPage() {
         .scroll-indicator:hover { color: #EAB308; }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+        /* ── Discord Button ── */
+        .discord-link {
+          position: absolute;
+          bottom: 15%;
+          right: 5%;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 20px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: #EAB308;
+          font-family: var(--font-mono);
+          font-size: 11px;
+          letter-spacing: 2px;
+          border-color: rgba(234, 179, 8, 0.2);
+          background: rgba(234, 179, 8, 0.05);
+          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 100;
+        }
+        .discord-link:hover {
+          color: white;
+          background: rgba(234, 179, 8, 0.2);
+          border-color: #EAB308;
+          box-shadow: 0 0 30px rgba(234, 179, 8, 0.3);
+          transform: translateY(-2px);
+        }
+        .discord-icon {
+          filter: drop-shadow(0 0 8px #EAB308);
+        }
 
         /* ── Dossier Section ── */
         .dossier-section {

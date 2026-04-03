@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, Flame, HardDrive, ShieldAlert, Cpu, Activity, Terminal, Users, Database } from "lucide-react";
+import { ChevronLeft, Flame, HardDrive, ShieldAlert, Cpu, Activity, Terminal, Users, Database, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 function ServerTerminal() {
@@ -86,6 +86,19 @@ export default function DysunsArkPage() {
               <span className="st-sub">Hosted via NAMTAR Infrastructure</span>
             </div>
           </div>
+          
+          <motion.a 
+            href="https://discord.gg/ka2zXPMUJG"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="discord-btn spatial-panel"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <MessageSquare size={14} />
+            <span>JOIN FACTION</span>
+          </motion.a>
         </header>
 
         <div className="dashboard-grid">
@@ -239,6 +252,29 @@ export default function DysunsArkPage() {
           border-radius: 2px; background: rgba(255, 69, 0, 0.05);
         }
         .pulse-icon { animation: pulse-glow 2s infinite; }
+
+        .discord-btn {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 20px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: #FF4500;
+          font-family: var(--font-tactical);
+          font-size: 11px;
+          letter-spacing: 2px;
+          font-weight: 700;
+          border-color: rgba(255, 69, 0, 0.2);
+          background: rgba(255, 69, 0, 0.05);
+          transition: all 300ms;
+        }
+        .discord-btn:hover {
+          color: #FFF;
+          background: rgba(255, 69, 0, 0.2);
+          border-color: #FF4500;
+          box-shadow: 0 0 20px rgba(255, 69, 0, 0.3);
+        }
 
         .header-titles { text-align: center; }
         .title {

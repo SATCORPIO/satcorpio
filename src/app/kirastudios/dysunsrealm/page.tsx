@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, Flame, AlertOctagon, Eye, Skull, Zap, Shield, Play, ChevronRight, Activity, Terminal } from "lucide-react";
+import { ChevronLeft, Flame, AlertOctagon, Eye, Skull, Zap, Shield, Play, ChevronRight, Activity, Terminal, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 /* ═══ Ember Canvas ═══ */
@@ -162,6 +162,19 @@ export default function DysunsRealmPage() {
             <button className="cta-secondary">
               <Terminal size={14} /> READ DATALOGS
             </button>
+            
+            <motion.a 
+              href="https://discord.gg/ka2zXPMUJG"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="discord-btn spatial-panel"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.2 }}
+            >
+              <MessageSquare size={14} />
+              <span>JOIN INFERNAL DISCORD</span>
+            </motion.a>
           </div>
         </div>
 
@@ -361,6 +374,30 @@ export default function DysunsRealmPage() {
           transition: all 200ms;
         }
         .cta-secondary:hover { border-color: rgba(255, 255, 255, 0.3); color: #FFF; background: rgba(255, 255, 255, 0.02); }
+
+        .discord-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 16px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: #FF4500;
+          font-family: var(--font-tactical);
+          font-size: 11px;
+          letter-spacing: 2px;
+          font-weight: 700;
+          border-color: rgba(255, 69, 0, 0.2);
+          background: rgba(255, 69, 0, 0.05);
+          transition: all 300ms;
+        }
+        .discord-btn:hover {
+          color: #FFF;
+          background: rgba(255, 69, 0, 0.2);
+          border-color: #FF4500;
+          box-shadow: 0 0 20px rgba(255, 69, 0, 0.3);
+        }
 
         .data-column { display: flex; flex-direction: column; gap: 24px; }
         

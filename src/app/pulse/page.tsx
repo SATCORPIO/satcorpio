@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronDown, Video, Scissors, TrendingUp, Share2, RadioReceiver, ShoppingBag } from "lucide-react";
+import { ChevronLeft, ChevronDown, Video, Scissors, TrendingUp, Share2, RadioReceiver, ShoppingBag, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { DossierManual } from "@/components/shared/DossierManual";
 import { dossierData as masterDossier } from "@/data/dossier";
@@ -141,6 +141,20 @@ export default function PulsePage() {
             Architecting the next generation of digital signal transmission. We build high-fidelity creator environments, 
             cinematic post-production pipelines, and automated syndication hubs for the modern broadcast era.
           </motion.p>
+
+          <motion.a 
+            href="https://discord.gg/RmpHjJsSBC" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="discord-btn spatial-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.0 }}
+          >
+            <MessageSquare size={14} className="cyan-glow" />
+            <span>JOIN THE GRID</span>
+          </motion.a>
+
 
           <motion.div 
             className="scroll-indicator"
@@ -336,6 +350,21 @@ export default function PulsePage() {
         .scroll-indicator:hover { color: #22D3EE; }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+        .discord-btn {
+          display: flex; align-items: center; gap: 10px;
+          padding: 14px 28px; border-radius: 4px;
+          text-decoration: none; color: #22D3EE;
+          font-family: var(--font-tactical); font-size: 12px; letter-spacing: 3px; font-weight: 700;
+          background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.2);
+          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .discord-btn:hover {
+          color: #FFF; background: rgba(34, 211, 238, 0.15);
+          border-color: #22D3EE; box-shadow: 0 0 30px rgba(34, 211, 238, 0.3);
+          transform: translateY(-2px);
+        }
+        .cyan-glow { filter: drop-shadow(0 0 8px #22D3EE); }
 
         /* ── Dossier Section ── */
         .dossier-section {
