@@ -37,7 +37,15 @@ export function SpatialCard({
       <motion.div
         className={`nav-card spatial-panel ${isActive ? "active" : ""} ${status === "LOCKED" ? "locked" : ""}`}
         onMouseEnter={onHover}
-        whileHover={{ scale: 1.05, y: -20, rotateX: 2, rotateY: -2, zIndex: 200 }}
+        onTap={onHover}
+        whileHover={{ 
+          scale: 1.05, 
+          y: -20, 
+          rotateX: typeof window !== 'undefined' && window.innerWidth > 768 ? 2 : 0, 
+          rotateY: typeof window !== 'undefined' && window.innerWidth > 768 ? -2 : 0, 
+          zIndex: 200 
+        }}
+        whileTap={{ scale: 0.98 }}
         style={{ "--card-color": color, perspective: 1200 } as React.CSSProperties}
       >
         <div className="card-media">

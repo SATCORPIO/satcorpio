@@ -34,8 +34,11 @@ function EmberCanvas() {
     }
 
     function draw() {
+      const isMobile = window.innerWidth <= 768;
+      const spawnFrequency = isMobile ? 0.925 : 0.85;
+
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
-      if (Math.random() > 0.85) spawn();
+      if (Math.random() > spawnFrequency) spawn();
       for (let i = embers.length - 1; i >= 0; i--) {
         const e = embers[i];
         e.x += e.dx;
@@ -425,14 +428,52 @@ export default function DysunsRealmPage() {
 
         @media (max-width: 1200px) {
           .dashboard-layout { grid-template-columns: 1fr; }
-          .telemetry-panel { max-width: 800px; margin: 0 auto; }
+          .telemetry-panel { max-width: 800px; margin: 0 auto; width: 100%; }
         }
         @media (max-width: 768px) {
-          .data-row { grid-template-columns: 1fr; }
+          .data-row { grid-template-columns: 1fr 1fr; }
           .target-row { grid-template-columns: 1fr; gap: 12px; }
           .target-status { justify-content: flex-start; }
-          .dashboard-layout { padding-left: 16px; padding-right: 16px; }
+          .dashboard-layout { padding: 80px 16px 32px; gap: 20px; }
           .tactical-nav { left: 16px; }
+          .dysun-title { font-size: 40px; letter-spacing: 3px; }
+          .telemetry-panel { padding: 28px 20px; }
+          .database-panel { padding: 24px 16px; }
+          .cta-grid { gap: 10px; }
+          .cta-primary, .cta-secondary { font-size: 11px; padding: 14px; }
+          .warning-strip { font-size: 9px; padding: 8px 16px; gap: 8px; flex-wrap: wrap; }
+          .dysun-footer { margin: 0 16px 16px; }
+          .footer-content { flex-direction: column; gap: 8px; text-align: center; }
+          .stat-value { font-size: 28px; }
+          .stat-card { padding: 24px 16px; }
+        }
+        @media (max-width: 480px) {
+          .dashboard-layout { padding: 70px 12px 24px; gap: 16px; }
+          .tactical-nav { left: 12px; }
+          .nav-btn { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .dysun-title { font-size: 32px; letter-spacing: 2px; }
+          .realm-text { font-size: inherit; }
+          .hero-desc { font-size: 12px; line-height: 1.7; }
+          .telemetry-panel { padding: 24px 16px; }
+          .telemetry-header { font-size: 9px; letter-spacing: 2px; margin-bottom: 24px; }
+          .data-row { grid-template-columns: 1fr; gap: 12px; }
+          .stat-value { font-size: 24px; }
+          .stat-label { font-size: 9px; }
+          .stat-card { padding: 20px 12px; }
+          .database-panel { padding: 20px 12px; }
+          .db-header { font-size: 10px; letter-spacing: 2px; margin-bottom: 16px; padding-bottom: 12px; }
+          .target-row { padding: 16px; gap: 8px; }
+          .target-name { font-size: 13px; }
+          .target-threat { font-size: 9px; }
+          .target-desc { font-size: 11px; }
+          .target-header { flex-direction: column; gap: 6px; }
+          .gauge-header { font-size: 9px; }
+          .gauge-track { height: 10px; }
+          .cta-primary, .cta-secondary { font-size: 10px; padding: 12px; }
+          .warning-strip { font-size: 8px; padding: 6px 12px; }
+          .warn-close { font-size: 9px; }
+          .dysun-footer { margin: 0 10px 12px; padding: 12px 16px; }
+          .footer-content { font-size: 9px; }
         }
       `}</style>
     </main>

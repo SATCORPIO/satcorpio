@@ -20,10 +20,13 @@ function SnowCanvas() {
     window.addEventListener("resize", resize);
 
     interface Flake { x: number; y: number; r: number; dx: number; dy: number; o: number }
-    const flakes: Flake[] = Array.from({ length: 80 }, () => ({
+    const isMobile = window.innerWidth <= 768;
+    const flakeCount = isMobile ? 30 : 80;
+    
+    const flakes: Flake[] = Array.from({ length: flakeCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: 0.5 + Math.random() * 2.5,
+      r: 0.5 + (Math.random() * (isMobile ? 1.5 : 2.5)),
       dx: (Math.random() - 0.5) * 0.6,
       dy: 0.3 + Math.random() * 1.2,
       o: 0.15 + Math.random() * 0.35,
@@ -34,7 +37,10 @@ function SnowCanvas() {
       for (const f of flakes) {
         f.x += f.dx + Math.sin(f.y * 0.01) * 0.3;
         f.y += f.dy;
-        if (f.y > canvas!.height) { f.y = -5; f.x = Math.random() * canvas!.width; }
+        if (f.y > canvas!.height) { 
+          f.y = -5; 
+          f.x = Math.random() * canvas!.width; 
+        }
         if (f.x > canvas!.width) f.x = 0;
         if (f.x < 0) f.x = canvas!.width;
         ctx!.beginPath();
@@ -383,9 +389,40 @@ export default function FrostheimPage() {
         @media (max-width: 768px) {
           .sensor-readouts { flex-direction: column; gap: 16px; align-items: flex-start; }
           .s-sep { width: 100%; height: 1px; }
-          .dashboard-layout { padding-left: 16px; padding-right: 16px; }
-          .tactical-nav { left: 16px; }
-          .db-table-wrapper { overflow-x: scroll; }
+          .dashboard-layout { padding: 80px 16px 32px; gap: 20px; }
+          .tactical-nav { left: 16px; top: 16px; }
+          .db-table-wrapper { overflow-x: scroll; -webkit-overflow-scrolling: touch; }
+          .frost-title { font-size: 48px; letter-spacing: 4px; }
+          .title-panel { padding: 28px 20px; }
+          .sensor-block { padding: 20px; }
+          .features-block { padding: 20px; }
+          .database-panel { padding: 20px; }
+          .cta-grid { gap: 10px; }
+          .cta-primary, .cta-secondary { font-size: 10px; padding: 14px; }
+          .frost-footer { margin: 0 16px 16px; flex-direction: column; gap: 8px; text-align: center; }
+          .rune-text { font-size: 10px; }
+        }
+        @media (max-width: 480px) {
+          .dashboard-layout { padding: 70px 12px 24px; gap: 16px; }
+          .tactical-nav { left: 12px; top: 12px; }
+          .nav-btn { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .frost-title { font-size: 36px; letter-spacing: 3px; }
+          .hero-desc { font-size: 12px; line-height: 1.7; }
+          .badge { font-size: 7px; letter-spacing: 2px; padding: 3px 10px; }
+          .panel-header { font-size: 9px; letter-spacing: 2px; }
+          .title-panel { padding: 24px 16px; }
+          .s-val { font-size: 14px; }
+          .s-lbl { font-size: 7px; }
+          .s-icon { width: 16px; height: 16px; }
+          .f-title { font-size: 10px; }
+          .f-desc { font-size: 10px; }
+          .db-table th { font-size: 8px; padding: 10px 12px; }
+          .db-table td { padding: 12px; font-size: 10px; }
+          .threat-pip { width: 8px; height: 8px; }
+          .cta-primary, .cta-secondary { font-size: 9px; padding: 12px; }
+          .frost-footer { margin: 0 10px 12px; padding: 12px 16px; }
+          .copyright { font-size: 8px; }
+          .rune-text { font-size: 10px; letter-spacing: 2px; }
         }
       `}</style>
     </main>

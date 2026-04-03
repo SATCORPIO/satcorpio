@@ -381,12 +381,33 @@ export default function KiraPage() {
         @media (max-width: 1024px) {
           .bento-grid { grid-template-columns: repeat(2, 1fr); }
           .bento-card { grid-column: span 1 !important; }
+          .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
-          .capabilities-grid { grid-template-columns: 1fr; }
+          .capabilities-grid { grid-template-columns: 1fr; gap: 16px; }
           .bento-grid { grid-template-columns: 1fr; }
           .title { letter-spacing: 6px; }
-          .kira-footer { flex-direction: column; gap: 10px; text-align: center; }
+          .kira-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
+          .hero { min-height: auto; padding: 60px 16px 40px; }
+          .kira-nav { padding: 16px; }
+          .desc { font-size: 14px; margin-bottom: 24px; }
+          .cap-card { padding: 24px; }
+          .scroll-indicator { margin-top: 40px; }
+        }
+        @media (max-width: 480px) {
+          .title { font-size: 32px; letter-spacing: 4px; }
+          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .desc { font-size: 13px; line-height: 1.7; }
+          .hero { padding: 40px 12px 32px; }
+          .kira-nav { padding: 12px; }
+          .back-link { font-size: 9px; padding: 8px 12px; }
+          .cap-card { padding: 20px; }
+          .cap-header { gap: 12px; margin-bottom: 12px; }
+          .cap-title { font-size: 13px; letter-spacing: 2px; }
+          .cap-desc { font-size: 12px; }
+          .cap-icon-box { padding: 10px; }
+          .kira-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
+          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
         }
       `}</style>
     </main>

@@ -294,22 +294,32 @@ export default function SatcorpHome() {
           .nav-card { min-width: 200px; height: 380px; }
         }
         @media (max-width: 900px) {
-          .dossier-manual { flex-direction: column; height: 800px; }
-          .manual-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); height: 250px; flex: none; }
-          .viewport-content { padding: 32px; }
-          .vh-title { font-size: 24px; }
+          .dossier-manual { flex-direction: column; height: auto; min-height: 600px; }
+          .manual-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); height: auto; max-height: 220px; flex: none; }
+          .viewport-content { padding: 28px; }
+          .vh-title { font-size: 22px; letter-spacing: 2px; }
         }
         @media (max-width: 768px) {
           .topbar { flex-direction: column; gap: 16px; padding: 20px; }
-          .hud-footer { flex-direction: column; gap: 8px; text-align: center; }
+          .hud-footer { flex-direction: column; gap: 8px; text-align: center; margin: 0 10px 10px; padding: 12px 16px; }
           .cards-spatial { flex-direction: column; align-items: center; }
           .nav-card { width: 100%; max-width: 400px; height: 320px; }
-          .hub-title { font-size: 40px; }
-          .spatial-hub { padding: 40px 20px; }
-          .dossier-section { padding: 60px 20px; }
-          .vh-left { flex-direction: column; align-items: flex-start; gap: 16px; }
+          .hub-title { font-size: 36px; letter-spacing: 4px; }
+          .spatial-hub { padding: 20px 12px; }
+          .dossier-section { padding: 60px 16px; }
+          .vh-left { flex-direction: column; align-items: flex-start; gap: 12px; }
           .vh-right { display: none; }
-          .viewport-list li { flex-direction: column; gap: 8px; font-size: 14px; }
+          .viewport-list li { flex-direction: column; gap: 8px; font-size: 13px; padding: 12px 16px; }
+          .scroll-indicator { margin-top: 32px; font-size: 9px; letter-spacing: 2px; }
+        }
+        @media (max-width: 480px) {
+          .hub-title { font-size: 28px; letter-spacing: 3px; }
+          .hub-desc { font-size: 13px; line-height: 1.6; }
+          .hub-badge { font-size: 9px; letter-spacing: 2px; padding: 5px 12px; }
+          .hud-footer { font-size: 8px; letter-spacing: 1px; margin: 0 8px 8px; padding: 10px 12px; border-radius: 8px; }
+          .scroll-indicator { margin-top: 20px; }
+          .dossier-section { padding: 40px 12px; }
+          .spatial-hub { padding: 16px 8px; }
         }
       `}</style>
     </main>

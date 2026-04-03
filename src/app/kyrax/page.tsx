@@ -354,10 +354,32 @@ export default function KyraxPage() {
         .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 8px #A855F7; animation: pulse-glow 1.5s infinite; }
 
         @media (max-width: 768px) {
-          .systems-grid { grid-template-columns: 1fr; }
+          .systems-grid { grid-template-columns: 1fr; gap: 16px; }
           .bento-grid { grid-template-columns: 1fr; }
           .title { font-size: 48px; letter-spacing: 8px; margin-left: 8px; }
-          .kyrax-footer { flex-direction: column; gap: 10px; text-align: center; }
+          .subtitle { font-size: 10px; letter-spacing: 4px; }
+          .kyrax-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
+          .hero { min-height: auto; padding: 60px 16px 40px; }
+          .kyrax-nav { padding: 16px; }
+          .desc { font-size: 14px; margin-bottom: 24px; }
+          .sys-card { padding: 24px; }
+          .scroll-indicator { margin-top: 40px; }
+        }
+        @media (max-width: 480px) {
+          .title { font-size: 36px; letter-spacing: 6px; margin-left: 6px; }
+          .subtitle { font-size: 9px; letter-spacing: 3px; }
+          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .desc { font-size: 13px; line-height: 1.7; }
+          .hero { padding: 40px 12px 32px; }
+          .kyrax-nav { padding: 12px; }
+          .back-link { font-size: 9px; padding: 8px 12px; }
+          .sys-card { padding: 20px; }
+          .sys-header { gap: 12px; margin-bottom: 12px; }
+          .sys-title { font-size: 13px; letter-spacing: 2px; }
+          .sys-desc { font-size: 12px; }
+          .sys-icon-wrap { padding: 10px; }
+          .kyrax-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
+          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
         }
       `}</style>
     </main>

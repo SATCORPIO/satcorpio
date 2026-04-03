@@ -46,7 +46,7 @@ export const navLinks = [
     href: "/anu",
     status: "OPERATIONAL",
     color: "#EAB308",
-    img: "/anu_concierge.png",
+    img: "/satcorp_ultrarealistic_1775186489305.png",
   },
   {
     id: "kyrax",

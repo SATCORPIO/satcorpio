@@ -76,7 +76,7 @@ export default function AnuPage() {
     <main className="anu film-grain">
       {/* ─── High-Fidelity Background ─── */}
       <div className="bg-container">
-        <Image src="/anu_concierge.png" alt="ANU Concierge Lounge" fill priority style={{ objectFit: 'cover' }} />
+        <Image src="/satcorp_ultrarealistic_1775186489305.png" alt="ANU Concierge Lounge" fill priority style={{ objectFit: 'cover' }} />
         <div className="bg-overlay" />
       </div>
 
@@ -294,8 +294,27 @@ export default function AnuPage() {
         @media (max-width: 768px) {
           .capabilities-grid { grid-template-columns: 1fr; }
           .bento-grid { grid-template-columns: 1fr; }
-          .title { font-size: 60px; letter-spacing: 8px; }
-          .anu-footer { flex-direction: column; gap: 10px; text-align: center; }
+          .title { font-size: 48px; letter-spacing: 6px; }
+          .subtitle { font-size: 10px; letter-spacing: 4px; }
+          .anu-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
+          .hero { min-height: auto; padding: 60px 16px 40px; }
+          .anu-nav { padding: 16px; }
+          .desc { font-size: 14px; margin-bottom: 24px; }
+          .scroll-indicator { margin-top: 40px; }
+        }
+        @media (max-width: 480px) {
+          .title { font-size: 36px; letter-spacing: 4px; }
+          .subtitle { font-size: 9px; letter-spacing: 3px; }
+          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .desc { font-size: 13px; line-height: 1.7; }
+          .hero { padding: 40px 12px 32px; }
+          .anu-nav { padding: 12px; }
+          .back-link { font-size: 9px; padding: 8px 12px; }
+          .cap-card { padding: 24px; }
+          .cap-title { font-size: 13px; letter-spacing: 2px; }
+          .cap-desc { font-size: 13px; }
+          .anu-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
+          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
         }
       `}</style>
     </main>

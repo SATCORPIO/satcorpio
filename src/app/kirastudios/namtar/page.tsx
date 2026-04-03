@@ -338,10 +338,39 @@ export default function NamtarPage() {
         @media (max-width: 768px) {
           .survival-hud { grid-template-columns: 1fr; padding: 16px; }
           .hud-list { grid-template-columns: 1fr; gap: 16px; }
-          .stat-grid { grid-template-columns: 1fr; }
-          .features-grid { grid-template-columns: 1fr; }
-          .dashboard-layout { padding-left: 16px; padding-right: 16px; }
-          .tactical-nav { left: 16px; }
+          .stat-grid { grid-template-columns: 1fr 1fr; }
+          .features-grid { grid-template-columns: 1fr; gap: 12px; }
+          .dashboard-layout { padding: 80px 16px 32px; gap: 24px; }
+          .tactical-nav { left: 16px; top: 16px; }
+          .namtar-title { font-size: 48px; letter-spacing: 4px; }
+          .cta-row { flex-direction: column; }
+          .cta-primary, .cta-secondary { font-size: 11px; padding: 14px 24px; }
+          .namtar-footer { margin: 0 16px 16px; flex-direction: column; gap: 8px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+          .dashboard-layout { padding: 70px 12px 24px; gap: 20px; }
+          .tactical-nav { left: 12px; top: 12px; }
+          .nav-btn { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .namtar-title { font-size: 36px; letter-spacing: 3px; }
+          .tagline { font-size: 12px; letter-spacing: 3px; }
+          .hero-desc { font-size: 12px; line-height: 1.7; }
+          .genre-badge { font-size: 8px; letter-spacing: 3px; }
+          .threat-bar { font-size: 8px; padding: 6px 12px; }
+          .panel-header { font-size: 9px; letter-spacing: 2px; margin-bottom: 16px; padding-bottom: 10px; }
+          .survival-hud { padding: 12px; }
+          .hud-val { font-size: 11px; }
+          .stat-grid { grid-template-columns: 1fr; gap: 8px; }
+          .stat-card { padding: 16px; }
+          .stat-num { font-size: 22px; }
+          .stat-label { font-size: 8px; }
+          .section-title { font-size: 22px; letter-spacing: 2px; }
+          .section-desc { font-size: 12px; }
+          .story-panel { padding: 24px 16px; }
+          .feature-card { padding: 20px 16px; }
+          .feature-title { font-size: 11px; }
+          .feature-desc { font-size: 10px; }
+          .cta-primary, .cta-secondary { font-size: 10px; padding: 12px 20px; }
+          .namtar-footer { margin: 0 10px 12px; font-size: 9px; padding: 12px 16px; }
         }
       `}</style>
     </main>

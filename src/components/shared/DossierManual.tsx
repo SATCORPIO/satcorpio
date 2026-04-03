@@ -86,16 +86,10 @@ export function DossierManual({
               exit={{ opacity: 0, scale: 1.02, filter: 'blur(4px)' }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              {/* Unique Background Design based on ID */}
-              <div className="viewport-bg">
-                <div className="bg-gradient" style={{ background: `radial-gradient(circle at 70% 30%, ${activeItem.color}15 0%, transparent 60%)` }} />
-                <activeItem.icon size={400} className="bg-watermark" style={{ color: activeItem.color }} />
-                <div className="bg-grid-overlay" style={{ backgroundImage: `radial-gradient(${activeItem.color}22 1px, transparent 1px)` }} />
-              </div>
-
+              {/* Backgrounds removed for readability */}
               <div className="viewport-header">
                 <div className="vh-left">
-                  <div className="vh-icon-wrap" style={{ color: activeItem.color, borderColor: `${activeItem.color}44`, background: `${activeItem.color}11` }}>
+                  <div className="vh-icon-wrap" style={{ color: activeItem.color }}>
                     <activeItem.icon size={32} />
                   </div>
                   <div className="vh-title-group">
@@ -118,6 +112,8 @@ export function DossierManual({
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.2 + idx * 0.05 }}
+                      style={{ borderLeft: `2px solid ${activeItem.color}66` }}
+                      className="terminal-li"
                     >
                       <span className="li-index" style={{ color: activeItem.color }}>{`[${(idx + 1).toString().padStart(2, '0')}]`}</span>
                       <span className="li-text">{item}</span>
@@ -126,12 +122,6 @@ export function DossierManual({
                 </ul>
               </div>
 
-              <div className="viewport-corners">
-                <div className="vc-tl" style={{ borderColor: activeItem.color }} />
-                <div className="vc-tr" style={{ borderColor: activeItem.color }} />
-                <div className="vc-bl" style={{ borderColor: activeItem.color }} />
-                <div className="vc-br" style={{ borderColor: activeItem.color }} />
-              </div>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -175,9 +165,10 @@ export function DossierManual({
           margin: 0 auto;
           display: flex;
           height: 700px;
-          background: rgba(5,7,12,0.8);
-          border: 1px solid rgba(255,255,255,0.05);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+          background: rgba(4, 6, 12, 0.95);
+          border: 1px solid rgba(255,255,255,0.08);
+          backdrop-filter: blur(12px);
+          box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5);
         }
         
         .manual-sidebar {
@@ -247,8 +238,8 @@ export function DossierManual({
         
         .sidebar-item.active {
           color: white;
-          background: rgba(255,255,255,0.03);
-          border-color: rgba(255,255,255,0.05);
+          background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent);
+          border-color: transparent;
         }
         
         .item-icon-box {
@@ -286,7 +277,7 @@ export function DossierManual({
           flex: 1;
           position: relative;
           overflow: hidden;
-          background: rgba(2,3,5,0.7);
+          background: transparent;
         }
         
         .viewport-content {
@@ -295,39 +286,6 @@ export function DossierManual({
           display: flex;
           flex-direction: column;
           padding: 48px;
-        }
-        
-        .viewport-bg {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          overflow: hidden;
-          pointer-events: none;
-        }
-        
-        .bg-gradient {
-          position: absolute;
-          inset: 0;
-          opacity: 0.8;
-          transition: background 0.5s ease;
-        }
-        
-        .bg-watermark {
-          position: absolute;
-          right: -5%;
-          bottom: -10%;
-          opacity: 0.03;
-          transform: rotate(-15deg);
-          filter: blur(4px);
-        }
-        
-        .bg-grid-overlay {
-          position: absolute;
-          inset: 0;
-          background-size: 30px 30px;
-          opacity: 0.5;
-          mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
-          -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
         }
         
         .viewport-header {
@@ -348,10 +306,10 @@ export function DossierManual({
         }
         
         .vh-icon-wrap {
-          border: 1px solid;
-          padding: 16px;
-          border-radius: 8px;
-          box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         .vh-title-group {
@@ -426,18 +384,24 @@ export function DossierManual({
           gap: 16px;
         }
         
-        .viewport-list li {
+        .terminal-li {
           display: flex;
           align-items: flex-start;
           gap: 16px;
           font-size: 15px;
           line-height: 1.6;
-          color: rgba(255,255,255,0.8);
-          background: rgba(0,0,0,0.3);
-          padding: 16px 20px;
-          border-radius: 6px;
-          border: 1px solid rgba(255,255,255,0.03);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+          color: rgba(255,255,255,0.9);
+          background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+          padding: 12px 20px;
+          border-radius: 0 4px 4px 0;
+          border: 1px solid rgba(255,255,255,0.02);
+          border-left: none; /* Handled inline via activeItem.color */
+          transition: all 0.2s;
+        }
+        
+        .terminal-li:hover {
+          background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+          transform: translateX(4px);
         }
         
         .li-index {
@@ -451,29 +415,84 @@ export function DossierManual({
           flex: 1;
         }
         
-        .viewport-corners div {
-          position: absolute;
-          width: 30px;
-          height: 30px;
-          opacity: 0.4;
-          z-index: 20;
-        }
-        
-        .vc-tl { top: 20px; left: 20px; border-top: 2px solid; border-left: 2px solid; }
-        .vc-tr { top: 20px; right: 20px; border-top: 2px solid; border-right: 2px solid; }
-        .vc-bl { bottom: 20px; left: 20px; border-bottom: 2px solid; border-left: 2px solid; }
-        .vc-br { bottom: 20px; right: 20px; border-bottom: 2px solid; border-right: 2px solid; }
 
         @media (max-width: 900px) {
-          .dossier-manual { flex-direction: column; height: 800px; }
-          .manual-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); height: 250px; flex: none; }
-          .viewport-content { padding: 32px; }
-          .vh-title { font-size: 24px; }
+          .dossier-section { padding: 60px 20px; }
+          .dossier-title { font-size: 24px; letter-spacing: 4px; }
+          .dossier-subtitle { font-size: 9px; letter-spacing: 3px; }
+          .dossier-header { margin-bottom: 40px; gap: 12px; }
+          .dossier-line { height: 28px; }
+
+          .dossier-manual { flex-direction: column; height: auto; min-height: 550px; }
+          .manual-sidebar {
+            width: 100%; border-right: none;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            height: auto; max-height: 200px; flex: none;
+          }
+          .sidebar-nav { flex-direction: row; flex-wrap: wrap; gap: 4px; padding: 8px; }
+          .sidebar-item { padding: 8px 12px; gap: 10px; }
+          .item-label { font-size: 11px; }
+          
+          .viewport-content { padding: 28px; position: relative; }
+          .vh-title { font-size: 22px; letter-spacing: 2px; }
+          .viewport-header { flex-direction: column; gap: 16px; }
         }
         @media (max-width: 768px) {
-          .vh-left { flex-direction: column; align-items: flex-start; gap: 16px; }
+          .dossier-section { padding: 48px 16px; }
+          .dossier-title { font-size: 20px; letter-spacing: 3px; }
+          .dossier-header { margin-bottom: 32px; }
+
+          .dossier-manual { min-height: auto; }
+          .manual-sidebar { max-height: 180px; }
+          .sidebar-header { padding: 16px; }
+          .sidebar-title { font-size: 9px; }
+          .sidebar-nav { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+          .sidebar-item { white-space: nowrap; flex-shrink: 0; padding: 8px 10px; }
+          .item-label { font-size: 10px; letter-spacing: 0.5px; }
+          .item-icon-box { display: none; }
+
+          .viewport-content { padding: 20px; }
+          .vh-left { flex-direction: column; align-items: flex-start; gap: 12px; }
+          .vh-icon-wrap { padding: 12px; }
+          .vh-title { font-size: 18px; letter-spacing: 1px; }
+          .vh-sub { font-size: 9px; letter-spacing: 2px; }
           .vh-right { display: none; }
-          .viewport-list li { flex-direction: column; gap: 8px; font-size: 14px; }
+          
+          .data-readout { font-size: 10px; padding-left: 10px; }
+          .viewport-list { gap: 12px; }
+          .terminal-li {
+            flex-direction: column; gap: 6px;
+            font-size: 13px; padding: 12px 16px;
+          }
+          .li-index { font-size: 11px; }
+
+          .viewport-corners div { width: 16px; height: 16px; }
+          .vc-tl { top: 10px; left: 10px; }
+          .vc-tr { top: 10px; right: 10px; }
+          .vc-bl { bottom: 10px; left: 10px; }
+          .vc-br { bottom: 10px; right: 10px; }
+        }
+        @media (max-width: 480px) {
+          .dossier-section { padding: 32px 10px; }
+          .dossier-title { font-size: 16px; letter-spacing: 2px; }
+          .dossier-subtitle { font-size: 8px; letter-spacing: 2px; }
+          .dossier-line { height: 20px; }
+          .dossier-header { margin-bottom: 24px; }
+
+          .manual-sidebar { max-height: 160px; }
+          .sidebar-header { padding: 12px; gap: 8px; }
+          .sidebar-item { padding: 6px 8px; }
+          .item-label { font-size: 9px; }
+          .active-indicator { width: 2px; }
+
+          .viewport-content { padding: 16px; }
+          .vh-icon-wrap { padding: 10px; border-radius: 6px; }
+          .vh-title { font-size: 15px; }
+          .vh-sub { font-size: 8px; }
+          .data-readout { font-size: 9px; }
+          .terminal-li { font-size: 12px; padding: 10px 12px; }
+          .li-index { font-size: 10px; }
+
         }
       `}</style>
     </section>

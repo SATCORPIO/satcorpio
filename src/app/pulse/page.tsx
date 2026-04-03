@@ -362,10 +362,32 @@ export default function PulsePage() {
           .bento-card { grid-column: span 1 !important; }
         }
         @media (max-width: 768px) {
-          .services-grid { grid-template-columns: 1fr; }
+          .services-grid { grid-template-columns: 1fr; gap: 16px; }
           .bento-grid { grid-template-columns: 1fr; }
-          .title { font-size: 60px; letter-spacing: 8px; }
-          .pulse-footer { flex-direction: column; gap: 10px; text-align: center; }
+          .title { font-size: 52px; letter-spacing: 8px; }
+          .subtitle { font-size: 9px; letter-spacing: 5px; }
+          .pulse-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
+          .hero { padding: 60px 16px 40px; }
+          .pulse-nav { padding: 16px; }
+          .desc { font-size: 14px; margin-bottom: 24px; }
+          .svc-card { padding: 24px 20px; }
+          .scroll-indicator { margin-top: 40px; }
+        }
+        @media (max-width: 480px) {
+          .title { font-size: 40px; letter-spacing: 6px; }
+          .subtitle { font-size: 8px; letter-spacing: 3px; }
+          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .desc { font-size: 13px; line-height: 1.7; }
+          .hero { padding: 40px 12px 32px; }
+          .pulse-nav { padding: 12px; }
+          .back-link { font-size: 9px; padding: 8px 12px; }
+          .svc-card { padding: 20px 16px; }
+          .svc-header { gap: 12px; margin-bottom: 12px; }
+          .svc-title { font-size: 12px; letter-spacing: 1.5px; }
+          .svc-desc { font-size: 12px; }
+          .svc-icon-box { padding: 10px; }
+          .pulse-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
+          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
         }
       `}</style>
     </main>
