@@ -5,7 +5,6 @@ import { ChevronDown, ChevronLeft, ChevronRight, MessageSquare } from "lucide-re
 import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
 import Image from "next/image";
 
-import { TacticalHeader } from "@/components/shared/TacticalHeader";
 import { SpatialCard } from "@/components/shared/SpatialCard";
 import { DossierManual } from "@/components/shared/DossierManual";
 import { DiscordButton } from "@/components/shared/DiscordButton";
@@ -90,11 +89,14 @@ export default function SatcorpHome() {
       <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(0,255,65,0.1) 0%, transparent 70%)', top: '10%', left: '20%', position: 'fixed' }} />
       <div className="volumetric-flare" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)', bottom: '10%', right: '10%', position: 'fixed' }} />
 
-      {/* ─── TOP BAR ─── */}
-      <TacticalHeader />
+      {/* ─── BANNER HEADER ─── */}
+      <div className="banner-header">
+        <Image src="/004.png" alt="SATCORP Banner" width={1920} height={400} priority className="banner-img" />
+      </div>
+
 
       {/* ─── Spatial Hub (Viewport 1) ─── */}
-      <section className="spatial-hub" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <section className="spatial-hub" style={{ minHeight: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
 
 
         {/* ─── Floating Cards 3D Wheel ─── */}
@@ -178,6 +180,27 @@ export default function SatcorpHome() {
           position: relative;
           color: white;
           overflow-x: hidden;
+        }
+
+        .banner-header {
+          position: relative;
+          z-index: 100;
+          width: 100%;
+          max-width: 1200px;
+          margin: 20px auto 0;
+          padding: 0 20px;
+          animation: fade-in 1s ease-out;
+        }
+        .banner-img {
+          width: 100%;
+          height: auto;
+          display: block;
+          object-fit: contain;
+          filter: drop-shadow(0 0 30px rgba(0,255,65,0.15));
+        }
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .hub-bg {

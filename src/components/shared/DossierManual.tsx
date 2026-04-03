@@ -105,8 +105,7 @@ export function DossierManual({
                   </div>
                 </div>
                 <div className="vh-right">
-                  <div className="vh-class">CLASSIFIED LEVEL 5</div>
-                  <div className="vh-id" style={{ color: activeItem.color }}>REF: {terminalPrefix}-{activeItem.id.toUpperCase()}-00{suffix || "..."}</div>
+                  {/* Indicators removed per protocol update */}
                 </div>
               </div>
 

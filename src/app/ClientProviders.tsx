@@ -49,11 +49,22 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   const getInsights = () => interactions;
 
   const initSystem = async () => {
+    if (audioReady) return;
     await AudioEngine.init();
     setAudioReady(true);
     setShowConsent(false);
     AudioEngine.startHum();
   };
+
+  useEffect(() => {
+    // Attempt automatic initialization (may be blocked by browser until first click)
+    const handleInitialClick = () => {
+      initSystem();
+      window.removeEventListener("click", handleInitialClick);
+    };
+    window.addEventListener("click", handleInitialClick);
+    return () => window.removeEventListener("click", handleInitialClick);
+  }, [audioReady]);
 
   return (
     <ClientContext.Provider value={{
@@ -65,20 +76,6 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
       registerVisit,
       getInsights,
     }}>
-      {showConsent && (
-        <div className="fixed inset-0 z-[9999] bg-[#030508] bg-opacity-95 flex flex-col items-center justify-center font-mono">
-          <div className="border border-[#00ff41] border-opacity-30 p-8 rounded bg-[#00ff41] bg-opacity-5 flex flex-col items-center max-w-md text-center">
-            <h2 className="text-[#00ff41] font-bold tracking-[6px] mb-4 text-xl">INITIALIZE SYSTEM?</h2>
-            <p className="text-gray-400 text-[10px] tracking-widest mb-8 uppercase">Activation requires Audio & Sensory protocols.</p>
-            <button 
-              onClick={initSystem}
-              className="px-6 py-3 border border-[#00ff41] text-[#00ff41] hover:bg-[#00ff41] hover:text-black transition-all font-bold tracking-widest text-xs uppercase"
-            >
-              [ ACCEPT & PROCEED ]
-            </button>
-          </div>
-        </div>
-      )}
       {children}
     </ClientContext.Provider>
   );
