@@ -121,7 +121,8 @@ export function DiscordButton({
       <style jsx>{`
         .premium-uplink {
           position: relative;
-          display: block;
+          display: inline-block;
+          width: fit-content;
           min-width: 260px;
           padding: 1px; /* Border gap */
           text-decoration: none;
