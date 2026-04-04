@@ -331,11 +331,16 @@ export const HeroGlobe = () => {
 
   return (
     <div className="hero-globe-container">
+      <div className="globe-fallback" style={{ zIndex: -1, opacity: 0.5 }} />
+      
+      {/* ─── TACTICAL BACKGROUND LAYER ─── */}
+      <div className="tactical-bg" />
+
       <Suspense fallback={<div className="globe-fallback" />}>
         <Canvas 
           gl={{ antialias: !isMobile, alpha: true, powerPreference: "high-performance" }} 
           camera={{ position: [0, -0.1, 2.5], fov: 45 }}
-          style={{ background: 'transparent' }}
+          style={{ background: 'transparent', zIndex: 1 }}
           dpr={isMobile ? [1, 1.5] : [1, 2]}
         >
           <color attach="background" args={["#000000"]} />
@@ -387,13 +392,26 @@ export const HeroGlobe = () => {
           background: #000000;
           overflow: hidden;
         }
+        .tactical-bg {
+          position: absolute;
+          inset: 0;
+          background: url('/tactical_hub_bg.png') center/cover no-repeat;
+          opacity: 0.3;
+          z-index: -1;
+          filter: brightness(0.8) contrast(1.1) saturate(0.8);
+          animation: slow-zoom 60s ease-in-out infinite alternate;
+        }
+        @keyframes slow-zoom {
+          from { transform: scale(1); }
+          to { transform: scale(1.1); }
+        }
         .globe-fallback {
           position: absolute;
           inset: 0;
           background: url('/globe_tactical.png') center/contain no-repeat;
           background-color: #020508;
           opacity: 1;
-          z-index: -1;
+          z-index: -2;
         }
       `}</style>
     </div>

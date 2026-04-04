@@ -1,16 +1,19 @@
 "use client";
 
+import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-import DivisionCarousel from "@/components/DivisionCarousel";
+import { SpatialCard } from "@/components/shared/SpatialCard";
+import { navLinks } from "@/data/dossier";
 import OperationsSection from "@/components/OperationsSection";
 import { HeroGlobe } from "@/components/HeroGlobe";
 import { useClientCore } from "@/app/ClientProviders";
 
 export default function SatcorpHome() {
   const { playClick, playHover } = useClientCore();
+  const [hoveredCard, setHoveredCard] = React.useState<string | null>(null);
 
   const scrollToDossier = () => {
     playClick();
@@ -22,14 +25,21 @@ export default function SatcorpHome() {
       {/* ─── WebGL Hero Scene (Background) ─── */}
       <HeroGlobe />
 
-      {/* ─── BANNER HEADER REMOVED ─── */}
-
-
       {/* ─── Spatial Hub (Viewport 1) ─── */}
-      <section className="spatial-hub" style={{ minHeight: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
-
-
-        <DivisionCarousel />
+      <section className="spatial-hub pt-32 pb-20 relative z-10">
+        <div className="max-w-[1400px] mx-auto px-8">
+          <div className="cards-spatial">
+            {navLinks.map((link, idx) => (
+              <SpatialCard 
+                key={link.id}
+                {...link}
+                index={idx}
+                isActive={hoveredCard === link.id}
+                onHover={() => setHoveredCard(link.id)}
+              />
+            ))}
+          </div>
+        </div>
 
         <motion.div 
           className="scroll-indicator"

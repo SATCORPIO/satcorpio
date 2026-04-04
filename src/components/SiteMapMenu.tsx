@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X, MessageSquare, ExternalLink, ShieldCheck, ShoppingCart } from "lucide-react";
 import { useClientCore } from "@/app/ClientProviders";
+import { dossierData } from "@/data/dossier";
 
 interface SiteMapMenuProps {
   isOpen: boolean;
@@ -150,7 +151,7 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
             </div>
 
             {/* ─── CONTENT GRID ─── */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-1 overflow-y-auto pr-4 custom-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 flex-1 overflow-y-auto pr-4 custom-scrollbar">
               {MENU_STRUCTURE.map((section, idx) => (
                 <motion.div 
                   key={idx}
@@ -175,7 +176,7 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                               className={`text-lg md:text-xl font-orbitron tracking-widest transition-all ${isActive ? 'text-cyan-400 glow-cyan' : isComingSoon ? 'text-white/20 cursor-not-allowed' : 'text-white/60 hover:text-white hover:translate-x-2'}`}
                             >
                               {link.label}
-                              {isActive && <span className="ml-3 text-[10px] animate-pulse">●</span>}
+                              {isActive && <span className="ml-3 text-[10px] font-mono text-cyan-400 animate-pulse text-[8px] tracking-[2px]"> // LOCATED</span>}
                             </Link>
                             
                             {link.discord && (
@@ -187,7 +188,7 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                                 onClick={playClick}
                                 className="flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded text-[9px] font-mono text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/40 transition-all"
                               >
-                                <MessageSquare size={10} /> DISCORD
+                                <MessageSquare size={10} /> {link.label.split(' ')[0]} UPLINK
                               </a>
                             )}
                           </div>
@@ -205,6 +206,7 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                                       className={`text-sm tracking-widest transition-all ${isSubActive ? 'text-cyan-400' : 'text-white/40 hover:text-white'}`}
                                     >
                                       {sub.label}
+                                      {isSubActive && <span className="ml-2 text-[8px] text-cyan-400 opacity-60">// ACTIVE</span>}
                                     </Link>
                                     {sub.discord && (
                                       <a 
@@ -212,6 +214,7 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="text-white/20 hover:text-blue-400 transition-colors"
+                                        title={`${sub.label} Discord`}
                                       >
                                         <MessageSquare size={12} />
                                       </a>
@@ -227,6 +230,31 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                   </div>
                 </motion.div>
               ))}
+
+              {/* ─── PHASE 4: STRATEGIC SERVICES INDEX ─── */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex flex-col gap-8"
+              >
+                <h3 className="text-[10px] font-mono tracking-[4px] text-white/40 uppercase border-l-2 border-white/10 pl-4">STRATEGIC INDEX</h3>
+                <div className="flex flex-col gap-4">
+                  {dossierData.map((item, idx) => (
+                    <div key={idx} className="flex flex-col gap-1 py-2 border-b border-white/5 last:border-0 group cursor-default">
+                      <div className="flex items-center gap-3">
+                        <item.icon size={12} className="text-white/20 group-hover:text-white transition-colors" />
+                        <span className="text-[10px] font-orbitron tracking-widest text-white/60 group-hover:text-white transition-colors">
+                          {item.title}
+                        </span>
+                      </div>
+                      <span className="text-[8px] font-mono text-white/20 ml-6 tracking-tight group-hover:text-cyan-400/40 transition-colors">
+                        CID: {item.id.toUpperCase()} // STRAT_MOD_{idx + 100}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
 
             {/* ─── FOOTER ─── */}
