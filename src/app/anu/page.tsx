@@ -20,11 +20,7 @@ export default function AnuPage() {
         <div className="crosshatch-grid" />
       </div>
 
-      <nav className="anu-nav">
-        <Link href="/" className="back-link spatial-panel">
-          <ChevronLeft size={16} /> <span className="bl-text">RETURN TO HUB</span>
-        </Link>
-      </nav>
+      {/* Local nav removed in favor of global header */}
 
       <section className="hero">
         <div className="hero-inner">
@@ -106,7 +102,6 @@ export default function AnuPage() {
 
       <footer className="anu-footer spatial-panel">
         <span>ANU © {new Date().getFullYear()} — SATCORP CONCIERGE</span>
-        <span className="clearance-level">LEVEL 4 CLEARANCE</span>
       </footer>
 
       <style jsx>{`

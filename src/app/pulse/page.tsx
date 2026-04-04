@@ -22,11 +22,8 @@ export default function PulsePage() {
         <div className="noise-overlay" />
       </div>
 
-      <nav className="pulse-nav">
-        <Link href="/" className="back-link spatial-panel">
-          <ChevronLeft size={16} className="text-[#22D3EE]" /> <span className="bl-text">RETURN TO HUB</span>
-        </Link>
-        
+      {/* Local nav removed in favor of global header */}
+      <div className="pulse-status-bar">
         <div className="now-broadcasting">
           <div className="broadcast-indicator">
             <span className="indicator-dot"></span>
@@ -39,9 +36,8 @@ export default function PulsePage() {
              <div className="bar"></div>
              <div className="bar"></div>
           </div>
-          <span className="broadcast-label">NOW BROADCASTING // SAT-COMM</span>
         </div>
-      </nav>
+      </div>
 
       <section className="hero">
         <div className="hero-inner">
@@ -127,10 +123,8 @@ export default function PulsePage() {
       </div>
 
       <footer className="pulse-footer spatial-panel">
-        <span>PULSE © {new Date().getFullYear()} — SATCORP ENGINEERING</span>
-        <span className="system-perf">
-          FPS: 144 <span className="separator">|</span> LATENCY: ~12ms
-        </span>
+        <span>PULSE © {new Date().getFullYear()}</span>
+        <span className="now-broadcasting">NETWORK SIGNAL: ONLINE</span>
       </footer>
 
       <style jsx>{`

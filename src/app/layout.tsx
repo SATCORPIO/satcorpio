@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Orbitron, Share_Tech_Mono } from "next/font/google";
 import { ClientProviders } from "./ClientProviders";
 import { FloatingActions } from "@/components/shared/FloatingActions";
+import { Header } from "@/components/Header";
 import "./globals.css";
 import "../styles/tokens.css";
 import "../../styles/animations.css";
@@ -46,7 +47,7 @@ export default function RootLayout({
     <html lang="en" className={`${orbitron.variable} ${shareTechMono.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#050A0F] text-white antialiased">
         <ClientProviders>
-          <FloatingActions />
+          <Header />
           {children}
         </ClientProviders>
       </body>

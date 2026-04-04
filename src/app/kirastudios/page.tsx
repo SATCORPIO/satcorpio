@@ -43,11 +43,7 @@ export default function KiraPage() {
       </div>
       <div className="bg-vignette" />
 
-      <nav className="kira-nav">
-        <Link href="/" className="back-link spatial-panel">
-          <ChevronLeft size={16} /> <span className="bl-text">RETURN TO HUB</span>
-        </Link>
-      </nav>
+      {/* Local nav removed in favor of global header */}
 
       <section className="hero">
         <div className="hero-inner">
@@ -164,8 +160,7 @@ export default function KiraPage() {
       </div>
 
       <footer className="kira-footer spatial-panel">
-        <span>KI-RA © {new Date().getFullYear()} — SATCORP CREATIVE</span>
-        <span className="clearance-level">RENDERING OK</span>
+        <span>KI-RA STUDIOS © {new Date().getFullYear()}</span>
       </footer>
 
       <style jsx>{`

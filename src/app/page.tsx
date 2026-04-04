@@ -22,17 +22,7 @@ export default function SatcorpHome() {
       {/* ─── WebGL Hero Scene (Background) ─── */}
       <HeroGlobe />
 
-      {/* ─── BANNER HEADER ─── */}
-      <div className="banner-header">
-        <Image 
-          src="/004cc.PNG" 
-          alt="SATCORP Banner" 
-          width={800} 
-          height={270} 
-          priority 
-          className="banner-img"
-        />
-      </div>
+      {/* ─── BANNER HEADER REMOVED ─── */}
 
 
       {/* ─── Spatial Hub (Viewport 1) ─── */}
@@ -60,7 +50,6 @@ export default function SatcorpHome() {
       <footer className="hud-footer spatial-panel">
         <span>CLASSIFICATION: COMMAND ARCHITECTURE</span>
         <span>SATCORP © {new Date().getFullYear()}</span>
-        <span className="alert-text">RESTRICTED DOSSIER LOGGED</span>
       </footer>
 
       <style jsx>{`

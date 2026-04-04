@@ -53,6 +53,11 @@ export const DossierSection: React.FC<DossierSectionProps> = ({
         </div>
 
         <div className="terminal-body">
+          {/* ─── Faded Watermark ─── */}
+          <div className="terminal-watermark">
+            RECONSTRUCTION // v3.5
+          </div>
+
           <div className="body-grid">
             {/* Left Column: Indexed Entries */}
             <div className="entry-column">
@@ -179,6 +184,23 @@ export const DossierSection: React.FC<DossierSectionProps> = ({
 
         .terminal-body {
           padding: 40px;
+          position: relative;
+        }
+
+        .terminal-watermark {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(-5deg);
+          font-family: var(--font-orbitron), sans-serif;
+          font-size: clamp(40px, 8vw, 70px);
+          font-weight: 900;
+          color: white;
+          opacity: 0.03;
+          pointer-events: none;
+          white-space: nowrap;
+          z-index: 0;
+          letter-spacing: 20px;
         }
 
         .body-grid {

@@ -22,11 +22,7 @@ export default function KyraxPage() {
         <MatrixFallingCode color="#A855F7" alpha={0.03} />
       </div>
 
-      <nav className="kyrax-nav">
-        <Link href="/" className="back-link spatial-panel">
-          <ChevronLeft size={16} /> <span className="bl-text">DISCONNECT</span>
-        </Link>
-      </nav>
+      {/* Local nav removed in favor of global header */}
 
       <section className="hero">
         <div className="hero-inner">
@@ -61,12 +57,7 @@ export default function KyraxPage() {
             <ChevronDown size={18} className="bounce-arrow" />
           </motion.div>
 
-          <DiscordButton 
-            href="https://discord.gg/KqphHMq6vS"
-            variant="purple"
-            label="KYRAX DISCORD"
-            className="discord-link-absolute"
-          />
+          {/* ─── DISCORD MOVED TO MENU ─── */}
         </div>
       </section>
 
@@ -114,7 +105,7 @@ export default function KyraxPage() {
       </div>
 
       <footer className="kyrax-footer spatial-panel">
-        <span>KYRAX © {new Date().getFullYear()} — SATCORP INTELLIGENCE</span>
+        <span>KYRAX © {new Date().getFullYear()}</span>
         <span className="network-status">
           <span className="pulse-dot" /> NEURAL NETWORK: STABLE
         </span>
