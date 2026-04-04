@@ -7,20 +7,21 @@ import { ChevronLeft } from "lucide-react";
 
 /* ─── HELPER COMPONENTS ─────────────────────────── */
 
-function KyraxAvatar({ className }: { className?: string }) {
+function KyraxAvatar({ className, style }: { className?: string, style?: React.CSSProperties }) {
   return (
-    <img src="/wolf.png" alt="KYRAX" className={className} />
+    <img src="/wolf.png" alt="KYRAX" className={className} style={style} />
   );
 }
 
 const BOOT_LOG_LINES = [
-    {text:'> SATCORP MAINFRAME ONLINE', cls:'ok', delay:1000, dur:600, ch:26},
-    {text:'> KYRAX v4.2.1 — LOADING AI CORE...', cls:'', delay:2000, dur:700, ch:36},
-    {text:'> NAMTAR ENVIRONMENT: LOADED', cls:'ok', delay:3000, dur:600, ch:28},
-    {text:'> SURVIVOR DATABASE: INITIALIZING', cls:'', delay:4000, dur:700, ch:33},
-    {text:'> SERVER CALIBRATION MODULE: ACTIVE', cls:'ok', delay:5000, dur:750, ch:35},
-    {text:'> DISCORD RELAY: STANDBY', cls:'warn', delay:6000, dur:600, ch:24},
-    {text:'> KYRAX: Survivor. Your arrival was expected.', cls:'kyrax-line', delay:7000, dur:900, ch:45},
+    {text:'> SATCORP MAINFRAME ONLINE', cls:'ok', delay:700, dur:600, ch:26},
+    {text:'> KYRAX v4.2.1 — LOADING AI CORE...', cls:'', delay:1400, dur:700, ch:36},
+    {text:'> NAMTAR ENVIRONMENT: LOADED', cls:'ok', delay:2200, dur:600, ch:28},
+    {text:'> SURVIVOR DATABASE: INITIALIZING', cls:'', delay:2900, dur:700, ch:33},
+    {text:'> SERVER CALIBRATION MODULE: ACTIVE', cls:'ok', delay:3600, dur:750, ch:35},
+    {text:'> DISCORD RELAY: CONNECTED', cls:'ok', delay:4300, dur:600, ch:26},
+    {text:'> [ ALERT ] NAMTAR ASCENSION DETECTED', cls:'warn', delay:5200, dur:800, ch:37},
+    {text:'> SYSTEM CALIBRATION: READY', cls:'ok', delay:6200, dur:700, ch:27},
 ];
 
 /* ─── MAIN COMPONENT ───────────────────────────── */
@@ -43,7 +44,7 @@ export default function NamtarSurveyPage() {
         if (!isBooting) return;
         
         let startTime = Date.now();
-        let bootDuration = 8000;
+        let bootDuration = 8400;
         
         const pctInterval = setInterval(() => {
             const elapsed = Date.now() - startTime;
@@ -155,17 +156,13 @@ export default function NamtarSurveyPage() {
         if (isBooting) return;
         const handleScroll = () => {
             const y = window.scrollY;
-            const jFar = document.getElementById('jungle-far');
-            const jMid = document.getElementById('jungle-mid');
             const f1 = document.getElementById('fog1');
             const f2 = document.getElementById('fog2');
-            const trex = document.getElementById('trex');
+            const f3 = document.getElementById('fog3');
             
-            if (jFar) jFar.style.transform = `translateY(${y*0.05}px)`;
-            if (jMid) jMid.style.transform = `translateY(${y*0.08}px)`;
             if (f1) f1.style.transform = `translateY(${y*0.04}px)`;
             if (f2) f2.style.transform = `translateY(${y*0.06}px)`;
-            if (trex) trex.style.transform = `translateY(${y*0.07}px)`;
+            if (f3) f3.style.transform = `translateY(${y*0.08}px)`;
 
             const total = document.documentElement.scrollHeight - window.innerHeight;
             const prog = document.getElementById('progress-bar');
@@ -213,48 +210,67 @@ export default function NamtarSurveyPage() {
         setIsSubmitting(true);
         setSubmitErr("");
 
-        const sectionMap: any = {
-            'q1':'Survivor Name', 'q2':'Platform', 'q3':'Play Time/Week', 'q4':'Playstyle',
-            'q5':'Server Mode', 'q6':'ORP Preference', 'q7':'Wipe Schedule', 'q8':'Map Setup',
-            'q9':'Starting Map', 'q9-other':'Starting Map (Other)',
-            'q10':'Harvest Rates', 'q11':'Taming Speed', 'q12':'Breeding Speed',
-            'q13':'XP Rate', 'q14':'Imprint Settings', 'q15':'Dino Difficulty',
-            'q16':'QoL Features', 'q17':'Mod Volume', 'q18':'Mod Categories',
-            'q19':'Economy Participation', 'q20':'World Events',
-            'q21':'Community Size', 'q22':'Rule Strictness',
-            'q23':'Long-Term Engagement', 'q24':'Leaving Factors',
-            'q25':'Interest Rating (1-10)', 'q26':'Join At Launch?', 'q27':'Additional Comments',
-            'q-bonus':'Elite Credentials'
+        const sectionMap1: any = {
+            'q1':'Survivor Name','q2':'Platform','q3':'Play Time/Week','q4':'Playstyle',
+            'q5':'Server Mode','q6':'ORP Preference','q7':'Wipe Schedule','q8':'Map Setup',
+            'q8-maps':'Cluster Maps','q8-custom-map':'Custom Map Suggestion',
+            'q9':'Starting Map','q9-other':'Starting Map (Other)',
+            'q10':'Harvest Rates','q10-custom':'Harvest Custom','q11':'Taming Speed',
+            'q12':'Breeding','q13':'XP Rate','q14':'Imprint Settings','q15':'Dino Difficulty'
         };
 
-        const fields = Object.entries(sectionMap).map(([key, label]) => {
-            let val = formData[key];
-            if (Array.isArray(val)) val = val.join(', ');
-            return val ? { name: label as string, value: String(val).substring(0, 1024), inline: false } : null;
-        }).filter(f => f !== null);
+        const sectionMap2: any = {
+            'q16':'QoL Features','q16-open':'QoL Mandatory',
+            'q17':'Mod Volume','q18':'Mod Categories','q18-open':'Specific Mods',
+            'q19':'Economy Participation','q20':'World Events',
+            'q21':'Community Size','q22':'Rule Strictness',
+            'q23':'Stays Long-Term For','q24':'Leaves Server For',
+            'q25':'Interest Rating (1–10)','q26':'Join At Launch?',
+            'q27':'Additional Comments','q-bonus':'Elite Credentials'
+        };
 
-        const chunks = [];
-        for (let i = 0; i < fields.length; i += 20) {
-            chunks.push(fields.slice(i, i + 20));
-        }
+        const buildFields = (map: any) => {
+            return Object.entries(map)
+                .filter(([key]) => formData[key])
+                .map(([key, label]) => {
+                    let val = formData[key];
+                    if (Array.isArray(val)) val = val.join(', ');
+                    return {
+                        name: label as string,
+                        value: String(val).substring(0, 1024),
+                        inline: false
+                    };
+                });
+        };
 
-        const payloads = chunks.map((ch, idx) => ({
-            username: 'KYRAX // SATCORP AI',
-            avatar_url: 'https://i.imgur.com/4M34hi2.png',
-            embeds: [{
-                title: idx === 0 ? `⚡ NAMTAR SURVEY — ${formData.q1 || 'Survivor'}` : `⚡ NAMTAR SURVEY PART ${idx+1}`,
-                description: idx === 0 ? `Survivor registration received.\n**Date:** ${new Date().toLocaleString()}` : "Continued...",
-                color: 0x00E5CC,
-                fields: ch,
-                footer: { text: 'Ki-Ra Studios | NAMTAR Calibration' }
-            }]
-        }));
+        const payloads = [
+            {
+                username: 'KYRAX // SATCORP AI',
+                embeds: [{
+                    title: `⚡ NAMTAR SURVEY — ${formData.q1 || 'Survivor'} [1/2]`,
+                    description: `New survivor registration received.\n**Submitted:** ${new Date().toLocaleString()}`,
+                    color: 0x00E5CC,
+                    fields: buildFields(sectionMap1),
+                    footer: { text: 'Ki-Ra Studios | NAMTAR Calibration - Profile' }
+                }]
+            },
+            {
+                username: 'KYRAX // SATCORP AI',
+                embeds: [{
+                    title: `⚡ NAMTAR SURVEY — ${formData.q1 || 'Survivor'} [2/2]`,
+                    color: 0xFF6B1A,
+                    fields: buildFields(sectionMap2),
+                    footer: { text: 'Ki-Ra Studios | NAMTAR Calibration - Systems' }
+                }]
+            }
+        ];
 
         let success = true;
         for (const p of payloads) {
             try {
                 const res = await fetch(hook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) });
                 if (!res.ok) success = false;
+                await new Promise(resolve => setTimeout(resolve, 600)); // Rate limit safety
             } catch (err) { success = false; }
         }
 
@@ -267,413 +283,971 @@ export default function NamtarSurveyPage() {
         }
     };
 
-    if (isBooting) {
-        return (
-            <div id="boot-screen">
-                <div id="boot-bg"></div>
-                <svg id="boot-jungle" viewBox="0 0 1400 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                    <path d="M0 320 L0 200 Q40 140 80 180 Q120 110 170 165 Q210 90 260 150 Q310 70 360 135 Q400 60 450 125 Q500 45 555 115 Q600 50 655 120 Q700 55 755 122 Q800 65 855 128 Q900 75 950 135 Q1000 90 1050 148 Q1100 105 1155 162 Q1200 125 1255 178 Q1300 148 1360 188 Q1385 172 1400 195 L1400 320 Z" fill="#010c05"/>
-                    <path d="M0 320 L0 235 Q50 195 100 220 Q160 180 215 210 Q270 165 325 200 Q380 155 440 192 Q495 150 555 188 Q610 148 670 185 Q725 150 785 186 Q840 155 900 190 Q955 158 1015 192 Q1070 160 1130 194 Q1185 165 1245 198 Q1300 170 1360 200 Q1385 190 1400 205 L1400 320 Z" fill="#000a04"/>
-                    <path d="M0 320 L0 275 Q100 255 200 270 Q300 250 400 268 Q500 248 600 266 Q700 248 800 265 Q900 248 1000 264 Q1100 250 1200 265 Q1300 252 1400 265 L1400 320 Z" fill="#000703"/>
-                    <g transform="translate(1080, 80)" opacity="0.35">
-                        <ellipse cx="80" cy="110" rx="45" ry="30"/>
-                        <path d="M105 85 Q118 65 145 62 Q155 60 158 68 Q162 76 153 82 Q143 87 140 97 Q135 107 126 105 Q112 102 105 85Z"/>
-                        <path d="M138 64 Q152 58 161 62 Q158 67 144 69Z"/>
-                        <circle cx="144" cy="68" r="3" fill="#001006"/>
-                        <path d="M100 100 Q105 85 112 90 Q116 105 108 113Z"/>
-                    </g>
-                </svg>
-                <canvas ref={bootRainRef} id="boot-rain"></canvas>
-                <div id="boot-content">
-                    <div className="boot-satcorp">SATCORP SYSTEMS // KI-RA STUDIOS</div>
-                    <KyraxAvatar className="boot-kyrax-img" />
-                    <div className="boot-namtar">NAMTAR</div>
-                    <div className="boot-ark-sub">ARK: SURVIVAL ASCENDED // SURVIVOR REGISTRATION</div>
-                    <div id="boot-terminal">
-                        {bootLogs.map((l, i) => (
-                            <div key={i} className={`boot-log-line ${l.cls} type`} style={{ '--dur': `${l.dur}ms`, '--ch': l.ch } as any}>
-                                {l.text}
-                            </div>
-                        ))}
-                    </div>
-                    <div className="boot-bar-wrap">
-                        <div className="boot-bar-label"><span>CALIBRATING SYSTEMS</span><span>{bootPct}%</span></div>
-                        <div className="boot-bar-track"><div className="boot-bar-fill" style={{ width: `${bootPct}%` }}></div></div>
-                    </div>
-                    {bootPct === 100 && <button id="boot-enter" onClick={() => setIsBooting(false)}>▶ ENTER NAMTAR</button>}
-                </div>
-                <style jsx>{`
-                    #boot-screen { position: fixed; inset: 0; z-index: 9999; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-                    #boot-bg { position: absolute; inset: 0; background: linear-gradient(180deg, #000305 0%, #010a06 40%, #021208 70%, #010803 100%); z-index: 1; }
-                    #boot-jungle { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; z-index: 2; opacity: 0.8; }
-                    #boot-rain { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-                    #boot-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; max-width: 600px; width: 95%; text-align: center; }
-                    .boot-satcorp { font-family: var(--font-mono); font-size: 10px; letter-spacing: 5px; color: rgba(0,229,204,0.5); margin-bottom: 20px; }
-                    :global(.boot-kyrax-img) { width: 100px; height: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 20px #00e5cc); object-fit: contain; }
-                    .boot-namtar { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; letter-spacing: 12px; background: linear-gradient(135deg, #ff9020 0%, #ff5500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(255,100,20,0.5)); line-height: 1.1; margin-bottom: 10px; }
-                    .boot-ark-sub { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 3px; color: #00e5cc; margin-bottom: 30px; }
-                    #boot-terminal { width: 100%; height: 165px; background: rgba(0,8,6,0.9); border: 1px solid rgba(0,229,204,0.2); padding: 15px; font-family: var(--font-mono); font-size: 11px; color: rgba(0,229,204,0.7); overflow-y: hidden; text-align: left; }
-                    .boot-log-line { margin-bottom: 5px; white-space: nowrap; overflow: hidden; width: 0; }
-                    .boot-log-line.ok { color: #50ff8c; }
-                    .boot-log-line.kyrax-line { color: #00e5cc; font-weight: bold; }
-                    .type { animation: type var(--dur) steps(var(--ch)) forwards; }
-                    @keyframes type { to { width: 100%; } }
-                    .boot-bar-wrap { width: 100%; margin-top: 20px; }
-                    .boot-bar-label { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: #00e5cc; margin-bottom: 5px; }
-                    .boot-bar-track { width: 100%; height: 2px; background: rgba(0,229,204,0.1); }
-                    .boot-bar-fill { height: 100%; background: #00e5cc; transition: width 0.1s; }
-                    #boot-enter { margin-top: 30px; background: transparent; border: 1px solid #00e5cc; color: #00e5cc; font-family: 'Orbitron', sans-serif; font-size: 12px; letter-spacing: 5px; padding: 12px 40px; cursor: pointer; transition: all 0.3s; animation: pulse 2s infinite; }
-                    #boot-enter:hover { background: rgba(0,229,204,0.1); box-shadow: 0 0 20px #00e5cc; }
-                    @keyframes pulse { 0%,100% { opacity: 0.8; } 50% { opacity: 1; filter: brightness(1.2); } }
-                `}</style>
-            </div>
-        );
-    }
-
-    if (isSubmitted) {
-        return (
-            <main className="namtar-ark">
-                <style jsx global>{globalStyles}</style>
-                <div id="thank-you">
-                    <div className="ty-header">
-                        <div className="ty-studio">KI-RA STUDIOS</div>
-                        <h1 className="ty-namtar">NAMTAR</h1>
-                        <div className="ty-ark">ARK SURVIVAL ASCENDED</div>
-                    </div>
-                    <div className="ty-transmission panel">
-                        <h2>Survivor Transmission Received.</h2>
-                        <p>Thank you for filling out our survey — your input will be a great help to the Ki-Ra Studios team as we calibrate the upcoming <strong>NAMTAR</strong> server experience.</p>
-                        <div className="ty-shapes">
-                            <div className="ty-shape">Server Rates</div>
-                            <div className="ty-shape">Mods & World Systems</div>
-                            <div className="ty-shape">PvP / PvE Balance</div>
-                            <div className="ty-shape">Events & Long-Term Progression</div>
-                        </div>
-                    </div>
-                    <div className="ty-reward panel" style={{ borderColor: 'var(--ark-amber)' }}>
-                        <h3>⚡ SURVIVOR REWARD CONFIRMED</h3>
-                        <p>With the completion of this survey, you will receive a complimentary <strong>Starter Kit</strong> after launch. Details will be announced inside the community channels prior to deployment.</p>
-                    </div>
-                    <div className="ty-discord-panel panel">
-                        <h3>📡 TRANSMISSION COMPLETE</h3>
-                        <p>Your data has been successfully integrated into the Namtar calibration matrix. Return to the main terminal to continue operations.</p>
-                         <div style={{ marginTop: '20px' }}>
-                              <Link href="/" className="ty-shape" style={{ textDecoration: 'none', display: 'inline-block' }}>
-                                 ◀ RETURN TO HUB
-                              </Link>
-                         </div>
-                    </div>
-                </div>
-            </main>
-        );
-    }
-
     return (
-        <main className="namtar-ark">
-            <style jsx global>{globalStyles}</style>
+        <div className="namtar-ark">
+            <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
             
             <div id="progress-bar"></div>
-            <div ref={lightningRef} id="lightning-flash"></div>
+            <div id="lightning-flash" ref={lightningRef}></div>
 
+            {/* ─── BOOT SCREEN ────────────────────────── */}
+            {isBooting && (
+                <div style={{
+                    position:'fixed', inset:0, background:'url(/namtar_trex_background_1775227097997.png) no-repeat center/cover', zIndex:9999,
+                    display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                    padding:'20px', fontFamily:'"Share Tech Mono", monospace'
+                }}>
+                    <canvas ref={bootRainRef} style={{position:'absolute', inset:0}} />
+                    
+                    <div className="boot-corner boot-corner-tl"></div>
+                    <div className="boot-corner boot-corner-tr"></div>
+                    <div className="boot-corner boot-corner-bl"></div>
+                    <div className="boot-corner boot-corner-br"></div>
+
+                    <div style={{position:'relative', zIndex:10, width:'100%', maxWidth:'600px', display:'flex', flexDirection:'column', alignItems:'center'}}>
+                        <KyraxAvatar className="boot-kyrax-img" style={{width:'80px', height:'80px', marginBottom:'20px'}} />
+                        <div style={{fontSize:'3.5rem', fontWeight:900, color:'#ffb347', textAlign:'center', letterSpacing:'0.2em', marginBottom:'10px', filter:'drop-shadow(0 0 20px #ff6b1a)', fontFamily:'Orbitron, sans-serif'}}>NAMTAR</div>
+                        <div style={{fontSize:'0.8rem', color:'#00e5cc', textAlign:'center', letterSpacing:'0.4em', marginBottom:'40px', fontFamily:'Orbitron, sans-serif'}}>SYSTEM CALIBRATION INITIALIZED</div>
+                        
+                        <div style={{background:'rgba(0,255,200,0.05)', border:'1px solid rgba(0,255,200,0.2)', padding:'20px', height:'220px', overflow:'hidden', marginBottom:'20px', borderRadius:'2px'}}>
+                            {bootLogs.map((log, i) => (
+                                <div key={i} style={{
+                                    color: log.cls === 'ok' ? '#39ff14' : log.cls === 'warn' ? '#ffb347' : '#00e5cc',
+                                    marginBottom:'6px', fontSize:'0.85rem'
+                                }}>{log.text}</div>
+                            ))}
+                        </div>
+                        
+                        <div style={{width:'100%', height:'4px', background:'rgba(255,255,255,0.05)', borderRadius:'10px', overflow:'hidden'}}>
+                            <div style={{width:`${bootPct}%`, height:'100%', background:'linear-gradient(90deg, #00e5cc, #ff6b1a)', boxShadow:'0 0 15px #00e5cc', transition:'width 0.1s linear'}}></div>
+                        </div>
+                        <div style={{display:'flex', justifyContent:'space-between', marginTop:'10px', color:'rgba(0,229,204,0.5)', fontSize:'0.7rem', letterSpacing:'0.1em'}}>
+                            <span>UPLINK DENSITY: {(bootPct * 1.2).toFixed(1)} GB/S</span>
+                            <span>{bootPct}%</span>
+                        </div>
+                        
+                        {bootPct === 100 && (
+                            <button 
+                                onClick={() => setIsBooting(false)}
+                                style={{
+                                    width:'100%', marginTop:'40px', padding:'15px', background:'transparent', 
+                                    border:'1px solid #00e5cc', color:'#00e5cc', fontFamily:'inherit',
+                                    cursor:'pointer', letterSpacing:'0.3em', fontSize:'0.9rem',
+                                    transition:'all 0.3s'
+                                }}
+                                onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(0,229,204,0.1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(0,229,204,0.3)'; }}
+                                onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; }}
+                            >
+                                [ ACCESS INTERFACE ]
+                            </button>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* ─── PARALLAX SCENE ─────────────────────── */}
             <div id="scene">
                 <div id="sky"></div>
                 <div id="stars"></div>
-                <div id="light-rays"><div className="ray"></div><div className="ray"></div><div className="ray"></div></div>
-                <canvas ref={rainCanvasRef} id="rain-canvas"></canvas>
-                <div id="jungle-far" className="jungle-layer"></div>
                 <div id="fog1" className="fog"></div>
-                <div id="jungle-mid" className="jungle-layer"></div>
                 <div id="fog2" className="fog"></div>
-                <div id="trex">
-                    <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" fill="#001508"><ellipse cx="110" cy="140" rx="50" ry="35"/><path d="M130 100 Q145 80 175 75 Q185 72 190 80 Q195 88 185 95 Q175 100 170 110 Q165 120 155 118 Q140 115 130 100Z"/><path d="M165 78 Q180 70 192 75 Q188 80 175 82 Q168 82 165 78Z"/><circle cx="175" cy="82" r="4" fill="#002010"/><path d="M125 115 Q130 100 140 105 Q145 120 135 130 Q127 128 125 115Z"/><path d="M62 145 Q40 155 20 175 Q10 185 15 190 Q22 190 35 178 Q55 162 70 158"/><path d="M140 120 Q150 130 148 142 Q143 145 138 138 Q135 128 140 120Z"/><path d="M90 170 Q88 200 82 220 Q78 230 85 232 Q90 232 92 220 Q96 205 100 180"/><path d="M120 168 Q120 200 116 218 Q113 228 120 230 Q127 228 126 215 Q124 200 125 172"/><path d="M78 228 Q68 240 70 245 Q78 244 85 235"/><path d="M115 226 Q106 238 108 244 Q116 243 124 232"/></svg>
-                </div>
                 <div id="fog3" className="fog"></div>
-                <div id="jungle-near" className="jungle-layer"></div>
-                <div className="vignette-overlay"></div>
+                <canvas ref={rainCanvasRef} id="rain-canvas"></canvas>
+                <div className="vignette-overlay" style={{position:'absolute', inset:0, background:'radial-gradient(circle, transparent 40%, rgba(0,5,10,0.8) 100%)', pointerEvents:'none'}}></div>
             </div>
 
-            <div id="content">
-                <header>
-                    <div className="studio-badge">KI-RA STUDIOS PRESENTS</div>
-                    <div className="namtar-logo">NAMTAR</div>
-                    <div className="ark-subtitle">ARK: SURVIVAL ASCENDED</div>
-                    <div className="divider"></div>
-                    <div className="tag-line">SURVIVOR REGISTRATION & SERVER CALIBRATION SURVEY</div>
-                </header>
+            {/* ─── MAIN CONTENT ────────────────────────── */}
+            <main id="content">
+                {isSubmitted ? (
+                    <div id="thank-you">
+                        <div className="ty-header">
+                            <div className="ty-studio">KI-RA STUDIOS PRESENTS</div>
+                            <h1 className="ty-namtar">NAMTAR</h1>
+                            <div className="ty-ark">ARK: SURVIVAL ASCENDED</div>
+                        </div>
+                        <div className="panel ty-transmission">
+                            <h2>TRANSMISSION SUCCESSFUL</h2>
+                            <p>Survivor, your data has been integrated into the <span className="highlight">NAMTAR Calibration Matrix</span>. We are analyzing your preferences to ensure the ultimate ARK experience.</p>
+                            <p>The dawn of a new era is approaching. Stay tuned to the Satcorp transmissions for launch window announcements.</p>
+                            
+                            <div className="ty-shapes">
+                                <div className="ty-shape">⌬ SYNC_COMPLETE</div>
+                                <div className="ty-shape">⌬ NODE_ACTIVE</div>
+                                <div className="ty-shape">⌬ SIGNAL_STABLE</div>
+                            </div>
 
-                <div id="kyrax-panel" className="panel">
-                    <div className="kyrax-container">
-                        <div className="kyrax-avatar"><KyraxAvatar /></div>
-                        <div className="kyrax-text">
-                            <div className="kyrax-name">KYRAX</div>
-                            <div className="kyrax-role">SATCORP A.I. INTERFACE // SURVEY LEAD</div>
-                            <div className="kyrax-msg">
-                                Greetings, Survivor. I am <span className="highlight">KYRAX</span>. Before the gates open, <span className="highlight">Ki-Ra Studios</span> needs to understand your ambitions. Your input directly shapes the world design.
+                            <div className="ty-reward">
+                                <h3>REGISTRATION REWARD: [PENDING]</h3>
+                                <p style={{fontSize:'0.8rem', opacity:0.7, margin:0}}>As an early registrant, your profile has been flagged for exclusive "First Wave" starting equipment and cosmetic data-packs.</p>
+                            </div>
+
+                            <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                                 <Link href="/" style={{ 
+                                     color: 'var(--ark-teal)', 
+                                     textDecoration: 'none', 
+                                     fontFamily: 'Orbitron, sans-serif',
+                                     fontSize: '0.8rem',
+                                     letterSpacing: '0.2em'
+                                 }}>
+                                     [ RETURN TO SATCORP HUB ]
+                                 </Link>
                             </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <>
+                        <header>
+                            <div className="studio-badge">KI-RA STUDIOS PRESENTS</div>
+                            <h1 className="namtar-logo">NAMTAR</h1>
+                            <div className="ark-subtitle">ARK: SURVIVAL ASCENDED</div>
+                            <div className="divider"></div>
+                            <div className="tag-line">SERVER CALIBRATION & SURVIVOR REGISTRATION</div>
+                        </header>
 
-                <div id="survey-wrap">
-
-                    <form onSubmit={(e) => e.preventDefault()}>
-                        <div className="section-header">
-                            <div className="section-num">SECTION I</div><div className="section-title">Survivor Profile</div><div className="section-line"></div>
+                        <div className="panel">
+                            <div className="kyrax-container">
+                                <div className="kyrax-avatar">
+                                    <img src="/wolf.png" alt="Kyrax AI" />
+                                </div>
+                                <div>
+                                    <div className="kyrax-name">KYRAX v4.2</div>
+                                    <div className="kyrax-role">SYSTEM OVERSEER</div>
+                                    <div className="kyrax-msg">
+                                        Greetings, Survivor. I am <span className="highlight">KYRAX</span>. To optimize the NAMTAR Ascension protocols, I requires your tactical input. Every response calibrates the final parameters of the server you will call home. <span className="highlight">Respond accurately.</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="question-card panel">
+
+                        {/* SECTION 1: IDENTITY */}
+                        <div className="section-header">
+                            <div className="section-num">S-01</div>
+                            <div className="section-title">Survivor Identity</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
                             <div className="q-label">QUESTION 01</div>
-                            <div className="q-text">Survivor Name (Gamertag):</div>
-                            <input className="ark-input" type="text" name="q1" placeholder="Enter gamertag..." onChange={handleInputChange} />
+                            <div className="q-text">What is your primary handle (Survivor Name)?</div>
+                            <input type="text" name="q1" className="ark-input" placeholder="Enter name..." onChange={handleInputChange} />
                         </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 02</div><div className="q-text">Platform:</div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 02</div>
+                            <div className="q-text">Which platform will you be utilizing for the NAMTAR transmission?</div>
                             <div className="options-grid">
-                                {['PC (Steam)', 'Xbox', 'PlayStation'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q2 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q2', v)}>{v}</button>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="section-header">
-                            <div className="section-num">SECTION II</div><div className="section-title">Gameplay Preferences</div><div className="section-line"></div>
-                        </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 04</div><div className="q-text">Playstyle (Multi-select):</div>
-                            <div className="options-grid">
-                                {['Solo', 'Small Tribe', 'PvE', 'PvP', 'Breeder'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q4?.includes(v) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q4', v, true)}>{v}</button>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 05</div><div className="q-text">Server Mode:</div>
-                            <div className="options-grid">
-                                {['PvE Only', 'PvP Only', 'ORP PvP Cluster'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q5 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q5', v)}>{v}</button>
+                                {['PC (Steam)', 'PlayStation 5', 'Xbox Series X/S', 'PC (Windows/Gamepass)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q2 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q2', o)}>{o}</button>
                                 ))}
                             </div>
                         </div>
 
+                        {/* SECTION 2: COMMITMENT */}
                         <div className="section-header">
-                            <div className="section-num">SECTION III</div><div className="section-title">Server Rates & Progression</div><div className="section-line"></div>
+                            <div className="section-num">S-02</div>
+                            <div className="section-title">Temporal Commitment</div>
+                            <div className="section-line"></div>
                         </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 10</div><div className="q-text">Harvest Rates:</div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 03</div>
+                            <div className="q-text">Estimated weekly engagement (Hours)?</div>
                             <div className="options-grid">
-                                {['1x (Vanilla)', '2x (Standard)', '3x (Balanced)', '5x (Fast)'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q10 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q10', v)}>{v}</button>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 11</div><div className="q-text">Taming Speed:</div>
-                            <div className="options-grid">
-                                {['1x', '2x', '3x', '5x', 'Instatame'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q11 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q11', v)}>{v}</button>
+                                {['1-10 Hours', '10-30 Hours', '30-60 Hours', '60+ Hours (Hardcore)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q3 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q3', o)}>{o}</button>
                                 ))}
                             </div>
                         </div>
 
+                        {/* SECTION 3: PLAYSTYLE */}
                         <div className="section-header">
-                            <div className="section-num">SECTION IV</div><div className="section-title">Modding & QoL</div><div className="section-line"></div>
+                            <div className="section-num">S-03</div>
+                            <div className="section-title">Tactical Doctrine</div>
+                            <div className="section-line"></div>
                         </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 16</div><div className="q-text">Key QoL Features (Multi-select):</div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 04</div>
+                            <div className="q-text">Select your primary gameplay focus:</div>
                             <div className="options-grid">
-                                {['Stack Sizes', 'Infinite Pickup', 'Cross-Map Chat', 'Solo Farm', 'Custom Crafting'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q16?.includes(v) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q16', v, true)}>{v}</button>
+                                {['Aggressive PVP', 'Competitive Building', 'PVE/Exploration Focus', 'Balanced (PVPVE)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q4 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q4', o)}>{o}</button>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="section-header">
-                            <div className="section-num">SECTION V</div><div className="section-title">Final Calibration</div><div className="section-line"></div>
-                        </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 26</div><div className="q-text">Do you plan to join at launch?</div>
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 05</div>
+                            <div className="q-text">Preferred server mode for this calibration?</div>
                             <div className="options-grid">
-                                {['Yes', 'Maybe', 'No'].map(v => (
-                                    <button key={v} type="button" className={`opt-btn ${formData.q26 === v ? 'selected' : ''}`} onClick={() => handleBtnToggle('q26', v)}>{v}</button>
+                                {['Pure PVP (No Rules)', 'Moderate PVP (Rules Apply)', 'PVE (Zero Combat)', 'Roleplay (RP)'].map(o => (
+                                    <button key={o} className={`opt-btn pvp-style ${formData.q5 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q5', o)}>{o}</button>
                                 ))}
                             </div>
                         </div>
-                        <div className="question-card panel">
-                            <div className="q-label">QUESTION 27</div><div className="q-text">Additional Comments:</div>
-                            <textarea className="ark-input" name="q27" style={{ height: '100px', resize: 'none' }} placeholder="Any other thoughts for the team?" onChange={handleInputChange as any}></textarea>
+
+                        {/* SECTION 4: SERVER STRUCTURE */}
+                        <div className="section-header">
+                            <div className="section-num">S-04</div>
+                            <div className="section-title">Environmental Protocols</div>
+                            <div className="section-line"></div>
                         </div>
-                        
-                        <div className="question-card panel">
-                            <div className="q-label">FINAL CALIBRATION</div>
-                            <div className="q-text">Rate interest (1-10):</div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 06</div>
+                            <div className="q-text">Offline Raid Protection (ORP) preference:</div>
+                            <div className="options-grid">
+                                {['Strict (Full Protection)', 'Delayed (Small Window)', 'Tactical (Turret/Dino Buffs Only)', 'None (Absolute Chaos)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q6 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q6', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 07</div>
+                            <div className="q-text">Wipe frequency preference?</div>
+                            <div className="options-grid">
+                                {['Never (Permanent Home)', 'Long Cycles (6+ Months)', 'Seasonal (2-3 Months)', 'Fast (Monthly)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q7 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q7', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 08</div>
+                            <div className="q-text">Map Architecture preference:</div>
+                            <div className="options-grid">
+                                {['Cluster (All Ark Maps)', 'Island Only', 'The Center Only', 'Custom/Modded Map Focus'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q8 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q8', o)}>{o}</button>
+                                ))}
+                            </div>
+                            <div className={`conditional ${formData.q8 === 'Cluster (All Ark Maps)' ? 'visible' : ''}`}>
+                                <div className="q-note">SELECT PREFERRED MAPS FOR THE CLUSTER:</div>
+                                <div className="options-grid">
+                                    {['The Island', 'The Center', 'Scorched Earth', 'Aberration', 'Ragnarok', 'Extinction'].map(m => (
+                                        <button key={m} className={`opt-btn ${formData['q8-maps']?.includes(m) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q8-maps', m, true)}>{m}</button>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className={`conditional ${formData.q8 === 'Custom/Modded Map Focus' ? 'visible' : ''}`}>
+                                <input type="text" name="q8-custom-map" className="ark-input" placeholder="Suggest a custom map..." onChange={handleInputChange} />
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 09</div>
+                            <div className="q-text">Where should your journey begin?</div>
+                            <div className="options-grid">
+                                {['The Island', 'Scorched Earth', 'The Center', 'Other'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q9 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q9', o)}>{o}</button>
+                                ))}
+                            </div>
+                            <div className={`conditional ${formData.q9 === 'Other' ? 'visible' : ''}`}>
+                                <input type="text" name="q9-other" className="ark-input" placeholder="Specifiy starting location..." onChange={handleInputChange} />
+                            </div>
+                        </div>
+
+                        {/* SECTION 5: RATES */}
+                        <div className="section-header">
+                            <div className="section-num">S-05</div>
+                            <div className="section-title">Resource & Biological Rates</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 10</div>
+                            <div className="q-text">Harvest Yield parameters:</div>
+                            <div className="options-grid">
+                                {['Classic (1x-2x)', 'Boosted (3x-5x)', 'Heavy (10x+)', 'Custom'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q10 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q10', o)}>{o}</button>
+                                ))}
+                            </div>
+                            <div className={`conditional ${formData.q10 === 'Custom' ? 'visible' : ''}`}>
+                                <input type="text" name="q10-custom" className="ark-input" placeholder="Describe preferred harvest settings..." onChange={handleInputChange} />
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 11</div>
+                            <div className="q-text">Biological Taming velocity:</div>
+                            <div className="options-grid">
+                                {['Official (1x)', 'Enhanced (3x-5x)', 'Fast (10x)', 'Instant'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q11 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q11', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 12</div>
+                            <div className="q-text">Breeding & Maturation rates:</div>
+                            <div className="options-grid">
+                                {['Official', 'Competitive Fast', 'Hyper-Speed'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q12 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q12', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 13</div>
+                            <div className="q-text">Ascension XP Growth:</div>
+                            <div className="options-grid">
+                                {['1x Experience', '2.5x Experience', '5x Experience', 'High (10x+)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q13 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q13', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* SECTION 6: ADVANCED SYSTEMS */}
+                        <div className="section-header">
+                            <div className="section-num">S-06</div>
+                            <div className="section-title">Advanced Mechanics</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 14</div>
+                            <div className="q-text">Imprint scaling preference:</div>
+                            <div className="options-grid">
+                                {['1-Cuddle 100%', 'Official Multi-Cuddle', 'None (Manual Only)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q14 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q14', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 15</div>
+                            <div className="q-text">Wild Creature Resistance/Difficulty:</div>
+                            <div className="options-grid">
+                                {['Standard (Lvl 150)', 'Advanced (Lvl 300)', 'Hardcore (Lvl 600+)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q15 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q15', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 16</div>
+                            <div className="q-text">Essential Quality of Life (QoL) features:</div>
+                            <div className="options-grid">
+                                {['Stacking Mods', 'Better Spyglass', 'Cryopod Enhancements', 'Automated Collection'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q16?.includes(o) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q16', o, true)}>{o}</button>
+                                ))}
+                            </div>
+                            <div style={{marginTop:'12px'}}>
+                                <input type="text" name="q16-open" className="ark-input" placeholder="List any other MUST-HAVE QoL features..." onChange={handleInputChange} />
+                            </div>
+                        </div>
+
+                        {/* SECTION 7: MODIFICATION */}
+                        <div className="section-header">
+                            <div className="section-num">S-07</div>
+                            <div className="section-title">Structural Modifications</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 17</div>
+                            <div className="q-text">Preferred Modification volume?</div>
+                            <div className="options-grid">
+                                {['Vanilla (No Mods)', 'Vanilla+ (Essential Only)', 'Modded (Balanced Additions)', 'Heavy (Transformation)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q17 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q17', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 18</div>
+                            <div className="q-text">Primary Mod Categories of interest:</div>
+                            <div className="options-grid">
+                                {['New Creatures', 'Building Structures', 'New Technology/Armor', 'Visual Enhancements'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q18?.includes(o) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q18', o, true)}>{o}</button>
+                                ))}
+                            </div>
+                            <div style={{marginTop:'12px'}}>
+                                <input type="text" name="q18-open" className="ark-input" placeholder="Specific mod suggestions?" onChange={handleInputChange} />
+                            </div>
+                        </div>
+
+                        {/* SECTION 8: ECONOMY */}
+                        <div className="section-header">
+                            <div className="section-num">S-08</div>
+                            <div className="section-title">Economic Protocols</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 19</div>
+                            <div className="q-text">Preferred participation in Server Economy?</div>
+                            <div className="options-grid">
+                                {['Trading (Player-to-Player)', 'Admin Shop (In-game Currency)', 'None (Barter Only)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q19 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q19', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 20</div>
+                            <div className="q-text">World Event preference:</div>
+                            <div className="options-grid">
+                                {['Dynamic Boss Spawns', 'Dino Racing/Tournaments', 'Raid Events (Admin Bases)', 'Scavenger Hunts'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q20?.includes(o) ? 'selected' : ''}`} onClick={() => handleBtnToggle('q20', o, true)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* SECTION 9: PHILOSOPHY */}
+                        <div className="section-header">
+                            <div className="section-num">S-09</div>
+                            <div className="section-title">Survivor Philosophy</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 21</div>
+                            <div className="q-text">The Ideal Community Size?</div>
+                            <div className="options-grid">
+                                {['Intimate (20-30 Active)', 'Busy (50-70 Active)', 'Populated (100+ Active)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q21 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q21', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 22</div>
+                            <div className="q-text">Rule Enforcement strictness?</div>
+                            <div className="options-grid">
+                                {['Strict (High Moderation)', 'Fair (Community Policed)', 'Loose (Wild West)'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q22 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q22', o)}>{o}</button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 23</div>
+                            <div className="q-text">What factors encourage your long-term engagement?</div>
+                            <textarea name="q23" className="ark-input" rows={3} placeholder="Examples: Friendly community, stable updates, active admins..." onChange={handleInputChange}></textarea>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 24</div>
+                            <div className="q-text">What factors would cause you to leave?</div>
+                            <textarea name="q24" className="ark-input" rows={3} placeholder="Examples: Lag, bad admins, toxicity..." onChange={handleInputChange}></textarea>
+                        </div>
+
+                        {/* SECTION 10: RATING */}
+                        <div className="section-header">
+                            <div className="section-num">S-10</div>
+                            <div className="section-title">Final Calibration</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 25</div>
+                            <div className="q-text">Interest in the NAMTAR Ascension? (1–10)</div>
                             <div className="range-wrap">
-                                <input type="range" min="1" max="10" name="q25" value={formData.q25} onChange={handleInputChange} className="ark-range" />
+                                <input type="range" name="q25" min="1" max="100" className="ark-range" value={formData.q25 * 10} onChange={(e) => setFormData({...formData, q25: Math.ceil(parseInt(e.target.value)/10)})} />
                                 <div className="range-val">{formData.q25}</div>
                             </div>
                         </div>
 
-                        <div id="submit-area">
-                            <div className="kyrax-closing panel">Transmission channels ready. Transmit for calibration.</div>
-                            {submitErr && <p style={{ color: 'var(--ark-red)', marginBottom: '10px' }}>{submitErr}</p>}
-                            <button type="button" id="submit-btn" disabled={isSubmitting} onClick={handleSubmit}>
-                                {isSubmitting ? 'TRANSMITTING...' : '▶ TRANSMIT TO NAMTAR'}
-                            </button>
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 26</div>
+                            <div className="q-text">Do you plan to join the NAMTAR transmission at launch?</div>
+                            <div className="options-grid">
+                                {['YES — AT LAUNCH', 'LATER — POST-ALPHA', 'MAYBE — UNDECIDED'].map(o => (
+                                    <button key={o} className={`opt-btn ${formData.q26 === o ? 'selected' : ''}`} onClick={() => handleBtnToggle('q26', o)}>{o}</button>
+                                ))}
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </main>
+
+                        <div className="panel question-card">
+                            <div className="q-label">QUESTION 27</div>
+                            <div className="q-text">Any additional data for KYRAX?</div>
+                            <textarea name="q27" className="ark-input" rows={4} placeholder="Suggestions, concerns, or greetings..." onChange={handleInputChange}></textarea>
+                        </div>
+
+                        {/* BONUS SECTION */}
+                        <div className="section-header">
+                            <div className="section-num">S-X</div>
+                            <div className="section-title">Bonus: Elite Application</div>
+                            <div className="section-line"></div>
+                        </div>
+
+                        <div className="panel" style={{borderStyle:'dashed', borderColor:'var(--ark-amber)'}}>
+                            <div className="q-label" style={{color:'var(--ark-amber)'}}>OPTIONAL: THE ASCENDED PATH</div>
+                            <div className="q-text">Do you have extensive ARK expertise or relevant technical skills (Admin, Dev, Community Lead)? Mention it here for consideration in the ELITE survivor cohort.</div>
+                            <textarea name="q-bonus" className="ark-input" rows={3} placeholder="Detail your credentials..." onChange={handleInputChange}></textarea>
+                        </div>
+
+                        {submitErr && <div style={{color:'var(--ark-red)', textAlign:'center', marginBottom:'15px', fontWeight:600}}>{submitErr}</div>}
+
+                        <button id="submit-btn" disabled={isSubmitting} onClick={handleSubmit}>
+                            {isSubmitting ? 'TRANSMITTING...' : '[ SUBMIT SURVEY ]'}
+                        </button>
+
+                        <footer style={{marginTop:'40px', opacity:0.4, textAlign:'center', fontSize:'0.7rem', letterSpacing:'0.2em'}}>
+                            © 2024 SATCORP.IO | NAMTAR ASCENSION PROTOCOLS
+                        </footer>
+                    </>
+                )}
+            </main>
+        </div>
     );
 }
 
 const globalStyles = `
-    :root {
-        --ark-orange: #ff6b1a;
-        --ark-amber: #ffb347;
-        --ark-teal: #00e5cc;
-        --ark-cyan: #00bcd4;
-        --ark-dark: #050a0e;
-        --ark-darker: #020507;
-        --ark-green: #39ff14;
-        --ark-red: #ff2244;
-        --panel: rgba(5,20,30,0.88);
-        --glass: rgba(0,20,30,0.75);
-        --glass-border: rgba(0,229,204,0.25);
-    }
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100;300;400;600;700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 
-    .namtar-ark { background: var(--ark-darker); color: #c8e8f0; font-family: 'Exo 2', sans-serif; min-height: 100vh; position: relative; overflow-x: hidden; }
-    #scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-    #sky { position: absolute; inset: 0; background: linear-gradient(180deg, #000508 0%, #021018 25%, #041a10 55%, #061c0a 75%, #0a1a06 100%); }
-    .jungle-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 50vh; background-repeat: no-repeat; background-position: bottom; background-size: 100% 100%; }
-    #jungle-far { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 400'%3E%3Cpath d='M0 400 L0 280 Q50 200 100 250 Q150 180 200 220 Q250 150 300 200 Q350 130 400 180 Q450 100 500 160 Q550 80 600 140 Q650 60 700 120 Q750 50 800 110 Q850 70 900 130 Q950 90 1000 150 Q1050 110 1100 170 L1400 400 Z' fill='%23021a08'/%3E%3C/svg%3E"); opacity: 0.6; }
-    #jungle-mid { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 350'%3E%3Cpath d='M0 350 L0 220 Q30 160 70 200 Q110 140 160 190 Q200 120 250 170 Q300 100 360 155 Q410 80 460 140 Q510 60 570 125 Q620 50 680 115 Q730 70 790 130 Q1400 210 L1400 350 Z' fill='%23031f0a'/%3E%3C/svg%3E"); }
-    #jungle-near { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 300'%3E%3Cpath d='M0 300 L0 180 Q20 140 50 170 Q80 120 120 160 Q200 145 Q240 80 290 130 Q330 70 380 115 Q420 55 470 105 Q600 40 650 95 Q1400 170 L1400 300 Z' fill='%23010e05'/%3E%3C/svg%3E"); }
-    
-    #trex { position: absolute; bottom: 30vh; right: 10%; width: 240px; opacity: 0.15; pointer-events: none; }
-    
-    .fog { position: absolute; width: 200%; height: 160px; filter: blur(30px); background: radial-gradient(ellipse, rgba(100,200,150,0.1), transparent); }
-    #fog1 { bottom: 20vh; animation: drift 20s infinite linear; opacity: 0.3; }
-    #fog2 { bottom: 10vh; animation: drift 15s infinite linear reverse; opacity: 0.4; }
-    #fog3 { bottom: 5vh; animation: drift 25s infinite linear; opacity: 0.5; }
-    @keyframes drift { from { transform: translateX(-10%); } to { transform: translateX(10%); } }
+  :root {
+    --ark-orange: #ff6b1a;
+    --ark-amber: #ffb347;
+    --ark-teal: #00e5cc;
+    --ark-cyan: #00bcd4;
+    --ark-dark: #050a0e;
+    --ark-darker: #020507;
+    --ark-green: #39ff14;
+    --ark-red: #ff2244;
+    --glass: rgba(0,20,30,0.75);
+    --glass-border: rgba(0,229,204,0.25);
+    --panel: rgba(5,20,30,0.88);
+  }
 
-    .vignette-overlay {
-        position: absolute; inset: 0;
-        background: radial-gradient(circle at 50% 50%, transparent 20%, rgba(0,0,0,0.8) 100%);
-        pointer-events: none;
-    }
-    
-    #rain-canvas { position: absolute; inset:0; opacity: 0.3; }
-    #lightning-flash { position: fixed; inset: 0; background: rgba(100,200,255,0.1); opacity: 0; z-index: 1; pointer-events: none; transition: opacity 0.1s; }
-    
-    #content { 
-        position: relative; 
-        z-index: 10; 
-        max-width: 900px; 
-        margin: 0 auto; 
-        padding: 100px 24px; 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    header, #kyrax-panel, #survey-wrap { width: 100%; }
-    header { text-align: center; margin-bottom: 50px; }
-    .studio-badge { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--ark-teal); letter-spacing: 4px; margin-bottom: 5px; opacity: 0.7; }
-    .namtar-logo { font-family: 'Orbitron', sans-serif; font-size: 72px; font-weight: 900; background: linear-gradient(to bottom, var(--ark-amber), var(--ark-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px #ff6b1a); margin: 0; }
-    .ark-subtitle { font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--ark-teal); letter-spacing: 3px; font-weight: bold; margin-bottom: 20px; }
-    .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--ark-teal), transparent); margin: 20px 0; opacity: 0.4; }
-    .tag-line { font-family: 'Orbitron', sans-serif; font-size: 11px; color: #fff; letter-spacing: 2px; opacity: 0.6; }
+  *, *::before, *::after { box-sizing: border-box; }
 
-    .panel { 
-        background: rgba(10, 15, 25, 0.7); 
-        border: 1px solid rgba(0, 229, 204, 0.15); 
-        padding: 30px; 
-        border-radius: 8px; 
-        backdrop-filter: blur(24px) saturate(1.8); 
-        margin-bottom: 24px; 
-        position: relative; 
-        transition: all 0.3s ease;
-    }
-    .panel:hover {
-        border-color: rgba(0, 229, 204, 0.3);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    }
-    .kyrax-container { display: flex; gap: 24px; align-items: center; }
-    .kyrax-avatar { width: 90px; height: 90px; filter: drop-shadow(0 0 15px var(--ark-teal)); border-radius: 50%; overflow: hidden; }
-    .kyrax-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .kyrax-name { font-family: 'Orbitron', sans-serif; font-size: 14px; color: var(--ark-teal); letter-spacing: 3px; font-weight: 800; }
-    .kyrax-role { font-family: var(--font-mono); font-size: 10px; opacity: 0.4; margin-bottom: 12px; letter-spacing: 1px; }
-    .kyrax-msg { line-height: 1.8; font-size: 16px; color: rgba(255, 255, 255, 0.8); }
-    .highlight { color: var(--ark-teal); text-shadow: 0 0 10px rgba(0, 229, 204, 0.4); }
+  .namtar-ark {
+    background: var(--ark-darker);
+    color: #c8e8f0;
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    .section-header { display: flex; align-items: center; gap: 15px; margin: 40px 0 20px; }
-    .section-num { font-size: 10px; opacity: 0.6; color: var(--ark-teal); letter-spacing: 2px; font-family: monospace; }
-    .section-title { font-family: 'Orbitron', sans-serif; color: var(--ark-amber); font-size: 14px; letter-spacing: 2px; }
-    .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--ark-teal), transparent); opacity: 0.3; }
+  /* ─── SCENE LAYERS ─────────────────────────────── */
+  #scene {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
 
-    .question-card { border-left: 2px solid var(--ark-teal); padding-left: 32px; position: relative; }
-    .question-card::before {
-        content: ""; position: absolute; left: -1px; top: 20%; height: 60%; width: 5px;
-        background: var(--ark-teal); border-radius: 0 4px 4px 0;
-        box-shadow: 0 0 15px var(--ark-teal);
-    }
-    .q-label { font-size: 10px; color: var(--ark-teal); margin-bottom: 12px; opacity: 0.5; font-family: var(--font-mono); letter-spacing: 2px; }
-    .q-text { font-family: 'Orbitron', sans-serif; font-size: 14px; margin-bottom: 24px; letter-spacing: 1px; color: #FFF; }
-    .ark-input { 
-        width: 100%; 
-        background: rgba(0,0,0,0.4); 
-        border: 1px solid rgba(255, 255, 255, 0.1); 
-        border-radius: 4px;
-        color: white; 
-        padding: 16px; 
-        font-family: inherit; 
-        outline: none; 
-        transition: 0.3s; 
-    }
-    .ark-input:focus { border-color: var(--ark-teal); background: rgba(0, 229, 204, 0.05); }
+  #sky {
+    position: absolute;
+    inset: 0;
+    background: url(/namtar_trex_background_1775226748846.png) no-repeat center/cover;
+  }
 
-    .options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-    .opt-btn { 
-        background: rgba(255, 255, 255, 0.03); 
-        border: 1px solid rgba(255, 255, 255, 0.1); 
-        color: rgba(255, 255, 255, 0.5); 
-        padding: 14px; 
-        cursor: pointer; 
-        border-radius: 4px; 
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-        font-family: var(--font-mono); 
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    .opt-btn:hover { 
-        background: rgba(255, 255, 255, 0.07); 
-        color: #FFF;
-        border-color: rgba(255, 255, 255, 0.3);
-    }
-    .opt-btn.selected { 
-        background: rgba(0, 229, 204, 0.1); 
-        color: var(--ark-teal); 
-        border-color: var(--ark-teal);
-        box-shadow: 0 0 20px rgba(0, 229, 204, 0.2);
-        transform: scale(1.02);
-    }
+  .jungle-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+  }
 
-    .range-wrap { display: flex; align-items: center; gap: 20px; }
-    .ark-range { flex: 1; height: 4px; appearance: none; background: rgba(0,229,204,0.2); }
-    .ark-range::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #00e5cc; border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px #00e5cc; }
-    .range-val { font-size: 24px; font-weight: 900; color: #00e5cc; font-family: 'Orbitron', sans-serif; }
+  #jungle-far {
+    height: 55vh;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 400' preserveAspectRatio='none'%3E%3Cpath d='M0 400 L0 280 Q50 200 100 250 Q150 180 200 220 Q250 150 300 200 Q350 130 400 180 Q450 100 500 160 Q550 80 600 140 Q650 60 700 120 Q750 50 800 110 Q850 70 900 130 Q950 90 1000 150 Q1050 110 1100 170 Q1150 130 1200 190 Q1250 150 1300 200 Q1350 170 1400 220 L1400 400 Z' fill='%23021a08' opacity='0.9'/%3E%3C/svg%3E") no-repeat bottom;
+    background-size: 100% 100%;
+    opacity: 0.7;
+    transition: transform 0.1s;
+  }
 
-    #submit-btn { width: 100%; padding: 20px; background: linear-gradient(135deg, #ff6b1a, #ff4400); border: none; color: white; font-family: 'Orbitron', sans-serif; font-weight: bold; letter-spacing: 5px; cursor: pointer; border-radius: 3px; box-shadow: 0 0 20px rgba(255,107,26,0.3); transition: 0.3s; margin-top: 20px; }
-    #submit-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 30px rgba(255,107,26,0.6); }
+  #jungle-mid {
+    height: 50vh;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 350' preserveAspectRatio='none'%3E%3Cpath d='M0 350 L0 220 Q30 160 70 200 Q110 140 160 190 Q200 120 250 170 Q300 100 360 155 Q410 80 460 140 Q510 60 570 125 Q620 50 680 115 Q730 70 790 130 Q840 90 900 145 Q950 110 1010 165 Q1060 120 1120 175 Q1170 140 1230 195 Q1280 160 1350 200 Q1380 185 1400 210 L1400 350 Z' fill='%23031f0a' opacity='0.95'/%3E%3C/svg%3E") no-repeat bottom;
+    background-size: 100% 100%;
+    opacity: 0.9;
+  }
 
-    .ty-header { text-align: center; margin-bottom: 40px; padding-top: 50px; }
-    .ty-studio { font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--ark-teal); letter-spacing: 5px; opacity: 0.7; }
-    .ty-namtar { font-family: 'Orbitron', sans-serif; font-size: 56px; color: #ffb347; margin: 10px 0; }
-    .ty-transmission h2 { color: #ffb347; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; }
-    .ty-shapes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-    .ty-shape { background: rgba(0,229,204,0.1); border: 1px solid #00e5cc; padding: 10px 20px; font-size: 12px; font-family: monospace; }
+  #jungle-near {
+    height: 38vh;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 300' preserveAspectRatio='none'%3E%3Cpath d='M0 300 L0 180 Q20 140 50 170 Q80 120 120 160 Q150 100 200 145 Q240 80 290 130 Q330 70 380 115 Q420 55 470 105 Q510 45 560 98 Q600 40 650 95 Q690 50 740 100 Q780 60 830 110 Q870 70 920 115 Q960 80 1010 125 Q1050 90 1100 135 Q1140 100 1190 145 Q1230 110 1280 155 Q1320 125 1360 165 Q1385 150 1400 170 L1400 300 Z' fill='%23010e05'/%3E%3C/svg%3E") no-repeat bottom;
+    background-size: 100% 100%;
+  }
 
-    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: #00e5cc; width: 0; z-index: 1000; box-shadow: 0 0 10px #00e5cc; }
-    
-    .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--d) ease-in-out infinite; }
-    @keyframes twinkle { 0%,100%{opacity:0.2} 50%{opacity:1} }
+  #trex {
+    position: absolute;
+    bottom: 28vh;
+    right: 8%;
+    width: 220px;
+    height: 280px;
+    opacity: 0.18;
+    filter: blur(2px);
+    animation: trex-breathe 5s ease-in-out infinite;
+  }
+  @keyframes trex-breathe {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.015); }
+  }
+
+  .fog {
+    position: absolute;
+    width: 200%;
+    height: 160px;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+  #fog1 {
+    bottom: 22vh;
+    left: -50%;
+    background: radial-gradient(ellipse at center, rgba(100,200,150,0.08) 0%, transparent 70%);
+    animation: fog-drift 18s ease-in-out infinite alternate;
+    filter: blur(15px);
+  }
+  #fog2 {
+    bottom: 15vh;
+    left: -20%;
+    height: 200px;
+    background: radial-gradient(ellipse at center, rgba(50,180,130,0.12) 0%, transparent 65%);
+    animation: fog-drift 25s ease-in-out infinite alternate-reverse;
+    filter: blur(20px);
+  }
+  #fog3 {
+    bottom: 5vh;
+    left: -30%;
+    height: 250px;
+    background: radial-gradient(ellipse at center, rgba(20,80,60,0.15) 0%, transparent 70%);
+    animation: fog-drift 32s ease-in-out infinite alternate;
+    filter: blur(25px);
+  }
+  @keyframes fog-drift {
+    0% { transform: translateX(0) scaleX(1); }
+    100% { transform: translateX(15%) scaleX(1.1); }
+  }
+
+  #light-rays {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .ray {
+    position: absolute;
+    top: -10%;
+    width: 2px;
+    height: 80%;
+    background: linear-gradient(180deg, rgba(255,180,50,0.12) 0%, rgba(100,255,150,0.05) 60%, transparent 100%);
+    transform-origin: top center;
+    filter: blur(3px);
+  }
+  .ray:nth-child(1) { left: 15%; transform: rotate(-15deg) scaleX(30); opacity: 0.6; animation: ray-pulse 8s ease-in-out infinite; }
+  .ray:nth-child(2) { left: 35%; transform: rotate(-5deg) scaleX(20); opacity: 0.4; animation: ray-pulse 11s ease-in-out 2s infinite; }
+  .ray:nth-child(3) { left: 55%; transform: rotate(8deg) scaleX(25); opacity: 0.5; animation: ray-pulse 9s ease-in-out 1s infinite; }
+
+  @keyframes ray-pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+
+  /* ─── MAIN CONTENT ─────────────────────────────── */
+  #content {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    padding: 60px 20px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    padding: 60px 20px 40px;
+  }
+
+  .studio-badge {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: var(--ark-teal);
+    opacity: 0.7;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .namtar-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, var(--ark-amber) 0%, var(--ark-orange) 40%, #ff4400 70%, var(--ark-amber) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(255,107,26,0.5));
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .ark-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+    letter-spacing: 0.35em;
+    color: var(--ark-teal);
+    margin-bottom: 30px;
+    opacity: 0.85;
+  }
+
+  .divider {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ark-teal), var(--ark-orange), var(--ark-teal), transparent);
+    opacity: 0.5;
+  }
+
+  .tag-line {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: #c8e8f0;
+    opacity: 0.6;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  /* ─── KYRAX PANEL ─────────────────────────────── */
+  .panel {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .kyrax-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .kyrax-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    position: relative;
+  }
+  :global(.kyrax-avatar img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px rgba(0,229,204,0.6));
+    animation: hlna-float 4s ease-in-out infinite;
+  }
+  @keyframes hlna-float {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-4px) rotate(1deg); }
+    66% { transform: translateY(2px) rotate(-1deg); }
+  }
+
+  .kyrax-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--ark-teal);
+    margin-bottom: 2px;
+  }
+  .kyrax-role {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(0,229,204,0.5);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+  .kyrax-msg {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: #a8d8e0;
+  }
+  .highlight { color: var(--ark-amber); font-weight: 600; }
+
+  /* ─── SURVEY ─────────────────────────────────── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 50px 0 28px;
+  }
+  .section-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    color: var(--ark-teal);
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+  }
+  .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--ark-teal), transparent); opacity: 0.3; }
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+    letter-spacing: 0.25em;
+    color: var(--ark-amber);
+    text-transform: uppercase;
+  }
+
+  .question-card {
+    border-left: 3px solid var(--ark-teal);
+  }
+  .q-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    color: var(--ark-teal);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+    opacity: 0.6;
+  }
+  .q-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #d8eef5;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .q-note {
+    font-size: 0.72rem;
+    color: rgba(0,229,204,0.5);
+    font-style: italic;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+  }
+
+  .options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .opt-btn {
+    background: rgba(0,20,30,0.6);
+    border: 1px solid rgba(0,229,204,0.2);
+    color: #8ec8d5;
+    padding: 8px 16px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .opt-btn:hover { border-color: var(--ark-teal); color: var(--ark-teal); }
+  .opt-btn.selected {
+    background: rgba(0,229,204,0.12);
+    border-color: var(--ark-teal);
+    color: var(--ark-teal);
+    box-shadow: 0 0 12px rgba(0,229,204,0.2);
+  }
+
+  .opt-btn.pvp-style { border-color: rgba(255,34,68,0.25); color: #d08090; }
+  .opt-btn.pvp-style:hover, .opt-btn.pvp-style.selected {
+    border-color: var(--ark-red);
+    color: var(--ark-red);
+    background: rgba(255,34,68,0.1);
+    box-shadow: 0 0 12px rgba(255,34,68,0.2);
+  }
+
+  .ark-input {
+    width: 100%;
+    background: rgba(0,10,18,0.8);
+    border: 1px solid rgba(0,229,204,0.2);
+    border-bottom: 2px solid rgba(0,229,204,0.4);
+    color: #c8e8f0;
+    padding: 10px 14px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.88rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+    outline: none;
+  }
+  .ark-input:focus {
+    border-color: var(--ark-teal);
+    box-shadow: 0 0 15px rgba(0,229,204,0.12);
+  }
+
+  .range-wrap { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+  .ark-range {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    background: rgba(0,229,204,0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  .ark-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    background: var(--ark-teal);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0,229,204,0.6);
+  }
+  .range-val {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    color: var(--ark-teal);
+    min-width: 40px;
+    text-align: center;
+    font-weight: 900;
+  }
+
+  .conditional { display: none; margin-top: 14px; }
+  .conditional.visible { display: block; }
+
+  #submit-btn {
+    background: linear-gradient(135deg, #ff6b1a 0%, #ff4400 50%, #cc2200 100%);
+    border: none;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    padding: 18px 60px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s;
+    box-shadow: 0 0 30px rgba(255,107,26,0.4);
+    width: 100%;
+    margin-top: 20px;
+  }
+  #submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 40px rgba(255,107,26,0.6); }
+
+  /* ─── THANK YOU ──────────────────────────── */
+  #thank-you {
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+  .ty-header { text-align: center; margin-bottom: 40px; }
+  .ty-studio { font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--ark-teal); margin-bottom: 10px; opacity: 0.7; }
+  .ty-namtar { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; background: linear-gradient(135deg, var(--ark-amber), var(--ark-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(255,107,26,0.5)); }
+  .ty-ark { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.25em; color: var(--ark-teal); margin: 8px 0; }
+  
+  .ty-transmission { border-top: 3px solid var(--ark-teal); position: relative; }
+  .ty-transmission::before { content: 'TRANSMISSION RECEIVED'; position: absolute; top: -10px; left: 24px; background: var(--ark-darker); padding: 0 10px; font-family: 'Orbitron', sans-serif; font-size: 0.55rem; letter-spacing: 0.3em; color: var(--ark-teal); }
+  .ty-transmission h2 { font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 3vw, 1.6rem); color: var(--ark-amber); margin-bottom: 16px; letter-spacing: 0.1em; }
+  .ty-transmission p { line-height: 1.8; color: #a8d8e0; font-size: 0.9rem; margin-bottom: 16px; }
+
+  .ty-shapes { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin: 20px 0; }
+  .ty-shape { background: rgba(0,229,204,0.08); border: 1px solid rgba(0,229,204,0.2); border-radius: 2px; padding: 12px 16px; font-size: 0.8rem; color: var(--ark-teal); display: flex; align-items: center; gap: 8px; }
+
+  .ty-reward { background: linear-gradient(135deg, rgba(255,179,71,0.08) 0%, rgba(255,107,26,0.05) 100%); border: 1px solid rgba(255,179,71,0.3); padding: 24px; border-radius: 4px; }
+  .ty-reward h3 { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; color: var(--ark-amber); margin-bottom: 12px; }
+
+  /* ─── PROGRESS BAR ──────────────────────────── */
+  #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--ark-teal), var(--ark-orange)); width: 0%; z-index: 100; transition: width 0.4s ease; box-shadow: 0 0 10px rgba(0,229,204,0.6); }
+  #lightning-flash { position: fixed; inset: 0; background: rgba(100,200,255,0.08); pointer-events: none; opacity: 0; z-index: 1; transition: opacity 0.1s; }
+
+  /* ─── BOOT SCREEN CORNERS ──────────────────── */
+  .boot-corner {
+    position: absolute; width: 50px; height: 50px; z-index: 25;
+  }
+  .boot-corner-tl { top: 16px; left: 16px; border-top: 2px solid rgba(0,229,204,0.5); border-left: 2px solid rgba(0,229,204,0.5); }
+  .boot-corner-tr { top: 16px; right: 16px; border-top: 2px solid rgba(0,229,204,0.5); border-right: 2px solid rgba(0,229,204,0.5); }
+  .boot-corner-bl { bottom: 16px; left: 16px; border-bottom: 2px solid rgba(0,229,204,0.5); border-left: 2px solid rgba(0,229,204,0.5); }
+  .boot-corner-br { bottom: 16px; right: 16px; border-bottom: 2px solid rgba(0,229,204,0.5); border-right: 2px solid rgba(0,229,204,0.5); }
+
+  @media(max-width:600px) {
+    .kyrax-container { flex-direction: column; }
+    .kyrax-avatar { width: 60px; height: 60px; }
+    .options-grid { gap: 6px; }
+  }
 `;
+

@@ -187,6 +187,35 @@ export default function FrostheimPage() {
 
         {/* RIGHT COLUMN: CREATURE INDEX DB */}
         <div className="right-column">
+          {/* KYRAX SENSORY UPLINK */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="kyrax-monitor spatial-panel"
+          >
+            <div className="panel-header">
+              <Fingerprint size={12} className="accent-icon" />
+              <span>KYRAX_SENSORY_UPLINK // LOCAL_SITE_SURVEILLANCE</span>
+            </div>
+            <div className="monitor-view">
+              <Image 
+                src="/KYRAX764764.gif" 
+                alt="Kyrax Tactical Scan" 
+                width={800} 
+                height={450} 
+                className="monitor-gif"
+                unoptimized
+              />
+              <div className="monitor-scanline" />
+              <div className="monitor-hud">
+                <div className="hud-corner-tl">REC [●] LIVE_SIGNAL</div>
+                <div className="hud-corner-tr">FRM_RATE: 60FPS</div>
+                <div className="hud-corner-bl">COORDS: 78.23°N, 15.65°E</div>
+                <div className="hud-corner-br">SATCORP_ENCRYPTION_v4.2</div>
+              </div>
+            </div>
+          </motion.div>
+
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -428,6 +457,55 @@ export default function FrostheimPage() {
         .layer-item { display: flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 10px; color: rgba(255, 255, 255, 0.3); }
         .dot { width: 4px; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; }
         .dot.active { background: var(--c2-cyan); box-shadow: 0 0 8px var(--c2-cyan); }
+
+        .kyrax-monitor {
+          padding: 24px;
+          margin-bottom: 0px;
+        }
+        .monitor-view {
+          position: relative;
+          aspect-ratio: 16 / 9;
+          background: #000;
+          border-radius: 2px;
+          border: 1px solid rgba(125, 211, 252, 0.2);
+          overflow: hidden;
+        }
+        .monitor-gif {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: grayscale(0.4) brightness(1.1) contrast(1.1) hue-rotate(180deg) saturate(0.8);
+          opacity: 0.85;
+        }
+        .monitor-scanline {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(to bottom, transparent, rgba(125, 211, 252, 0.2), transparent);
+          animation: monitor-scan 4s linear infinite;
+          z-index: 5;
+          pointer-events: none;
+        }
+        @keyframes monitor-scan {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(500%); }
+        }
+        .monitor-hud {
+          position: absolute;
+          inset: 12px;
+          pointer-events: none;
+          font-family: var(--font-mono);
+          font-size: 7px;
+          color: var(--c2-cyan);
+          text-shadow: 0 0 4px rgba(125, 211, 252, 0.8);
+          z-index: 10;
+        }
+        .hud-corner-tl { position: absolute; top: 0; left: 0; color: #F87171; font-weight: 700; }
+        .hud-corner-tr { position: absolute; top: 0; right: 0; opacity: 0.6; }
+        .hud-corner-bl { position: absolute; bottom: 0; left: 0; opacity: 0.6; }
+        .hud-corner-br { position: absolute; bottom: 0; right: 0; opacity: 0.6; }
 
         .frost-footer {
           margin: 40px 32px 32px; padding: 24px 32px;
