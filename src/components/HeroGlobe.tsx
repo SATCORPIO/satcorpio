@@ -395,7 +395,7 @@ export const HeroGlobe = () => {
         .tactical-bg {
           position: absolute;
           inset: 0;
-          background: url('/tactical_hub_bg.png') center/cover no-repeat;
+          background: url('/satcorp_minimal_bg.png') center/cover no-repeat;
           opacity: 0.3;
           z-index: -1;
           filter: brightness(0.8) contrast(1.1) saturate(0.8);

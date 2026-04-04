@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-import Image from "next/image";
-
-import { SpatialCard } from "@/components/shared/SpatialCard";
+import DivisionCard from "@/components/DivisionCard";
 import { navLinks } from "@/data/dossier";
 import OperationsSection from "@/components/OperationsSection";
 import { HeroGlobe } from "@/components/HeroGlobe";
@@ -13,7 +11,6 @@ import { useClientCore } from "@/app/ClientProviders";
 
 export default function SatcorpHome() {
   const { playClick, playHover } = useClientCore();
-  const [hoveredCard, setHoveredCard] = React.useState<string | null>(null);
 
   const scrollToDossier = () => {
     playClick();
@@ -27,15 +24,14 @@ export default function SatcorpHome() {
 
       {/* ─── Spatial Hub (Viewport 1) ─── */}
       <section className="spatial-hub pt-32 pb-20 relative z-10">
-        <div className="max-w-[1400px] mx-auto px-8">
+        <div className="max-w-[1500px] mx-auto px-8">
           <div className="cards-spatial">
             {navLinks.map((link, idx) => (
-              <SpatialCard 
+              <DivisionCard 
                 key={link.id}
                 {...link}
-                index={idx}
-                isActive={hoveredCard === link.id}
-                onHover={() => setHoveredCard(link.id)}
+                status={link.status as "ACTIVE" | "TRANSMITTING" | "OPERATIONAL" | "LOCKED"}
+                delay={idx * 0.15}
               />
             ))}
           </div>
@@ -54,6 +50,7 @@ export default function SatcorpHome() {
 
       </section>
 
+      {/* ─── Operation Command (Viewport 2) ─── */}
       <OperationsSection />
 
       {/* ─── FOOTER ─── */}
@@ -70,117 +67,24 @@ export default function SatcorpHome() {
           position: relative;
           color: white;
           overflow-x: hidden;
+          background: #030508;
         }
 
-        .banner-header {
-          position: relative;
-          z-index: 100;
-          width: 100%;
-          max-width: 1400px;
-          margin: 0 auto;
+        .spatial-hub {
           display: flex;
-          justify-content: center;
-          animation: fade-in 1.2s cubic-bezier(0.2, 0, 0.2, 1);
-          padding: 0 40px; 
-          max-height: 280px; 
-          margin-top: 20px;
-          overflow: visible; /* Let the shadow spill naturally */
-        }
-        .banner-img {
-          width: 100%;
-          height: auto;
-          max-width: 800px; 
-          display: block;
-          object-fit: contain;
-          filter: drop-shadow(0 0 40px rgba(0,255,65,0.2));
-        }
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hub-bg {
-          position: fixed;
-          inset: -5%;
-          z-index: 0;
-          animation: slow-pan 40s ease-in-out infinite alternate;
-        }
-        
-        .hub-dim {
-          position: fixed;
-          inset: 0;
-          z-index: 1;
-          background: radial-gradient(circle at top center, rgba(3,5,8,0.3) 0%, rgba(3,5,8,0.7) 70%, rgba(3,5,8,0.8) 100%);
-        }
-
-        .hero {
+          flex-direction: column;
           min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
           justify-content: center;
-          padding: 40px 24px 80px;
-          text-align: center;
           position: relative;
-          z-index: 10;
-        }
-
-        .hero-inner {
-          max-width: 1000px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 24px;
-        }
-
-        .hero-header {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .hub-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          font-family: var(--font-mono);
-          font-size: 11px;
-          letter-spacing: 4px;
-          color: var(--c2-green);
-          border: 1px solid rgba(0,255,65,0.2);
-          padding: 6px 16px;
-          border-radius: 4px;
-          background: rgba(0,255,65,0.05);
-          margin-bottom: 24px;
-          box-shadow: 0 4px 12px rgba(0,255,65,0.05);
-        }
-
-        .hub-title {
-          font-family: var(--font-tactical);
-          font-size: clamp(48px, 6vw, 84px);
-          font-weight: 900;
-          letter-spacing: 8px;
-          line-height: 1.1;
-          text-shadow: var(--shadow-spatial-lg);
-          margin-bottom: 16px;
-        }
-
-        .hub-desc {
-          font-size: 15px;
-          color: rgba(248,250,252,0.5);
-          max-width: 600px;
-          margin: 0 auto;
-          line-height: 1.8;
-          letter-spacing: 0.5px;
         }
 
         .cards-spatial {
-          display: flex;
-          justify-content: center;
-          gap: 20px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 32px;
+          max-width: 1400px;
+          margin: 0 auto;
           perspective: 1500px;
-          flex-wrap: wrap;
         }
 
         .scroll-indicator {
@@ -193,11 +97,11 @@ export default function SatcorpHome() {
           font-family: var(--font-mono);
           font-size: 10px;
           letter-spacing: 3px;
-          color: rgba(0,255,65,0.5);
+          color: rgba(255,255,255,0.4);
           cursor: pointer;
-          transition: color 300ms;
+          transition: all 300ms;
         }
-        .scroll-indicator:hover { color: var(--c2-green); }
+        .scroll-indicator:hover { color: white; transform: translateY(5px); }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
@@ -215,29 +119,14 @@ export default function SatcorpHome() {
           letter-spacing: 2px;
           color: rgba(255,255,255,0.3);
         }
-        .alert-text {
-          color: rgba(239, 68, 68, 0.6);
-        }
 
         @media (max-width: 1200px) {
-          .nav-card { min-width: 200px; height: 380px; }
+           .cards-spatial { grid-template-columns: repeat(2, 1fr); gap: 20px; }
         }
         @media (max-width: 768px) {
-          .banner-header { padding: 0 16px; margin-top: 10px; }
-          .hud-footer { flex-direction: column; gap: 8px; text-align: center; margin: 0 10px 10px; padding: 12px 16px; }
-          .cards-spatial { flex-direction: column; align-items: center; }
-          .nav-card { width: 100%; max-width: 400px; height: 320px; }
-          .hub-title { font-size: 36px; letter-spacing: 4px; }
-          .spatial-hub { padding: 20px 12px; }
-          .scroll-indicator { margin-top: 32px; font-size: 9px; letter-spacing: 2px; }
-        }
-        @media (max-width: 480px) {
-          .hub-title { font-size: 28px; letter-spacing: 3px; }
-          .hub-desc { font-size: 13px; line-height: 1.6; }
-          .hub-badge { font-size: 9px; letter-spacing: 2px; padding: 5px 12px; }
-          .hud-footer { font-size: 8px; letter-spacing: 1px; margin: 0 8px 8px; padding: 10px 12px; border-radius: 8px; }
-          .scroll-indicator { margin-top: 20px; }
-          .spatial-hub { padding: 16px 8px; }
+          .cards-spatial { grid-template-columns: 1fr; gap: 20px; }
+          .spatial-hub { padding-top: 100px; }
+          .hud-footer { flex-direction: column; gap: 8px; text-align: center; }
         }
       `}</style>
     </main>
