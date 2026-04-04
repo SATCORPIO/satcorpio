@@ -64,40 +64,19 @@ export default function KyraxPage() {
       <div id="kyrax-dossier">
         <DossierSection
           division="kyrax"
-          classification="NEURAL // SWARM OPS"
+          classification="RECONSTRUCTION // v3.5"
           title="AUTONOMOUS SYSTEMS"
           accentColor="#A855F7"
           entries={[
-            { index: "01", text: "Multi-agent network orchestration for autonomous content and research ops." },
-            { index: "02", text: "Custom AI persona development and brand-consistent prompt engineering." },
-            { index: "03", text: "Predictive intelligence mapping for market-leading strategic advantage." }
+            { index: "01", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "02", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "03", text: "COMING SOON // UNDER RECONSTRUCTION" }
           ]}
           tabs={[
             {
-               label: "ORCHESTRATION",
+               label: "RECONSTRUCTION",
                content: [
-                 "CrewAI & AutoGen agent swarm architecture",
-                 "Autonomous task delegation & hiearchy loops",
-                 "Cross-agent memory & context persistence",
-                 "Human-in-the-loop oversight systems"
-               ]
-            },
-            {
-               label: "GENERATIVE",
-               content: [
-                  "Brand-consistent generative visual pipelines",
-                  "Cinematic text-to-video & voice synthesis",
-                  "Modular character rigging & asset generation",
-                  "Advanced lip-sync & emotional delivery vectors"
-               ]
-            },
-            {
-               label: "PREDICTIVE",
-               content: [
-                  "Autonomous market trend & sentiment analysis",
-                  "Competitor architecture deep-dive agents",
-                  "Real-time news ingestion & strategic filtering",
-                  "Custom LLM fine-tuning for operation protocols"
+                 "COMING SOON // UNDER RECONSTRUCTION v3.5",
                ]
             }
           ]}

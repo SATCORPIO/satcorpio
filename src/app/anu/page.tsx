@@ -60,40 +60,19 @@ export default function AnuPage() {
       <div id="anu-dossier">
         <DossierSection
           division="anu"
-          classification="OPS // CONCIERGE"
+          classification="RECONSTRUCTION // v3.5"
           title="OPERATOR PROTOCOLS"
           accentColor="#EAB308"
           entries={[
-            { index: "01", text: "End-to-end client journey mapping and high-fidelity intake protocols." },
-            { index: "02", text: "Automated lifecycle management from onboarding to versioned offboarding." },
-            { index: "03", text: "Precision financial architecture and profitability tracking systems." }
+            { index: "01", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "02", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "03", text: "COMING SOON // UNDER RECONSTRUCTION" }
           ]}
           tabs={[
             {
-               label: "EXPERIENCE",
+               label: "RECONSTRUCTION",
                content: [
-                 "Scope engineering & requirement vetting",
-                 "Interactive client intake frameworks",
-                 "Per-project knowledge portals (Notion)",
-                 "High-authority communication standards"
-               ]
-            },
-            {
-               label: "LIFECYCLE",
-               content: [
-                  "Automated milestone & progress tracking",
-                  "Revision control & scope-creep logic",
-                  "Modular feedback & NPS systems",
-                  "Dynamic asset delivery architectures"
-               ]
-            },
-            {
-               label: "OPS",
-               content: [
-                  "Invoicing & payment chasing automation",
-                  "Real-time project margin analytics",
-                  "Contract modularity & legal clause logic",
-                  "Expense categorization & fiscal exports"
+                 "COMING SOON // UNDER RECONSTRUCTION v3.5",
                ]
             }
           ]}
@@ -101,7 +80,7 @@ export default function AnuPage() {
       </div>
 
       <footer className="anu-footer spatial-panel">
-        <span>ANU © {new Date().getFullYear()}</span>
+        <span>ANU © {new Date().getFullYear()} — SATCORP CONCIERGE</span>
       </footer>
 
       <style jsx>{`

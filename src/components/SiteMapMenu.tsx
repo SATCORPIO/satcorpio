@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X, MessageSquare, ExternalLink, ShieldCheck, ShoppingCart } from "lucide-react";
 import { useClientCore } from "@/app/ClientProviders";
-import { dossierData } from "@/data/dossier";
 
 interface SiteMapMenuProps {
   isOpen: boolean;
@@ -33,15 +32,14 @@ interface MenuCategory {
 
 const MENU_STRUCTURE: MenuCategory[] = [
   {
-    category: "COMMAND CENTER",
+    category: "OPERATIONAL CORE",
     links: [
-      { label: "NEURAL HUB (HOME)", href: "/", id: "home" },
+      { label: "NEURAL HUB (HOME)", href: "/", id: "home", discord: "https://discord.gg/KqphHMq6vS" },
       { label: "NAMTAR CALIBRATION", href: "/namtarsurvey", id: "survey" },
-      { label: "CLASSIFIED UPLINK", href: "https://discord.gg/Ff8mArCacW", id: "classified", discord: "https://discord.gg/Ff8mArCacW" },
     ]
   },
   {
-    category: "OPERATIONAL DIVISIONS",
+    category: "TACTICAL DIVISIONS",
     links: [
       { 
         label: "KI-RA STUDIOS", 
@@ -49,9 +47,9 @@ const MENU_STRUCTURE: MenuCategory[] = [
         id: "kira",
         discord: "https://discord.gg/mypZpPsPeb",
         subLinks: [
-          { label: "NAMTAR OPS", href: "/kirastudios/namtar", discord: "https://discord.gg/mypZpPsPeb" },
-          { label: "FROSTHEIM OPS", href: "/kirastudios/frostheim", discord: "https://discord.gg/uU5K64kXjY" },
-          { label: "DYSUN OPS", href: "/kirastudios/dysunsrealm", discord: "https://discord.gg/R9Axsm7JfN" },
+          { label: "NAMTAR OPERATION", href: "/kirastudios/namtar", discord: "https://discord.gg/mypZpPsPeb" },
+          { label: "FROSTHEIM OPERATION", href: "/kirastudios/frostheim", discord: "https://discord.gg/uU5K64kXjY" },
+          { label: "DYSUN OPERATION", href: "/kirastudios/dysunsrealm", discord: "https://discord.gg/R9Axsm7JfN" },
         ]
       },
       { 
@@ -75,9 +73,10 @@ const MENU_STRUCTURE: MenuCategory[] = [
     ]
   },
   {
-    category: "FUTURE LOGISTICS",
+    category: "LOGISTICS & ASSETS",
     links: [
       { label: "SERVICE PORTAL (v4.0)", href: "/service", id: "shop", isComingSoon: true },
+      { label: "OPERATOR DOSSIER", href: "/#dossier", id: "dossier" },
     ]
   }
 ];
@@ -151,32 +150,43 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
             </div>
 
             {/* ─── CONTENT GRID ─── */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 flex-1 overflow-y-auto pr-4 custom-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 flex-1 overflow-y-auto pr-6 custom-scrollbar">
               {MENU_STRUCTURE.map((section, idx) => (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + idx * 0.1 }}
-                  className="flex flex-col gap-8"
+                  transition={{ delay: 0.1 + idx * 0.1, duration: 0.6 }}
+                  className="flex flex-col gap-10"
                 >
-                  <h3 className="text-[10px] font-mono tracking-[4px] text-cyan-400/60 uppercase border-l-2 border-cyan-400/30 pl-4">{section.category}</h3>
-                  <div className="flex flex-col gap-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-1 h-4 bg-cyan-500/50" />
+                    <h3 className="text-[11px] font-mono tracking-[5px] text-cyan-400 uppercase">{section.category}</h3>
+                  </div>
+
+                  <div className="flex flex-col gap-8">
                     {section.links.map((link, lIdx) => {
                       const isActive = pathname === link.href;
                       const isComingSoon = link.isComingSoon;
 
                       return (
-                        <div key={lIdx} className="group flex flex-col gap-3">
-                          <div className="flex items-center justify-between">
+                        <div key={lIdx} className="group flex flex-col gap-4 relative">
+                          {/* Active Marker */}
+                          {isActive && (
+                            <motion.div 
+                              layoutId="activePointer"
+                              className="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 bg-cyan-400 rotate-45 shadow-[0_0_10px_#22D3EE]"
+                            />
+                          )}
+
+                          <div className="flex items-center justify-between gap-4">
                             <Link 
                               href={isComingSoon ? "#" : link.href}
                               onClick={() => { if(!isComingSoon) { playClick(); onClose(); } }}
                               onMouseEnter={playHover}
-                              className={`text-lg md:text-xl font-orbitron tracking-widest transition-all ${isActive ? 'text-cyan-400 glow-cyan' : isComingSoon ? 'text-white/20 cursor-not-allowed' : 'text-white/60 hover:text-white hover:translate-x-2'}`}
+                              className={`text-xl md:text-2xl font-orbitron tracking-[0.2em] transition-all duration-300 ${isActive ? 'text-cyan-400 glow-cyan translate-x-2' : isComingSoon ? 'text-white/10 cursor-not-allowed' : 'text-white/50 hover:text-white hover:translate-x-2'}`}
                             >
                               {link.label}
-                              {isActive && <span className="ml-3 text-[10px] font-mono text-cyan-400 animate-pulse text-[8px] tracking-[2px]"> // LOCATED</span>}
                             </Link>
                             
                             {link.discord && (
@@ -186,37 +196,40 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                                 rel="noopener noreferrer"
                                 onMouseEnter={playHover}
                                 onClick={playClick}
-                                className="flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded text-[9px] font-mono text-blue-400 hover:bg-blue-500/20 hover:border-blue-500/40 transition-all"
+                                className="flex items-center gap-2 px-4 py-1.5 bg-blue-500/5 border border-blue-500/10 rounded-sm text-[8px] font-mono text-blue-400/60 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-all uppercase tracking-widest"
                               >
-                                <MessageSquare size={10} /> {link.label.split(' ')[0]} UPLINK
+                                <span className="hidden sm:inline">UPLINK</span>
+                                <MessageSquare size={12} />
                               </a>
                             )}
                           </div>
 
                           {link.subLinks && (
-                            <div className="ml-4 flex flex-col gap-3 border-l border-white/10 pl-6 py-1">
+                            <div className="ml-6 flex flex-col gap-4 border-l border-white/5 pl-8 py-2">
                               {link.subLinks.map((sub: any, sIdx: number) => {
                                 const isSubActive = pathname === sub.href;
                                 return (
-                                  <div key={sIdx} className="flex items-center justify-between">
-                                    <Link 
-                                      href={sub.href}
-                                      onClick={() => { playClick(); onClose(); }}
-                                      onMouseEnter={playHover}
-                                      className={`text-sm tracking-widest transition-all ${isSubActive ? 'text-cyan-400' : 'text-white/40 hover:text-white'}`}
-                                    >
-                                      {sub.label}
-                                      {isSubActive && <span className="ml-2 text-[8px] text-cyan-400 opacity-60">// ACTIVE</span>}
-                                    </Link>
+                                  <div key={sIdx} className="flex items-center justify-between group/sub">
+                                    <div className="flex items-center gap-3">
+                                      {isSubActive && <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse" />}
+                                      <Link 
+                                        href={sub.href}
+                                        onClick={() => { playClick(); onClose(); }}
+                                        onMouseEnter={playHover}
+                                        className={`text-sm md:text-base tracking-[0.15em] transition-all ${isSubActive ? 'text-cyan-400' : 'text-white/30 hover:text-white'}`}
+                                      >
+                                        {sub.label}
+                                      </Link>
+                                    </div>
                                     {sub.discord && (
                                       <a 
                                         href={sub.discord} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="text-white/20 hover:text-blue-400 transition-colors"
+                                        className="text-white/10 hover:text-blue-400 transition-colors p-1"
                                         title={`${sub.label} Discord`}
                                       >
-                                        <MessageSquare size={12} />
+                                        <MessageSquare size={14} />
                                       </a>
                                     )}
                                   </div>
@@ -230,31 +243,6 @@ export function SiteMapMenu({ isOpen, onClose }: SiteMapMenuProps) {
                   </div>
                 </motion.div>
               ))}
-
-              {/* ─── PHASE 4: STRATEGIC SERVICES INDEX ─── */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex flex-col gap-8"
-              >
-                <h3 className="text-[10px] font-mono tracking-[4px] text-white/40 uppercase border-l-2 border-white/10 pl-4">STRATEGIC INDEX</h3>
-                <div className="flex flex-col gap-4">
-                  {dossierData.map((item, idx) => (
-                    <div key={idx} className="flex flex-col gap-1 py-2 border-b border-white/5 last:border-0 group cursor-default">
-                      <div className="flex items-center gap-3">
-                        <item.icon size={12} className="text-white/20 group-hover:text-white transition-colors" />
-                        <span className="text-[10px] font-orbitron tracking-widest text-white/60 group-hover:text-white transition-colors">
-                          {item.title}
-                        </span>
-                      </div>
-                      <span className="text-[8px] font-mono text-white/20 ml-6 tracking-tight group-hover:text-cyan-400/40 transition-colors">
-                        CID: {item.id.toUpperCase()} // STRAT_MOD_{idx + 100}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
             </div>
 
             {/* ─── FOOTER ─── */}

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Orbitron, Share_Tech_Mono } from "next/font/google";
 import { ClientProviders } from "./ClientProviders";
-import { FloatingActions } from "@/components/shared/FloatingActions";
 import { Header } from "@/components/Header";
 import "./globals.css";
-import "@/styles/tokens.css";
-import "@/styles/animations.css";
-import "@/styles/responsive.css";
+import "../styles/tokens.css";
+import "../../styles/animations.css";
+import "../../styles/responsive.css";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",

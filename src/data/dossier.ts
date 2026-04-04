@@ -21,7 +21,7 @@ export const navLinks = [
   {
     id: "kirastudios",
     label: "KI-RA STUDIOS",
-    desc: "",
+    desc: "RECONSTRUCTION // v3.5",
     icon: Gamepad2,
     href: "/kirastudios",
     status: "ACTIVE",
@@ -31,7 +31,7 @@ export const navLinks = [
   {
     id: "pulse",
     label: "PULSE",
-    desc: "",
+    desc: "RECONSTRUCTION // v3.5",
     icon: Radio,
     href: "/pulse",
     status: "TRANSMITTING",
@@ -41,7 +41,7 @@ export const navLinks = [
   {
     id: "anu",
     label: "ANU",
-    desc: "",
+    desc: "RECONSTRUCTION // v3.5",
     icon: UserCircle,
     href: "/anu",
     status: "OPERATIONAL",
@@ -51,17 +51,17 @@ export const navLinks = [
   {
     id: "kyrax",
     label: "KYRAX",
-    desc: "",
+    desc: "RECONSTRUCTION // v3.5",
     icon: Brain,
     href: "/kyrax",
     status: "ACTIVE",
     color: "#A855F7",
-    img: "/kyrax-wolf.png",
+    img: "/satcorp_c2.png",
   },
   {
     id: "classified",
     label: "CLASSIFIED",
-    desc: "",
+    desc: "UPLINK // DISCORD HQ",
     icon: Lock,
     href: "https://discord.gg/Ff8mArCacW",
     status: "LOCKED",
@@ -77,13 +77,8 @@ export const dossierData = [
     subtitle: "Operator Value",
     icon: TerminalSquare,
     colSpan: 2,
-    items: [
-      "End-to-end problem solver bridging design, automation, branding, and systems",
-      "Translates vague ideas into deployable assets (web/brand/workflow/media)",
-      "High-performance workstation driven delivery (RTX workflows/rapid iteration)",
-      "Client-first concierge model: clarity → scope → execution → polish"
-    ],
-    description: "Multi-disciplinary approach focused on bridging the gap between high-level vision and technical execution. Delivering clean, battle-tested solutions.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#00FF41"
   },
   {
@@ -92,16 +87,8 @@ export const dossierData = [
     subtitle: "Visual & Platform Architecture",
     icon: Palette,
     colSpan: 2,
-    items: [
-      "Brand foundation & full identity systems",
-      "Modular design frameworks built for scalability",
-      "Wordmark/logotype design (minimalist/luxury/modern)",
-      "Color doctrine & typography systems rules",
-      "Asset systems engineered for long-term growth",
-      "Social media platform-specific assets (IG grids / TikTok Covers)",
-      "Presentation Decks / Pitch slides / Print collateral"
-    ],
-    description: "Complete visual architecture including core brand foundations, modular identity systems, and tactical style doctrines for long-term scalability.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#A855F7"
   },
   {
@@ -110,14 +97,8 @@ export const dossierData = [
     subtitle: "Frontend Architecture",
     icon: MonitorSmartphone,
     colSpan: 1,
-    items: [
-      "Landing pages & scalable portals",
-      "Responsive design systems",
-      "Interactive elements & animation",
-      "Hosting & deployment strategy",
-      "HTML, CSS, JS, GSAP, Vanta.js, React"
-    ],
-    description: "High-performance frontend architecture using Next.js, Three.js, and interactive motion systems for immersive, conversion-focused web experiences.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#38BDF8"
   },
   {
@@ -126,14 +107,8 @@ export const dossierData = [
     subtitle: "Architecture & Logic",
     icon: Network,
     colSpan: 1,
-    items: [
-      "Workflow mapping & SOP creation",
-      "AI-assisted production pipelines",
-      "Toolchain optimization",
-      "Freelance service architecture",
-      "Long-term scalability planning"
-    ],
-    description: "Logic-driven architecture and workflow automation utilizing n8n, Make, and AI-assisted pipelines to optimize high-volume production cycles.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#EAB308"
   },
   {
@@ -142,14 +117,8 @@ export const dossierData = [
     subtitle: "Advanced Animation Systems",
     icon: Video,
     colSpan: 2,
-    items: [
-      "Kinetic typography, logo reveals, explainer animations",
-      "Complex particle systems, fluid simulations, 3D motion graphics",
-      "Character rigging & 2D/3D animation pipelines",
-      "Motion tracking, rotoscoping, advanced compositing",
-      "Tools: After Effects, Cinema 4D, Blender, Lottie, Rive, GSAP"
-    ],
-    description: "Advanced animation systems including kinetic typography, 3D simulations, and generative video pipelines designed for cinematic visual impact.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#FF006E"
   },
   {
@@ -158,14 +127,8 @@ export const dossierData = [
     subtitle: "Community Engineering",
     icon: Users,
     colSpan: 2,
-    items: [
-      "Community identity development & monetization architecture",
-      "Server architecture design (hierarchy, permissions, gating)",
-      "Custom Node.js Discord bots, AI CRM setups, API integrations",
-      "Security hardening, anti-raid frameworks, moderation systems",
-      "Event experience systems & high-authority server deployment"
-    ],
-    description: "Elite community architecture including custom AI-bot development, security hardening, and high-authority infrastructure for decentralized networks.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#5865F2"
   },
   {
@@ -174,13 +137,8 @@ export const dossierData = [
     subtitle: "Product Architecture",
     icon: Code2,
     colSpan: 1,
-    items: [
-      "Full MVPs built in days",
-      "Custom DBs & user auth flows",
-      "Automation across 20+ APIs",
-      "Tools: Webflow, Bubble, Framer, Airtable"
-    ],
-    description: "Rapid application prototyping and low-code deployments using Bubble, Webflow, and Airtable for lightning-fast MVP turnaround.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#10B981"
   },
   {
@@ -189,12 +147,8 @@ export const dossierData = [
     subtitle: "Performance Analytics",
     icon: LineChart,
     colSpan: 1,
-    items: [
-      "Real-time KPI tracking",
-      "Funnel analysis & A/B testing",
-      "Tools: GA4, Mixpanel, Looker"
-    ],
-    description: "Data-driven audience growth strategy, performance analytics, and retention-focused content pipelines to scale community engagement.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#F97316"
   },
   {
@@ -203,12 +157,8 @@ export const dossierData = [
     subtitle: "Brand Protection",
     icon: Fingerprint,
     colSpan: 1,
-    items: [
-      "Naming systems & tagline dev",
-      "Competitor positioning audits",
-      "IP asset protection systems"
-    ],
-    description: "Strategic brand protection, intellectual property audits, and competitive positioning frameworks for long-term market authority.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#94A3B8"
   },
   {
@@ -217,12 +167,8 @@ export const dossierData = [
     subtitle: "Offer Structuring",
     icon: Briefcase,
     colSpan: 1,
-    items: [
-      "Fiverr gig architecture",
-      "Package tier logic",
-      "Upsell & add-on systems"
-    ],
-    description: "Monetization and offer structuring for digital marketplaces, including package tier logic and automated customer acquisition systems.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#1DBF73"
   },
   {
@@ -231,12 +177,8 @@ export const dossierData = [
     subtitle: "Documentation",
     icon: Database,
     colSpan: 2,
-    items: [
-      "Long-form guides & databases",
-      "Versioned documentation",
-      "Canon-locked references"
-    ],
-    description: "Centralized knowledge bases, internal documentation systems, and standard operating procedures (SOPs) for distributed operations.",
+    items: ["COMING SOON // UNDER RECONSTRUCTION"],
+    description: "COMING SOON // UNDER RECONSTRUCTION",
     color: "#0EA5E9"
   }
 ];

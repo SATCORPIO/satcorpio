@@ -119,40 +119,19 @@ export default function KiraPage() {
       <div id="kira-dossier">
         <DossierSection
           division="kira"
-          classification="VISINT // CREATIVE OPS"
+          classification="RECONSTRUCTION // v3.5"
           title="VISUAL ARCHITECTURE"
           accentColor="#A855F7"
           entries={[
-            { index: "01", text: "Multi-disciplinary approach focused on bridging the gap between high-level vision and technical execution." },
-            { index: "02", text: "End-to-end design systems for scalable digital identities and environments." },
-            { index: "03", text: "Cinematic visual storytelling using advanced motion graphics and 3D pipelines." }
+            { index: "01", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "02", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "03", text: "COMING SOON // UNDER RECONSTRUCTION" }
           ]}
           tabs={[
             {
-               label: "IDENTITY",
+               label: "RECONSTRUCTION",
                content: [
-                 "Modular brand foundation & identity systems",
-                 "Tactical color doctrine & typography rules",
-                 "Platform-specific visual asset libraries",
-                 "High-performance design token engineering"
-               ]
-            },
-            {
-               label: "ENVIRONMENTS",
-               content: [
-                  "Interactive WebGL & 3D hero scenes",
-                  "Responsive UI/UX for complex platforms",
-                  "Spatial design & immersive digital hubs",
-                  "Cross-platform design consistency audits"
-               ]
-            },
-            {
-               label: "MOTION",
-               content: [
-                  "Kinetic typography & interactive animations",
-                  "Complex 3D particle & fluid simulations",
-                  "Character rigging & cinematic pipelines",
-                  "Lottie, Rive & high-performance web motion"
+                 "COMING SOON // UNDER RECONSTRUCTION v3.5",
                ]
             }
           ]}

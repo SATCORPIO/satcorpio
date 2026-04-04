@@ -82,40 +82,19 @@ export default function PulsePage() {
       <div id="pulse-dossier">
         <DossierSection
           division="pulse"
-          classification="SIGINT // BROADCAST OPS"
+          classification="RECONSTRUCTION // v3.5"
           title="BROADCAST PROTOCOLS"
           accentColor="#22D3EE"
           entries={[
-            { index: "01", text: "End-to-end broadcast design for elite creators and enterprises." },
-            { index: "02", text: "Automated syndication across multiple platforms (Twitch, YT, Kick)." },
-            { index: "03", text: "Post-production suites optimized for high-volume conversion." }
+            { index: "01", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "02", text: "COMING SOON // UNDER RECONSTRUCTION" },
+            { index: "03", text: "COMING SOON // UNDER RECONSTRUCTION" }
           ]}
           tabs={[
             {
-               label: "DESIGN",
+               label: "RECONSTRUCTION",
                content: [
-                 "OBS scene architecture & overlay systems",
-                 "Interactive HUD style brand UI",
-                 "Alert systems & kinetic visual assets",
-                 "Platform-specific aesthetic engineering"
-               ]
-            },
-            {
-               label: "PRODUCTION",
-               content: [
-                  "Cinematic post-production pipelines",
-                  "AI-assisted editing and upscaling",
-                  "Modular video assets design",
-                  "VFX & advanced color grading"
-               ]
-            },
-            {
-               label: "SYNDICATION",
-               content: [
-                  "Multi-platform publishing hubs",
-                  "Auto-clipping & cross-posting logic",
-                  "Community management automation",
-                  "Real-time signal analytics & metrics"
+                 "COMING SOON // UNDER RECONSTRUCTION v3.5",
                ]
             }
           ]}

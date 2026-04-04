@@ -785,7 +785,7 @@ export default function NamtarSurveyPage() {
                         </button>
 
                         <footer style={{marginTop:'40px', opacity:0.4, textAlign:'center', fontSize:'0.7rem', letterSpacing:'0.2em'}}>
-                            © {new Date().getFullYear()} Ki-Ra Studios | NAMTAR ASCENSION PROTOCOLS
+                            © {new Date().getFullYear()} KI-RA STUDIOS | NAMTAR ASCENSION PROTOCOLS
                         </footer>
                     </>
                 )}

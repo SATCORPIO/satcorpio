@@ -28,46 +28,59 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-[9000] border-b border-white/5 backdrop-blur-md bg-black/20">
-        <div className="max-w-[1400px] mx-auto h-20 px-8 flex items-center justify-between">
-          {/* Left: Blank Space (per v3.0 spec) */}
-          <div className="w-16 hidden md:block" />
+      <header className="fixed top-0 left-0 w-full z-[9000] border-b border-white/10 backdrop-blur-xl bg-black/40">
+        <div className="max-w-[1600px] mx-auto h-24 px-10 flex items-center justify-between relative">
+          {/* Left: Tactical Spacer (Blank as requested) */}
+          <div className="hidden md:flex w-32 h-full items-center">
+            <div className="w-[1px] h-8 bg-white/10" />
+            <div className="ml-4 flex flex-col gap-1">
+              <div className="w-4 h-[1px] bg-white/20" />
+              <div className="w-2 h-[1px] bg-white/20" />
+            </div>
+          </div>
 
-          {/* Center: Tactical Page Title */}
+          {/* Center: Interactive Page Title */}
           <Link 
             href="/" 
             onClick={playClick}
             onMouseEnter={playHover}
-            className="flex flex-col items-center group cursor-pointer transition-transform duration-300 active:scale-95"
+            className="flex flex-col items-center group cursor-pointer absolute left-1/2 -translate-x-1/2 z-10"
           >
             <div className="relative">
-              <h1 className={`text-xl md:text-3xl font-orbitron font-black tracking-[0.5em] transition-all duration-700 ${pageConfig.effect}`}>
+              <h1 className={`text-2xl md:text-3xl font-orbitron font-black tracking-[0.5em] transition-all duration-700 uppercase ${pageConfig.effect} group-hover:scale-105`}>
                 {pageConfig.title}
               </h1>
-              {/* Underline Glitch */}
-              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-current opacity-20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+              {/* Tactical Scanline on Title */}
+              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-500 overflow-hidden">
+                <div className="w-full h-[1px] bg-white animate-scanline" />
+              </div>
             </div>
-            <span className="text-[7px] font-mono tracking-[0.8em] text-white/20 mt-3 group-hover:text-white/40 transition-colors uppercase">
-              Tactical Command Interface
-            </span>
+            <div className="h-[2px] w-12 group-hover:w-full bg-current transition-all duration-700 opacity-20 mt-2" />
+            <p className="text-[7px] font-mono tracking-[0.4em] opacity-0 group-hover:opacity-40 transition-all duration-500 uppercase mt-1">Uplink established // Return to core</p>
           </Link>
 
-          {/* Right: Markdown Menu (3 Lines) */}
-          <button
-            onClick={() => { playClick(); setIsMenuOpen(true); }}
-            onMouseEnter={playHover}
-            className="p-4 hover:bg-white/5 rounded-xl transition-all group relative"
-            aria-label="Open Site Map"
-          >
-            <div className="flex flex-col gap-1.5 items-end">
-              <div className="w-8 h-[2px] bg-white group-hover:bg-cyan-400 group-hover:w-10 transition-all duration-300" />
-              <div className="w-10 h-[2px] bg-white group-hover:bg-cyan-400 group-hover:w-8 transition-all duration-300" />
-              <div className="w-8 h-[2px] bg-white group-hover:bg-cyan-400 group-hover:w-10 transition-all duration-300" />
+          {/* Right: Full-Screen Menu Toggle */}
+          <div className="flex items-center gap-6">
+            <div className="hidden lg:flex flex-col items-end text-[8px] font-mono text-white/30 tracking-[0.2em] uppercase">
+              <span>LOC_0x{Math.random().toString(16).slice(2, 6).toUpperCase()}</span>
+              <span>SECURE_UPLINK</span>
             </div>
-            {/* Visual Flare */}
-            <div className="absolute -top-1 -right-1 w-2 h-2 border-t border-r border-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="absolute -bottom-1 -left-1 w-2 h-2 border-b border-l border-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
+            <button
+              id="menu-trigger"
+              onClick={() => { playClick(); setIsMenuOpen(true); }}
+              onMouseEnter={playHover}
+              className="p-4 hover:bg-white/5 rounded-none border-l border-white/5 transition-all group relative overflow-hidden"
+              aria-label="Open Menu"
+            >
+              <div className="flex flex-col gap-2 items-end">
+                <div className="w-10 h-[2px] bg-white group-hover:bg-cyan-400 transition-all duration-300" />
+                <div className="w-7 h-[2px] bg-white/60 group-hover:bg-cyan-400/60 transition-all duration-300" />
+                <div className="w-10 h-[2px] bg-white group-hover:bg-cyan-400 transition-all duration-300" />
+              </div>
+              {/* Visual Glitch Hover State */}
+              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -132,9 +145,11 @@ export function Header() {
           text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
-        .glitch-anim {
-          animation: glitch 1s infinite;
+        @keyframes scanline {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(300%); }
         }
+
         @keyframes glitch {
           0% { transform: translate(0); }
           20% { transform: translate(-2px, 1px); }

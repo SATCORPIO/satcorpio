@@ -70,10 +70,6 @@ export default function OperationsSection() {
                       {activeData.subtitle.toUpperCase()}
                     </div>
                     <h3 className="desc-title">{activeData.title}</h3>
-                    <div className="reconstruction-badge">
-                      <span className="re-dot" />
-                      COMING SOON UNDER RECONSTRUCTION [v3.5]
-                    </div>
                     <p className="desc-text">
                       {activeData.description || `Professional grade implementation of ${activeData.title.toLowerCase()} across the SATCORP ecosystem. Engineered for high-performance delivery and modular scalability.`}
                     </p>
@@ -244,36 +240,6 @@ export default function OperationsSection() {
           letter-spacing: 2px;
           color: white;
           margin: 0;
-        }
-
-        .reconstruction-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 12px;
-          padding: 8px 16px;
-          background: rgba(234, 179, 8, 0.05);
-          border: 1px solid rgba(234, 179, 8, 0.2);
-          border-radius: 4px;
-          font-family: var(--font-share-tech-mono), monospace;
-          font-size: 11px;
-          letter-spacing: 2px;
-          color: #EAB308;
-          width: fit-content;
-          margin: 4px 0 12px;
-        }
-
-        .re-dot {
-          width: 6px;
-          height: 6px;
-          background: #EAB308;
-          border-radius: 50%;
-          box-shadow: 0 0 8px #EAB308;
-          animation: pulse-re 2s infinite;
-        }
-
-        @keyframes pulse-re {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
         }
 
         .desc-text {
