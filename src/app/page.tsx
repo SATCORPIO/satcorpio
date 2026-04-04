@@ -223,12 +223,6 @@ export default function SatcorpHome() {
         @media (max-width: 1200px) {
           .nav-card { min-width: 200px; height: 380px; }
         }
-        @media (max-width: 900px) {
-          .dossier-manual { flex-direction: column; height: auto; min-height: 600px; }
-          .manual-sidebar { width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); height: auto; max-height: 220px; flex: none; }
-          .viewport-content { padding: 28px; }
-          .vh-title { font-size: 22px; letter-spacing: 2px; }
-        }
         @media (max-width: 768px) {
           .banner-header { padding: 0 16px; margin-top: 10px; }
           .hud-footer { flex-direction: column; gap: 8px; text-align: center; margin: 0 10px 10px; padding: 12px 16px; }
@@ -236,10 +230,6 @@ export default function SatcorpHome() {
           .nav-card { width: 100%; max-width: 400px; height: 320px; }
           .hub-title { font-size: 36px; letter-spacing: 4px; }
           .spatial-hub { padding: 20px 12px; }
-          .dossier-section { padding: 60px 16px; }
-          .vh-left { flex-direction: column; align-items: flex-start; gap: 12px; }
-          .vh-right { display: none; }
-          .viewport-list li { flex-direction: column; gap: 8px; font-size: 13px; padding: 12px 16px; }
           .scroll-indicator { margin-top: 32px; font-size: 9px; letter-spacing: 2px; }
         }
         @media (max-width: 480px) {
@@ -248,7 +238,6 @@ export default function SatcorpHome() {
           .hub-badge { font-size: 9px; letter-spacing: 2px; padding: 5px 12px; }
           .hud-footer { font-size: 8px; letter-spacing: 1px; margin: 0 8px 8px; padding: 10px 12px; border-radius: 8px; }
           .scroll-indicator { margin-top: 20px; }
-          .dossier-section { padding: 40px 12px; }
           .spatial-hub { padding: 16px 8px; }
         }
       `}</style>

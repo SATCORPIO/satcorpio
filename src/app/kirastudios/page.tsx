@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { DossierManual } from "@/components/shared/DossierManual";
-import { TerminalSquare, MonitorSmartphone, Network, Video } from "lucide-react";
+import { ChevronLeft, ChevronDown, Anchor, Snowflake, Sun } from "lucide-react";
+import { motion } from "framer-motion";
+import { DossierSection } from "@/components/DossierSection";
 
 const realms = [
   {
@@ -30,70 +29,14 @@ const realms = [
     bgImage: "/dysuns_dark.png"
   }
 ];
- 
-const kiraDossier = [
-  {
-    id: "core",
-    title: "CORE IDENTITY",
-    subtitle: "Operator Value",
-    icon: TerminalSquare,
-    items: [
-      "End-to-end problem solver bridging design, automation, branding, and systems",
-      "Translates vague ideas into deployable assets (web/brand/workflow/media)",
-      "High-performance workstation driven delivery (RTX workflows/rapid iteration)",
-      "Client-first concierge model: clarity → scope → execution → polish"
-    ],
-    color: "#00FF41"
-  },
-  {
-    id: "brand",
-    title: "BRAND SYSTEMS",
-    subtitle: "Visual & Platform Architecture",
-    icon: Palette,
-    items: [
-      "Brand foundation & full identity systems",
-      "Modular design frameworks built for scalability",
-      "Wordmark/logotype design (minimalist/luxury/modern)",
-      "Color doctrine & typography systems rules",
-      "Asset systems engineered for long-term growth"
-    ],
-    color: "#A855F7"
-  },
-  {
-    id: "motion",
-    title: "MOTION DESIGN",
-    subtitle: "Advanced Animation Systems",
-    icon: Video,
-    items: [
-      "Kinetic typography, logo reveals, explainer animations",
-      "Complex particle systems, fluid simulations, 3D motion graphics",
-      "Character rigging & 2D/3D animation pipelines",
-      "Tools: After Effects, Cinema 4D, Blender, Lottie, Rive, GSAP"
-    ],
-    color: "#FF006E"
-  },
-  {
-    id: "web",
-    title: "WEB & UI",
-    subtitle: "Frontend Architecture",
-    icon: MonitorSmartphone,
-    items: [
-      "Landing pages & scalable portals",
-      "Responsive design systems",
-      "Interactive elements & animation",
-      "Hosting & deployment strategy",
-      "HTML, CSS, JS, GSAP, Vanta.js, React"
-    ],
-    color: "#38BDF8"
-  }
-];
-
-
 
 export default function KiraPage() {
+  const scrollToDossier = () => {
+    document.getElementById('kira-dossier')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <main className="kira film-grain">
+    <main className="kira">
       {/* ─── Immersive Background ─── */}
       <div className="hero-bg">
         <Image src="/kirastudios_ue5.png" alt="Ki-Ra Studios" fill priority className="bg-image" style={{ objectFit: "cover" }} />
@@ -114,11 +57,10 @@ export default function KiraPage() {
             transition={{ duration: 1 }}
             className="hero-header"
           >
-            <div className="badge spatial-panel" style={{ borderColor: 'rgba(245, 158, 11, 0.3)' }}>
-              <span className="dot" style={{ background: '#F59E0B', boxShadow: '0 0 8px #F59E0B' }} /> CREATIVE DIRECTION
+            <div className="badge spatial-panel" style={{ borderColor: 'rgba(168, 85, 247, 0.3)' }}>
+              <span className="dot" style={{ background: '#A855F7', boxShadow: '0 0 8px #A855F7' }} /> CREATIVE DIRECTION
             </div>
-            <h1 className="title" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>KI-RA STUDIOS</h1>
-
+            <h1 className="title" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #A855F7 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>KI-RA STUDIOS</h1>
           </motion.div>
 
           <motion.p 
@@ -171,26 +113,59 @@ export default function KiraPage() {
           <motion.div 
             className="scroll-indicator"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
-            onClick={() => document.getElementById('kira-dossier')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={scrollToDossier}
           >
             <ChevronDown size={18} className="bounce-arrow" />
           </motion.div>
         </div>
       </section>
 
-      <DossierManual 
-        items={kiraDossier}
-        sectionTitle="CREATIVE BRANCH"
-        sectionSubtitle="STUDIO OPERATIONS & VISUAL ARCHITECTURE"
-        terminalPrefix="KIRA"
-        anchorId="kira-dossier"
-      />
+      <div id="kira-dossier">
+        <DossierSection
+          division="kira"
+          classification="VISINT // CREATIVE OPS"
+          title="VISUAL ARCHITECTURE"
+          accentColor="#A855F7"
+          entries={[
+            { index: "01", text: "Multi-disciplinary approach focused on bridging the gap between high-level vision and technical execution." },
+            { index: "02", text: "End-to-end design systems for scalable digital identities and environments." },
+            { index: "03", text: "Cinematic visual storytelling using advanced motion graphics and 3D pipelines." }
+          ]}
+          tabs={[
+            {
+               label: "IDENTITY",
+               content: [
+                 "Modular brand foundation & identity systems",
+                 "Tactical color doctrine & typography rules",
+                 "Platform-specific visual asset libraries",
+                 "High-performance design token engineering"
+               ]
+            },
+            {
+               label: "ENVIRONMENTS",
+               content: [
+                  "Interactive WebGL & 3D hero scenes",
+                  "Responsive UI/UX for complex platforms",
+                  "Spatial design & immersive digital hubs",
+                  "Cross-platform design consistency audits"
+               ]
+            },
+            {
+               label: "MOTION",
+               content: [
+                  "Kinetic typography & interactive animations",
+                  "Complex 3D particle & fluid simulations",
+                  "Character rigging & cinematic pipelines",
+                  "Lottie, Rive & high-performance web motion"
+               ]
+            }
+          ]}
+        />
+      </div>
 
       <footer className="kira-footer spatial-panel">
         <span>KI-RA © {new Date().getFullYear()} — SATCORP CREATIVE</span>
-        <span className="clearance-level">
-          <Cpu size={12} style={{ display: 'inline', marginRight: '6px' }} /> RENDERING OK
-        </span>
+        <span className="clearance-level">RENDERING OK</span>
       </footer>
 
       <style jsx>{`
@@ -209,7 +184,7 @@ export default function KiraPage() {
         .bg-image { filter: brightness(0.6) contrast(1.1) saturate(1.2); }
         .bg-vignette {
           position: fixed; inset: 0; z-index: 1;
-          background: radial-gradient(circle at 50% 50%, transparent 20%, #030508 95%);
+          background: radial-gradient(circle at 50% 50%, transparent 20%, rgba(168, 85, 247, 0.1) 60%, #030508 100%);
         }
 
         .kira-nav {
@@ -219,13 +194,14 @@ export default function KiraPage() {
         }
         .back-link {
           display: inline-flex; align-items: center; gap: 8px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+          font-family: var(--font-share-tech-mono), monospace; font-size: 10px; letter-spacing: 3px;
           color: rgba(255, 255, 255, 0.7); text-decoration: none;
           padding: 10px 16px; border-radius: 6px;
           transition: all 300ms;
-          border-color: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          background: rgba(5, 5, 10, 0.8);
         }
-        .back-link:hover { color: #F59E0B; background: rgba(245, 158, 11, 0.05); border-color: #F59E0B; }
+        .back-link:hover { color: #A855F7; border-color: #A855F7; }
 
         .hero {
           min-height: 90vh;
@@ -256,30 +232,21 @@ export default function KiraPage() {
 
         .badge {
           display: inline-flex; align-items: center; gap: 8px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
-          color: #FFF; border-color: rgba(255, 255, 255, 0.2);
+          font-family: var(--font-share-tech-mono), monospace; font-size: 10px; letter-spacing: 3px;
+          color: #FFF; border: 1px solid rgba(255, 255, 255, 0.2);
           padding: 8px 16px; border-radius: 4px;
           background: rgba(255, 255, 255, 0.03);
           box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
         }
         .dot {
           width: 6px; height: 6px; border-radius: 50%;
-          background: #FFF; box-shadow: 0 0 8px #FFF;
         }
 
         .title {
           font-family: var(--font-tactical);
           font-size: clamp(50px, 8vw, 110px);
           font-weight: 800; letter-spacing: 12px;
-          background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-          text-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
           line-height: 1;
-        }
-
-        .subtitle {
-          font-family: var(--font-mono); font-size: 12px; letter-spacing: 6px;
-          color: rgba(255, 255, 255, 0.5);
         }
 
         .desc {
@@ -296,7 +263,7 @@ export default function KiraPage() {
         .cap-card {
           padding: 32px; border-radius: 8px;
           background: rgba(255, 255, 255, 0.03);
-          border-color: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           cursor: crosshair;
           backdrop-filter: blur(20px);
         }
@@ -318,39 +285,30 @@ export default function KiraPage() {
           font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
         }
 
-
         .scroll-indicator {
           margin-top: 60px;
           display: flex; flex-direction: column; align-items: center; gap: 8px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+          font-family: var(--font-share-tech-mono), monospace; font-size: 10px; letter-spacing: 3px;
           color: rgba(255, 255, 255, 0.4); cursor: pointer; transition: color 300ms;
         }
-        .scroll-indicator:hover { color: #F59E0B; }
+        .scroll-indicator:hover { color: #A855F7; }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
-
-        .bounce-arrow { animation: bounce-y 2s infinite; }
-
-
-
 
         .kira-footer {
           margin: 20px 32px; padding: 16px 24px;
           display: flex; justify-content: space-between;
-          font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px;
-          color: rgba(255, 255, 255, 0.4); border-color: rgba(255, 255, 255, 0.1);
-          background: rgba(255, 255, 255, 0.03); position: relative; z-index: 100;
+          font-family: var(--font-share-tech-mono), monospace; font-size: 9px; letter-spacing: 2px;
+          color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(5, 5, 10, 0.8); position: relative; z-index: 100;
+          backdrop-filter: blur(10px);
         }
-        .clearance-level { color: rgba(255, 255, 255, 0.3); }
 
         @media (max-width: 1024px) {
-          .bento-grid { grid-template-columns: repeat(2, 1fr); }
-          .bento-card { grid-column: span 1 !important; }
           .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
           .capabilities-grid { grid-template-columns: 1fr; gap: 16px; }
-          .bento-grid { grid-template-columns: 1fr; }
           .title { letter-spacing: 6px; }
           .kira-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
           .hero { min-height: auto; padding: 60px 16px 40px; }
@@ -358,21 +316,6 @@ export default function KiraPage() {
           .desc { font-size: 14px; margin-bottom: 24px; }
           .cap-card { padding: 24px; }
           .scroll-indicator { margin-top: 40px; }
-        }
-        @media (max-width: 480px) {
-          .title { font-size: 32px; letter-spacing: 4px; }
-          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
-          .desc { font-size: 13px; line-height: 1.7; }
-          .hero { padding: 40px 12px 32px; }
-          .kira-nav { padding: 12px; }
-          .back-link { font-size: 9px; padding: 8px 12px; }
-          .cap-card { padding: 20px; }
-          .cap-header { gap: 12px; margin-bottom: 12px; }
-          .cap-title { font-size: 13px; letter-spacing: 2px; }
-          .cap-desc { font-size: 12px; }
-          .cap-icon-box { padding: 10px; }
-          .kira-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
-          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
         }
       `}</style>
     </main>

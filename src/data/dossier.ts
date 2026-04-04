@@ -83,6 +83,7 @@ export const dossierData = [
       "High-performance workstation driven delivery (RTX workflows/rapid iteration)",
       "Client-first concierge model: clarity → scope → execution → polish"
     ],
+    description: "Multi-disciplinary approach focused on bridging the gap between high-level vision and technical execution. Delivering clean, battle-tested solutions.",
     color: "#00FF41"
   },
   {
@@ -100,6 +101,7 @@ export const dossierData = [
       "Social media platform-specific assets (IG grids / TikTok Covers)",
       "Presentation Decks / Pitch slides / Print collateral"
     ],
+    description: "Complete visual architecture including core brand foundations, modular identity systems, and tactical style doctrines for long-term scalability.",
     color: "#A855F7"
   },
   {
@@ -115,6 +117,7 @@ export const dossierData = [
       "Hosting & deployment strategy",
       "HTML, CSS, JS, GSAP, Vanta.js, React"
     ],
+    description: "High-performance frontend architecture using Next.js, Three.js, and interactive motion systems for immersive, conversion-focused web experiences.",
     color: "#38BDF8"
   },
   {
@@ -130,6 +133,7 @@ export const dossierData = [
       "Freelance service architecture",
       "Long-term scalability planning"
     ],
+    description: "Logic-driven architecture and workflow automation utilizing n8n, Make, and AI-assisted pipelines to optimize high-volume production cycles.",
     color: "#EAB308"
   },
   {
@@ -145,6 +149,7 @@ export const dossierData = [
       "Motion tracking, rotoscoping, advanced compositing",
       "Tools: After Effects, Cinema 4D, Blender, Lottie, Rive, GSAP"
     ],
+    description: "Advanced animation systems including kinetic typography, 3D simulations, and generative video pipelines designed for cinematic visual impact.",
     color: "#FF006E"
   },
   {
@@ -160,6 +165,7 @@ export const dossierData = [
       "Security hardening, anti-raid frameworks, moderation systems",
       "Event experience systems & high-authority server deployment"
     ],
+    description: "Elite community architecture including custom AI-bot development, security hardening, and high-authority infrastructure for decentralized networks.",
     color: "#5865F2"
   },
   {
@@ -174,6 +180,7 @@ export const dossierData = [
       "Automation across 20+ APIs",
       "Tools: Webflow, Bubble, Framer, Airtable"
     ],
+    description: "Rapid application prototyping and low-code deployments using Bubble, Webflow, and Airtable for lightning-fast MVP turnaround.",
     color: "#10B981"
   },
   {
@@ -187,6 +194,7 @@ export const dossierData = [
       "Funnel analysis & A/B testing",
       "Tools: GA4, Mixpanel, Looker"
     ],
+    description: "Data-driven audience growth strategy, performance analytics, and retention-focused content pipelines to scale community engagement.",
     color: "#F97316"
   },
   {
@@ -200,6 +208,7 @@ export const dossierData = [
       "Competitor positioning audits",
       "IP asset protection systems"
     ],
+    description: "Strategic brand protection, intellectual property audits, and competitive positioning frameworks for long-term market authority.",
     color: "#94A3B8"
   },
   {
@@ -213,6 +222,7 @@ export const dossierData = [
       "Package tier logic",
       "Upsell & add-on systems"
     ],
+    description: "Monetization and offer structuring for digital marketplaces, including package tier logic and automated customer acquisition systems.",
     color: "#1DBF73"
   },
   {
@@ -226,6 +236,7 @@ export const dossierData = [
       "Versioned documentation",
       "Canon-locked references"
     ],
+    description: "Centralized knowledge bases, internal documentation systems, and standard operating procedures (SOPs) for distributed operations.",
     color: "#0EA5E9"
   }
 ];

@@ -8,7 +8,7 @@ import { useClientCore } from "@/app/ClientProviders";
 /**
  * OperationsSection
  * High-fidelity tabbed interface for SATCORP strategic modules.
- * Features smooth transitions, interactive underlines, and concise capability indexing.
+ * Features smooth transitions, interactive underlines, and a comprehensive capability index.
  */
 export default function OperationsSection() {
   const { playHover, playClick } = useClientCore();
@@ -21,7 +21,7 @@ export default function OperationsSection() {
       <div className="section-header">
         <div className="accent-line" />
         <h2 className="section-title">SATCORP OPERATION COMMAND</h2>
-        <p className="section-subtitle">STRATEGIC CAPABILITY INDEX // VER v4.0</p>
+        <p className="section-subtitle">STRATEGIC CAPABILITY INDEX // VER v4.5</p>
       </div>
 
       <div className="ops-container spatial-panel">
@@ -56,40 +56,49 @@ export default function OperationsSection() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.1, ease: "easeOut" }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               className="ops-content"
             >
-              <div className="content-side">
-                <div className="desc-block">
-                  <div className="desc-header" style={{ color: activeData.color }}>
-                    {activeData.subtitle.toUpperCase()}
+              <div className="content-layout">
+                {/* Information Column */}
+                <div className="info-column">
+                  <div className="desc-block">
+                    <div className="desc-header" style={{ color: activeData.color }}>
+                      {activeData.subtitle.toUpperCase()}
+                    </div>
+                    <h3 className="desc-title">{activeData.title}</h3>
+                    <p className="desc-text">
+                      {activeData.description || `Professional grade implementation of ${activeData.title.toLowerCase()} across the SATCORP ecosystem. Engineered for high-performance delivery and modular scalability.`}
+                    </p>
                   </div>
-                  <h3 className="desc-title">{activeData.title}</h3>
-                  <p className="desc-text">
-                    Professional grade implementation of {activeData.title.toLowerCase()} across the SATCORP ecosystem. 
-                    Engineered for high-performance delivery and modular scalability.
-                  </p>
+
+                  <div className="capability-grid-container">
+                    <div className="cap-header">TECHNICAL CAPABILITIES</div>
+                    <ul className="cap-grid">
+                      {activeData.items.map((item, i) => (
+                        <li key={i} className="cap-item">
+                          <span className="cap-dot" style={{ background: activeData.color }} />
+                          <span className="cap-text">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
 
-                <div className="capability-block">
-                  <div className="cap-header">CORE CAPABILITIES</div>
-                  <ul className="cap-list">
-                    {activeData.items.slice(0, 3).map((item, i) => (
-                      <li key={i} className="cap-item">
-                        <span className="cap-dot" style={{ background: activeData.color }} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="content-decoration">
-                <div className="decor-icon" style={{ color: activeData.color }}>
-                  <activeData.icon size={120} strokeWidth={0.5} opacity={0.1} />
+                {/* Aesthetic Column */}
+                <div className="aesthetic-column">
+                  <div className="decor-icon-wrap" style={{ '--accent': activeData.color } as React.CSSProperties}>
+                    <activeData.icon size={200} strokeWidth={0.5} className="decor-icon" />
+                    <div className="status-readout">
+                        <span className="st-label">STATUS:</span>
+                        <span className="st-value">OPTIMIZED</span>
+                        <span className="st-label">THROUGHPUT:</span>
+                        <span className="st-value">100%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -102,7 +111,7 @@ export default function OperationsSection() {
           padding: 100px 40px;
           position: relative;
           z-index: 10;
-          background: linear-gradient(180deg, transparent, rgba(3, 5, 8, 0.8) 20%);
+          background: linear-gradient(180deg, transparent, rgba(3, 5, 8, 1) 20%);
         }
 
         .section-header {
@@ -129,7 +138,7 @@ export default function OperationsSection() {
         }
 
         .section-subtitle {
-          font-family: var(--font-mono);
+          font-family: var(--font-share-tech-mono), monospace;
           font-size: 10px;
           letter-spacing: 4px;
           color: var(--c2-green);
@@ -137,51 +146,52 @@ export default function OperationsSection() {
         }
 
         .ops-container {
-          max-width: 1200px;
+          max-width: 1300px;
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          background: rgba(4, 6, 12, 0.9);
+          background: rgba(5, 10, 15, 0.85);
           border: 1px solid rgba(255, 255, 255, 0.05);
-          min-height: 500px;
+          border-radius: 4px;
+          overflow: hidden;
+          backdrop-filter: blur(20px);
+          box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
         }
 
         .ops-tabs {
           display: flex;
-          flex-wrap: wrap;
-          padding: 12px;
-          gap: 4px;
+          padding: 8px;
+          gap: 2px;
+          background: rgba(255, 255, 255, 0.02);
           border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-          background: rgba(0, 0, 0, 0.2);
           overflow-x: auto;
           scrollbar-width: none;
         }
 
-        .ops-tabs::-webkit-scrollbar {
-          display: none;
-        }
+        .ops-tabs::-webkit-scrollbar { display: none; }
 
         .tab-btn {
           position: relative;
-          padding: 14px 24px;
+          padding: 16px 24px;
           background: transparent;
           border: none;
-          color: rgba(255, 255, 255, 0.4);
-          font-family: var(--font-tactical);
+          color: rgba(255, 255, 255, 0.35);
+          font-family: var(--font-share-tech-mono), monospace;
           font-size: 11px;
           letter-spacing: 2px;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: all 0.3s ease;
           white-space: nowrap;
         }
 
         .tab-btn:hover {
           color: rgba(255, 255, 255, 0.8);
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(255, 255, 255, 0.03);
         }
 
         .tab-btn.active {
-          color: var(--c2-green);
+          color: white;
+          background: rgba(255, 255, 255, 0.05);
         }
 
         .tab-underline {
@@ -189,124 +199,144 @@ export default function OperationsSection() {
           bottom: 0;
           left: 0;
           height: 2px;
-          background: var(--c2-green);
-          box-shadow: 0 0 8px var(--c2-green-glow);
+          background: white;
+          box-shadow: 0 0 10px white;
         }
 
         .ops-viewport {
-          flex: 1;
           padding: 60px;
-          position: relative;
-          overflow: hidden;
+          min-height: 500px;
         }
 
-.ops-content {
-  display: flex;
-  gap: 60px;
-  height: 100%;
-  min-height: 400px; /* Prevent layout shifts when switching tabs */
-}
+        .content-layout {
+          display: grid;
+          grid-template-columns: 1.5fr 1fr;
+          gap: 80px;
+          align-items: flex-start;
+        }
 
-        .content-side {
-          flex: 1;
+        .info-column {
           display: flex;
           flex-direction: column;
-          gap: 48px;
-          max-width: 600px;
+          gap: 60px;
         }
 
         .desc-block {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 16px;
         }
 
         .desc-header {
-          font-family: var(--font-mono);
+          font-family: var(--font-share-tech-mono), monospace;
           font-size: 11px;
-          letter-spacing: 4px;
+          letter-spacing: 6px;
           font-weight: 700;
         }
 
         .desc-title {
-          font-family: var(--font-tactical);
-          font-size: 42px;
+          font-family: var(--font-orbitron), sans-serif;
+          font-size: 48px;
           letter-spacing: 2px;
           color: white;
-          margin-bottom: 8px;
+          margin: 0;
         }
 
         .desc-text {
-          font-size: 16px;
+          font-size: 17px;
           line-height: 1.7;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.5);
+          max-width: 600px;
         }
 
-        .capability-block {
+        .capability-grid-container {
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 24px;
         }
 
         .cap-header {
-          font-family: var(--font-mono);
+          font-family: var(--font-share-tech-mono), monospace;
           font-size: 10px;
           letter-spacing: 3px;
-          color: rgba(255, 255, 255, 0.4);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          color: rgba(255, 255, 255, 0.3);
           padding-bottom: 8px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
           width: fit-content;
         }
 
-        .cap-list {
+        .cap-grid {
           list-style: none;
           padding: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
+          margin: 0;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px 40px;
         }
 
         .cap-item {
           display: flex;
           align-items: center;
-          gap: 16px;
-          font-size: 14px;
-          color: rgba(255, 255, 255, 0.8);
-          font-family: var(--font-mono);
-          letter-spacing: 1px;
+          gap: 12px;
         }
 
         .cap-dot {
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
-          filter: blur(1px);
+          flex-shrink: 0;
         }
 
-        .content-decoration {
-          flex: 1;
+        .cap-text {
+          font-family: var(--font-share-tech-mono), monospace;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.7);
+          letter-spacing: 0.5px;
+        }
+
+        .aesthetic-column {
           display: flex;
-          align-items: center;
           justify-content: center;
-          opacity: 0.5;
+          align-items: center;
+          height: 100%;
         }
 
-        @media (max-width: 1024px) {
-          .ops-content { flex-direction: column; gap: 40px; }
-          .content-decoration { display: none; }
-          .desc-title { font-size: 32px; }
+        .decor-icon-wrap {
+          position: relative;
+          color: var(--accent);
+          opacity: 0.6;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          filter: drop-shadow(0 0 30px var(--accent));
+        }
+
+        .status-readout {
+          margin-top: 20px;
+          display: flex;
+          gap: 12px;
+          font-family: var(--font-share-tech-mono), monospace;
+          font-size: 10px;
+          letter-spacing: 2px;
+        }
+
+        .st-label { color: rgba(255, 255, 255, 0.3); }
+        .st-value { color: var(--accent); font-weight: 700; }
+
+        @media (max-width: 1100px) {
+          .content-layout { grid-template-columns: 1fr; gap: 60px; }
+          .aesthetic-column { display: none; }
           .ops-viewport { padding: 40px; }
         }
 
         @media (max-width: 768px) {
           .ops-section { padding: 60px 20px; }
           .section-title { font-size: 24px; letter-spacing: 4px; }
-          .ops-tabs { padding: 4px; }
-          .tab-btn { padding: 12px 16px; font-size: 9px; }
-          .ops-viewport { padding: 32px 24px; }
-          .desc-title { font-size: 28px; }
-          .desc-text { font-size: 14px; }
-          .cap-item { font-size: 12px; }
+          .ops-viewport { padding: 30px 20px; }
+          .desc-title { font-size: 32px; }
+          .desc-text { font-size: 15px; }
+          .cap-grid { grid-template-columns: 1fr; gap: 12px; }
+          .tab-btn { padding: 12px 16px; font-size: 10px; }
         }
       `}</style>
     </section>

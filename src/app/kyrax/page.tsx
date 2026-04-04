@@ -2,71 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, Brain, Cpu, Network, Zap, Boxes, ChevronDown, BrainCircuit, Users, Clapperboard, Radar, MessageSquare } from "lucide-react";
+import { ChevronLeft, Brain, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-import { DossierManual } from "@/components/shared/DossierManual";
+import { DossierSection } from "@/components/DossierSection";
+import { MatrixFallingCode } from "@/components/shared/MatrixFallingCode";
 import { DiscordButton } from "@/components/shared/DiscordButton";
-
-
-/* ═══ Kyrax Dossier Data ═══ */
-const dossierData = [
-  {
-    id: "workflows",
-    title: "CREATIVE WORKFLOWS",
-    subtitle: "AI-Enhanced Systems",
-    icon: BrainCircuit,
-    colSpan: 1, 
-    items: [
-      "Prompt engineering & reusable frameworks",
-      "Brand-consistent AI visuals & static pipelines",
-      "Task automation & custom AI personas",
-      "AI acceleration inside defined systems"
-    ],
-    color: "#E879F9" // Magenta / Pink
-  },
-  {
-    id: "orchestration",
-    title: "MULTI-AGENT NETWORKS",
-    subtitle: "AI Swarm Orchestration",
-    icon: Users,
-    colSpan: 1,
-    items: [
-      "Crew-based AI teams (Research/Design/Edit)",
-      "Autonomous task delegation & handoff",
-      "Memory & context persistence across agents",
-      "Frameworks: CrewAI, AutoGen, LangGraph"
-    ],
-    color: "#C084FC" // Violet
-  },
-  {
-    id: "generative",
-    title: "GENERATIVE PIPELINES",
-    subtitle: "Video, Voice & Motion",
-    icon: Clapperboard,
-    colSpan: 1,
-    items: [
-      "Text-to-video, image-to-video & lip-sync",
-      "Brand-consistent character generation",
-      "Voice cloning & emotional delivery vectors",
-      "Tools: Runway Gen-3, Kling, ElevenLabs"
-    ],
-    color: "#A855F7" // Purple
-  },
-  {
-    id: "research",
-    title: "PREDICTIVE UNITS",
-    subtitle: "Autonomous Intelligence",
-    icon: Radar,
-    colSpan: 1,
-    items: [
-      "Deep-dive market & competitor agents",
-      "Trend prediction & opportunity mapping",
-      "Real-time news & sentiment analysis",
-      "Tools: Perplexity, Custom GPT logic loops"
-    ],
-    color: "#D8B4FE" // Light Violet
-  }
-];
 
 export default function KyraxPage() {
   const scrollToDossier = () => {
@@ -74,11 +14,12 @@ export default function KyraxPage() {
   };
 
   return (
-    <main className="kyrax film-grain">
+    <main className="kyrax">
       {/* ─── Neural Core Background ─── */}
       <div className="bg-neural">
         <Image src="/kyrax_ultrarealistic_1775186474360.png" alt="Kyrax Neural Core" fill priority style={{ objectFit: 'cover' }} />
         <div className="bg-dimmer" />
+        <MatrixFallingCode color="#A855F7" alpha={0.03} />
       </div>
 
       <nav className="kyrax-nav">
@@ -111,8 +52,6 @@ export default function KyraxPage() {
             Deploying multi-agent networks and autonomous operational intelligence 
             to accelerate workflow efficiency across the SATCORP ecosystem.
           </motion.p>
-          
-
 
           <motion.div 
             className="scroll-indicator"
@@ -128,17 +67,51 @@ export default function KyraxPage() {
             label="KYRAX DISCORD"
             className="discord-link-absolute"
           />
-
         </div>
       </section>
 
-      <DossierManual 
-        items={dossierData}
-        sectionTitle="NEURAL BRANCH"
-        sectionSubtitle="AUTONOMOUS ORCHESTRATION DOSSIER"
-        terminalPrefix="KYRAX"
-        anchorId="kyrax-dossier"
-      />
+      <div id="kyrax-dossier">
+        <DossierSection
+          division="kyrax"
+          classification="NEURAL // SWARM OPS"
+          title="AUTONOMOUS SYSTEMS"
+          accentColor="#A855F7"
+          entries={[
+            { index: "01", text: "Multi-agent network orchestration for autonomous content and research ops." },
+            { index: "02", text: "Custom AI persona development and brand-consistent prompt engineering." },
+            { index: "03", text: "Predictive intelligence mapping for market-leading strategic advantage." }
+          ]}
+          tabs={[
+            {
+               label: "ORCHESTRATION",
+               content: [
+                 "CrewAI & AutoGen agent swarm architecture",
+                 "Autonomous task delegation & hiearchy loops",
+                 "Cross-agent memory & context persistence",
+                 "Human-in-the-loop oversight systems"
+               ]
+            },
+            {
+               label: "GENERATIVE",
+               content: [
+                  "Brand-consistent generative visual pipelines",
+                  "Cinematic text-to-video & voice synthesis",
+                  "Modular character rigging & asset generation",
+                  "Advanced lip-sync & emotional delivery vectors"
+               ]
+            },
+            {
+               label: "PREDICTIVE",
+               content: [
+                  "Autonomous market trend & sentiment analysis",
+                  "Competitor architecture deep-dive agents",
+                  "Real-time news ingestion & strategic filtering",
+                  "Custom LLM fine-tuning for operation protocols"
+               ]
+            }
+          ]}
+        />
+      </div>
 
       <footer className="kyrax-footer spatial-panel">
         <span>KYRAX © {new Date().getFullYear()} — SATCORP INTELLIGENCE</span>
@@ -161,18 +134,14 @@ export default function KyraxPage() {
 
         .bg-neural {
           position: fixed;
-          inset: -2%;
+          inset: 0;
           z-index: 0;
-          animation: float-slow 20s ease-in-out infinite alternate;
-        }
-        @keyframes float-slow {
-          0% { transform: scale(1) translateY(0); filter: brightness(0.6) saturate(1.2); }
-          100% { transform: scale(1.05) translateY(-2%); filter: brightness(0.8) saturate(1.5); }
         }
         .bg-dimmer {
           position: absolute;
           inset: 0;
           background: radial-gradient(circle at center, transparent 0%, rgba(4,1,8,0.9) 70%, #040108 100%);
+          z-index: 1;
         }
 
         .kyrax-nav {
@@ -225,6 +194,7 @@ export default function KyraxPage() {
           background: rgba(168, 85, 247, 0.05);
           box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
         }
+        
         .brain-pulse {
           animation: pulse-glow 2s infinite;
         }
@@ -237,12 +207,12 @@ export default function KyraxPage() {
           -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           text-shadow: 0 0 60px rgba(168, 85, 247, 0.4);
           line-height: 1;
-          margin-left: 16px; /* offset for letter-spacing to visually center */
         }
 
         .subtitle {
-          font-family: var(--font-mono); font-size: 12px; letter-spacing: 6px;
+          font-family: var(--font-share-tech-mono), monospace; font-size: 12px; letter-spacing: 6px;
           color: rgba(168, 85, 247, 0.6);
+          margin-top: 8px;
         }
 
         .desc {
@@ -251,106 +221,38 @@ export default function KyraxPage() {
           margin-bottom: 40px;
         }
 
-        .systems-grid {
-          display: grid; grid-template-columns: repeat(2, 1fr);
-          gap: 24px; width: 100%; text-align: left;
-        }
-
-        .sys-card {
-          position: relative; overflow: hidden;
-          padding: 32px; border-radius: 8px;
-          background: rgba(4, 1, 8, 0.7);
-          border-color: rgba(168, 85, 247, 0.15);
-        }
-
-        .sys-hacker-line {
-          position: absolute; top: 0; left: 0; right: 0; height: 1px;
-          background: linear-gradient(90deg, transparent, #E879F9, transparent);
-          transform: translateX(-100%); transition: transform 800ms ease;
-        }
-        .sys-card:hover .sys-hacker-line { transform: translateX(100%); }
-        .bento-card:hover .sys-hacker-line { transform: translateX(100%); }
-
-        .sys-header {
-          display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
-        }
-        .sys-icon-wrap {
-          color: #E879F9; background: rgba(168, 85, 247, 0.1);
-          padding: 12px; border-radius: 6px; border: 1px solid rgba(168, 85, 247, 0.2);
-          box-shadow: inset 0 0 10px rgba(168, 85, 247, 0.2);
-        }
-
-        .sys-title {
-          font-family: var(--font-tactical); font-size: 15px; font-weight: 700;
-          letter-spacing: 3px; color: #FFFFFF;
-        }
-        .sys-desc {
-          font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
-        }
-
         .scroll-indicator {
           margin-top: 60px;
           display: flex; flex-direction: column; align-items: center; gap: 8px;
-          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
           color: rgba(168, 85, 247, 0.5); cursor: pointer; transition: color 300ms;
         }
         .scroll-indicator:hover { color: #E879F9; }
         .bounce-arrow { animation: bounce-y 2s infinite; }
         @keyframes bounce-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
-        /* ── Discord Button Positioning ── */
         .discord-link-absolute {
-          position: absolute;
-          bottom: 12%;
-          left: 5%;
-          z-index: 100;
+          margin-top: 40px;
         }
-
-        /* ── Dossier Section ── */
-        .dossier-section {
-          position: relative; z-index: 10;
-          padding: 100px 40px;
-          background: linear-gradient(180deg, transparent, rgba(2,1,4,0.98) 200px);
-        }
-
 
         .kyrax-footer {
           margin: 20px 32px; padding: 16px 24px;
           display: flex; justify-content: space-between; align-items: center;
-          font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px;
+          font-family: var(--font-share-tech-mono), monospace; font-size: 9px; letter-spacing: 2px;
           color: rgba(168, 85, 247, 0.4); border-color: rgba(168, 85, 247, 0.15);
           background: rgba(4, 1, 8, 0.6); position: relative; z-index: 100;
+          backdrop-filter: blur(10px);
         }
         .network-status { display: flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.4); }
         .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 8px #A855F7; animation: pulse-glow 1.5s infinite; }
 
         @media (max-width: 768px) {
-          .systems-grid { grid-template-columns: 1fr; gap: 16px; }
-          .bento-grid { grid-template-columns: 1fr; }
-          .title { font-size: 48px; letter-spacing: 8px; margin-left: 8px; }
+          .title { font-size: 48px; letter-spacing: 8px; }
           .subtitle { font-size: 10px; letter-spacing: 4px; }
           .kyrax-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
           .hero { min-height: auto; padding: 60px 16px 40px; }
           .kyrax-nav { padding: 16px; }
           .desc { font-size: 14px; margin-bottom: 24px; }
-          .sys-card { padding: 24px; }
           .scroll-indicator { margin-top: 40px; }
-        }
-        @media (max-width: 480px) {
-          .title { font-size: 36px; letter-spacing: 6px; margin-left: 6px; }
-          .subtitle { font-size: 9px; letter-spacing: 3px; }
-          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
-          .desc { font-size: 13px; line-height: 1.7; }
-          .hero { padding: 40px 12px 32px; }
-          .kyrax-nav { padding: 12px; }
-          .back-link { font-size: 9px; padding: 8px 12px; }
-          .sys-card { padding: 20px; }
-          .sys-header { gap: 12px; margin-bottom: 12px; }
-          .sys-title { font-size: 13px; letter-spacing: 2px; }
-          .sys-desc { font-size: 12px; }
-          .sys-icon-wrap { padding: 10px; }
-          .kyrax-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
-          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
         }
       `}</style>
     </main>

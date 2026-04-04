@@ -101,6 +101,66 @@
   }
 }
 
+/* --- Dossier & Operations Mobile Optimization --- */
+@media (max-width: 900px) {
+  .body-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  
+  .terminal-body {
+    padding: 30px 20px !important;
+  }
+
+  .content-layout {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .aesthetic-column {
+    display: none !important;
+  }
+
+  .ops-viewport {
+    padding: 30px 20px !important;
+  }
+
+  .desc-title {
+    font-size: 32px !important;
+  }
+
+  .cap-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px;
+  }
+
+  .section-title {
+    font-size: 18px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .entry-row {
+    gap: 12px !important;
+  }
+
+  .entry-text {
+    font-size: 14px !important;
+  }
+
+  .tab-btn {
+    padding: 10px 14px !important;
+    font-size: 9px !important;
+  }
+}
+
 /* --- Performance: Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
