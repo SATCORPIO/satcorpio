@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/kirastudios/layout,_N_T_/kirastudios/namtar/layout,_N_T_/kirastudios/namtar/namtarark/layout,_N_T_/kirastudios/namtar/namtarark/page,_N_T_/kirastudios/namtar/namtarark"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/kirastudios/namtar/namtarark/__PAGE__",
+    "/kirastudios/namtar/namtarark",
+    "/kirastudios/namtar",
+    "/kirastudios",
+    "/_index",
+    "/_head"
+  ]
+}
