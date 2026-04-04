@@ -205,8 +205,6 @@ export default function NamtarSurveyPage() {
     };
 
     const handleSubmit = async () => {
-        const hook = "https://discord.com/api/webhooks/1475195439254081768/O4YNOHNGYV1Z6UjWDW660ZwGPh2IWcHqeuni2guMHJnLDoDKj62g_kpSV00g5_G7Ypmf";
-
         setIsSubmitting(true);
         setSubmitErr("");
 
@@ -265,21 +263,23 @@ export default function NamtarSurveyPage() {
             }
         ];
 
-        let success = true;
-        for (const p of payloads) {
-            try {
-                const res = await fetch(hook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(p) });
-                if (!res.ok) success = false;
-                await new Promise(resolve => setTimeout(resolve, 600)); // Rate limit safety
-            } catch (err) { success = false; }
-        }
-
-        setIsSubmitting(false);
-        if (success) {
-            setIsSubmitted(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            setSubmitErr("Transmission failed. Please try again later.");
+        try {
+            const res = await fetch('/api/namtarsurvey', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(payloads) 
+            });
+            
+            if (res.ok) {
+                setIsSubmitted(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                setSubmitErr("Transmission failed. Please try again later.");
+            }
+        } catch (err) {
+            setSubmitErr("Connection error. Please check your uplink.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
