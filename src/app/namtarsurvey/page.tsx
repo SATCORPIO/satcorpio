@@ -785,7 +785,7 @@ export default function NamtarSurveyPage() {
                         </button>
 
                         <footer style={{marginTop:'40px', opacity:0.4, textAlign:'center', fontSize:'0.7rem', letterSpacing:'0.2em'}}>
-                            © 2024 SATCORP.IO | NAMTAR ASCENSION PROTOCOLS
+                            © {new Date().getFullYear()} SATCORP.IO | NAMTAR ASCENSION PROTOCOLS
                         </footer>
                     </>
                 )}
