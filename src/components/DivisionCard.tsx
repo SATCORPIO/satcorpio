@@ -4,7 +4,7 @@ import React, { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
-import { useBootSequence } from "../../hooks/useBootSequence";
+import { useBootSequence } from "@/hooks/useBootSequence";
 import { StatusBadge } from "./StatusBadge";
 
 interface DivisionCardProps {

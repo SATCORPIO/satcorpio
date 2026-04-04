@@ -1,0 +1,208 @@
+﻿
+> temp-app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.2.2 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+node.exe : Error: Can't 
+resolve 
+'../../styles/tokens.css' 
+in 'C:\Users\SATCO\OneDriv
+e\Documents\satcorp.io\src
+\app'
+At C:\Program 
+Files\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (E  
+  rror: Can't re...orp.   
+ io\src\app':String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+    [2m[at 
+finishWithoutResolve (C:\U
+sers\SATCO\OneDrive\Docume
+nts\satcorp.io\node_module
+s\enhanced-resolve\lib\Res
+olver.js:587:18)][0m
+    [2m[at C:\Users\SATCO
+\OneDrive\Documents\satcor
+p.io\node_modules\enhanced
+-resolve\lib\Resolver.js:6
+79:14][0m
+    [2m[at C:\Users\SATCO
+\OneDrive\Documents\satcor
+p.io\node_modules\enhanced
+-resolve\lib\Resolver.js:7
+40:5][0m
+    [2m[at eval (eval at 
+create (C:\Users\SATCO\One
+Drive\Documents\satcorp.io
+\node_modules\tapable\lib\
+HookCodeFactory.js:31:10),
+ <anonymous>:15:1)][0m
+    [2m[at C:\Users\SATCO
+\OneDrive\Documents\satcor
+p.io\node_modules\enhanced
+-resolve\lib\Resolver.js:7
+40:5][0m
+    [2m[at eval (eval at 
+create (C:\Users\SATCO\One
+Drive\Documents\satcorp.io
+\node_modules\tapable\lib\
+HookCodeFactory.js:31:10),
+ <anonymous>:27:1)][0m
+    [2m[at C:\Users\SATCO
+\OneDrive\Documents\satcor
+p.io\node_modules\enhanced
+-resolve\lib\DescriptionFi
+lePlugin.js:89:43][0m
+    [2m[at C:\Users\SATCO
+\OneDrive\Documents\satcor
+p.io\node_modules\enhanced
+-resolve\lib\Resolver.js:7
+40:5][0m
+    [2m[at eval (eval at 
+create (C:\Users\SATCO\One
+Drive\Documents\satcorp.io
+\node_modules\tapable\lib\
+HookCodeFactory.js:31:10),
+ <anonymous>:15:1)][0m
+    [2m[at C:\Users\SATCO
+\OneDrive\Documents\satcor
+p.io\node_modules\enhanced
+-resolve\lib\Resolver.js:7
+40:5][0m {
+  details: "resolve 
+'../../styles/tokens.css' 
+in 'C:\\Users\\SATCO\\OneD
+rive\\Documents\\satcorp.i
+o\\src\\app'\n" +
+    '  using description 
+file: C:\\Users\\SATCO\\On
+eDrive\\Documents\\satcorp
+.io\\package.json 
+(relative path: 
+./src/app)\n' +
+    '    using 
+description file: C:\\User
+s\\SATCO\\OneDrive\\Docume
+nts\\satcorp.io\\package.j
+son (relative path: 
+./styles/tokens.css)\n' +
+    '      no 
+extension\n' +
+    "        C:\\Users\\SA
+TCO\\OneDrive\\Documents\\
+satcorp.io\\styles\\tokens
+.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\SA
+TCO\\OneDrive\\Documents\\
+satcorp.io\\styles\\tokens
+.css.css doesn't exist\n" 
++
+    '      as 
+directory\n' +
+    "        C:\\Users\\SA
+TCO\\OneDrive\\Documents\\
+satcorp.io\\styles\\tokens
+.css doesn't exist"
+}
+
+> Build error occurred
+Error: Turbopack build 
+failed with 1 errors:
+./src/app/globals.css
+Error evaluating Node.js 
+code
+CssSyntaxError: 
+tailwindcss: C:\Users\SATC
+O\OneDrive\Documents\satco
+rp.io\src\app\globals.css:
+1:1: Can't resolve 
+'../../styles/tokens.css' 
+in 'C:\Users\SATCO\OneDriv
+e\Documents\satcorp.io\src
+\app'
+    at Input.error (node_m
+odules/postcss/lib/input.j
+s:135:16) [C:\Users\SATCO\
+OneDrive\Documents\satcorp
+.io\.next\build\chunks\nod
+e_modules_13sb.px._.js:465
+1:22]
+    at error (node_modules
+/postcss/lib/node.js:146:3
+2) [C:\Users\SATCO\OneDriv
+e\Documents\satcorp.io\.ne
+xt\build\chunks\node_modul
+es_13sb.px._.js:928:38]
+    [at Object.Once (C:\Us
+ers\SATCO\OneDrive\Documen
+ts\satcorp.io\node_modules
+\@tailwindcss\postcss\dist
+\index.js:10:6913)]
+    [at process.processTic
+ksAndRejections (node:inte
+rnal/process/task_queues:1
+05:5)]
+    at async 
+LazyResult.runAsync (node_
+modules/postcss/lib/lazy-r
+esult.js:293:11) [C:\Users
+\SATCO\OneDrive\Documents\
+satcorp.io\.next\build\chu
+nks\node_modules_13sb.px._
+.js:6214:21]
+    at async transform (tu
+rbopack:///[turbopack-node
+]/transforms/postcss.ts:70
+:34) [C:\Users\SATCO\OneDr
+ive\Documents\satcorp.io\.
+next\build\chunks\[root-of
+-the-server]__0d-m0h0._.js
+:146:36]
+    at async run (turbopac
+k:///[turbopack-node]/chil
+d_process/evaluate.ts:89:2
+3) [C:\Users\SATCO\OneDriv
+e\Documents\satcorp.io\.ne
+xt\build\chunks\[root-of-t
+he-server]__0ubbtyl._.js:4
+43:31]
+
+Import trace:
+  Client Component 
+Browser:
+    ./src/app/globals.css 
+[Client Component Browser]
+    ./src/app/layout.tsx 
+[Server Component]
+
+
+    at async transform (tu
+rbopack:///[turbopack-node
+]/transforms/postcss.ts:70
+:34) [C:\Users\SATCO\OneDr
+ive\Documents\satcorp.io\.
+next\build\chunks\[root-of
+-the-server]__0d-m0h0._.js
+:146:36])
+    at async run (turbopac
+k:///[turbopack-node]/chil
+d_process/evaluate.ts:89:2
+3) [C:\Users\SATCO\OneDriv
+e\Documents\satcorp.io\.ne
+xt\build\chunks\[root-of-t
+he-server]__0ubbtyl._.js:4
+43:31])
