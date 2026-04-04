@@ -1,226 +1,192 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ChevronRight } from "lucide-react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { navLinks } from "@/data/dossier";
+import DivisionCard from "./DivisionCard";
 import { useClientCore } from "@/app/ClientProviders";
 
 /**
  * DivisionCarousel
- * High-fidelity infinite marquee for division cards.
- * Uses pure CSS for performance and seamless looping.
+ * High-fidelity manual carousel for division cards.
+ * Features:
+ * - Desktop: Manual arrow navigation (Left/Right)
+ * - Mobile: Native-feel horizontal dragging with scroll-snap
+ * - Aesthetic: v3.0 vertical 480px cards with 3D tilt
  */
 export default function DivisionCarousel() {
   const { playHover, playClick } = useClientCore();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Duplicate the list to create a seamless loop (A B C D E | A B C D E)
-  const items = [...navLinks, ...navLinks];
+  // Check scroll position to show/hide arrows
+  const checkScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener("scroll", checkScroll);
+      window.addEventListener("resize", checkScroll);
+      checkScroll();
+      return () => {
+        el.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    playClick();
+    const scrollAmount = 400; // Adjust based on card width + gap
+    const newScrollLeft = 
+      direction === "left" 
+        ? scrollRef.current.scrollLeft - scrollAmount 
+        : scrollRef.current.scrollLeft + scrollAmount;
+    
+    scrollRef.current.scrollTo({
+      left: newScrollLeft,
+      behavior: "smooth"
+    });
+  };
 
   return (
-    <section className="carousel-section" role="region" aria-label="Division overview" aria-live="off">
-      <div className="carousel-container">
-        <div className="carousel-track">
-          {items.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <article key={`${item.id}-${idx}`}>
-                <Link
-                  href={item.href}
-                  className={`carousel-card ${item.status === "LOCKED" ? "locked" : ""}`}
-                  onClick={() => playClick()}
-                  onMouseEnter={() => playHover()}
-                  aria-labelledby={`card-title-${item.id}-${idx}`}
-                >
-                  <div className="card-bg">
-                    <Image
-                      src={item.img}
-                      alt="" /* Decorative background image */
-                      fill
-                      sizes="(max-width: 768px) 220px, 280px"
-                      loading="lazy"
-                      style={{ objectFit: 'cover', opacity: 0.8 }}
-                    />
-                    <div className="card-overlay" style={{ background: `linear-gradient(180deg, transparent 40%, ${item.color}33 100%)` }} />
-                  </div>
+    <section className="carousel-wrapper" aria-label="Division Strategic Command">
+      <div className="carousel-controls-container">
+        {/* Navigation Arrows */}
+        <button 
+          className={`nav-btn left ${canScrollLeft ? 'visible' : ''}`}
+          onClick={() => scroll("left")}
+          onMouseEnter={playHover}
+          aria-label="Scroll Left"
+        >
+          <ChevronLeft size={24} />
+        </button>
 
-                  <div className="card-content">
-                    <div className="card-header">
-                      <div className="icon-box" style={{ color: item.color }}>
-                        <Icon size={18} strokeWidth={1.5} aria-hidden="true" />
-                      </div>
-                      <span className="status-label" style={{ color: item.color }} aria-label={`Status: ${item.status}`}>
-                        {item.status}
-                      </span>
-                    </div>
-
-                    <div className="card-footer">
-                      <h2 className="card-title" id={`card-title-${item.id}-${idx}`}>{item.label}</h2>
-                      {item.status !== "LOCKED" && (
-                        <div className="card-cta" style={{ color: item.color }}>
-                          INIT <ChevronRight size={12} aria-hidden="true" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              </article>
-            );
-          })}
+        <div className="scroll-viewport" ref={scrollRef}>
+          <div className="carousel-track">
+            {navLinks.map((link, idx) => (
+              <div key={link.id} className="carousel-item">
+                <DivisionCard 
+                  {...link}
+                  status={link.status as any}
+                  delay={idx * 0.1}
+                />
+              </div>
+            ))}
+          </div>
         </div>
+
+        <button 
+          className={`nav-btn right ${canScrollRight ? 'visible' : ''}`}
+          onClick={() => scroll("right")}
+          onMouseEnter={playHover}
+          aria-label="Scroll Right"
+        >
+          <ChevronRight size={24} />
+        </button>
       </div>
 
       <style jsx>{`
-        .carousel-section {
-          padding: 80px 0;
+        .carousel-wrapper {
           position: relative;
+          width: 100%;
+          padding: 40px 0;
           z-index: 20;
-          overflow: hidden;
         }
 
-        .carousel-container {
-          width: 100%;
-          mask-image: linear-gradient(
-            90deg,
-            transparent 0%,
-            black 10%,
-            black 90%,
-            transparent 100%
-          );
-          -webkit-mask-image: linear-gradient(
-            90deg,
-            transparent 0%,
-            black 10%,
-            black 90%,
-            transparent 100%
-          );
+        .carousel-controls-container {
+          position: relative;
+          max-width: 1600px;
+          margin: 0 auto;
+          padding: 0 40px;
+        }
+
+        .scroll-viewport {
+          overflow-x: scroll;
+          overflow-y: hidden;
+          scrollbar-width: none; /* Hide scrollbar Firefox */
+          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          padding: 20px 0 60px;
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+
+        .scroll-viewport::-webkit-scrollbar {
+          display: none; /* Hide scrollbar Chrome/Safari */
         }
 
         .carousel-track {
           display: flex;
           gap: 32px;
-          padding: 24px 0;
+          padding: 0 100px; /* Side padding to allow cards to center */
           width: max-content;
-          animation: marquee-scroll 45s linear infinite;
-          touch-action: pan-x; /* Explicitly allow horizontal touch swipe */
         }
 
-        .carousel-track:hover {
-          animation-play-state: paused;
-        }
-
-        @keyframes marquee-scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        .carousel-card {
-          display: block;
-          position: relative;
-          width: 280px;
-          height: 180px;
+        .carousel-item {
+          width: 380px; /* Card width */
           flex-shrink: 0;
-          border-radius: 12px;
-          overflow: hidden;
+          scroll-snap-align: center;
+          transition: transform 0.4s var(--ease-tactical);
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 100;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
           background: rgba(10, 14, 24, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(8px);
-          transition: all 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
-          text-decoration: none;
-          color: white;
-        }
-
-        .carousel-card:hover {
-          border-color: rgba(255, 255, 255, 0.2);
-          transform: translateY(-8px) scale(1.02);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .card-bg {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-        }
-
-        .card-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-        }
-
-        .card-content {
-          position: relative;
-          z-index: 3;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          padding: 20px;
-        }
-
-        .card-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .icon-box {
-          background: rgba(0, 0, 0, 0.5);
-          padding: 8px;
-          border-radius: 8px;
           border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .status-label {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 2px;
-          font-weight: 700;
-        }
-
-        .card-footer {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-          gap: 12px;
-        }
-
-        .card-title {
-          font-family: var(--font-tactical);
-          font-size: 16px;
-          letter-spacing: 2px;
-          margin: 0;
-          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-        }
-
-        .card-cta {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 1px;
-          font-weight: 800;
+          color: white;
           display: flex;
           align-items: center;
-          gap: 4px;
-          opacity: 0.7;
+          justify-content: center;
+          cursor: pointer;
+          backdrop-filter: blur(8px);
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
 
-        .locked {
-          filter: grayscale(1) brightness(0.6);
+        .nav-btn.visible {
+          opacity: 0.6;
+          pointer-events: auto;
+        }
+
+        .nav-btn:hover {
+          opacity: 1;
+          border-color: rgba(0, 255, 65, 0.4);
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+        }
+
+        .nav-btn.left { left: 40px; }
+        .nav-btn.right { right: 40px; }
+
+        @media (max-width: 1200px) {
+          .carousel-item { width: 320px; }
+          .carousel-track { padding: 0 20px; }
         }
 
         @media (max-width: 768px) {
-          .carousel-card {
-            width: 220px;
-            height: 140px;
-          }
-          .carousel-track {
-            gap: 16px;
-          }
+          .carousel-item { width: 85vw; }
+          .carousel-track { padding: 0 20px; gap: 16px; }
+          .nav-btn { display: none; }
+          .scroll-viewport { mask-image: none; -webkit-mask-image: none; }
         }
       `}</style>
     </section>

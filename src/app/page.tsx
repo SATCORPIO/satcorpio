@@ -3,8 +3,7 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-import DivisionCard from "@/components/DivisionCard";
-import { navLinks } from "@/data/dossier";
+import DivisionCarousel from "@/components/DivisionCarousel";
 import OperationsSection from "@/components/OperationsSection";
 import { HeroGlobe } from "@/components/HeroGlobe";
 import { useClientCore } from "@/app/ClientProviders";
@@ -14,7 +13,10 @@ export default function SatcorpHome() {
 
   const scrollToDossier = () => {
     playClick();
-    document.getElementById('dossier')?.scrollIntoView({ behavior: 'smooth' });
+    const dossierElement = document.getElementById('dossier');
+    if (dossierElement) {
+      dossierElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -23,19 +25,8 @@ export default function SatcorpHome() {
       <HeroGlobe />
 
       {/* ─── Spatial Hub (Viewport 1) ─── */}
-      <section className="spatial-hub pt-32 pb-20 relative z-10">
-        <div className="max-w-[1500px] mx-auto px-8">
-          <div className="cards-spatial">
-            {navLinks.map((link, idx) => (
-              <DivisionCard 
-                key={link.id}
-                {...link}
-                status={link.status as "ACTIVE" | "TRANSMITTING" | "OPERATIONAL" | "LOCKED"}
-                delay={idx * 0.15}
-              />
-            ))}
-          </div>
-        </div>
+      <section className="spatial-hub pt-20 relative z-10">
+        <DivisionCarousel />
 
         <motion.div 
           className="scroll-indicator"
@@ -47,7 +38,6 @@ export default function SatcorpHome() {
         >
           <ChevronDown size={18} className="bounce-arrow" />
         </motion.div>
-
       </section>
 
       {/* ─── Operation Command (Viewport 2) ─── */}
@@ -78,17 +68,8 @@ export default function SatcorpHome() {
           position: relative;
         }
 
-        .cards-spatial {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 32px;
-          max-width: 1400px;
-          margin: 0 auto;
-          perspective: 1500px;
-        }
-
         .scroll-indicator {
-          margin-top: 60px;
+          margin-top: 20px;
           align-self: center;
           display: flex;
           flex-direction: column;
@@ -120,11 +101,7 @@ export default function SatcorpHome() {
           color: rgba(255,255,255,0.3);
         }
 
-        @media (max-width: 1200px) {
-           .cards-spatial { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        }
         @media (max-width: 768px) {
-          .cards-spatial { grid-template-columns: 1fr; gap: 20px; }
           .spatial-hub { padding-top: 100px; }
           .hud-footer { flex-direction: column; gap: 8px; text-align: center; }
         }
