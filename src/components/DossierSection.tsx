@@ -55,7 +55,7 @@ export const DossierSection: React.FC<DossierSectionProps> = ({
         <div className="terminal-body">
           {/* ─── Faded Watermark ─── */}
           <div className="terminal-watermark">
-            RECONSTRUCTION // v3.5
+            SATCORP // NEURAL CORE // v3.0
           </div>
 
           <div className="body-grid">

@@ -30,35 +30,43 @@ export function Header() {
     <>
       <header className="fixed top-0 left-0 w-full z-[9000] border-b border-white/5 backdrop-blur-md bg-black/20">
         <div className="max-w-[1400px] mx-auto h-20 px-8 flex items-center justify-between">
-          {/* Left: Blank */}
-          <div className="w-12 h-12" />
+          {/* Left: Blank Space (per v3.0 spec) */}
+          <div className="w-16 hidden md:block" />
 
-          {/* Center: Title with dynamic effect */}
+          {/* Center: Tactical Page Title */}
           <Link 
             href="/" 
             onClick={playClick}
             onMouseEnter={playHover}
-            className="flex flex-col items-center group cursor-pointer"
+            className="flex flex-col items-center group cursor-pointer transition-transform duration-300 active:scale-95"
           >
-            <h1 className={`text-xl md:text-2xl font-orbitron font-black tracking-[0.4em] transition-all duration-500 ${pageConfig.effect}`}>
-              {pageConfig.title}
-            </h1>
-            <div className="h-[1px] w-0 group-hover:w-full bg-current transition-all duration-500 opacity-30 mt-1" />
+            <div className="relative">
+              <h1 className={`text-xl md:text-3xl font-orbitron font-black tracking-[0.5em] transition-all duration-700 ${pageConfig.effect}`}>
+                {pageConfig.title}
+              </h1>
+              {/* Underline Glitch */}
+              <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-current opacity-20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+            </div>
+            <span className="text-[7px] font-mono tracking-[0.8em] text-white/20 mt-3 group-hover:text-white/40 transition-colors uppercase">
+              Tactical Command Interface
+            </span>
           </Link>
 
-          {/* Right: Menu Toggle */}
+          {/* Right: Markdown Menu (3 Lines) */}
           <button
             onClick={() => { playClick(); setIsMenuOpen(true); }}
             onMouseEnter={playHover}
-            className="p-3 hover:bg-white/5 rounded-lg transition-all group relative overflow-hidden"
+            className="p-4 hover:bg-white/5 rounded-xl transition-all group relative"
+            aria-label="Open Site Map"
           >
             <div className="flex flex-col gap-1.5 items-end">
-              <div className="w-8 h-[2px] bg-white/80 group-hover:bg-cyan-400 group-hover:w-6 transition-all" />
-              <div className="w-6 h-[2px] bg-white/80 group-hover:bg-cyan-400 group-hover:w-8 transition-all" />
-              <div className="w-8 h-[2px] bg-white/80 group-hover:bg-cyan-400 group-hover:w-5 transition-all" />
+              <div className="w-8 h-[2px] bg-white group-hover:bg-cyan-400 group-hover:w-10 transition-all duration-300" />
+              <div className="w-10 h-[2px] bg-white group-hover:bg-cyan-400 group-hover:w-8 transition-all duration-300" />
+              <div className="w-8 h-[2px] bg-white group-hover:bg-cyan-400 group-hover:w-10 transition-all duration-300" />
             </div>
-            {/* Hover Glitch Effect */}
-            <div className="absolute inset-0 bg-cyan-400/10 -translate-x-full group-hover:translate-x-0 transition-transform duration-500 skew-x-12" />
+            {/* Visual Flare */}
+            <div className="absolute -top-1 -right-1 w-2 h-2 border-t border-r border-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute -bottom-1 -left-1 w-2 h-2 border-b border-l border-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
           </button>
         </div>
       </header>

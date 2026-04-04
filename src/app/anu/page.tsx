@@ -101,7 +101,7 @@ export default function AnuPage() {
       </div>
 
       <footer className="anu-footer spatial-panel">
-        <span>ANU © {new Date().getFullYear()} — SATCORP CONCIERGE</span>
+        <span>ANU © {new Date().getFullYear()}</span>
       </footer>
 
       <style jsx>{`

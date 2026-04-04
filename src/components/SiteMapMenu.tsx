@@ -36,10 +36,11 @@ const MENU_STRUCTURE: MenuCategory[] = [
     links: [
       { label: "NEURAL HUB (HOME)", href: "/", id: "home" },
       { label: "NAMTAR CALIBRATION", href: "/namtarsurvey", id: "survey" },
+      { label: "CLASSIFIED UPLINK", href: "https://discord.gg/Ff8mArCacW", id: "classified", discord: "https://discord.gg/Ff8mArCacW" },
     ]
   },
   {
-    category: "DIVISIONS",
+    category: "OPERATIONAL DIVISIONS",
     links: [
       { 
         label: "KI-RA STUDIOS", 
@@ -73,9 +74,9 @@ const MENU_STRUCTURE: MenuCategory[] = [
     ]
   },
   {
-    category: "LOGISTICS",
+    category: "FUTURE LOGISTICS",
     links: [
-      { label: "SERVICE / SHOP (v4.0)", href: "/service", id: "shop", isComingSoon: true },
+      { label: "SERVICE PORTAL (v4.0)", href: "/service", id: "shop", isComingSoon: true },
     ]
   }
 ];
