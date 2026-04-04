@@ -4,8 +4,6 @@ import { ClientProviders } from "./ClientProviders";
 import { Header } from "@/components/Header";
 import "./globals.css";
 import "../styles/tokens.css";
-import "../../styles/animations.css";
-import "../../styles/responsive.css";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
