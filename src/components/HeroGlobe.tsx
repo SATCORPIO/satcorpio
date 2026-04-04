@@ -10,44 +10,83 @@ import {
   Sphere, 
   MeshDistortMaterial, 
   Html,
-  useTexture,
   Float
 } from "@react-three/drei";
 import * as THREE from "three";
 
 // --- Sub-components ---
 
-const Earth = ({ segments = 64 }: { segments?: number }) => {
-  // Using a more reliable NASA night-lights texture source from Three.js examples
-  const texture = useTexture(
-    "https://threejs.org/examples/textures/planets/earth_atnight_2048.jpg",
-    (t) => { t.colorSpace = THREE.SRGBColorSpace; }
-  );
-  const earthRef = useRef<THREE.Mesh>(null);
+const Earth = ({ segments = 48 }: { segments?: number }) => {
+  const earthRef = useRef<THREE.Group>(null);
+  const cloudRef = useRef<THREE.Points>(null);
+
+  // Generate tactical node points for the holographic shell
+  const pointsData = useMemo(() => {
+    const pointCount = 1200; // Optimized for performance
+    const array = new Float32Array(pointCount * 3);
+    const sphereRadius = 1.05;
+    
+    for (let i = 0; i < pointCount; i++) {
+      const phi = Math.acos(-1 + (2 * i) / pointCount);
+      const theta = Math.sqrt(pointCount * Math.PI) * phi;
+      
+      const v = new THREE.Vector3().setFromSphericalCoords(sphereRadius, phi, theta);
+      array[i * 3] = v.x;
+      array[i * 3 + 1] = v.y;
+      array[i * 3 + 2] = v.z;
+    }
+    return array;
+  }, []);
 
   useFrame((state, delta) => {
     if (earthRef.current) {
-      earthRef.current.rotation.y += 0.0008; // slow rotation
+      earthRef.current.rotation.y += 0.0006;
+    }
+    if (cloudRef.current) {
+      cloudRef.current.rotation.y += 0.001; // Independent slow drift
     }
   });
 
   return (
-    <group rotation={[0, 0, THREE.MathUtils.degToRad(23.4)]}>
-      <Sphere ref={earthRef} args={[1, segments, segments]}>
-        <meshPhongMaterial 
-          map={texture} 
-          emissive={new THREE.Color("#ffffff")}
-          emissiveIntensity={0.2} 
-          specular={new THREE.Color("#333333")}
-          shininess={5}
+    <group ref={earthRef} rotation={[0, 0, THREE.MathUtils.degToRad(23.4)]}>
+      {/* 1. Core Holographic Frame */}
+      <Sphere args={[1, 32, 32]}>
+        <meshBasicMaterial 
+          color="#00FF41" 
+          wireframe 
+          transparent 
+          opacity={0.08} 
+          blending={THREE.AdditiveBlending}
         />
       </Sphere>
-      {/* Atmosphere Glow */}
-      <Sphere args={[1.05, segments, segments]}>
-        <meshBasicMaterial 
-          color="var(--color-accent-primary)"
+
+      {/* 2. Tactical Neural Node Cloud */}
+      <points ref={cloudRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={pointsData.length / 3}
+            array={pointsData}
+            itemSize={3}
+            args={[pointsData, 3]}
+          />
+        </bufferGeometry>
+        <pointsMaterial 
+          size={0.015} 
+          color="#00FF41" 
           transparent 
-          opacity={0.15} 
+          opacity={0.6} 
+          sizeAttenuation 
+          blending={THREE.AdditiveBlending}
+        />
+      </points>
+
+      {/* 3. Atmosphere Halo */}
+      <Sphere args={[1.08, 32, 32]}>
+        <meshBasicMaterial 
+          color="#00FF41"
+          transparent 
+          opacity={0.04} 
           side={THREE.BackSide} 
           blending={THREE.AdditiveBlending}
         />
@@ -56,11 +95,11 @@ const Earth = ({ segments = 64 }: { segments?: number }) => {
   );
 };
 
-const OrbitalRing = ({ radius, rotation, opacity = 0.15 }: { radius: number, rotation: [number, number, number], opacity?: number }) => {
+const OrbitalRing = ({ radius, rotation, opacity = 0.1 }: { radius: number, rotation: [number, number, number], opacity?: number }) => {
   return (
     <mesh rotation={rotation}>
-      <torusGeometry args={[radius, 0.003, 16, 100]} />
-      <meshBasicMaterial color="var(--color-accent-primary)" transparent opacity={opacity} wireframe />
+      <torusGeometry args={[radius, 0.002, 8, 64]} />
+      <meshBasicMaterial color="#00FF41" transparent opacity={opacity} blending={THREE.AdditiveBlending} />
     </mesh>
   );
 };
