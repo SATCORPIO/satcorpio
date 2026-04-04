@@ -56,7 +56,7 @@ export const navLinks = [
     href: "/kyrax",
     status: "ACTIVE",
     color: "#A855F7",
-    img: "/kyrax_neural.png",
+    img: "/wolf.png",
   },
   {
     id: "classified",

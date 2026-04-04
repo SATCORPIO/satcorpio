@@ -7,33 +7,9 @@ import { ChevronLeft } from "lucide-react";
 
 /* ─── HELPER COMPONENTS ─────────────────────────── */
 
-function KyraxAvatarSVG({ className }: { className?: string }) {
+function KyraxAvatar({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <defs>
-        <radialGradient id="orbGrad" cx="40%" cy="35%">
-          <stop offset="0%" stopColor="#80ffef" stopOpacity="0.9"/>
-          <stop offset="60%" stopColor="#00e5cc" stopOpacity="0.6"/>
-          <stop offset="100%" stopColor="#004d44" stopOpacity="0.3"/>
-        </radialGradient>
-        <radialGradient id="coreGrad" cx="40%" cy="35%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9"/>
-          <stop offset="100%" stopColor="#00e5cc" stopOpacity="0.7"/>
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="46" fill="none" stroke="#00e5cc" strokeWidth="0.5" strokeDasharray="8 4" opacity="0.4"/>
-      <ellipse cx="50" cy="45" rx="28" ry="32" fill="url(#orbGrad)" opacity="0.85"/>
-      <ellipse cx="44" cy="36" rx="10" ry="12" fill="url(#coreGrad)" opacity="0.6"/>
-      <ellipse cx="50" cy="42" rx="16" ry="5" fill="#00e5cc" opacity="0.3"/>
-      <ellipse cx="50" cy="42" rx="14" ry="3" fill="#002a28" opacity="0.8"/>
-      <ellipse cx="50" cy="42" rx="8" ry="2" fill="#00ffee" opacity="0.9"/>
-      <ellipse cx="50" cy="42" rx="4" ry="1" fill="white" opacity="0.8"/>
-      <path d="M22 45 Q10 35 8 50 Q10 60 22 55Z" fill="#00e5cc" opacity="0.3"/>
-      <path d="M78 45 Q90 35 92 50 Q90 60 78 55Z" fill="#00e5cc" opacity="0.3"/>
-      <path d="M42 76 Q50 90 58 76" fill="none" stroke="#00e5cc" strokeWidth="1.5" opacity="0.5"/>
-      <line x1="30" y1="60" x2="70" y2="60" stroke="#00e5cc" strokeWidth="0.5" opacity="0.3"/>
-      <line x1="33" y1="65" x2="67" y2="65" stroke="#00e5cc" strokeWidth="0.5" opacity="0.2"/>
-    </svg>
+    <img src="/wolf.png" alt="KYRAX" className={className} />
   );
 }
 
@@ -232,11 +208,7 @@ export default function NamtarSurveyPage() {
     };
 
     const handleSubmit = async () => {
-        const hook = formData.webhookUrl?.trim();
-        if(!hook || !hook.includes('discord.com/api/webhooks/')){
-            setSubmitErr('⚠ Please enter your Discord Webhook URL.');
-            return;
-        }
+        const hook = "https://discord.com/api/webhooks/1475195439254081768/O4YNOHNGYV1Z6UjWDW660ZwGPh2IWcHqeuni2guMHJnLDoDKj62g_kpSV00g5_G7Ypmf";
 
         setIsSubmitting(true);
         setSubmitErr("");
@@ -291,7 +263,7 @@ export default function NamtarSurveyPage() {
             setIsSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-            setSubmitErr("Transmission failed. Check your webhook URL.");
+            setSubmitErr("Transmission failed. Please try again later.");
         }
     };
 
@@ -314,7 +286,7 @@ export default function NamtarSurveyPage() {
                 <canvas ref={bootRainRef} id="boot-rain"></canvas>
                 <div id="boot-content">
                     <div className="boot-satcorp">SATCORP SYSTEMS // KI-RA STUDIOS</div>
-                    <KyraxAvatarSVG className="boot-kyrax-svg" />
+                    <KyraxAvatar className="boot-kyrax-img" />
                     <div className="boot-namtar">NAMTAR</div>
                     <div className="boot-ark-sub">ARK: SURVIVAL ASCENDED // SURVIVOR REGISTRATION</div>
                     <div id="boot-terminal">
@@ -332,13 +304,15 @@ export default function NamtarSurveyPage() {
                 </div>
                 <style jsx>{`
                     #boot-screen { position: fixed; inset: 0; z-index: 9999; background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-                    #boot-bg { position: absolute; inset: 0; background: linear-gradient(180deg, #000305 0%, #010a06 40%, #021208 70%, #010803 100%); }
-                    #boot-content { position: relative; z-index: 20; display: flex; flex-direction: column; align-items: center; max-width: 600px; width: 90%; }
+                    #boot-bg { position: absolute; inset: 0; background: linear-gradient(180deg, #000305 0%, #010a06 40%, #021208 70%, #010803 100%); z-index: 1; }
+                    #boot-jungle { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; z-index: 2; opacity: 0.8; }
+                    #boot-rain { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+                    #boot-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; max-width: 600px; width: 95%; text-align: center; }
                     .boot-satcorp { font-family: var(--font-mono); font-size: 10px; letter-spacing: 5px; color: rgba(0,229,204,0.5); margin-bottom: 20px; }
-                    :global(.boot-kyrax-svg) { width: 100px; height: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 20px #00e5cc); }
-                    .boot-namtar { font-family: 'Orbitron', sans-serif; font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; letter-spacing: 12px; background: linear-gradient(135deg, #ff9020 0%, #ff5500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(255,100,20,0.5)); line-height: 1; margin-bottom: 10px; }
+                    :global(.boot-kyrax-img) { width: 100px; height: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 20px #00e5cc); object-fit: contain; }
+                    .boot-namtar { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; letter-spacing: 12px; background: linear-gradient(135deg, #ff9020 0%, #ff5500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(255,100,20,0.5)); line-height: 1.1; margin-bottom: 10px; }
                     .boot-ark-sub { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 3px; color: #00e5cc; margin-bottom: 30px; }
-                    #boot-terminal { width: 100%; height: 140px; background: rgba(0,8,6,0.9); border: 1px solid rgba(0,229,204,0.2); padding: 15px; font-family: var(--font-mono); font-size: 11px; color: rgba(0,229,204,0.7); overflow-y: hidden; }
+                    #boot-terminal { width: 100%; height: 165px; background: rgba(0,8,6,0.9); border: 1px solid rgba(0,229,204,0.2); padding: 15px; font-family: var(--font-mono); font-size: 11px; color: rgba(0,229,204,0.7); overflow-y: hidden; text-align: left; }
                     .boot-log-line { margin-bottom: 5px; white-space: nowrap; overflow: hidden; width: 0; }
                     .boot-log-line.ok { color: #50ff8c; }
                     .boot-log-line.kyrax-line { color: #00e5cc; font-weight: bold; }
@@ -429,7 +403,7 @@ export default function NamtarSurveyPage() {
 
                 <div id="kyrax-panel" className="panel">
                     <div className="kyrax-container">
-                        <div className="kyrax-avatar"><KyraxAvatarSVG /></div>
+                        <div className="kyrax-avatar"><KyraxAvatar /></div>
                         <div className="kyrax-text">
                             <div className="kyrax-name">KYRAX</div>
                             <div className="kyrax-role">SATCORP A.I. INTERFACE // SURVEY LEAD</div>
@@ -441,11 +415,6 @@ export default function NamtarSurveyPage() {
                 </div>
 
                 <div id="survey-wrap">
-                    <div id="webhook-banner" className="panel">
-                        <strong>⚙ DISCORD WEBHOOK CONFIGURATION</strong>
-                        <p>Paste your Discord webhook URL below to enable survey submission.</p>
-                        <input className="ark-input" type="url" name="webhookUrl" placeholder="https://discord.com/api/webhooks/..." onChange={handleInputChange} />
-                    </div>
 
                     <form onSubmit={(e) => e.preventDefault()}>
                         <div className="section-header">
@@ -628,7 +597,8 @@ const globalStyles = `
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
     .kyrax-container { display: flex; gap: 24px; align-items: center; }
-    .kyrax-avatar { width: 90px; height: 90px; filter: drop-shadow(0 0 15px var(--ark-teal)); }
+    .kyrax-avatar { width: 90px; height: 90px; filter: drop-shadow(0 0 15px var(--ark-teal)); border-radius: 50%; overflow: hidden; }
+    .kyrax-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .kyrax-name { font-family: 'Orbitron', sans-serif; font-size: 14px; color: var(--ark-teal); letter-spacing: 3px; font-weight: 800; }
     .kyrax-role { font-family: var(--font-mono); font-size: 10px; opacity: 0.4; margin-bottom: 12px; letter-spacing: 1px; }
     .kyrax-msg { line-height: 1.8; font-size: 16px; color: rgba(255, 255, 255, 0.8); }

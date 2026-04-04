@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { 
   ChevronLeft, Server, Activity, Users, Shield, Cpu, Database, 
-  AlertCircle, ChevronRight, MessageSquare, Zap
+  AlertCircle, ChevronRight, MessageSquare, Zap, FileText
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -82,6 +82,9 @@ export default function NamtarArkPage() {
                 on rates, mods, and rules is critical to our survival protocol.
               </p>
               <div className="promo-cta">
+                <Link href="/namtarsurvey" className="btn-tactical">
+                   <FileText size={14} /> START CALIBRATION SURVEY
+                </Link>
                 <div className="eta">EST. DEPLOYMENT: Q4 2026</div>
               </div>
             </div>
