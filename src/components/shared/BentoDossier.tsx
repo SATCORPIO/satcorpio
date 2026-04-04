@@ -21,14 +21,14 @@ export function BentoDossier({ items, sectionTitle, sectionSubtitle }: BentoDoss
         </div>
       )}
 
-      <div className="bento-grid">
+      <div className="bento-grid" role="region" aria-label="Division details grid">
         {items.map((node, i) => {
           const Icon = node.icon;
           // By default, if colSpan isn't present in DossierItem, we'll assign one
           const colSpan = (node as any).colSpan || 1;
           
           return (
-            <motion.div 
+            <motion.article 
               key={node.id} 
               className="bento-card spatial-panel"
               style={{ gridColumn: `span ${colSpan}` }}
@@ -36,6 +36,7 @@ export function BentoDossier({ items, sectionTitle, sectionSubtitle }: BentoDoss
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.05 }}
+              aria-labelledby={`bento-title-${node.id}`}
             >
               <div className="bento-header">
                 <div className="bento-icon-wrap" style={{ color: node.color, borderColor: `${node.color}33`, background: `${node.color}0A` }}>
@@ -43,7 +44,7 @@ export function BentoDossier({ items, sectionTitle, sectionSubtitle }: BentoDoss
                 </div>
                 <div className="bento-title-group">
                   <span className="bento-subtitle" style={{ color: node.color }}>{node.subtitle}</span>
-                  <h3 className="bento-title">{node.title}</h3>
+                  <h2 className="bento-title" id={`bento-title-${node.id}`}>{node.title}</h2>
                 </div>
               </div>
               <ul className="bento-list">
@@ -55,7 +56,7 @@ export function BentoDossier({ items, sectionTitle, sectionSubtitle }: BentoDoss
                 ))}
               </ul>
               <div className="bento-corner" style={{ borderBottomColor: `${node.color}44`, borderRightColor: `${node.color}44` }} />
-            </motion.div>
+            </motion.article>
           );
         })}
       </div>

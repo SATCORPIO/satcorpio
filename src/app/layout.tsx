@@ -3,6 +3,7 @@ import { Orbitron } from "next/font/google";
 import { ClientProviders } from "./ClientProviders";
 import { FloatingActions } from "@/components/shared/FloatingActions";
 import "./globals.css";
+import "../styles/tokens.css";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",

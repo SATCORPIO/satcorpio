@@ -1,0 +1,115 @@
+/* ============================================================
+   SATCORP.IO — RESPONSIVE DESIGN SYSTEM
+   Mobile-First Breakpoints & Utilities
+   ============================================================ */
+
+/* 
+   Breakpoints:
+   sm:  640px+  (Phones)
+   md:  768px+  (Tablets)
+   lg:  1024px+ (Laptops)
+   xl:  1280px+ (Desktops)
+*/
+
+/* --- Universal Responsive Utilities --- */
+.container {
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 640px) {
+  .container { max-width: 640px; }
+}
+@media (min-width: 768px) {
+  .container { max-width: 768px; }
+}
+@media (min-width: 1024px) {
+  .container { max-width: 1024px; }
+}
+@media (min-width: 1280px) {
+  .container { max-width: 1280px; }
+}
+
+/* --- Navigation Header Fixes --- */
+.discord-uplink, .nav-btn {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Status Badge Fixes --- */
+.status-badge {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Division Card Grid --- */
+.division-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .division-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .division-grid {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+
+/* --- Carousel Enhancements --- */
+.wheel-track {
+  touch-action: pan-x; /* Prevent vertical scroll hijacking */
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+  .wheel-item {
+    width: 220px !important;
+  }
+  .nav-card {
+    width: 220px !important;
+    height: 320px !important;
+  }
+}
+
+/* --- Dossier Tab Bar (Sub-pages) --- */
+@media (max-width: 767px) {
+  .dossier-tab-bar, .sidebar-nav {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 12px;
+    mask-image: linear-gradient(90deg, black 85%, transparent 100%);
+  }
+  
+  .sidebar-item {
+    flex: 0 0 auto !important;
+  }
+}
+
+/* --- Performance: Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

@@ -226,7 +226,7 @@ export default function DysunPage() {
                 to withstand temperatures exceeding 1000°K.
               </p>
               <div style={{ marginTop: '24px', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(245,158,11,0.2)' }}>
-                <Image src="/Dysark5.png" alt="Solar Concept" width={800} height={400} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                 <Image src="/Dysark5.png" alt="Solar Concept" width={800} height={400} style={{ display: 'block' }} />
               </div>
             </div>
 

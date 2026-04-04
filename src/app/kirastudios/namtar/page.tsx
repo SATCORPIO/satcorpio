@@ -173,7 +173,7 @@ export default function NamtarPage() {
               </p>
               
               <div style={{ marginTop: '24px', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <Image src="/namtar_survival.png" alt="Namtar Concept" width={800} height={400} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                 <Image src="/namtar_survival.png" alt="Namtar Concept" style={{ display: 'block' }} />
               </div>
             </div>
 

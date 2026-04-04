@@ -1,9 +1,10 @@
+@import "../../styles/tokens.css";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Oswald:wght@200;300;400;500;600;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
 /* ============================================================
    SATCORP.IO — ULTRA-REALISTIC GLOBAL DESIGN SYSTEM
    Tactical Command & Control | v4.0 — Spatial Edition
    ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Oswald:wght@200;300;400;500;600;700&family=IM+Fell+English:ital@0;1&family=MedievalSharp&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 /* === CSS RESET === */
 *, *::before, *::after {
@@ -12,50 +13,10 @@
   padding: 0;
 }
 
-/* === GLOBAL DESIGN TOKENS === */
-:root {
-  /* Core SATCORP Palette */
-  --color-primary: #1E293B;
-  --color-secondary: #334155;
-  --color-cta: #22C55E;
-  --color-background: #030508; /* Darker, physical black */
-  --color-text: #F8FAFC;
-
-  /* Tactical C2 accents */
-  --c2-green: #00FF41;
-  --c2-green-glow: rgba(0, 255, 65, 0.4);
-  --c2-green-dark: #003B0F;
-  --c2-amber: #F59E0B;
-  --c2-red: #EF4444;
-
-  /* Specific Thematic Colors */
-  --ue5-blue: #00A8FF;
-  --pulse-pink: #FF006E;
-  --pulse-cyan: #00F5FF;
-  --namtar-amber: #D97706;
-  --dysun-lava: #FF4500;
-
-  /* Spatial Shadows & Depth Tokens */
-  --shadow-spatial-sm: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  --shadow-spatial-md: 0 12px 28px rgba(0, 0, 0, 0.6), 0 8px 12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  --shadow-spatial-lg: 0 24px 60px rgba(0, 0, 0, 0.7), 0 12px 20px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2);
-  --shadow-spatial-glow: 0 0 30px rgba(0, 255, 65, 0.25), inset 0 0 12px rgba(0, 255, 65, 0.15);
-
-  /* Glassmorphism Refined */
-  --glass-bg: rgba(7, 12, 17, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: 32px;
-
-  /* Spacing */
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-
-  /* Fonts */
-  --font-tactical: 'Orbitron', monospace;
-  --font-body: 'Space Grotesk', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
-  --font-military: 'Rajdhani', sans-serif;
+/* --- Accessibility: Focus States --- */
+:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 4px;
 }
 
 html {

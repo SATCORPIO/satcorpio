@@ -108,7 +108,7 @@ export function DiscordButton({
         </div>
 
         <div className="uplink-status">
-          <div className="status-bars">
+          <div className="status-bars" aria-hidden="true">
             <div className="bar active" />
             <div className="bar active" />
             <div className="bar active" />
@@ -124,12 +124,14 @@ export function DiscordButton({
           display: inline-block;
           width: fit-content;
           min-width: 260px;
+          min-height: 48px;
           padding: 1px; /* Border gap */
           text-decoration: none;
           color: white;
           border-radius: 4px;
           overflow: hidden;
           transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          touch-action: manipulation;
         }
 
         .premium-uplink:hover {

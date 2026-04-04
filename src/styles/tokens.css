@@ -1,0 +1,27 @@
+:root {
+  /* Core palette */
+  --color-bg:          #020508;
+  --color-surface:     #080f14;
+  --color-border:      #1a2e3a;
+  --color-accent-primary:   #00d4ff;  /* cyan — SATCORP global */
+  --color-accent-warn:      #ff6b00;  /* orange — locked/danger states */
+  --color-accent-success:   #00ff88;  /* green — operational/active */
+  --color-text-primary:     #e8f4f8;
+  --color-text-muted:       #4a7a8a;
+
+  /* Per-division accent overrides (used by Agent C) */
+  --color-kira:    #c084fc;   /* purple — creative/studio */
+  --color-pulse:   #f472b6;   /* pink — underground radio */
+  --color-anu:     #00d4ff;   /* cyan — default/operator */
+  --color-kyrax:   #a3e635;   /* lime — AI/machine */
+
+  /* Typography */
+  --font-display:  'Orbitron', monospace;      /* headings, status labels */
+  --font-body:     'Share Tech Mono', monospace; /* body, dossier text */
+
+  /* Motion timing */
+  --ease-tactical: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-mid:  400ms;
+  --duration-slow: 800ms;
+}

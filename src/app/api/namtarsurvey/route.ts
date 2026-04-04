@@ -3,7 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
     try {
         const payload = await request.json();
-        const hook = "https://discord.com/api/webhooks/1475195439254081768/O4YNOHNGYV1Z6UjWDW660ZwGPh2IWcHqeuni2guMHJnLDoDKj62g_kpSV00g5_G7Ypmf";
+        const hook = process.env.DISCORD_WEBHOOK_URL;
+
+        if (!hook) {
+            throw new Error('DISCORD_WEBHOOK_URL is not defined');
+        }
 
         // The frontend sends an array of payloads for the two-message strategy
         if (Array.isArray(payload)) {

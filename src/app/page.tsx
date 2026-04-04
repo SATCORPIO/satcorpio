@@ -1,77 +1,16 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
-import { motion, useMotionValue, useAnimationFrame, animate } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
-import { SpatialCard } from "@/components/shared/SpatialCard";
-import { DossierManual } from "@/components/shared/DossierManual";
-import { navLinks, dossierData } from "@/data/dossier";
+import DivisionCarousel from "@/components/DivisionCarousel";
+import OperationsSection from "@/components/OperationsSection";
+import { HeroGlobe } from "@/components/HeroGlobe";
 import { useClientCore } from "@/app/ClientProviders";
 
 export default function SatcorpHome() {
-  const { playHover, playClick } = useClientCore();
-  const [activeNav, setActiveNav] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  
-  const x = useMotionValue(0);
-  const trackRef = useRef<HTMLDivElement>(null);
-  
-  // Base speed for auto-scroll (px per frame at 60fps)
-  // Low value (0.8) for smooth cinematic glide. 
-  const baseSpeed = 0.8; 
-
-  useAnimationFrame((t, delta) => {
-    if (isPaused || !trackRef.current) return;
-    
-    const currentX = x.get();
-    const halfWidth = trackRef.current.scrollWidth / 2;
-    
-    // Smooth frame-rate independent movement
-    const moveBy = baseSpeed * (delta / 16.67); 
-    let nextX = currentX - moveBy;
-    
-    // Seamless loop reset (Modular arithmetic)
-    if (nextX <= -halfWidth) {
-      nextX += halfWidth;
-    }
-    x.set(nextX);
-  });
-
-  const handlePrev = () => {
-    if (!trackRef.current) return;
-    setIsPaused(true);
-    const halfWidth = trackRef.current.scrollWidth / 2;
-    const currentX = x.get();
-    animate(x, currentX + 380, {
-      type: "spring",
-      stiffness: 300,
-      damping: 30,
-      onComplete: () => {
-        setIsPaused(false);
-        const newX = x.get();
-        x.set(((newX % halfWidth) - halfWidth) % halfWidth);
-      }
-    });
-  };
-
-  const handleNext = () => {
-    if (!trackRef.current) return;
-    setIsPaused(true);
-    const halfWidth = trackRef.current.scrollWidth / 2;
-    const currentX = x.get();
-    animate(x, currentX - 380, {
-      type: "spring",
-      stiffness: 300,
-      damping: 30,
-      onComplete: () => {
-        setIsPaused(false);
-        const newX = x.get();
-        x.set(((newX % halfWidth) - halfWidth) % halfWidth);
-      }
-    });
-  };
+  const { playClick, playHover } = useClientCore();
 
   const scrollToDossier = () => {
     playClick();
@@ -80,17 +19,8 @@ export default function SatcorpHome() {
 
   return (
     <main className="home film-grain">
-      {/* ─── Volumetric Background (Fixed for parallax illusion) ─── */}
-      <div className="hub-bg">
-        <Image 
-          src="/globe_tactical.png" 
-          alt="Tactical Globe" 
-          fill 
-          priority 
-          style={{ objectFit: 'contain', opacity: 0.6 }} 
-        />
-      </div>
-      <div className="hub-dim" />
+      {/* ─── WebGL Hero Scene (Background) ─── */}
+      <HeroGlobe />
 
       {/* ─── BANNER HEADER ─── */}
       <div className="banner-header">
@@ -109,51 +39,13 @@ export default function SatcorpHome() {
       <section className="spatial-hub" style={{ minHeight: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 10 }}>
 
 
-        {/* ─── Floating Cards 3D Wheel ─── */}
-        <div className="wheel-container">
-          <button className="nav-arrow prev" onClick={() => { playClick(); handlePrev(); }} onMouseEnter={playHover} aria-label="Previous card">
-            <ChevronLeft size={28} />
-          </button>
-          <button className="nav-arrow next" onClick={() => { playClick(); handleNext(); }} onMouseEnter={playHover} aria-label="Next card">
-            <ChevronRight size={28} />
-          </button>
-          
-          <motion.div 
-            className="wheel-track" 
-            ref={trackRef}
-            style={{ x, animation: 'none' }}
-            drag="x"
-            onDragStart={() => setIsPaused(true)}
-            onDragEnd={(e, info) => {
-              setIsPaused(false);
-              // Handle loop reset after drag if necessary
-              const halfWidth = trackRef.current ? trackRef.current.scrollWidth / 2 : 0;
-              if (halfWidth > 0) {
-                const currentX = x.get();
-                x.set(((currentX % halfWidth) - halfWidth) % halfWidth);
-              }
-            }}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => !isPaused && setIsPaused(false)} /* Check if dragging? */
-            whileTap={{ cursor: 'grabbing' }}
-          >
-            {/* Double the cards for seamless loop */}
-            {[...navLinks, ...navLinks].map((n, i) => (
-              <div key={`${n.id}-${i}`} className="wheel-item">
-                <SpatialCard
-                  {...n}
-                  index={i}
-                  isActive={activeNav === i % navLinks.length}
-                  onHover={() => setActiveNav(i % navLinks.length)}
-                />
-              </div>
-            ))}
-          </motion.div>
-        </div>
+        <DivisionCarousel />
 
         <motion.div 
           className="scroll-indicator"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 1 }}
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 2, duration: 1 }}
           onClick={scrollToDossier}
           onMouseEnter={playHover}
         >
@@ -162,13 +54,7 @@ export default function SatcorpHome() {
 
       </section>
 
-      <DossierManual 
-        items={dossierData}
-        sectionTitle="SATCORP OPERATION COMMAND"
-        sectionSubtitle="DEVELOPER BRANCH // CONCIERGE / SYSTEM ARCHITECT / CREATIVE OP"
-        terminalPrefix="SAT"
-        anchorId="dossier"
-      />
+      <OperationsSection />
 
       {/* ─── FOOTER ─── */}
       <footer className="hud-footer spatial-panel">

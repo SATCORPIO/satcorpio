@@ -440,10 +440,19 @@ export function DossierManual({
             border-bottom: 1px solid rgba(255,255,255,0.05);
             height: auto; max-height: 200px; flex: none;
           }
-          .sidebar-nav { flex-direction: row; flex-wrap: wrap; gap: 4px; padding: 8px; }
-          .sidebar-item { padding: 8px 12px; gap: 10px; }
+          .sidebar-nav { 
+            flex-direction: row; 
+            flex-wrap: nowrap; 
+            gap: 4px; 
+            padding: 8px; 
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            mask-image: linear-gradient(90deg, black 85%, transparent 100%);
+          }
+          .sidebar-item { padding: 8px 12px; gap: 10px; white-space: nowrap; flex: 0 0 auto; }
           .item-label { font-size: 11px; }
           
+          .manual-viewport { min-height: 400px; }
           .viewport-content { padding: 28px; position: relative; }
           .vh-title { font-size: 22px; letter-spacing: 2px; }
           .viewport-header { flex-direction: column; gap: 16px; }
@@ -462,7 +471,7 @@ export function DossierManual({
           .item-label { font-size: 10px; letter-spacing: 0.5px; }
           .item-icon-box { display: none; }
 
-          .viewport-content { padding: 20px; }
+          .viewport-content { padding: 20px; min-height: 350px; }
           .vh-left { flex-direction: column; align-items: flex-start; gap: 12px; }
           .vh-icon-wrap { padding: 12px; }
           .vh-title { font-size: 18px; letter-spacing: 1px; }
