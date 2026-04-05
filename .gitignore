@@ -43,3 +43,24 @@ next-env.d.ts
 # legacy versions
 satcorp_io_V1/
 satcorp-io-v3.0/
+
+# AI Agents & IDE Configs
+.agent/
+.claude/
+.codebuddy/
+.codex/
+.continue/
+.cursor/
+.gemini/
+.kiro/
+.opencode/
+.qoder/
+.roo/
+.trae/
+.windsurf/
+AGENTS.md
+CLAUDE.md
+
+# Design Assets
+Skills/
+design-system/
