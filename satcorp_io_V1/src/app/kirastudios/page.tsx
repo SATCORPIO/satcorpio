@@ -1,0 +1,371 @@
+"use client";
+
+import Link from "next/link";
+import { ChevronLeft, Anchor, Snowflake, Sun, Palette, Boxes, Fingerprint, Layers, Cpu, ChevronDown, Gamepad2, FileText, Database, Headset, Music, Coins, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
+
+const realms = [
+  {
+    title: "NAMTAR",
+    desc: "Deep-ocean tactical interface and abyssal node monitoring systems.",
+    icon: Anchor,
+    href: "/kirastudios/namtar",
+    bgImage: "/namtar_survival.png"
+  },
+  {
+    title: "FROSTHEIM",
+    desc: "Arctic data preservation and sub-zero core infrastructure protocols.",
+    icon: Snowflake,
+    href: "/kirastudios/frostheim",
+    bgImage: "/frostheim_viking.png"
+  },
+  {
+    title: "DYSUN'S REALM",
+    desc: "Solar-thermal energy management and orbital relay synchronization.",
+    icon: Sun,
+    href: "/kirastudios/dysunsrealm",
+    bgImage: "/dysuns_dark.png"
+  }
+];
+
+
+export default function KiraPage() {
+
+  return (
+    <main className="kira film-grain">
+      {/* ─── Parallax Background ─── */}
+      <div className="bg-kira">
+        <div className="bg-gradient" />
+        <div className="glass-spheres" />
+      </div>
+
+      <nav className="kira-nav">
+        <Link href="/" className="back-link spatial-panel">
+          <ChevronLeft size={16} /> <span className="bl-text">RETURN TO HUB</span>
+        </Link>
+      </nav>
+
+      <section className="hero">
+        <div className="hero-inner">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="hero-header"
+          >
+            <div className="badge spatial-panel">
+              <span className="dot" /> CREATIVE DIRECTION
+            </div>
+            <h1 className="title">KI-RA STUDIOS</h1>
+            
+            <motion.a 
+              href="https://discord.gg/mypZpPsPeb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="discord-link-premium spatial-panel"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              <div className="dl-glow" />
+              <MessageSquare size={18} />
+              <div className="dl-content">
+                <span className="dl-main">JOIN CREATIVE OPS</span>
+                <span className="dl-sub">KIRA // STUDIO CHANNEL</span>
+              </div>
+            </motion.a>
+
+          </motion.div>
+
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="desc"
+          >
+            Where logic meets aesthetics. Designing the visual language of the future. 
+            We build digital environments that feel physical, reactive, and premium.
+          </motion.p>
+
+          <div className="capabilities-grid">
+            {realms.map((realm, i) => {
+              const Icon = realm.icon;
+              return (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -4, borderColor: 'rgba(255, 255, 255, 0.4)' }}
+                >
+                  <Link 
+                    href={realm.href} 
+                    className="cap-card spatial-panel" 
+                    style={{ 
+                      textDecoration: 'none', 
+                      display: 'block', 
+                      height: '100%',
+                      backgroundImage: `linear-gradient(to bottom, rgba(5,5,10,0.4) 0%, rgba(5,5,10,0.95) 100%), url(${realm.bgImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <div className="cap-header">
+                      <div className="cap-icon-box">
+                        <Icon size={20} className="cap-icon" strokeWidth={1.5} />
+                      </div>
+                      <span className="cap-title">{realm.title}</span>
+                    </div>
+                    <p className="cap-desc">{realm.desc}</p>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <footer className="kira-footer spatial-panel">
+        <span>KI-RA © {new Date().getFullYear()} — SATCORP CREATIVE</span>
+        <span className="clearance-level">
+          <Cpu size={12} style={{ display: 'inline', marginRight: '6px' }} /> RENDERING OK
+        </span>
+      </footer>
+
+      <style jsx>{`
+        .kira {
+          background: #000;
+          font-family: var(--font-body);
+          color: white;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          overflow-x: hidden;
+        }
+
+        .bg-kira {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+        }
+        .bg-gradient {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 0%, #1A1A1E 0%, #000000 70%);
+        }
+        .glass-spheres {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            radial-gradient(circle at 15% 50%, rgba(255,255,255,0.03) 0%, transparent 20%),
+            radial-gradient(circle at 85% 30%, rgba(255,255,255,0.04) 0%, transparent 25%);
+          filter: blur(40px);
+        }
+
+        .kira-nav {
+          position: relative;
+          z-index: 100;
+          padding: 24px 32px;
+        }
+        .back-link {
+          display: inline-flex; align-items: center; gap: 8px;
+          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+          color: rgba(255, 255, 255, 0.7); text-decoration: none;
+          padding: 10px 16px; border-radius: 6px;
+          transition: all 300ms;
+          border-color: rgba(255, 255, 255, 0.15);
+        }
+        .back-link:hover { color: #FFF; background: rgba(255, 255, 255, 0.05); }
+
+        .hero {
+          min-height: 90vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 40px 24px 80px;
+          text-align: center;
+          position: relative;
+          z-index: 10;
+        }
+
+        .hero-inner {
+          max-width: 1000px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
+        }
+
+        .hero-header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+          color: #FFF; border-color: rgba(255, 255, 255, 0.2);
+          padding: 8px 16px; border-radius: 4px;
+          background: rgba(255, 255, 255, 0.03);
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+        }
+        .dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #FFF; box-shadow: 0 0 8px #FFF;
+        }
+
+        .title {
+          font-family: var(--font-tactical);
+          font-size: clamp(50px, 8vw, 110px);
+          font-weight: 800; letter-spacing: 12px;
+          background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          text-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+          line-height: 1;
+        }
+
+        .subtitle {
+          font-family: var(--font-mono); font-size: 12px; letter-spacing: 6px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        .desc {
+          max-width: 680px; font-size: 16px; line-height: 1.8;
+          color: rgba(255, 255, 255, 0.6);
+          margin-bottom: 40px; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .capabilities-grid {
+          display: grid; grid-template-columns: repeat(3, 1fr);
+          gap: 24px; width: 100%; text-align: left;
+        }
+
+        .cap-card {
+          padding: 32px; border-radius: 8px;
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.1);
+          cursor: crosshair;
+          backdrop-filter: blur(20px);
+        }
+
+        .cap-header {
+          display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+        }
+        .cap-icon-box {
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+          padding: 12px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .cap-icon { color: #FFF; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4)); }
+
+        .cap-title {
+          font-family: var(--font-tactical); font-size: 15px; font-weight: 700;
+          letter-spacing: 3px; color: #FFF;
+        }
+        .cap-desc {
+          font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ── Discord Button ── */
+        .discord-link-premium {
+          display: inline-flex;
+          align-items: center;
+          gap: 16px;
+          padding: 14px 28px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: #FFF;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(10px);
+          transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+          margin-top: 24px;
+          position: relative;
+          overflow: hidden;
+        }
+        .discord-link-premium:hover {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: #FFF;
+          box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+          transform: translateY(-2px);
+        }
+        .dl-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+          opacity: 0;
+          transition: opacity 400ms;
+        }
+        .discord-link-premium:hover .dl-glow { opacity: 1; }
+        
+        .dl-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+        }
+        .dl-main {
+          font-family: var(--font-tactical);
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 2.5px;
+          line-height: 1;
+        }
+        .dl-sub {
+          font-family: var(--font-mono);
+          font-size: 9px;
+          letter-spacing: 1px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+
+
+        .kira-footer {
+          margin: 20px 32px; padding: 16px 24px;
+          display: flex; justify-content: space-between;
+          font-family: var(--font-mono); font-size: 9px; letter-spacing: 2px;
+          color: rgba(255, 255, 255, 0.4); border-color: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.03); position: relative; z-index: 100;
+        }
+        .clearance-level { color: rgba(255, 255, 255, 0.3); }
+
+        @media (max-width: 1024px) {
+          .bento-grid { grid-template-columns: repeat(2, 1fr); }
+          .bento-card { grid-column: span 1 !important; }
+          .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+          .capabilities-grid { grid-template-columns: 1fr; gap: 16px; }
+          .bento-grid { grid-template-columns: 1fr; }
+          .title { letter-spacing: 6px; }
+          .kira-footer { flex-direction: column; gap: 10px; text-align: center; margin: 16px; }
+          .hero { min-height: auto; padding: 60px 16px 40px; }
+          .kira-nav { padding: 16px; }
+          .desc { font-size: 14px; margin-bottom: 24px; }
+          .cap-card { padding: 24px; }
+          .scroll-indicator { margin-top: 40px; }
+        }
+        @media (max-width: 480px) {
+          .title { font-size: 32px; letter-spacing: 4px; }
+          .badge { font-size: 9px; letter-spacing: 2px; padding: 6px 12px; }
+          .desc { font-size: 13px; line-height: 1.7; }
+          .hero { padding: 40px 12px 32px; }
+          .kira-nav { padding: 12px; }
+          .back-link { font-size: 9px; padding: 8px 12px; }
+          .cap-card { padding: 20px; }
+          .cap-header { gap: 12px; margin-bottom: 12px; }
+          .cap-title { font-size: 13px; letter-spacing: 2px; }
+          .cap-desc { font-size: 12px; }
+          .cap-icon-box { padding: 10px; }
+          .kira-footer { margin: 12px 10px; padding: 12px 16px; font-size: 8px; }
+          .scroll-indicator { margin-top: 24px; font-size: 9px; letter-spacing: 2px; }
+        }
+      `}</style>
+    </main>
+  );
+}

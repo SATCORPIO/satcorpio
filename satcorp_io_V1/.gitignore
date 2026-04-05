@@ -1,0 +1,70 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# --- DEPENDENCIES ---
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!/.yarn/patches
+!/.yarn/plugins
+!/.yarn/releases
+!/.yarn/versions
+
+# --- NEXT.JS / BUILD ---
+/.next/
+/out/
+/build
+/coverage
+*.tsbuildinfo
+next-env.d.ts
+
+# --- SKILLS & AGENTS ---
+# Ignore all skill files and folders
+Skills/
+**/skills/
+**/SKILL.md
+.agent/
+.claude/
+.cursor/
+.gemini/
+.windsurf/
+.roo/
+.trae/
+.kiro/
+.opencode/
+.qoder/
+.codebuddy/
+.codex/
+.continue/
+
+# --- LOCAL WORKSPACE / NON-WEBSITE ---
+nano-banana/
+Sites/
+/Untitled 7.odt
+.~lock.*
+
+# --- ENVIRONMENT ---
+# env files (locally stored secrets)
+.env*
+.vercel
+
+# --- OS & IDE ---
+.DS_Store
+Thumbs.db
+*.pem
+.vscode/
+.idea/
+
+# --- DEBUG ---
+*-debug.log*
+*-error.log*
+
+# --- MANUAL OVERRIDES ---
+AGENTS.md
+CLAUDE.md
+design-system/satcorp/MASTER.md
+# --- BACKUPS ---
+satcorp_io_V1/
+
+# --- RESEARCH ---
+Research/

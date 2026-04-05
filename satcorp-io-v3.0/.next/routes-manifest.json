@@ -1,0 +1,135 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/anu",
+      "regex": "^/anu(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/anu(?:/)?$"
+    },
+    {
+      "page": "/api/namtarsurvey",
+      "regex": "^/api/namtarsurvey(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/namtarsurvey(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/kirastudios",
+      "regex": "^/kirastudios(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kirastudios(?:/)?$"
+    },
+    {
+      "page": "/kirastudios/dysunsrealm",
+      "regex": "^/kirastudios/dysunsrealm(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kirastudios/dysunsrealm(?:/)?$"
+    },
+    {
+      "page": "/kirastudios/dysunsrealm/dysunsark",
+      "regex": "^/kirastudios/dysunsrealm/dysunsark(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kirastudios/dysunsrealm/dysunsark(?:/)?$"
+    },
+    {
+      "page": "/kirastudios/frostheim",
+      "regex": "^/kirastudios/frostheim(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kirastudios/frostheim(?:/)?$"
+    },
+    {
+      "page": "/kirastudios/namtar",
+      "regex": "^/kirastudios/namtar(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kirastudios/namtar(?:/)?$"
+    },
+    {
+      "page": "/kirastudios/namtar/namtarark",
+      "regex": "^/kirastudios/namtar/namtarark(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kirastudios/namtar/namtarark(?:/)?$"
+    },
+    {
+      "page": "/kyrax",
+      "regex": "^/kyrax(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/kyrax(?:/)?$"
+    },
+    {
+      "page": "/namtarsurvey",
+      "regex": "^/namtarsurvey(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/namtarsurvey(?:/)?$"
+    },
+    {
+      "page": "/pulse",
+      "regex": "^/pulse(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pulse(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
