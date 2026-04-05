@@ -1,3 +1,0 @@
-﻿satcorp_io_V1/nano-banana/src/cli.ts(16,29): error TS2307: Cannot find module '@google/genai' or its corresponding type declarations.
-src/lib/AudioEngine.ts(48,7): error TS2353: Object literal may only specify known properties, and 'frequency' does not exist in type 'RecursivePartial<MetalSynthOptions>'.
-src/lib/AudioEngine.ts(90,16): error TS2554: Expected 2-4 arguments, but got 1.

@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# legacy versions
+satcorp_io_V1/
+satcorp-io-v3.0/
