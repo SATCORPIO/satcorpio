@@ -14,12 +14,19 @@ import NamtarSurvey from './pages/NamtarSurvey'
 import AdminPortal from './pages/portals/AdminPortal'
 import OperatorPortal from './pages/portals/OperatorPortal'
 import ClientPortal from './pages/portals/ClientPortal'
+// Portal modules
+import Par450k      from './pages/portals/modules/450kPar'
+import Dualcore900  from './pages/portals/modules/dualcore-900'
+import GenDashV2    from './pages/portals/modules/GenDashV2'
+import XOIAudit     from './pages/portals/modules/XOIAudit'
+import XOIClient    from './pages/portals/modules/XOIClient'
 
-// Protected route — redirects to home if not authenticated or wrong role
-function ProtectedRoute({ element, allowedRole }) {
-  const { currentUser } = useAuth()
+// Protected route — redirects to home if not authenticated, wrong role, or missing module
+function ProtectedRoute({ element, allowedRole, moduleKey }) {
+  const { currentUser, hasModule } = useAuth()
   if (!currentUser) return <Navigate to="/" replace />
   if (allowedRole && currentUser.role !== allowedRole) return <Navigate to="/" replace />
+  if (moduleKey && !hasModule(moduleKey)) return <Navigate to="/" replace />
   return element
 }
 
@@ -42,6 +49,13 @@ function AppRoutes() {
       <Route path="/portal/admin"    element={<ProtectedRoute element={<AdminPortal />}    allowedRole="admin" />} />
       <Route path="/portal/operator" element={<ProtectedRoute element={<OperatorPortal />} allowedRole="operator" />} />
       <Route path="/portal/client"   element={<ProtectedRoute element={<ClientPortal />}   allowedRole="client" />} />
+
+      {/* Module routes — user + module-key gated */}
+      <Route path="/portal/modules/450kpar"      element={<ProtectedRoute element={<Par450k />}     moduleKey="450kpar" />} />
+      <Route path="/portal/modules/dualcore-900" element={<ProtectedRoute element={<Dualcore900 />} moduleKey="dualcore-900" />} />
+      <Route path="/portal/modules/gendashv2"    element={<ProtectedRoute element={<GenDashV2 />}   moduleKey="gendashv2" />} />
+      <Route path="/portal/modules/xoi-audit"    element={<ProtectedRoute element={<XOIAudit />}    moduleKey="xoi-audit" />} />
+      <Route path="/portal/modules/xoi-client"   element={<ProtectedRoute element={<XOIClient />}   moduleKey="xoi-client" />} />
 
       <Route path="*" element={<MainPage />} />
     </Routes>

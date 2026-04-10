@@ -3,6 +3,15 @@ import { useAuth } from '../../context/AuthContext'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
+// Module registry — defines card metadata for every portal module
+const MODULE_REGISTRY = [
+  { key: '450kpar',      route: '/portal/modules/450kpar',      icon: '⚡', title: '450kW PARALLEL',   desc: 'Dual 450kW genset parallel operation reference' },
+  { key: 'dualcore-900', route: '/portal/modules/dualcore-900', icon: '⚙', title: 'DUALCORE 900',      desc: 'Integrated dual-engine generator design doc' },
+  { key: 'gendashv2',    route: '/portal/modules/gendashv2',    icon: '◉', title: 'GEN DASH V2',       desc: '450kW diesel genset engineering dashboard' },
+  { key: 'xoi-audit',   route: '/portal/modules/xoi-audit',    icon: '◈', title: 'XOI AUDIT',         desc: 'XOi feature audit & decision board' },
+  { key: 'xoi-client',  route: '/portal/modules/xoi-client',   icon: '◆', title: 'XOI CLIENT',        desc: 'Field service discovery matrix form' },
+]
+
 export default function AdminPortal() {
   const { currentUser, logout } = useAuth()
   const navigate = useNavigate()
@@ -11,6 +20,10 @@ export default function AdminPortal() {
     logout()
     navigate('/')
   }
+
+  const userModules = MODULE_REGISTRY.filter(m =>
+    currentUser?.modules?.includes(m.key)
+  )
 
   return (
     <div className="page-wrapper portal-page">
@@ -48,14 +61,20 @@ export default function AdminPortal() {
           <p className="portal-subtitle">CLEARANCE LEVEL: ALPHA — UNRESTRICTED ACCESS</p>
         </div>
 
-        {/* Placeholder Grid */}
-        <div className="portal-section-label">// COMMAND MODULES — PENDING DEPLOYMENT</div>
+        {/* Module Grid */}
+        <div className="portal-section-label">// ASSIGNED MODULES — {userModules.length} ACTIVE</div>
         <div className="portal-modules-grid">
-          {['OPERATOR MANAGEMENT', 'CLIENT OVERSIGHT', 'SYSTEM LOGS', 'ACCESS CONTROL', 'MISSION BRIEFINGS', 'ANALYTICS'].map((mod, i) => (
-            <div key={i} className="portal-module-card coming-soon">
-              <div className="module-card-icon">◈</div>
-              <div className="module-card-title">{mod}</div>
-              <div className="module-card-status">COMING ONLINE</div>
+          {userModules.map((mod) => (
+            <div
+              key={mod.key}
+              className="portal-module-card"
+              onClick={() => navigate(mod.route)}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="module-card-icon">{mod.icon}</div>
+              <div className="module-card-title">{mod.title}</div>
+              <div className="module-card-status" style={{ color: 'var(--accent-cyan, #06b6d4)' }}>LAUNCH MODULE →</div>
+              <div style={{ fontSize: '10px', opacity: 0.5, marginTop: '6px', fontFamily: 'monospace' }}>{mod.desc}</div>
             </div>
           ))}
         </div>
