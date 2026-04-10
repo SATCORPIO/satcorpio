@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, 
   Settings, 
@@ -240,85 +239,519 @@ const XOIAudit = () => {
     <button 
       onClick={exportDecisions}
       disabled={submitting}
-      className={`bg-white text-black px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-2 hover:bg-slate-200 transition-all stealth-shadow disabled:opacity-50 ${className}`}
+      className={`submit-btn ${className}`}
     >
-      {submitting ? 'Transmitting...' : <><Send className="w-3.5 h-3.5" /> Export Decisions</>}
+      {submitting ? 'TRANSMITTING...' : 'EXPORT DECISIONS'}
     </button>
   );
 
   return (
-    <div style={{ background: '#020202', color: '#fff', minHeight: '100vh' }}>
-      <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8">
+    <div className="xoi-client-wrapper">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+        :root {
+          --bg-primary: #020202;
+          --bg-secondary: #0d0d0d;
+          --bg-tertiary: #141414;
+          --surface: rgba(20, 20, 20, 0.7);
+          --border: #1c1c1c;
+          --border-active: #333333;
+          --text-primary: #ffffff;
+          --text-secondary: #a1a1aa;
+          --text-dim: #52525b;
+          --accent-red: #e11d48;
+          --accent-cyan: #06b6d4;
+          --accent-amber: #f59e0b;
+          --accent-blue: #3b82f6;
+          --mono: 'JetBrains Mono', monospace;
+          --sans: 'Inter', sans-serif;
+          --glass: rgba(2, 2, 2, 0.8);
+        }
+
+        .xoi-client-wrapper {
+          background-color: var(--bg-primary);
+          color: var(--text-primary);
+          font-family: var(--sans);
+          font-weight: 300;
+          line-height: 1.6;
+          min-height: 100vh;
+          -webkit-font-smoothing: antialiased;
+          background-image: 
+            radial-gradient(circle at 2px 2px, rgba(255,255,255,0.02) 1px, transparent 0);
+          background-size: 40px 40px;
+        }
+
+        .page {
+          max-width: 840px;
+          margin: 0 auto;
+          padding: 80px 40px 100px;
+        }
+
+        /* HEADER */
+        .doc-header {
+          padding-top: 24px;
+          padding-bottom: 24px;
+          margin-bottom: 56px;
+          border-bottom: 1px solid var(--border);
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 24px;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          background: var(--glass);
+          backdrop-filter: blur(10px);
+        }
+
+        .doc-header::after {
+          content: '';
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          width: 80px;
+          height: 1px;
+          background: var(--accent-red);
+          box-shadow: 0 0 10px var(--accent-red);
+        }
+
+        .doc-eyebrow {
+          font-family: var(--mono);
+          font-size: 10px;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          color: var(--accent-cyan);
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .doc-eyebrow::before {
+          content: '';
+          width: 12px;
+          height: 12px;
+          border-left: 1px solid var(--accent-cyan);
+          border-top: 1px solid var(--accent-cyan);
+        }
+
+        h1 {
+          font-size: clamp(32px, 5vw, 48px);
+          line-height: 1;
+          letter-spacing: -0.04em;
+          color: var(--text-primary);
+          max-width: 600px;
+          margin: 0;
+          font-weight: 900;
+          text-transform: uppercase;
+          font-style: italic;
+        }
+
+        h1 em {
+          font-style: italic;
+          color: var(--accent-red);
+          text-shadow: 0 0 20px rgba(225, 29, 72, 0.3);
+        }
+
+        .doc-header-right {
+          text-align: right;
+          flex-shrink: 0;
+        }
+
+        .doc-meta {
+          font-family: var(--mono);
+          font-size: 10px;
+          line-height: 2.2;
+          color: var(--text-dim);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .doc-meta strong {
+          color: var(--text-secondary);
+          font-weight: 500;
+        }
+
+        /* INTRO */
+        .intro {
+          background: var(--bg-secondary);
+          border: 1px solid var(--border);
+          padding: 40px;
+          margin-bottom: 64px;
+          position: relative;
+          backdrop-filter: blur(10px);
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .intro::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; width: 100%; height: 100%;
+          background: linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, transparent 100%);
+          pointer-events: none;
+        }
+
+        .intro p {
+          font-size: 14px;
+          line-height: 1.8;
+          color: var(--text-secondary);
+          position: relative;
+          z-index: 1;
+          margin: 0;
+        }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          gap: 20px;
+          border-bottom: 1px solid var(--border);
+          padding-bottom: 24px;
+          margin-bottom: 24px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .stat-item {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .stat-label {
+          font-family: var(--mono);
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          color: var(--text-dim);
+        }
+
+        .stat-value {
+          font-size: 24px;
+          font-weight: 900;
+          color: var(--text-primary);
+        }
+
+        .filter-controls {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          align-items: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        .filter-label {
+          font-family: var(--mono);
+          font-size: 10px;
+          color: var(--text-dim);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-right: 12px;
+        }
+
+        .filter-btn {
+          background: transparent;
+          border: 1px solid var(--border);
+          color: var(--text-dim);
+          padding: 8px 16px;
+          font-family: var(--mono);
+          font-size: 9px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+          border-color: var(--border-active);
+          color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+          background: rgba(255,255,255,0.1);
+          border-color: var(--text-primary);
+          color: var(--text-primary);
+        }
+
+        /* SECTIONS */
+        .section {
+          margin-bottom: 72px;
+          animation: fadeUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          margin-bottom: 32px;
+          padding-bottom: 12px;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .section-num {
+          font-family: var(--mono);
+          font-size: 11px;
+          color: var(--accent-cyan);
+          letter-spacing: 0.2em;
+          background: rgba(6,182,212,0.1);
+          padding: 4px 10px;
+          border: 1px solid var(--accent-cyan);
+        }
+
+        .section-title {
+          font-size: 24px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          color: var(--text-primary);
+          text-transform: uppercase;
+        }
+
+        .section-desc {
+          font-size: 10px;
+          color: var(--text-dim);
+          margin-left: auto;
+          font-family: var(--mono);
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+        }
+
+        .features-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+          .features-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* QUESTION BLOCKS */
+        .question-block {
+          padding: 24px;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .question-block::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; width: 2px; height: 100%;
+          background: var(--border);
+          transition: background 0.3s;
+        }
+
+        .question-block:hover {
+          background: var(--bg-tertiary);
+          border-color: var(--border-active);
+        }
+
+        .question-block[data-status="FUTURE"]::before { background: var(--accent-blue); }
+        .question-block[data-status="ADD"]::before { background: var(--accent-amber); }
+        .question-block[data-status="CUT"]::before { background: var(--accent-red); }
+
+        .question-block[data-status="FUTURE"] { background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.2); }
+        .question-block[data-status="ADD"] { background: rgba(245, 158, 11, 0.05); border-color: rgba(245, 158, 11, 0.2); }
+        .question-block[data-status="CUT"] { background: rgba(225, 29, 72, 0.05); border-color: rgba(225, 29, 72, 0.2); }
+
+        .q-num {
+          font-family: var(--mono);
+          font-size: 9px;
+          color: var(--text-dim);
+          letter-spacing: 0.3em;
+          margin-bottom: 12px;
+          text-transform: uppercase;
+        }
+
+        .q-text {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text-primary);
+          line-height: 1.4;
+          margin-bottom: 8px;
+        }
+
+        .q-hint {
+          font-size: 12px;
+          color: var(--text-dim);
+          margin-bottom: 24px;
+          line-height: 1.6;
+          font-weight: 300;
+        }
+
+        .action-row {
+          display: flex;
+          gap: 8px;
+          margin-top: auto;
+          flex-wrap: wrap;
+        }
+
+        .action-btn {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 10px;
+          background: transparent;
+          border: 1px solid var(--border);
+          font-family: var(--mono);
+          font-size: 9px;
+          font-weight: 700;
+          color: var(--text-dim);
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+          background: rgba(255,255,255,0.05);
+          color: var(--text-primary);
+        }
+
+        .action-btn[data-type="FUTURE"].active {
+          background: var(--accent-blue);
+          border-color: var(--accent-blue);
+          color: #000;
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .action-btn[data-type="ADD"].active {
+          background: var(--accent-amber);
+          border-color: var(--accent-amber);
+          color: #000;
+          box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .action-btn[data-type="CUT"].active {
+          background: var(--accent-red);
+          border-color: var(--accent-red);
+          color: #000;
+          box-shadow: 0 0 20px rgba(225, 29, 72, 0.3);
+        }
+
+        /* SUBMIT BUTTON */
+        .submit-btn {
+          background: var(--accent-red);
+          color: white;
+          border: none;
+          padding: 20px 48px;
+          font-family: var(--mono);
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.3s;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          box-shadow: 0 0 30px rgba(225, 29, 72, 0.2);
+          width: 100%;
+          margin-top: 40px;
+        }
+
+        .submit-btn:hover:not(:disabled) { 
+          background: #ff1f54; 
+          transform: translateY(-2px);
+          box-shadow: 0 0 40px rgba(225, 29, 72, 0.4);
+        }
         
-        {/* HEADER SECTION */}
-        <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pb-8 border-b border-border-dim relative overflow-hidden">
-          <div>
-            <div className="flex items-center gap-3 text-accent-cyan font-mono text-[10px] uppercase tracking-[0.4em] mb-4">
-              <Shield className="w-4 h-4" />
-              Strategic Appraisal // Vector XOi
-            </div>
-            <h1 className="text-3xl md:text-5xl font-black tracking-tighter text-white uppercase italic">
-              XOi <span className="text-accent-red glow-text-red">Feature Audit</span>
-            </h1>
-            <p className="text-text-secondary font-mono text-[10px] mt-4 uppercase tracking-[0.3em]">
-              Determine operational viability for subsequent integration phases.
-            </p>
+        .submit-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .submit-btn::after { 
+          content: '>>'; 
+          font-family: var(--mono);
+          font-size: 14px; 
+          opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+          .page { padding: 40px 20px 80px; }
+          .doc-header { flex-direction: column; align-items: flex-start; }
+          .doc-header-right { text-align: left; }
+          .stats-grid { grid-template-columns: 1fr 1fr; }
+          .action-btn { flex: 1 1 100%; }
+        }
+      `}</style>
+
+      <div className="page">
+        {/* HEADER */}
+        <div className="doc-header">
+          <div className="doc-header-left">
+            <div className="doc-eyebrow"><Shield className="w-3 h-3" /> Strategic Appraisal // Vector XOi</div>
+            <h1>XOi<br /><em>Feature</em> Audit</h1>
           </div>
-
-          <ExportButton />
-        </section>
-
-        {/* SUMMARY & FILTER BAR */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3 glass-panel p-6 border-l-4 border-accent-cyan flex flex-wrap items-center gap-8">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-text-dim uppercase tracking-widest">Total Assets</span>
-              <span className="text-2xl font-black text-white">{stats.total}</span>
-            </div>
-            <div className="w-[1px] h-8 bg-white/10 hidden sm:block"></div>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-accent-blue uppercase tracking-widest">Future Feature</span>
-              <span className="text-2xl font-black text-accent-blue">{stats.future}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-accent-amber uppercase tracking-widest">Add</span>
-              <span className="text-2xl font-black text-accent-amber">{stats.add}</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-accent-red uppercase tracking-widest">Cut</span>
-              <span className="text-2xl font-black text-accent-red">{stats.cut}</span>
-            </div>
-            <div className="w-[1px] h-8 bg-white/10 hidden sm:block"></div>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-text-dim uppercase tracking-widest">Unmarked</span>
-              <span className="text-2xl font-black text-text-dim">{stats.none}</span>
+          <div className="doc-header-right">
+             <div className="doc-meta">
+              <div><strong>Document</strong> · XOI-AUDIT-001</div>
+              <div><strong>Version</strong> · 1.0</div>
             </div>
           </div>
+        </div>
 
-          <div className="glass-panel p-6 border-l-4 border-white/20 flex flex-col justify-center gap-4">
-             <div className="text-[10px] font-mono text-text-dim uppercase tracking-widest flex items-center gap-2">
-                <Filter className="w-3 h-3" /> Filter Vector
-             </div>
-             <div className="flex flex-wrap gap-2">
-                {['ALL', 'FUTURE', 'ADD', 'CUT', 'NONE'].map(f => (
-                  <button
-                    key={f}
-                    onClick={() => setFilter(f)}
-                    className={`px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider border transition-all ${
-                      filter === f 
-                      ? 'bg-white/10 border-white text-white' 
-                      : 'border-white/5 text-text-dim hover:border-white/20 hover:text-white'
-                    }`}
-                  >
-                    {f === 'FUTURE' ? 'Future Feature' : f}
-                  </button>
-                ))}
-             </div>
+        {/* INTRO & STATS */}
+        <div className="intro">
+          <p>Determine operational viability for subsequent integration phases. Review each feature below and assign it to the appropriate development track.</p>
+          
+          <div className="stats-grid">
+            <div className="stat-item">
+              <span className="stat-label">Total Assets</span>
+              <span className="stat-value">{stats.total}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label" style={{color: 'var(--accent-blue)'}}>Future</span>
+              <span className="stat-value">{stats.future}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label" style={{color: 'var(--accent-amber)'}}>Add</span>
+              <span className="stat-value">{stats.add}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label" style={{color: 'var(--accent-red)'}}>Cut</span>
+              <span className="stat-value">{stats.cut}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">Unmarked</span>
+              <span className="stat-value">{stats.none}</span>
+            </div>
+          </div>
+
+          <div className="filter-controls">
+            <div className="filter-label"><Filter className="w-3 h-3" /> Filter Vector</div>
+            {['ALL', 'FUTURE', 'ADD', 'CUT', 'NONE'].map(f => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`filter-btn ${filter === f ? 'active' : ''}`}
+              >
+                {f === 'FUTURE' ? 'Future Feature' : f}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* FEATURE SECTIONS */}
-        <div className="space-y-12">
+        <div>
           {SECTIONS.map((section, sidx) => {
             const visibleFeatures = section.features.filter(f => {
               if (filter === 'ALL') return true;
@@ -329,78 +762,60 @@ const XOIAudit = () => {
             if (visibleFeatures.length === 0) return null;
 
             return (
-              <motion.div 
-                key={section.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: sidx * 0.05 }}
-                className="space-y-4"
-              >
-                <div className="flex items-center gap-6">
-                  <h2 className="text-[11px] font-mono uppercase tracking-[0.5em] text-accent-cyan font-black whitespace-nowrap">
-                    {section.name}
-                  </h2>
-                  <div className="flex-1 h-[1px] bg-gradient-to-r from-accent-cyan/30 to-transparent"></div>
+              <div key={section.name} className="section" style={{ animationDelay: `${sidx * 0.05}s` }}>
+                <div className="section-header">
+                  <div className="section-num">{String(sidx + 1).padStart(2, '0')}</div>
+                  <div className="section-title">{section.name}</div>
+                  <div className="section-desc"><Layers className="w-3 h-3 inline mr-2" /> Sector // {section.features.length} Features</div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="features-grid">
                   {visibleFeatures.map(feat => {
                     const status = decisions[feat.id];
                     return (
                       <div 
                         key={feat.id}
-                        className={`tactical-border glass-panel p-5 flex flex-col justify-between gap-6 group transition-all duration-300 ${
-                          status === 'FUTURE' ? 'border-l-4 border-l-accent-blue bg-accent-blue/5' :
-                          status === 'CUT' ? 'border-l-4 border-l-accent-red bg-accent-red/5' :
-                          status === 'ADD' ? 'border-l-4 border-l-accent-amber bg-accent-amber/5' :
-                          'border-l-4 border-l-transparent'
-                        }`}
+                        className="question-block"
+                        style={{ display: 'flex', flexDirection: 'column' }}
+                        data-status={status || ''}
                       >
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-start">
-                            <h3 className="text-sm font-black text-white uppercase tracking-tight group-hover:text-accent-cyan transition-colors">
-                              {feat.name}
-                            </h3>
-                            <span className="text-[9px] font-mono text-text-dim opacity-40 uppercase">{feat.id}</span>
-                          </div>
-                          <p className="text-[11px] text-text-secondary leading-relaxed font-mono uppercase opacity-70">
-                            {feat.desc}
-                          </p>
-                        </div>
+                        <div className="q-num">{feat.id}</div>
+                        <div className="q-text">{feat.name}</div>
+                        <div className="q-hint">{feat.desc}</div>
 
-                        <div className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
-                          {[
-                            { id: 'FUTURE', label: 'Future Feature', color: 'text-accent-blue', border: 'border-accent-blue/50', bg: 'bg-accent-blue', icon: Maximize2 },
-                            { id: 'ADD', label: 'Add', color: 'text-accent-amber', border: 'border-accent-amber/50', bg: 'bg-accent-amber', icon: PlusCircle },
-                            { id: 'CUT', label: 'Cut', color: 'text-accent-red', border: 'border-accent-red/50', bg: 'bg-accent-red', icon: XCircle },
-                          ].map(btn => (
+                        <div className="action-row">
                             <button
-                              key={btn.id}
-                              onClick={() => handleDecide(feat.id, btn.id)}
-                              className={`flex-1 min-w-[100px] flex items-center justify-center gap-2 py-2 border text-[9px] font-bold uppercase tracking-wider transition-all ${
-                                status === btn.id 
-                                ? `${btn.bg} border-transparent text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]` 
-                                : `border-white/10 text-text-dim hover:bg-white/5 hover:text-white`
-                              }`}
+                              onClick={() => handleDecide(feat.id, 'FUTURE')}
+                              className={`action-btn ${status === 'FUTURE' ? 'active' : ''}`}
+                              data-type="FUTURE"
                             >
-                              <btn.icon className="w-3 h-3" />
-                              {btn.label}
+                              <Maximize2 className="w-3 h-3" /> Future Feature
                             </button>
-                          ))}
+                            <button
+                              onClick={() => handleDecide(feat.id, 'ADD')}
+                              className={`action-btn ${status === 'ADD' ? 'active' : ''}`}
+                              data-type="ADD"
+                            >
+                              <PlusCircle className="w-3 h-3" /> Add
+                            </button>
+                            <button
+                              onClick={() => handleDecide(feat.id, 'CUT')}
+                              className={`action-btn ${status === 'CUT' ? 'active' : ''}`}
+                              data-type="CUT"
+                            >
+                              <XCircle className="w-3 h-3" /> Cut
+                            </button>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
         
-        {/* BOTTOM EXPORT BUTTON */}
-        <section className="flex justify-center pt-8 border-t border-border-dim mt-12">
-          <ExportButton />
-        </section>
+        <ExportButton />
       </div>
     </div>
   );

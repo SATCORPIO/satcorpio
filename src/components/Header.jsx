@@ -44,7 +44,7 @@ export default function Header({ title }) {
               aria-label={`Go to ${currentUser.role} portal`}
             >
               <span className="portal-btn-dot" />
-              PORTAL
+              Ops Portal
             </button>
           ) : (
             <button
