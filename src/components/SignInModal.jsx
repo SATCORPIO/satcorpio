@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 export default function SignInModal({ onClose }) {
+  const navigate = useNavigate()
   const { login, loginError, clearError } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -27,9 +29,15 @@ export default function SignInModal({ onClose }) {
     setLoading(true)
     // Brief simulated auth delay for tactical feel
     await new Promise(r => setTimeout(r, 600))
-    const ok = login(username.trim(), password)
+    const user = login(username.trim(), password)
     setLoading(false)
-    if (ok) onClose()
+    if (user) {
+      onClose()
+      const role = user.role
+      if (role === 'admin') navigate('/portal/admin')
+      else if (role === 'operator') navigate('/portal/operator')
+      else navigate('/portal/client')
+    }
   }
 
   return (

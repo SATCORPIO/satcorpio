@@ -22,10 +22,10 @@ export function AuthProvider({ children }) {
     if (user) {
       setCurrentUser(user)
       setLoginError('')
-      return true
+      return user
     } else {
       setLoginError('Invalid credentials. Access denied.')
-      return false
+      return null
     }
   }, [])
 
