@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../../../components/Layout';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, 
@@ -248,7 +247,7 @@ const XOIAudit = () => {
   );
 
   return (
-    <Layout title="Feature Audit Board">
+    <div style={{ background: '#020202', color: '#fff', minHeight: '100vh' }}>
       <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8">
         
         {/* HEADER SECTION */}
@@ -403,7 +402,7 @@ const XOIAudit = () => {
           <ExportButton />
         </section>
       </div>
-    </Layout>
+    </div>
   );
 };
 
