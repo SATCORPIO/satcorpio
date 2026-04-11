@@ -36,6 +36,30 @@ export default function MainPage() {
           Core Identity <em>/</em> Operator Value
         </h1>
         <p className="op-sub">CLASSIFIED OPERATIONAL PROFILE — CLEARANCE LEVEL UNRESTRICTED</p>
+        
+        <div className="op-actions" style={{ marginBottom: '32px' }}>
+          <a 
+            href="https://discord.gg/KqphHMq6vS" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="btn-ghost"
+            style={{ 
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '12px'
+            }}
+          >
+            <span style={{ 
+              width: '8px', 
+              height: '8px', 
+              borderRadius: '50%', 
+              background: 'var(--accent)',
+              boxShadow: '0 0 10px var(--accent)',
+              animation: 'blinkDot 1.6s ease-in-out infinite'
+            }} />
+            JOIN COMMUNICATION HUB
+          </a>
+        </div>
 
         <div className="op-value-grid">
           {OP_VALUES.map((v, i) => (

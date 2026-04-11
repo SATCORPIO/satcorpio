@@ -112,7 +112,7 @@ export default function SignInModal({ onClose }) {
         <div className="signin-alt-action">
           <span className="signin-alt-text">No clearance?</span>
           <a
-            href="https://discord.gg/gQk5gnGXPt"
+            href="https://discord.gg/KqphHMq6vS"
             target="_blank"
             rel="noopener noreferrer"
             className="signin-request-link"

@@ -20,6 +20,7 @@ export default function DysunsRealm() {
           { label: 'ACCESS', value: 'SOVEREIGN ONLY', color: '#7c3aed', status: 'wait' },
           { label: 'DIMENSION', value: 'BEYOND STANDARD', color: '#c084fc', status: 'on' },
         ],
+        discordLink: 'https://discord.gg/nTCBH8Qac7'
       }}
     />
   )

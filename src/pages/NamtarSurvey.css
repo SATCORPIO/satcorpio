@@ -1024,3 +1024,36 @@ header {
   .options-grid { gap: 6px; }
   .opt-btn { padding: 6px 12px; font-size: 0.75rem; }
 }
+
+
+.survey-boot {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--ark-darker);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s ease;
+}
+.survey-boot.fade-out { opacity: 0; pointer-events: none; }
+.survey-boot .boot-terminal {
+  width: 100%; max-width: 700px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem; line-height: 1.6;
+  padding: 40px; color: #fff;
+}
+.survey-boot .boot-line {
+  margin-bottom: 8px; opacity: 0;
+  animation: typeLine 0.1s forwards;
+}
+.survey-boot .boot-line.dim { color: #666; }
+.survey-boot .boot-line.green { color: #10b981; }
+.survey-boot .boot-line.yellow { color: #f59e0b; }
+.survey-boot .boot-line.red { color: #ef4444; }
+.survey-boot .boot-line.white { color: #ffffff; }
+
+.survey-boot .boot-cursor {
+  display: inline-block; width: 8px; height: 14px;
+  background: #10b981; margin-left: 6px;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes typeLine { to { opacity: 1; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }

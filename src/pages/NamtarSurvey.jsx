@@ -6,15 +6,24 @@ import './NamtarSurvey.css';
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1475195439254081768/O4YNOHNGYV1Z6UjWDW660ZwGPh2IWcHqeuni2guMHJnLDoDKj62g_kpSV00g5_G7Ypmf';
 
 const BOOT_LINES = [
-  { text: '> SATCORP MAINFRAME ONLINE', cls: 'ok', delay: 700, ch: 26 },
-  { text: '> KYRAX v4.2.1 — LOADING AI CORE...', cls: '', delay: 1400, ch: 36 },
-  { text: '> NAMTAR ENVIRONMENT: LOADED', cls: 'ok', delay: 2200, ch: 28 },
-  { text: '> SURVIVOR DATABASE: INITIALIZING', cls: '', delay: 2900, ch: 33 },
-  { text: '> SERVER CALIBRATION MODULE: ACTIVE', cls: 'ok', delay: 3600, ch: 35 },
-  { text: '> DISCORD RELAY: CONNECTED', cls: 'ok', delay: 4300, ch: 26 },
+  { text: '[ SATCORP SYSTEMS INITIALIZE ]', cls: 'white', delay: 0 },
+  { text: '-------------------------------------------', cls: 'dim', delay: 200 },
+  { text: 'KERNEL BUILD: SC-NAMTAR-7.4.1 ... OK', cls: 'green', delay: 500 },
+  { text: 'LOADING CALIBRATION SUBSYSTEM ... OK', cls: 'green', delay: 900 },
+  { text: 'MOUNTING SURVIVOR DATABASE ... OK', cls: 'green', delay: 1300 },
+  { text: 'INTEGRITY CHECK: PASSED [SHA256 VERIFIED]', cls: 'green', delay: 1700 },
+  { text: 'AUTH LAYER: ACTIVE — TIER 3 CLEARANCE REQUIRED', cls: 'yellow', delay: 2100 },
+  { text: 'LOADING QUESTION MATRIX ...', cls: 'green', delay: 2600 },
+  { text: '  > MODULE 01: IDENTITY CALIBRATION ........', cls: 'dim', delay: 3000 },
+  { text: '  > MODULE 02: BEHAVIORAL MAPPING ..........', cls: 'dim', delay: 3300 },
+  { text: '  > MODULE 03: THREAT ASSESSMENT ...........', cls: 'dim', delay: 3600 },
+  { text: '  > MODULE 04: SURVIVABILITY SCORE .........', cls: 'dim', delay: 3900 },
+  { text: '', cls: 'dim', delay: 4200 },
+  { text: 'REDIRECTING TO CALIBRATION INTERFACE ...', cls: 'yellow', delay: 4500 },
+  { text: '-------------------------------------------', cls: 'dim', delay: 4800 },
 ];
 
-const BOOT_TOTAL_MS = 5000;
+const BOOT_TOTAL_MS = 5200;
 
 function RainCanvas({ className, style, id }) {
   const canvasRef = useRef(null);
@@ -78,9 +87,7 @@ function RainCanvas({ className, style, id }) {
 export default function NamtarSurvey() {
   const [bootVisible, setBootVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
-  const [bootPct, setBootPct] = useState(0);
   const [visibleLines, setVisibleLines] = useState([]);
-  const [showEnter, setShowEnter] = useState(false);
   const [lightningOpacity, setLightningOpacity] = useState(0);
 
   const [answers, setAnswers] = useState({
@@ -120,24 +127,15 @@ export default function NamtarSurvey() {
       }, line.delay);
     });
 
-    const startTime = Date.now();
-    let animId;
-    const animatePct = () => {
-      const elapsed = Date.now() - startTime;
-      const pct = Math.min(100, Math.floor((elapsed / BOOT_TOTAL_MS) * 100));
-      setBootPct(pct);
-      if (pct < 100) {
-        animId = requestAnimationFrame(animatePct);
-      } else {
-        setTimeout(() => setShowEnter(true), 400);
-      }
-    };
-    animId = requestAnimationFrame(animatePct);
+    const fadeTimer = setTimeout(() => {
+      setFadeOut(true);
+      setTimeout(() => setBootVisible(false), 800);
+    }, BOOT_TOTAL_MS);
 
-    return () => cancelAnimationFrame(animId);
+    return () => clearTimeout(fadeTimer);
   }, []);
 
-  // Lightning effect
+  // Lightning effect (Boot)
   useEffect(() => {
     let timeoutIds = [];
     const doLightning = () => {
@@ -169,34 +167,6 @@ export default function NamtarSurvey() {
     tId = setTimeout(doFlash, 4000);
     return () => clearTimeout(tId);
   }, [bootVisible]);
-
-  // Parallax Scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const y = window.scrollY;
-      const t = (id, mul) => {
-        const el = document.getElementById(id);
-        if (el) el.style.transform = `translateZ(0) translateY(${y * mul}px)`;
-      };
-      t('jungle-far', 0.05); t('jungle-mid', 0.08); t('fog1', 0.04); t('fog2', 0.06);
-      
-      const elTrex = document.getElementById('trex');
-      if (elTrex) elTrex.style.transform = `translateZ(0) translateX(0) translateY(${y * 0.07}px)`;
-      
-      const elBar = document.getElementById('progress-bar');
-      if (elBar) {
-        const total = document.documentElement.scrollHeight - window.innerHeight;
-        elBar.style.width = total > 0 ? (y / total * 100) + '%' : '0%';
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const enterSite = () => {
-    setFadeOut(true);
-    setTimeout(() => setBootVisible(false), 1200);
-  };
 
   const OptionBtn = ({ qKey, val, multi, pvp }) => {
     const isSelected = multi ? answers[qKey]?.includes(val) : answers[qKey] === val;
@@ -296,126 +266,49 @@ export default function NamtarSurvey() {
   return (
     <div className="namtar-survey-page">
       {bootVisible && (
-        <div id="boot-screen" style={{
-          position: 'fixed', inset: 0, zIndex: 9999, background: '#000', display: 'flex',
-          flexDirection: 'column', overflow: 'hidden', transition: 'opacity 1.2s ease',
-          opacity: fadeOut ? 0 : 1
-        }}>
-          <div id="boot-bg" style={{position:'absolute', inset:0, background:'linear-gradient(180deg, #000305 0%, #010a06 40%, #021208 70%, #010803 100%)'}} />
-          
-          <svg id="boot-jungle" viewBox="0 0 1400 320" preserveAspectRatio="none" style={{position:'absolute', bottom:0, left:0, width:'100%', height:'45vh', animation:'boot-jungle-rise 2s ease 1s forwards'}}>
-            <path d="M0 320 L0 200 Q40 140 80 180 Q120 110 170 165 Q210 90 260 150 Q310 70 360 135 Q400 60 450 125 Q500 45 555 115 Q600 50 655 120 Q700 55 755 122 Q800 65 855 128 Q900 75 950 135 Q1000 90 1050 148 Q1100 105 1155 162 Q1200 125 1255 178 Q1300 148 1360 188 Q1385 172 1400 195 L1400 320 Z" fill="#010c05"/>
-            <path d="M0 320 L0 235 Q50 195 100 220 Q160 180 215 210 Q270 165 325 200 Q380 155 440 192 Q495 150 555 188 Q610 148 670 185 Q725 150 785 186 Q840 155 900 190 Q955 158 1015 192 Q1070 160 1130 194 Q1185 165 1245 198 Q1300 170 1360 200 Q1385 190 1400 205 L1400 320 Z" fill="#000a04"/>
-            <path d="M0 320 L0 275 Q100 255 200 270 Q300 250 400 268 Q500 248 600 266 Q700 248 800 265 Q900 248 1000 264 Q1100 250 1200 265 Q1300 252 1400 265 L1400 320 Z" fill="#000703"/>
-            <g transform="translate(1080, 80)" opacity="0.35">
-              <ellipse cx="80" cy="110" rx="45" ry="30"/>
-              <path d="M105 85 Q118 65 145 62 Q155 60 158 68 Q162 76 153 82 Q143 87 140 97 Q135 107 126 105 Q112 102 105 85Z"/>
-              <path d="M138 64 Q152 58 161 62 Q158 67 144 69Z"/>
-              <circle cx="144" cy="68" r="3" fill="#001006"/>
-              <path d="M100 100 Q105 85 112 90 Q116 105 108 113Z"/>
-              <path d="M38 118 Q20 126 5 142 Q-2 150 2 154 Q8 153 18 143 Q34 130 46 126"/>
-              <path d="M65 142 Q63 166 58 182 Q55 190 60 191 Q64 191 67 180 Q70 168 74 150"/>
-              <path d="M92 140 Q92 165 88 180 Q85 189 91 190 Q97 189 96 176 Q95 162 96 143"/>
-              <path d="M53 186 Q45 196 47 200 Q53 199 60 192"/>
-              <path d="M84 184 Q77 194 79 198 Q85 197 93 188"/>
-            </g>
-          </svg>
+        <div id="survey-boot-screen" className={`survey-boot${fadeOut ? ' fade-out' : ''}`}>
+          <div style={{
+            position: 'absolute', inset: 0, zIndex: 0,
+            backgroundImage: 'url(/assets/namtar_trex_survival.png)',
+            backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.3)'
+          }} />
+          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.25, zIndex:2}} />
+          <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: lightningOpacity, transition: 'opacity 0.05s'}} />
 
-          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.25, zIndex:6}} />
-          <div id="boot-lightning" style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:5, opacity: lightningOpacity, transition: 'opacity 0.05s'}} />
-
-          <div className="boot-corner boot-corner-tl" />
-          <div className="boot-corner boot-corner-tr" />
-          <div className="boot-corner boot-corner-bl" />
-          <div className="boot-corner boot-corner-br" />
-
-          <div id="boot-content">
-            <div className="boot-satcorp">SATCORP SYSTEMS // KI-RA STUDIOS</div>
-            <div id="boot-kyrax">
-              <img src="/assets/kyrax-wolf.png" alt="KYRAX" />
-            </div>
-            <div className="boot-namtar">NAMTAR</div>
-            <div className="boot-ark-sub">ARK: SURVIVAL ASCENDED // SURVIVOR REGISTRATION</div>
-
-            <div id="boot-terminal">
-              {BOOT_LINES.map((line, idx) => visibleLines.includes(idx) && (
-                <div key={idx} className={`boot-log-line ${line.cls}`} style={{
-                  animation: `typingBoot ${line.dur || 600}ms steps(${line.ch || 30}, end) forwards`
-                }}>
+          <div className="boot-terminal" style={{position:'relative', zIndex:10}}>
+            {BOOT_LINES.map((line, i) => (
+              visibleLines.includes(i) && (
+                <div key={i} className={`boot-line ${line.cls}`} style={{ animationDelay: '0ms' }}>
                   {line.text}
+                  {i === visibleLines[visibleLines.length - 1] && i < BOOT_LINES.length - 1 && (
+                    <span className="boot-cursor" />
+                  )}
                 </div>
-              ))}
-            </div>
-
-            <div className="boot-bar-wrap">
-              <div className="boot-bar-label">
-                <span>CALIBRATING SYSTEMS</span>
-                <span>{bootPct}%</span>
-              </div>
-              <div className="boot-bar-track">
-                <div className="boot-bar-fill" style={{width: `${bootPct}%`}} />
-              </div>
-            </div>
-
-            {showEnter && (
-              <button id="boot-enter" style={{display:'block'}} onClick={enterSite}>
-                ▶ ENTER NAMTAR
-              </button>
-            )}
+              )
+            ))}
           </div>
         </div>
       )}
 
-      {/* Main Survey Setup */}
+      {/* Background for Survey Setup */}
       {!bootVisible && (
-        <div id="scene">
-          <div id="sky" />
-          <div id="stars">
-            {Array.from({length: 120}).map((_, i) => (
-              <div key={i} className="star" style={{
-                width: `${Math.random()*2+0.5}px`, height: `${Math.random()*2+0.5}px`,
-                left: `${Math.random()*100}%`, top: `${Math.random()*60}%`,
-                '--d': `${2+Math.random()*4}s`, animationDelay: `${Math.random()*5}s`,
-                opacity: 0.1+Math.random()*0.5
-              }} />
-            ))}
-          </div>
-          <div id="light-rays">
-            <div className="ray" /><div className="ray" /><div className="ray" /><div className="ray" />
-          </div>
-          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.35}} />
-          <div id="jungle-far" className="jungle-layer parallax-el" />
-          <div id="fog1" className="fog parallax-el" />
-          <div id="jungle-mid" className="jungle-layer parallax-el" />
-          <div id="fog2" className="fog parallax-el" />
-          <div id="trex">
-            <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" fill="#001508">
-              <ellipse cx="110" cy="140" rx="50" ry="35"/>
-              <path d="M130 100 Q145 80 175 75 Q185 72 190 80 Q195 88 185 95 Q175 100 170 110 Q165 120 155 118 Q140 115 130 100Z"/>
-              <path d="M165 78 Q180 70 192 75 Q188 80 175 82 Q168 82 165 78Z"/>
-              <circle cx="175" cy="82" r="4" fill="#002010"/>
-              <path d="M125 115 Q130 100 140 105 Q145 120 135 130 Q127 128 125 115Z"/>
-              <path d="M62 145 Q40 155 20 175 Q10 185 15 190 Q22 190 35 178 Q55 162 70 158"/>
-              <path d="M140 120 Q150 130 148 142 Q143 145 138 138 Q135 128 140 120Z"/>
-              <path d="M90 170 Q88 200 82 220 Q78 230 85 232 Q90 232 92 220 Q96 205 100 180"/>
-              <path d="M120 168 Q120 200 116 218 Q113 228 120 230 Q127 228 126 215 Q124 200 125 172"/>
-              <path d="M78 228 Q68 240 70 245 Q78 244 85 235"/>
-              <path d="M115 226 Q106 238 108 244 Q116 243 124 232"/>
-            </svg>
-          </div>
-          <div id="fog3" className="fog parallax-el" />
-          <div id="jungle-near" className="jungle-layer parallax-el" />
+        <div id="scene" style={{zIndex: 0}}>
+          <div style={{
+            position: 'absolute', inset: 0, zIndex: 0,
+            backgroundImage: 'url(/assets/namtar_trex_bg.png)',
+            backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.2)'
+          }} />
+          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.35, zIndex: 2}} />
+          <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: generalFlash, transition: 'opacity 0.05s'}} />
         </div>
       )}
 
       {/* Main Content */}
-      <div id="content" style={{display: bootVisible ? 'none' : 'block'}}>
+      <div id="content" style={{display: bootVisible ? 'none' : 'block', position: 'relative', zIndex: 10}}>
         <div className="corner corner-tl" />
         <div className="corner corner-tr" />
         <div className="corner corner-bl" />
         <div className="corner corner-br" />
-        <div id="progress-bar" />
-        <div id="lightning-flash" style={{opacity: generalFlash}}/>
 
         {!submitted ? (
           <>

@@ -17,6 +17,7 @@ export default function Frostheim() {
         pills: [
           { label: 'STATUS', value: 'COMING SOON', color: '#bae6fd', status: 'wait' },
         ],
+        discordLink: 'https://discord.gg/UkWzc8FvZT'
       }}
     />
   )
