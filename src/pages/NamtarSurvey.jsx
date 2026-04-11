@@ -60,15 +60,15 @@ function RainCanvas({ className, style, id }) {
       drops.forEach(d => {
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x - 2, d.y + d.len); // Slightly more angled for wind effect
+        ctx.lineTo(d.x + 4, d.y + d.len); // Angled to the right, slightly more intensity
         ctx.strokeStyle = `rgba(175,235,255,${d.op})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
         d.y += d.speed;
-        d.x -= 2; // Wind movement
+        d.x += 4; // Wind movement to the right
         if (d.y > h) {
           d.y = -d.len;
-          d.x = Math.random() * w + 100; // Account for wind angle
+          d.x = Math.random() * w - 200; // Account for rightward wind angle
         }
       });
       animationId = requestAnimationFrame(draw);
