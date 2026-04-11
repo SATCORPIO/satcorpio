@@ -208,7 +208,7 @@ function CommDiagram(){
   const[off,setOff]=useState(0);
   useEffect(()=>{const iv=setInterval(()=>setOff(o=>(o+1)%20),50);return()=>clearInterval(iv);},[]);
   return(
-    <svg width="100%"viewBox="0 0 860 480"style={{maxWidth:"100%",minHeight:"280px"}}>
+    <svg width="100%"viewBox="0 0 860 540"style={{maxWidth:"100%",minHeight:"280px"}}>
       <defs>
         {[["aJ","#20d890"],["aSC","#e060f0"],["aCO","#6090ff"],["aE1","#f0a010"],["aE2","#10c8d0"],["aBU","#2880f0"]].map(([id,c])=>(
           <marker key={id}id={id}markerWidth="6"markerHeight="5"refX="6"refY="2.5"orient="auto"><polygon points="0 0,6 2.5,0 5"fill={c}/></marker>
@@ -343,9 +343,10 @@ function CommDiagram(){
       <path className="fe2"d={`M570 302 L570 464`}markerEnd="url(#aE2)"/>
 
       {/* Legend */}
+      <text x={10}y={505}fill="var(--TM)"fontSize="8"fontFamily="'JetBrains Mono'"fontWeight="700"letterSpacing="2">ECM COM LAYER</text>
       {[["#20d890","J1939 CAN (ECM→PCC)"],["#e060f0","s-CAN (PCC↔PCC MLD)"],["#6090ff","CANopen/Modbus (PCC→HMI)"],["#f0a010","E1 Power"],["#10c8d0","E2 Power"]].map(([c,l],i)=>(
-        <g key={i}><line x1={10+i*168}y1={476}x2={34+i*168}y2={476}stroke={c}strokeWidth="2"strokeDasharray="6,3"/>
-        <text x={38+i*168}y={479}fill="#3a6080"fontSize="7"fontFamily="'JetBrains Mono'">{l}</text></g>
+        <g key={i}><line x1={10+i*168}y1={522}x2={34+i*168}y2={522}stroke={c}strokeWidth="2"strokeDasharray="6,3"/>
+        <text x={38+i*168}y={525}fill="#3a6080"fontSize="7"fontFamily="'JetBrains Mono'">{l}</text></g>
       ))}
     </svg>
   );
