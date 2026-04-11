@@ -8,6 +8,7 @@ const SKILL_CARDS = [
   {
     id: "ai-workflows",
     title: "AI-Enhanced Creative Workflows",
+    image: "/assets/kyrax_ai_workflows.png",
     shortDesc: "Brand-consistent AI visuals, custom personas, and rapid iteration pipelines.",
     capabilities: [
       "Prompt engineering/reusable prompt frameworks",
@@ -29,6 +30,7 @@ const SKILL_CARDS = [
   {
     id: "multi-agent",
     title: "Multi-Agent AI Orchestration Networks",
+    image: "/assets/kyrax_multi_agent.png",
     shortDesc: "Crew-based AI teams with memory persistence and task delegation.",
     capabilities: [
       "Crew-based AI teams (researcher + designer + editor + strategist)",
@@ -48,6 +50,7 @@ const SKILL_CARDS = [
   {
     id: "generative-pipelines",
     title: "Generative Video / Voice / Motion AI Pipelines",
+    image: "/assets/kyrax_generative_pipelines.png",
     shortDesc: "Brand-consistent scene generation, voice cloning, and text-to-video.",
     capabilities: [
       "Text-to-video, image-to-video, lip-sync",
@@ -67,6 +70,7 @@ const SKILL_CARDS = [
   {
     id: "autonomous-research",
     title: "Autonomous Research & Predictive Intelligence Units",
+    image: "/assets/kyrax_autonomous_research.png",
     shortDesc: "Deep-dive market research, trend prediction, and personalized briefs.",
     capabilities: [
       "Deep-dive market/competitor research agents",
@@ -235,6 +239,14 @@ export default function Kyrax() {
           min-height: 180px;
           display: flex;
           flex-direction: column;
+          background-size: cover;
+          background-position: center;
+        }
+        .pulse-skill-card .card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+          z-index: 1;
         }
         .pulse-skill-card:hover {
           border-color: rgba(59, 130, 246, 0.6);
@@ -368,8 +380,10 @@ export default function Kyrax() {
             <div 
               key={card.id} 
               className="pulse-skill-card"
+              style={{ backgroundImage: card.image ? `url(${card.image})` : 'none' }}
               onClick={() => setActiveCard(card)}
             >
+              <div className="card-overlay" />
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
             </div>
