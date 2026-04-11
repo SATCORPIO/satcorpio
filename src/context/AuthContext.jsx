@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useCallback } from 'react'
 const AuthContext = createContext(null)
 
 // Module keys — must match route paths defined in App.jsx
-const ALL_MODULES = ['450kpar', 'dualcore-900', 'dualcore-900-v2', 'gendashv2', 'xoi-audit', 'xoi-client']
+const ALL_MODULES = ['450kpar', 'dualcore-900', 'dualcore-900-v2', 'gendashv2', 'xoi-audit', 'xoi-client', 'aire-serv-proposal']
 
 // Registered users — credentials stored here for now
 const USERS = [

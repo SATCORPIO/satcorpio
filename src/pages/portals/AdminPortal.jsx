@@ -11,6 +11,7 @@ const MODULE_REGISTRY = [
   { key: 'gendashv2',    route: '/portal/modules/gendashv2',    icon: '◉', title: 'GEN DASH V2',       desc: '450kW diesel genset engineering dashboard' },
   { key: 'xoi-audit',   route: '/portal/modules/xoi-audit',    icon: '◈', title: 'XOI AUDIT',         desc: 'XOi feature audit & decision board' },
   { key: 'xoi-client',  route: '/portal/modules/xoi-client',   icon: '◆', title: 'XOI CLIENT',        desc: 'Field service discovery matrix form' },
+  { key: 'aire-serv-proposal', route: '/portal/modules/aire-serv-proposal', icon: '❄', title: 'AIRE SERV', desc: 'Sector Aire Serv platform proposal & vector analysis' },
 ]
 
 export default function AdminPortal() {
