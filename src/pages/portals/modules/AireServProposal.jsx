@@ -4,7 +4,7 @@ import {
   FileText, 
   Calendar, 
   CheckCircle2, 
-  Xoi, 
+  X, 
   Smartphone, 
   Zap, 
   Mic, 
@@ -763,8 +763,8 @@ const AireServProposal = () => {
                 <li><CheckCircle2 size={14} /> Source Code Transmission</li>
                 <li><CheckCircle2 size={14} /> 12mo Sustainment Period</li>
                 <li><CheckCircle2 size={14} /> Independent Hosting Mode</li>
-                <li className="no"><Xoi size={14} /> Post-Yr 1 Evolution Excluded</li>
-                <li className="no"><Xoi size={14} /> Infrastructure Management Required</li>
+                <li className="no"><X size={14} /> Post-Yr 1 Evolution Excluded</li>
+                <li className="no"><X size={14} /> Infrastructure Management Required</li>
               </ul>
             </div>
           </div>
