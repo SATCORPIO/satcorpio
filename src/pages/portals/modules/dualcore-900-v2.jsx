@@ -409,7 +409,7 @@ function AntSurgeSimulator(){
   const crit=e1Hz<=T_HZ_CRIT||e1V<=T_V_CRIT||e1RPM<=T_RPM_CRIT;
 
   const stateColor=crit?"var(--ER)":watch?"var(--WN)":"var(--OK)";
-  const stateLabel=crit?"⚡ SURGE RISK — E2 STARTING":"THRESHOLD WATCH":watch?"⚠ PRE-TRIGGER — E2 WARMING":"✓ NORMAL";
+  const stateLabel=crit?"⚡ SURGE RISK — E2 STARTING":watch?"⚠ PRE-TRIGGER — E2 WARMING":"✓ NORMAL";
   const stateMsg=crit?"E2 auto-starts immediately. Pre-start already complete if in SECURE mode.":watch?"One or more parameters approaching trigger threshold. E2 begins warm-up in SECURE/ADAPTIVE modes.":"All parameters within normal operating band. E2 in standby per selected mode.";
 
   const triggerReasons=[];
