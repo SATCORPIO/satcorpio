@@ -46,12 +46,12 @@ function RainCanvas({ className, style, id }) {
     };
     window.addEventListener('resize', handleResize);
 
-    const drops = Array.from({ length: 150 }, () => ({
+    const drops = Array.from({ length: 800 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      len: 8 + Math.random() * 20,
-      speed: 7 + Math.random() * 10,
-      op: 0.1 + Math.random() * 0.4
+      len: 20 + Math.random() * 40,
+      speed: 15 + Math.random() * 20,
+      op: 0.2 + Math.random() * 0.6
     }));
 
     let animationId;
@@ -60,15 +60,15 @@ function RainCanvas({ className, style, id }) {
       drops.forEach(d => {
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x - d.len * 0.1, d.y + d.len);
-        ctx.strokeStyle = `rgba(150,220,255,${d.op})`;
-        ctx.lineWidth = 0.5;
+        ctx.lineTo(d.x - 2, d.y + d.len); // Slightly more angled for wind effect
+        ctx.strokeStyle = `rgba(175,235,255,${d.op})`;
+        ctx.lineWidth = 1.2;
         ctx.stroke();
         d.y += d.speed;
-        d.x -= 0.5;
+        d.x -= 2; // Wind movement
         if (d.y > h) {
-          d.y = -20;
-          d.x = Math.random() * w;
+          d.y = -d.len;
+          d.x = Math.random() * w + 100; // Account for wind angle
         }
       });
       animationId = requestAnimationFrame(draw);
@@ -272,7 +272,7 @@ export default function NamtarSurvey() {
             backgroundImage: 'url(/assets/namtar_trex_survival.png)',
             backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.3)'
           }} />
-          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.25, zIndex:2}} />
+          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.55, zIndex:2}} />
           <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: lightningOpacity, transition: 'opacity 0.05s'}} />
 
           <div className="boot-terminal" style={{position:'relative', zIndex:10}}>
@@ -298,7 +298,7 @@ export default function NamtarSurvey() {
             backgroundImage: 'url(/assets/namtar_trex_bg.png)',
             backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.2)'
           }} />
-          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.35, zIndex: 2}} />
+          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.65, zIndex: 2}} />
           <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: generalFlash, transition: 'opacity 0.05s'}} />
         </div>
       )}
