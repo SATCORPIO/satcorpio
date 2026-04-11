@@ -7,6 +7,7 @@ import Footer from '../../components/Footer'
 const MODULE_REGISTRY = [
   { key: '450kpar',      route: '/portal/modules/450kpar',      icon: '⚡', title: '450kW PARALLEL',   desc: 'Dual 450kW genset parallel operation reference' },
   { key: 'dualcore-900', route: '/portal/modules/dualcore-900', icon: '⚙', title: 'DUALCORE 900',      desc: 'Integrated dual-engine generator design doc' },
+  { key: 'dualcore-900-v2', route: '/portal/modules/dualcore-900-v2', icon: '⚙', title: 'DUALCORE 900 V2', desc: 'Updated dual-engine generator design doc' },
   { key: 'gendashv2',    route: '/portal/modules/gendashv2',    icon: '◉', title: 'GEN DASH V2',       desc: '450kW diesel genset engineering dashboard' },
   { key: 'xoi-audit',   route: '/portal/modules/xoi-audit',    icon: '◈', title: 'XOI AUDIT',         desc: 'XOi feature audit & decision board' },
   { key: 'xoi-client',  route: '/portal/modules/xoi-client',   icon: '◆', title: 'XOI CLIENT',        desc: 'Field service discovery matrix form' },

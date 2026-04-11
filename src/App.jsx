@@ -17,6 +17,7 @@ import ClientPortal from './pages/portals/ClientPortal'
 // Portal modules
 import Par450k      from './pages/portals/modules/450kPar'
 import Dualcore900  from './pages/portals/modules/dualcore-900'
+import Dualcore900V2 from './pages/portals/modules/dualcore-900-v2'
 import GenDashV2    from './pages/portals/modules/GenDashV2'
 import XOIAudit     from './pages/portals/modules/XOIAudit'
 import XOIClient    from './pages/portals/modules/XOIClient'
@@ -53,6 +54,7 @@ function AppRoutes() {
       {/* Module routes — user + module-key gated */}
       <Route path="/portal/modules/450kpar"      element={<ProtectedRoute element={<Par450k />}     moduleKey="450kpar" />} />
       <Route path="/portal/modules/dualcore-900" element={<ProtectedRoute element={<Dualcore900 />} moduleKey="dualcore-900" />} />
+      <Route path="/portal/modules/dualcore-900-v2" element={<ProtectedRoute element={<Dualcore900V2 />} moduleKey="dualcore-900-v2" />} />
       <Route path="/portal/modules/gendashv2"    element={<ProtectedRoute element={<GenDashV2 />}   moduleKey="gendashv2" />} />
       <Route path="/portal/modules/xoi-audit"    element={<ProtectedRoute element={<XOIAudit />}    moduleKey="xoi-audit" />} />
       <Route path="/portal/modules/xoi-client"   element={<ProtectedRoute element={<XOIClient />}   moduleKey="xoi-client" />} />
