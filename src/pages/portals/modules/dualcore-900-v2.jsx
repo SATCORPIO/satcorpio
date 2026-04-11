@@ -835,7 +835,7 @@ export default function App(){
                       <tr><td>Reserve engine RPM</td><td>~800 RPM (warm idle)</td></tr>
                       <tr><td>Reserve coolant temp</td><td>82°C — fully thermalized</td></tr>
                       <tr><td>Time from reserve to full</td><td>3–5 seconds (speed + sync)</td></tr>
-                      <tr><td>Grid equivalent</td><td>Frequency nadir response < 1 cycle</td></tr>
+                      <tr><td>Grid equivalent</td><td>Frequency nadir response &lt; 1 cycle</td></tr>
                       <tr><td>Idle fuel penalty</td><td>~2.5 GPH E2 idle = ~$11/hr at $4.50/gal</td></tr>
                       <tr><td>Break-even justification</td><td>One avoided power outage pays for months of idle fuel on any critical site</td></tr>
                     </tbody>
