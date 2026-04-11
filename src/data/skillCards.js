@@ -37,7 +37,7 @@ export const SKILL_CARDS = [
     id: 'web-design',
     title: 'Web Design / UI Systems',
     shortDesc: 'Full-service web design and UI/UX covering responsive sites, animated interfaces, and dashboard systems.',
-    image: null,
+    image: '/assets/card_web_design.png',
     gradient: 'linear-gradient(135deg, #001a0a 0%, #002a14 50%, #001208 100%)',
     sections: [
       {
@@ -65,7 +65,7 @@ export const SKILL_CARDS = [
     id: 'systems-arch',
     title: 'Systems Architecture',
     shortDesc: 'End-to-end systems design for creative and business operations — workflow automation, AI pipelines, and strategic consulting.',
-    image: null,
+    image: '/assets/card_systems_arch.png',
     gradient: 'linear-gradient(135deg, #0a0800 0%, #1a1200 50%, #0d0a00 100%)',
     sections: [
       {
@@ -104,7 +104,7 @@ export const SKILL_CARDS = [
     id: 'platforms',
     title: 'Platforms / Marketplaces',
     shortDesc: 'Freelance marketplace expertise in structuring and optimizing gig offerings, pricing tiers, and upsell systems for maximum conversion.',
-    image: null,
+    image: '/assets/card_platforms.png',
     gradient: 'linear-gradient(135deg, #0a0010 0%, #180020 50%, #0a000d 100%)',
     sections: [
       {
@@ -122,7 +122,7 @@ export const SKILL_CARDS = [
     id: 'documentation',
     title: 'Documentation / Knowledge Systems',
     shortDesc: 'Creation and maintenance of structured, versioned reference documentation from long-form guides to organized knowledge bases and taxonomies.',
-    image: null,
+    image: '/assets/card_docs.png',
     gradient: 'linear-gradient(135deg, #001014 0%, #001e22 50%, #000d10 100%)',
     sections: [
       {
@@ -140,7 +140,7 @@ export const SKILL_CARDS = [
     id: 'motion-design',
     title: 'Motion Design & Advanced Animation Systems',
     shortDesc: 'Full-spectrum motion design from logo reveals and kinetic typography to 3D simulations and interactive UI.',
-    image: null,
+    image: '/assets/card_motion.png',
     gradient: 'linear-gradient(135deg, #100010 0%, #200020 50%, #100010 100%)',
     sections: [
       {
@@ -175,7 +175,7 @@ export const SKILL_CARDS = [
     id: 'nocode',
     title: 'No-Code / Low-Code Product Architecture',
     shortDesc: 'Rapid no-code/low-code product builds from MVPs and SaaS tools to automated workflows delivered live with full documentation.',
-    image: null,
+    image: '/assets/card_nocode.png',
     gradient: 'linear-gradient(135deg, #001414 0%, #002828 50%, #001010 100%)',
     sections: [
       {
@@ -207,7 +207,7 @@ export const SKILL_CARDS = [
     id: 'growth',
     title: 'Growth Systems & Performance Analytics Dashboards',
     shortDesc: 'Data-driven growth infrastructure — custom analytics dashboards, funnel optimization, and automated reporting.',
-    image: null,
+    image: '/assets/card_growth.png',
     gradient: 'linear-gradient(135deg, #0a0a00 0%, #141400 50%, #0a0a00 100%)',
     sections: [
       {
@@ -239,7 +239,7 @@ export const SKILL_CARDS = [
     id: 'brand-strategy',
     title: 'Brand Strategy & Intellectual Property Frameworks',
     shortDesc: 'Comprehensive brand strategy and IP framework covering positioning, naming, voice, trademark guidance, and long-term brand evolution.',
-    image: null,
+    image: '/assets/card_strategy.png',
     gradient: 'linear-gradient(135deg, #0a0500 0%, #180c00 50%, #0a0500 100%)',
     sections: [
       {
@@ -265,7 +265,7 @@ export const SKILL_CARDS = [
     id: 'discord',
     title: 'Discord Systems & Community Engineering',
     shortDesc: 'End-to-end Discord ecosystem engineering from server architecture, bots, and AI automation to community growth and enterprise-grade deployments.',
-    image: null,
+    image: '/assets/card_discord.png',
     gradient: 'linear-gradient(135deg, #060010 0%, #0f0020 50%, #060010 100%)',
     sections: [
       {
