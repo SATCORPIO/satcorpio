@@ -39,7 +39,7 @@ export default function OperatorPortal() {
         <div className="portal-topbar">
           <div className="portal-topbar-left">
             <span className="portal-role-badge operator-badge">OPERATOR</span>
-            <span className="portal-username">{currentUser?.username}</span>
+            <span className="portal-username">{currentUser?.username?.split('@')[0]}</span>
           </div>
           <div className="portal-topbar-right">
             <div className="portal-status-dot" />

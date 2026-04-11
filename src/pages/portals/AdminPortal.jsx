@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -16,6 +16,7 @@ const MODULE_REGISTRY = [
 export default function AdminPortal() {
   const { currentUser, logout } = useAuth()
   const navigate = useNavigate()
+  const { userId } = useParams()
 
   const handleLogout = () => {
     logout()
@@ -26,11 +27,15 @@ export default function AdminPortal() {
     currentUser?.modules?.includes(m.key)
   )
 
+  const isAnu = userId?.toLowerCase() === 'anu'
+  const bgStyle = isAnu ? { backgroundImage: 'url(/assets/anu_ultrarealistic_1775186455303.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 } : {}
+
   return (
     <div className="page-wrapper portal-page">
       <Header title="SATCORP" />
 
       <div className="portal-bg">
+        {isAnu && <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/assets/anu_ultrarealistic_1775186455303.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.4 }} />}
         <div className="portal-grid-overlay" />
       </div>
 
@@ -39,7 +44,7 @@ export default function AdminPortal() {
         <div className="portal-topbar">
           <div className="portal-topbar-left">
             <span className="portal-role-badge admin-badge">ADMIN</span>
-            <span className="portal-username">{currentUser?.username}</span>
+            <span className="portal-username">{currentUser?.username?.split('@')[0]}</span>
           </div>
           <div className="portal-topbar-right">
             <div className="portal-status-dot" />

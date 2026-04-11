@@ -26,9 +26,10 @@ export default function Header({ title }) {
   const handlePortalClick = () => {
     if (!currentUser) return
     const role = currentUser.role
-    if (role === 'admin')    navigate('/portal/admin')
-    else if (role === 'operator') navigate('/portal/operator')
-    else                     navigate('/portal/client')
+    const userSlug = currentUser.username.split('@')[0]
+    if (role === 'admin')    navigate(`/portal/admin/${userSlug}`)
+    else if (role === 'operator') navigate(`/portal/OP/${userSlug}`)
+    else                     navigate(`/portal/Contact/${userSlug}`)
   }
 
   return (

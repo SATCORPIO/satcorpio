@@ -39,7 +39,7 @@ export default function ClientPortal() {
         <div className="portal-topbar">
           <div className="portal-topbar-left">
             <span className="portal-role-badge client-badge">CLIENT</span>
-            <span className="portal-username">{currentUser?.username}</span>
+            <span className="portal-username">{currentUser?.username?.split('@')[0]}</span>
           </div>
           <div className="portal-topbar-right">
             <div className="portal-status-dot" />

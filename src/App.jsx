@@ -47,9 +47,9 @@ function AppRoutes() {
       <Route path="/namtarsurvey" element={<NamtarSurvey />} />
 
       {/* Portal routes — role-gated */}
-      <Route path="/portal/admin"    element={<ProtectedRoute element={<AdminPortal />}    allowedRole="admin" />} />
-      <Route path="/portal/operator" element={<ProtectedRoute element={<OperatorPortal />} allowedRole="operator" />} />
-      <Route path="/portal/client"   element={<ProtectedRoute element={<ClientPortal />}   allowedRole="client" />} />
+      <Route path="/portal/admin/:userId"    element={<ProtectedRoute element={<AdminPortal />}    allowedRole="admin" />} />
+      <Route path="/portal/OP/:userId" element={<ProtectedRoute element={<OperatorPortal />} allowedRole="operator" />} />
+      <Route path="/portal/Contact/:userId"   element={<ProtectedRoute element={<ClientPortal />}   allowedRole="client" />} />
 
       {/* Module routes — user + module-key gated */}
       <Route path="/portal/modules/450kpar"      element={<ProtectedRoute element={<Par450k />}     moduleKey="450kpar" />} />
