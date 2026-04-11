@@ -219,48 +219,63 @@ export default function Anu() {
   return (
     <div className="page-wrapper portal-page anu-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header title="SATCORP" />
-      <div className="portal-bg" style={{ backgroundImage: 'linear-gradient(135deg, rgba(10,0,30,0.88) 0%, rgba(30,0,60,0.7) 50%, rgba(0,0,0,0.92) 100%), url(/assets/anu_bg.png)' }} />
+      <div className="portal-bg" style={{ backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(30,15,5,0.7) 50%, rgba(10,5,0,0.95) 100%), url(/assets/anu_bg_gold.png)' }} />
       <GalaxyBackground />
       
       {/* CSS internal string for custom classes not in index.css */}
       <style dangerouslySetInnerHTML={{__html: `
         .anu-operator-wrapper .portal-main { flex: 1; padding-bottom: 80px; position: relative; z-index: 10; }
         .anu-skill-card {
-          background: rgba(0, 0, 0, 0.4);
-          border: 1px solid rgba(0, 255, 255, 0.2);
-          border-radius: 8px;
+          background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url(/assets/anu_card_bg.png);
+          background-size: cover;
+          background-position: center;
+          border: 1px solid rgba(255, 215, 0, 0.15);
+          border-radius: 12px;
           padding: 24px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           overflow: hidden;
-          min-height: 180px;
+          min-height: 200px;
           display: flex;
           flex-direction: column;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         .anu-skill-card:hover {
-          border-color: rgba(0, 255, 255, 0.6);
-          box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-          transform: translateY(-2px);
+          border-color: rgba(255, 215, 0, 0.5);
+          box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+          transform: translateY(-5px) scale(1.02);
         }
         .anu-skill-card::before {
           content: '';
           position: absolute;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, rgba(6,182,212,0.1) 0%, transparent 100%);
+          background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, transparent 100%);
           opacity: 0;
           transition: opacity 0.3s ease;
+        }
+        .anu-skill-card::after {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 0; width: 100%; height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+        }
+        .anu-skill-card:hover::after {
+          transform: translateX(100%);
         }
         .anu-skill-card:hover::before { opacity: 1; }
         
         .anu-skill-card .card-title {
           font-family: var(--font-header), monospace;
-          color: var(--accent-cyan);
-          font-size: 1.25rem;
+          color: #ffca28;
+          font-size: 1.3rem;
           font-weight: 700;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.08em;
           margin-bottom: 12px;
           z-index: 2;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         
         .anu-skill-card .card-short-desc {
@@ -288,7 +303,7 @@ export default function Anu() {
 
         .skill-deck-content {
           background: rgba(10, 10, 12, 0.95);
-          border: 1px solid var(--accent-cyan);
+          border: 1px solid rgba(255, 215, 0, 0.3);
           border-radius: 12px;
           width: 100%; max-width: 800px; max-height: 90vh;
           overflow-y: auto;
@@ -298,9 +313,9 @@ export default function Anu() {
         
         .skill-deck-header {
           padding: 24px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid rgba(255, 215, 0, 0.2);
           display: flex; justify-content: space-between; align-items: center;
-          background: rgba(6, 182, 212, 0.05);
+          background: rgba(255, 215, 0, 0.05);
         }
         
         .skill-deck-body { padding: 24px; flex: 1; color: #ddd; }
@@ -312,9 +327,9 @@ export default function Anu() {
           font-size: 0.9rem; letter-spacing: 1px;
         }
         .modal-btn.primary {
-          background: var(--accent-cyan); color: #000; border: none; font-weight: bold;
+          background: #ffca28; color: #000; border: none; font-weight: bold;
         }
-        .modal-btn.primary:hover { background: #fff; box-shadow: 0 0 15px var(--accent-cyan); }
+        .modal-btn.primary:hover { background: #fff; box-shadow: 0 0 15px rgba(255, 202, 40, 0.6); }
         .modal-btn.secondary {
           background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3);
         }
@@ -322,7 +337,7 @@ export default function Anu() {
         
         .deck-list { list-style-type: none; padding-left: 0; margin-bottom: 24px; }
         .deck-list li { padding: 6px 0; padding-left: 20px; position: relative; }
-        .deck-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent-cyan); }
+        .deck-list li::before { content: '▹'; position: absolute; left: 0; color: #ffca28; }
         .deck-section-title { font-family: var(--font-header), monospace; font-size: 1.1rem; color: #fff; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; }
         
         /* Form Overrides */
@@ -332,16 +347,16 @@ export default function Anu() {
           width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2);
           color: #fff; padding: 12px; border-radius: 4px; font-family: var(--font-body), sans-serif;
         }
-        .anu-input:focus, .anu-textarea:focus, .anu-select:focus { outline: none; border-color: var(--accent-cyan); }
+        .anu-input:focus, .anu-textarea:focus, .anu-select:focus { outline: none; border-color: #ffca28; }
         
         .anu-checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
-        .anu-checkbox { mt-1 flex-shrink-0; width: 18px; height: 18px; accent-color: var(--accent-cyan); }
+        .anu-checkbox { mt-1 flex-shrink-0; width: 18px; height: 18px; accent-color: #ffca28; }
         
         .anu-footer {
           position: fixed; bottom: 0; left: 0; right: 0;
           height: 60px; padding: 0 40px;
           display: flex; justify-content: space-between; align-items: center;
-          border-top: 1px solid rgba(0, 255, 255, 0.1);
+          border-top: 1px solid rgba(255, 215, 0, 0.2);
           background: rgba(0, 0, 0, 0.8);
           backdrop-filter: blur(5px);
           font-family: monospace; font-size: 0.75rem; color: rgba(255,255,255,0.4);
@@ -352,11 +367,11 @@ export default function Anu() {
       <main className="portal-main">
         <div style={{ marginBottom: '40px' }}>
           <div className="portal-eyebrow">
-            <div className="op-eyebrow-line" style={{ background: 'var(--accent-cyan)' }} />
-            <span className="op-eyebrow-text" style={{ color: 'var(--accent-cyan)' }}>CONCIERGE OPERATOR NODE</span>
+            <div className="op-eyebrow-line" style={{ background: '#ffca28' }} />
+            <span className="op-eyebrow-text" style={{ color: '#ffca28' }}>CONCIERGE OPERATOR NODE</span>
           </div>
           <h1 className="portal-title">
-            ANU <span className="portal-title-accent">SKILLS</span>
+            ANU <span className="portal-title-accent" style={{ color: '#ffca28' }}>SKILLS</span>
           </h1>
           <p className="portal-subtitle">SELECT A CAPABILITY CHASSIS TO INITIATE CONCIERGE PROTOCOLS</p>
         </div>
@@ -443,14 +458,14 @@ export default function Anu() {
             <div className="skill-deck-header">
               <div>
                 <h2 style={{ margin: 0, fontFamily: 'var(--font-header), monospace', fontSize: '1.4rem' }}>SERVICE REQUISITION</h2>
-                <div style={{ color: 'var(--accent-cyan)', fontSize: '0.85rem', marginTop: '4px' }}>// MODULE: {activeCard.title.toUpperCase()}</div>
+                <div style={{ color: '#ffca28', fontSize: '0.85rem', marginTop: '4px' }}>// MODULE: {activeCard.title.toUpperCase()}</div>
               </div>
               <button style={{ background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }} onClick={() => setShowOrderForm(false)}>×</button>
             </div>
 
             <div className="skill-deck-body">
               {submitSuccess ? (
-                <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--accent-cyan)' }}>
+                <div style={{ textAlign: 'center', padding: '40px 0', color: '#ffca28' }}>
                   <div style={{ fontSize: '3rem', marginBottom: '16px' }}>✓</div>
                   <h3 style={{ fontFamily: 'var(--font-header)', letterSpacing: '2px' }}>REQUEST SECURELY TRANSMITTED</h3>
                   <p style={{ color: '#aaa' }}>Concierge operators have been notified.</p>
