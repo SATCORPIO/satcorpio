@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
+import GalaxyBackground from '../components/GalaxyBackground';
 
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1492038802544267395/XHgcF2P_gMzDELXeuL2mw6LfKrNsj2HyhLagC5jHqgmc1MHX15mK3NaMmIAGgc_8JVVv';
 
@@ -219,6 +220,7 @@ export default function Anu() {
     <div className="page-wrapper portal-page anu-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header title="SATCORP" />
       <div className="portal-bg" style={{ backgroundImage: 'linear-gradient(135deg, rgba(10,0,30,0.88) 0%, rgba(30,0,60,0.7) 50%, rgba(0,0,0,0.92) 100%), url(/assets/anu_bg.png)' }} />
+      <GalaxyBackground />
       
       {/* CSS internal string for custom classes not in index.css */}
       <style dangerouslySetInnerHTML={{__html: `
