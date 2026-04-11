@@ -275,7 +275,11 @@ export default function NamtarSurvey() {
           <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.55, zIndex:2}} />
           <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: lightningOpacity, transition: 'opacity 0.05s'}} />
 
-          <div className="boot-terminal" style={{position:'relative', zIndex:10}}>
+          <div className="boot-content" style={{position:'relative', zIndex:10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+            <div id="boot-kyrax">
+              <img src="/assets/wolf.png" alt="KYRAX" />
+            </div>
+            <div className="boot-terminal">
             {BOOT_LINES.map((line, i) => (
               visibleLines.includes(i) && (
                 <div key={i} className={`boot-line ${line.cls}`} style={{ animationDelay: '0ms' }}>
@@ -286,6 +290,7 @@ export default function NamtarSurvey() {
                 </div>
               )
             ))}
+            </div>
           </div>
         </div>
       )}
@@ -325,7 +330,7 @@ export default function NamtarSurvey() {
             <div id="kyrax-panel">
               <div className="kyrax-container">
                 <div className="kyrax-avatar">
-                  <img src="/assets/kyrax-wolf.png" alt="KYRAX" />
+                  <img src="/assets/wolf.png" alt="KYRAX" />
                   <div className="kyrax-ring" />
                 </div>
                 <div className="kyrax-text">
