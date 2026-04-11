@@ -15,7 +15,18 @@ const USERS = [
 ]
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(() => {
+    const saved = localStorage.getItem('satcorp_user')
+    if (saved) {
+      try {
+        return JSON.parse(saved)
+      } catch (e) {
+        console.error('Failed to parse saved user', e)
+        return null
+      }
+    }
+    return null
+  })
   const [loginError, setLoginError] = useState('')
 
   const login = useCallback((username, password) => {
@@ -24,6 +35,7 @@ export function AuthProvider({ children }) {
     )
     if (user) {
       setCurrentUser(user)
+      localStorage.setItem('satcorp_user', JSON.stringify(user))
       setLoginError('')
       return user
     } else {
@@ -34,6 +46,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     setCurrentUser(null)
+    localStorage.removeItem('satcorp_user')
     setLoginError('')
   }, [])
 

@@ -819,7 +819,7 @@ export default function App(){
                     ].map(x=>(
                       <div key={x.k}style={{background:"var(--p2)",border:`1px solid ${x.c}30`,padding:"10px 12px"}}>
                         <div style={{fontFamily:"var(--MO)",fontSize:"9px",color:x.c,fontWeight:"700",marginBottom:"8px"}}>{x.k}</div>
-                        {x.items.map((i,j)=><div key={j}style={{fontSize:"12px",color:"var(--TX)",marginBottom:"4px",display:"flex",gap:"6px"}}><span style={{color:x.c,flexShrink:0}}>{x.c===var_()?"✗":"✓"}</span>{i}</div>)}
+                        {x.items.map((i,j)=><div key={j}style={{fontSize:"12px",color:"var(--TX)",marginBottom:"4px",display:"flex",gap:"6px"}}><span style={{color:x.c,flexShrink:0}}>{x.c==='var(--ER2)'?"✗":"✓"}</span>{i}</div>)}
                       </div>
                     ))}
                   </div>
