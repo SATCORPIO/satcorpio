@@ -12,13 +12,10 @@ export default function DysunsArk() {
         badgeLabel: "MOBILE COMMAND · DYSUN'S VESSEL · TRAVERSING",
         badgeDotColor: '#14b8a6',
         sectorName: "DYSUN'S ARK",
-        designation: '// MOBILE COMMAND INFRASTRUCTURE · SELF-SUSTAINING · EN ROUTE',
-        lore: `DYSUN'S ARK is the mobile command infrastructure — a self-sustaining operational vessel traversing the frontier on a permanent vector. Unlike fixed sectors, the ARK moves. It cannot be pinned, surrounded, or cut off. Every critical command function is mirrored aboard the ARK, making it the most resilient single asset in the SATCORP fleet. Where the Realm sets direction, the ARK carries it forward — indefinitely, across any terrain.`,
+        designation: '// IN DEVELOPMENT',
+        lore: 'Dysun’s Realm Ark Survival Ascended Servers Comin Soon to NAMTAR ASA Clusters',
         pills: [
-          { label: 'STATUS', value: 'TRAVERSING', color: '#14b8a6', status: 'on' },
-          { label: 'SYSTEMS', value: 'ALL NOMINAL', color: '#0d9488', status: 'on' },
-          { label: 'VECTOR', value: 'CLASSIFIED', color: '#0f766e', status: 'wait' },
-          { label: 'RANGE', value: 'UNLIMITED', color: '#2dd4bf', status: 'on' },
+          { label: 'STATUS', value: 'COMING SOON', color: '#14b8a6', status: 'wait' },
         ],
       }}
     />

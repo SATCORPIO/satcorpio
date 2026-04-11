@@ -12,13 +12,10 @@ export default function Namtar() {
         badgeLabel: 'ANCIENT ARCHIVE · KEEPER TIER · SEALED',
         badgeDotColor: '#d97706',
         sectorName: 'NAMTAR',
-        designation: '// THE ANCIENT ARCHIVE · LORE KEEPER · SEALED VAULT',
-        lore: `NAMTAR is the ancient archive — keeper of SATCORP's canon, operational lore, and deep institutional memory. Named for the ancient deity of fate and the underworld, NAMTAR maintains the records that others cannot access. Every classified datum, every historical operation, every precedent that shapes current action — it lives here, in the dark, preserved against entropy. What NAMTAR locks away, only NAMTAR can release.`,
+        designation: '// IN DEVELOPMENT',
+        lore: 'NAMTAR “Open World Survival Game” Coming Soon',
         pills: [
-          { label: 'STATUS', value: 'ARCHIVE: SEALED', color: '#d97706', status: 'on' },
-          { label: 'RECORDS', value: 'CLASSIFIED', color: '#b45309', status: 'on' },
-          { label: 'ACCESS', value: 'KEEPER ONLY', color: '#d97706', status: 'wait' },
-          { label: 'DEPTH', value: 'EPOCH CLASS', color: '#92400e', status: 'on' },
+          { label: 'STATUS', value: 'COMING SOON', color: '#d97706', status: 'wait' },
         ],
       }}
     />

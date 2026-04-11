@@ -12,13 +12,10 @@ export default function Frostheim() {
         badgeLabel: 'NORTHERN OPS · IRON TIER · FROZEN STANDBY',
         badgeDotColor: '#bae6fd',
         sectorName: 'FROSTHEIM',
-        designation: '// NORTHERN OPERATIONS · IRON WILL DOCTRINE · CALCULATED',
-        lore: `FROSTHEIM is the northern operations sector — cold-blooded, calculated, and unbreakable. Named for the frozen realm where strategy hardens into iron, this sector embodies precision under pressure. No operation runs warm here. Every move is calculated to the decimal, executed without waste, and held to a standard that does not bend under adversity. Frostheim does not rush. Frostheim does not miss.`,
+        designation: '// IN DEVELOPMENT',
+        lore: 'Ark Survival Ascended Servers Coming Soon to NAMTAR ASA Clusters',
         pills: [
-          { label: 'STATUS', value: 'STANDBY — COLD', color: '#bae6fd', status: 'on' },
-          { label: 'DOCTRINE', value: 'IRON WILL', color: '#93c5fd', status: 'on' },
-          { label: 'TEMP', value: 'BELOW ZERO', color: '#7dd3fc', status: 'wait' },
-          { label: 'READINESS', value: '100%', color: '#bae6fd', status: 'on' },
+          { label: 'STATUS', value: 'COMING SOON', color: '#bae6fd', status: 'wait' },
         ],
       }}
     />

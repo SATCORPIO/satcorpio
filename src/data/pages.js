@@ -58,7 +58,7 @@ export const PAGES = [
   {
     id: 'frostheim',
     title: 'FROSTHEIM',
-    path: '/frostheim',
+    path: '/frostheimark',
     image: '/assets/frostheim_bg.png',
     designation: 'NORTHERN OPS',
     accent: '#bae6fd',

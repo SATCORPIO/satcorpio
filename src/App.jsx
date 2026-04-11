@@ -41,7 +41,7 @@ function AppRoutes() {
       <Route path="/kirastudios" element={<KiraStudios />} />
       <Route path="/namtar" element={<Namtar />} />
       <Route path="/namtarark" element={<NamtarArk />} />
-      <Route path="/frostheim" element={<Frostheim />} />
+      <Route path="/frostheimark" element={<Frostheim />} />
       <Route path="/dysunsrealm" element={<DysunsRealm />} />
       <Route path="/dysunsark" element={<DysunsArk />} />
       <Route path="/namtarsurvey" element={<NamtarSurvey />} />
