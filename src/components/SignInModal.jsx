@@ -108,6 +108,18 @@ export default function SignInModal({ onClose }) {
           </button>
         </form>
 
+        <div className="signin-alt-action">
+          <span className="signin-alt-text">No clearance?</span>
+          <a
+            href="https://discord.gg/gQk5gnGXPt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="signin-request-link"
+          >
+            REQUEST ACCESS
+          </a>
+        </div>
+
         {/* Footer */}
         <div className="signin-foot">
           <span className="signin-foot-text">CLEARANCE REQUIRED — AUTHORIZED PERSONNEL ONLY</span>
