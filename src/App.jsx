@@ -21,6 +21,7 @@ import Dualcore900V2 from './pages/portals/modules/dualcore-900-v2'
 import GenDashV2    from './pages/portals/modules/GenDashV2'
 import XOIAudit     from './pages/portals/modules/XOIAudit'
 import XOIClient    from './pages/portals/modules/XOIClient'
+import AnuOperator  from './pages/portals/modules/AnuOperator'
 
 // Protected route — redirects to home if not authenticated, wrong role, or missing module
 function ProtectedRoute({ element, allowedRole, moduleKey }) {
@@ -58,6 +59,7 @@ function AppRoutes() {
       <Route path="/portal/modules/gendashv2"    element={<ProtectedRoute element={<GenDashV2 />}   moduleKey="gendashv2" />} />
       <Route path="/portal/modules/xoi-audit"    element={<ProtectedRoute element={<XOIAudit />}    moduleKey="xoi-audit" />} />
       <Route path="/portal/modules/xoi-client"   element={<ProtectedRoute element={<XOIClient />}   moduleKey="xoi-client" />} />
+      <Route path="/portal/modules/anu-operator" element={<ProtectedRoute element={<AnuOperator />} moduleKey="anu-operator" />} />
 
       <Route path="*" element={<MainPage />} />
     </Routes>

@@ -3,13 +3,13 @@ import { createContext, useContext, useState, useCallback } from 'react'
 const AuthContext = createContext(null)
 
 // Module keys — must match route paths defined in App.jsx
-const ALL_MODULES = ['450kpar', 'dualcore-900', 'dualcore-900-v2', 'gendashv2', 'xoi-audit', 'xoi-client']
+const ALL_MODULES = ['450kpar', 'dualcore-900', 'dualcore-900-v2', 'gendashv2', 'xoi-audit', 'xoi-client', 'anu-operator']
 
 // Registered users — credentials stored here for now
 const USERS = [
   { username: 'anu@satcorp.io',     password: 'Hess1862$',       role: 'admin',    modules: ALL_MODULES },
-  { username: 'iss@satcorp.io',     password: 'Muscleman320$',   role: 'operator', modules: ['450kpar', 'dualcore-900-v2', 'gendashv2'] },
-  { username: 'dhalsim@satcorp.io', password: 'Hiimpaul$',       role: 'operator', modules: ['450kpar', 'dualcore-900', 'gendashv2'] },
+  { username: 'iss@satcorp.io',     password: 'Muscleman320$',   role: 'operator', modules: ['450kpar', 'dualcore-900-v2', 'gendashv2', 'anu-operator'] },
+  { username: 'dhalsim@satcorp.io', password: 'Hiimpaul$',       role: 'operator', modules: ['450kpar', 'dualcore-900', 'gendashv2', 'anu-operator'] },
   { username: 'babajoe1@satcorp.io',password: 'Whoisjeff$',      role: 'operator', modules: [] },
   { username: 'dysun@satcorp.io',   password: 'Ikickdodos556$',  role: 'client',   modules: ['xoi-audit', 'xoi-client'] },
 ]
