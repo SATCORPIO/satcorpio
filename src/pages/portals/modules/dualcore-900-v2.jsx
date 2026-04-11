@@ -373,7 +373,7 @@ function AntSurgeDiagram({e1hz,e1rpm,e1v,e1kw}){
         {states.map((s,i)=>(
           <div key={s.id} style={{
             background:s.active?`${s.c}22`:"var(--p2)",
-            border:`1px solid ${s.active?s.c:var_:"var(--line)"}`,
+            border:`1px solid ${s.active?s.c:"var(--line)"}`,
             padding:"8px 12px",flex:"1",minWidth:"110px",
             transition:"all .3s",
             borderLeft:`3px solid ${s.active?s.c:"var(--line2)"}`,
@@ -389,7 +389,7 @@ function AntSurgeDiagram({e1hz,e1rpm,e1v,e1kw}){
   );
 }
 
-function var_(){return "var(--line)";}
+
 
 /* ══════════════════════════════════════════════════════
    LIVE ANTI-SURGE SIMULATOR
