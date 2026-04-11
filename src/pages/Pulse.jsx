@@ -17,6 +17,7 @@ const SKILL_CARDS = [
       "Animated overlays/scene layouts",
       "Creator-focused visual systems"
     ],
+    image: "/assets/pulse_stream_design.png",
     services: [
       "OBS scene architecture/overlay design",
       "Alert/HUD style UI design",
@@ -38,6 +39,7 @@ const SKILL_CARDS = [
       "Subtitle & accessibility post"
     ],
     toolsTech: ["DaVinci Resolve", "Premiere Pro", "CapCut", "Runway Gen-3", "Topaz"],
+    image: "/assets/pulse_video_editing.png",
     deliverables: ["Final masters + project files + asset libraries"],
     services: [
       "Long-form & cinematic editing",
@@ -281,6 +283,19 @@ export default function Pulse() {
           box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
           transform: translateY(-2px);
         }
+        .pulse-skill-card .card-bg {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background-size: cover;
+          background-position: center;
+          opacity: 0.4;
+          transition: opacity 0.3s ease, transform 0.5s ease;
+          z-index: 1;
+        }
+        .pulse-skill-card:hover .card-bg {
+          opacity: 0.6;
+          transform: scale(1.05);
+        }
         .pulse-skill-card::before {
           content: '';
           position: absolute;
@@ -410,6 +425,12 @@ export default function Pulse() {
               className="pulse-skill-card"
               onClick={() => setActiveCard(card)}
             >
+              {card.image && (
+                <div 
+                  className="card-bg" 
+                  style={{ backgroundImage: `url(${card.image})` }}
+                />
+              )}
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
             </div>
