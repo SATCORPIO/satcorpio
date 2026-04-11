@@ -179,46 +179,68 @@ const XOIAudit = () => {
     setSubmitting(true);
     const timestamp = new Date().toLocaleString();
     
-    // Group decisions
-    const groups = { 'FUTURE FEATURE': [], ADD: [], CUT: [] };
-    SECTIONS.forEach(sec => {
-      sec.features.forEach(f => {
-        const d = decisions[f.id];
-        if (d === 'FUTURE') groups['FUTURE FEATURE'].push(`${sec.name} → ${f.name}`);
-        else if (d) groups[d].push(`${sec.name} → ${f.name}`);
-      });
+    const auditEmbeds = [];
+
+    // 1. MASTER SUMMARY EMBED
+    auditEmbeds.push({
+      title: "🎯 XOi FEATURE AUDIT: STRATEGIC SUMMARY",
+      color: 0x06b6d4,
+      description: `Transmission from SATCORP Terminal\n**Timestamp:** ${timestamp}`,
+      fields: [
+        { name: "TOTAL ASSETS", value: `${stats.total}`, inline: true },
+        { name: "PLANNED (ADD)", value: `${stats.add}`, inline: true },
+        { name: "FUTURE SCOPE", value: `${stats.future}`, inline: true },
+        { name: "CUT", value: `${stats.cut}`, inline: true },
+        { name: "REMAINING", value: `${stats.none}`, inline: true },
+      ],
+      footer: { text: "KYRAX AI System // Phase 1 Audit" }
     });
 
-    const embeds = [
-      {
-        title: "🎯 XOi Feature Audit Decisions",
-        color: 0x06b6d4,
-        description: `Audit submission from SATCORP Terminal\n**Timestamp:** ${timestamp}`,
-        fields: [
-          ...Object.entries(groups).filter(([_, items]) => items.length > 0).map(([key, items]) => ({
-            name: `${key} (${items.length})`,
-            value: items.map(i => `• ${i}`).join('\n').substring(0, 1024)
-          }))
-        ],
-        footer: { text: "KYRAX AI System // Feature Audit Module" }
-      }
-    ];
+    // 2. SECTION BATCHES (2 sections per embed)
+    for (let i = 0; i < SECTIONS.length; i += 2) {
+      const sectionPair = SECTIONS.slice(i, i + 2);
+      const fields = [];
+      let hasDecisions = false;
 
-    if (stats.none > 0) {
-      embeds[0].fields.push({
-        name: "PENDING REVIEW",
-        value: `${stats.none} features remain unmarked.`
+      sectionPair.forEach(sec => {
+        const groups = { 'FUTURE FEATURE': [], 'ADD TO PLAN': [], 'CUT FROM SCOPE': [] };
+        sec.features.forEach(f => {
+          const d = decisions[f.id];
+          if (d === 'FUTURE') groups['FUTURE FEATURE'].push(f.name);
+          else if (d === 'ADD') groups['ADD TO PLAN'].push(f.name);
+          else if (d === 'CUT') groups['CUT FROM SCOPE'].push(f.name);
+        });
+
+        Object.entries(groups).forEach(([label, items]) => {
+          if (items.length > 0) {
+            hasDecisions = true;
+            fields.push({
+              name: `📁 ${sec.name.toUpperCase()} // ${label}`,
+              value: items.map(it => `• ${it}`).join('\n').substring(0, 1024)
+            });
+          }
+        });
       });
+
+      if (hasDecisions) {
+        auditEmbeds.push({
+          title: `📂 SECTOR BATCH: ${sectionPair.map(s => s.name.toUpperCase()).join(' + ')}`,
+          color: 0x06b6d4,
+          fields
+        });
+      }
     }
 
     try {
+      // Discord limit is 10 embeds per message.
+      // With 12 sections / 2 = 6 + 1 header = 7 embeds. Safe.
       const response = await fetch('https://discord.com/api/webhooks/1491959357221634211/uldYeelaRmSbirVgoPgx-OpV1TqbxUa5OTJB6ul1ntMb4NyzIQgtajOkmzR8tz7SkTbP', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           username: "KYRAX // AUDIT TERMINAL",
           content: "📁 **Strategic Feature Audit Transmission Received**",
-          embeds
+          embeds: auditEmbeds.slice(0, 10)
         })
       });
 
