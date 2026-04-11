@@ -43,16 +43,24 @@ function RainCanvas({ className, style, id }) {
       h = window.innerHeight;
       canvas.width = w;
       canvas.height = h;
+      
+      // Re-initialize drops on resize for better coverage
+      const dropCount = Math.min(800, Math.floor(w * 1.5));
+      drops.length = 0;
+      for (let i = 0; i < dropCount; i++) {
+        drops.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          len: 20 + Math.random() * 40,
+          speed: 15 + Math.random() * 20,
+          op: 0.2 + Math.random() * 0.6
+        });
+      }
     };
+    
+    const drops = [];
+    handleResize(); // Initial setup
     window.addEventListener('resize', handleResize);
-
-    const drops = Array.from({ length: 800 }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      len: 20 + Math.random() * 40,
-      speed: 15 + Math.random() * 20,
-      op: 0.2 + Math.random() * 0.6
-    }));
 
     let animationId;
     const draw = () => {
@@ -60,15 +68,15 @@ function RainCanvas({ className, style, id }) {
       drops.forEach(d => {
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x + 4, d.y + d.len); // Angled to the right, slightly more intensity
+        ctx.lineTo(d.x + 4, d.y + d.len);
         ctx.strokeStyle = `rgba(175,235,255,${d.op})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
         d.y += d.speed;
-        d.x += 4; // Wind movement to the right
+        d.x += 4;
         if (d.y > h) {
           d.y = -d.len;
-          d.x = Math.random() * w - 200; // Account for rightward wind angle
+          d.x = Math.random() * (w + 300) - 300; 
         }
       });
       animationId = requestAnimationFrame(draw);

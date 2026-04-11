@@ -9,6 +9,7 @@ const SKILL_CARDS = [
     id: "client-exp",
     title: "Client Experience / Concierge Skills",
     shortDesc: "Scope, expectations, and polished delivery.",
+    image: "/assets/anu_client_exp.png",
     capabilities: [
       "Scope clarification/expectation alignment",
       "Pre-order vetting/intake",
@@ -32,6 +33,7 @@ const SKILL_CARDS = [
     id: "crm-lifecycle",
     title: "Full CRM & Client Lifecycle Management",
     shortDesc: "End-to-end journey maps and bespoke portals.",
+    image: "/assets/anu_crm_lifecycle.png",
     capabilities: [
       "End-to-end client journey mapping",
       "Automated onboarding, milestones, offboarding",
@@ -51,6 +53,7 @@ const SKILL_CARDS = [
     id: "financial-ops",
     title: "Financial Operations, Invoicing & Profitability Systems",
     shortDesc: "Automated chasing, forecasting, and retention.",
+    image: "/assets/anu_financial_ops.png",
     capabilities: [
       "Automated invoicing & payment chasing",
       "Real-time project profitability tracking",
@@ -69,6 +72,7 @@ const SKILL_CARDS = [
     id: "legal-architect",
     title: "Advanced Contract & Legal Workflow Architecture",
     shortDesc: "E-signatures, modular templates, and IP flows.",
+    image: "/assets/anu_legal_architect.png",
     capabilities: [
       "Modular contract templates & clause libraries",
       "E-signature & version control flows",
@@ -226,7 +230,6 @@ export default function Anu() {
       <style dangerouslySetInnerHTML={{__html: `
         .anu-operator-wrapper .portal-main { flex: 1; padding-bottom: 80px; position: relative; z-index: 10; }
         .anu-skill-card {
-          background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url(/assets/anu_card_bg.png);
           background-size: cover;
           background-position: center;
           border: 1px solid rgba(255, 215, 0, 0.15);
@@ -386,6 +389,9 @@ export default function Anu() {
               key={card.id} 
               className="anu-skill-card"
               onClick={() => setActiveCard(card)}
+              style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url(${card.image})`
+              }}
             >
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>

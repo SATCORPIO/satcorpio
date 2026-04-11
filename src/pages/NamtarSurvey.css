@@ -853,9 +853,9 @@ header {
 
 .boot-namtar {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(3rem, 12vw, 8rem);
+  font-size: clamp(2.2rem, 15vw, 8rem);
   font-weight: 900;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.15em;
   background: linear-gradient(135deg, #ff9020 0%, #ff5500 35%, #ff2200 60%, #ffaa40 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -882,13 +882,13 @@ header {
 }
 
 #boot-terminal {
-  width: 100%;
+  width: 95%;
   max-width: 560px;
-  background: rgba(0,8,6,0.9);
-  border: 1px solid rgba(0,229,204,0.2);
+  background: rgba(0,8,6,0.95);
+  border: 1px solid rgba(0,229,204,0.3);
   border-radius: 3px;
-  padding: 16px 20px;
-  margin-bottom: 28px;
+  padding: 12px 15px;
+  margin-bottom: 24px;
   opacity: 0;
   animation: boot-fadein 0.5s ease 2.6s forwards;
   min-height: 130px;
@@ -1019,10 +1019,17 @@ header {
 ::-webkit-scrollbar-thumb { background: rgba(0,229,204,0.3); border-radius: 3px; }
 
 @media(max-width:600px) {
-  .kyrax-container { flex-direction: column; }
+  .kyrax-container { flex-direction: column; padding: 16px; gap: 15px; }
   .kyrax-avatar { width: 60px; height: 60px; }
+  .kyrax-msg { font-size: 0.82rem; }
+  .section-header { margin: 30px 0 20px; }
+  .question-card { padding: 16px 18px; }
   .options-grid { gap: 6px; }
-  .opt-btn { padding: 6px 12px; font-size: 0.75rem; }
+  .opt-btn { padding: 6px 10px; font-size: 0.72rem; }
+  .namtar-logo { font-size: clamp(1.8rem, 12vw, 3.5rem); letter-spacing: 0.1em; }
+  .boot-namtar { letter-spacing: 0.08em; font-size: clamp(2rem, 14vw, 7rem); }
+  #boot-terminal { padding: 10px; width: 98%; }
+  .boot-log-line { font-size: 0.6rem; }
 }
 
 

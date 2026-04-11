@@ -1680,17 +1680,43 @@ for(let i=0;i<120;i++){
 const canvas = document.getElementById('rain-canvas');
 const ctx = canvas.getContext('2d');
 let drops = [];
-function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+let dropCount = Math.min(800, Math.floor(window.innerWidth * 1.5));
+
+function initDrops() {
+  dropCount = Math.min(800, Math.floor(window.innerWidth * 1.5));
+  drops = [];
+  for(let i=0;i<dropCount;i++) {
+    drops.push({ 
+      x: Math.random() * window.innerWidth, 
+      y: Math.random() * window.innerHeight, 
+      len: 15+Math.random()*35, 
+      speed: 15+Math.random()*20, 
+      opacity: 0.2+Math.random()*0.6 
+    });
+  }
+}
+
+function resizeCanvas(){ 
+  canvas.width = window.innerWidth; 
+  canvas.height = window.innerHeight;
+  initDrops();
+}
+
+initDrops();
 resizeCanvas();
+
 window.addEventListener('resize', resizeCanvas);
-for(let i=0;i<800;i++) drops.push({ x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight, len:15+Math.random()*35, speed:15+Math.random()*20, opacity:0.2+Math.random()*0.6 });
+
 function drawRain(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   drops.forEach(d=>{
     ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(d.x+4,d.y+d.len);
     ctx.strokeStyle=`rgba(175,235,255,${d.opacity})`; ctx.lineWidth=1.0; ctx.stroke();
     d.y+=d.speed; d.x+=4;
-    if(d.y>canvas.height){ d.y=-d.len; d.x=Math.random()*canvas.width - 200; }
+    if(d.y > canvas.height){ 
+      d.y = -d.len; 
+      d.x = Math.random() * (canvas.width + 300) - 300; 
+    }
   });
   requestAnimationFrame(drawRain);
 }
@@ -1725,18 +1751,39 @@ var _bootDone = false;
   const bc = document.getElementById('boot-rain');
   if(bc){
     const bctx = bc.getContext('2d');
-    bc.width=window.innerWidth; bc.height=window.innerHeight;
+    let bdrops = [];
+    
+    function resizeBootCanvas() {
+      bc.width = window.innerWidth;
+      bc.height = window.innerHeight;
+      const bCount = Math.min(600, Math.floor(window.innerWidth * 1.2));
+      bdrops = Array.from({length: bCount}, () => ({ 
+        x: Math.random() * bc.width, 
+        y: Math.random() * bc.height, 
+        len: 15+Math.random()*30, 
+        speed: 15+Math.random()*20, 
+        op: 0.2+Math.random()*0.5 
+      }));
+    }
+    
+    resizeBootCanvas();
+    window.addEventListener('resize', resizeBootCanvas);
+    
     bc.style.cssText='position:absolute;inset:0;pointer-events:none;opacity:0.25;z-index:6;';
-    const bdrops = Array.from({length:600},()=>({ x:Math.random()*bc.width, y:Math.random()*bc.height, len:15+Math.random()*30, speed:15+Math.random()*20, op:0.2+Math.random()*0.5 }));
+    
     function drawBootRain(){
+      if(_bootDone) return;
       bctx.clearRect(0,0,bc.width,bc.height);
       bdrops.forEach(d=>{
         bctx.beginPath(); bctx.moveTo(d.x,d.y); bctx.lineTo(d.x+4,d.y+d.len);
         bctx.strokeStyle='rgba(175,235,255,'+d.op+')'; bctx.lineWidth=1.0; bctx.stroke();
         d.y+=d.speed; d.x+=4;
-        if(d.y>bc.height){ d.y=-d.len; d.x=Math.random()*bc.width - 200; }
+        if(d.y > bc.height){ 
+          d.y = -d.len; 
+          d.x = Math.random() * (bc.width + 300) - 300; 
+        }
       });
-      if(!_bootDone) requestAnimationFrame(drawBootRain);
+      requestAnimationFrame(drawBootRain);
     }
     drawBootRain();
   }
