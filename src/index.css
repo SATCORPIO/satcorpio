@@ -951,4 +951,11 @@ img { max-width: 100%; display: block; }
 .module-card-icon { font-size: 1.4rem; color: var(--text-muted); opacity: 0.5; }
 .module-card-title { font-family: var(--font-tactical); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text-secondary); text-transform: uppercase; }
 .module-card-status { font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.25em; color: var(--text-muted); text-transform: uppercase; }
-@media (max-width: 768px) { .portal-main { padding: 20px 20px 60px; } .portal-title { font-size: 1.8rem; } }
+@media (max-width: 768px) { 
+  :root {
+    --text-secondary: #aaa;
+    --text-muted: #777;
+  }
+  .portal-main { padding: 20px 20px 60px; } 
+  .portal-title { font-size: 1.8rem; } 
+}

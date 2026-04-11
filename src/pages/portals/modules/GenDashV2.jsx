@@ -21,6 +21,11 @@ const CSS = `
   --tx:#c0deff; --tm:#507890; --tl:#284860;
   --mo:'JetBrains Mono',monospace; --sa:'Rajdhani',sans-serif;
 }
+@media (max-width: 768px) {
+  :root {
+    --tm:#90b4cc; --tl:#507890;
+  }
+}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--bg0);}
 .app{font-family:var(--sa);background:var(--bg0);color:var(--tx);min-height:100vh;}

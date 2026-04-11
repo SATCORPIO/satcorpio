@@ -224,6 +224,13 @@ const XOIClient = () => {
           --glass: rgba(2, 2, 2, 0.8);
         }
 
+        @media (max-width: 768px) {
+          :root {
+            --text-secondary: #d4d4d8;
+            --text-dim: #a1a1aa;
+          }
+        }
+
         .xoi-client-wrapper {
           background-color: var(--bg-primary);
           color: var(--text-primary);

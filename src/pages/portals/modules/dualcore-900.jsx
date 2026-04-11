@@ -41,6 +41,11 @@ const CSS = `
   --SA:'Rajdhani',sans-serif;
   --DI:'Bebas Neue',sans-serif;
 }
+@media (max-width: 768px) {
+  :root {
+    --TM:#88aac4; --TL:#486888;
+  }
+}
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{background:var(--ink);}
 .app{font-family:var(--SA);background:var(--p0);color:var(--TX);min-height:100vh;}
