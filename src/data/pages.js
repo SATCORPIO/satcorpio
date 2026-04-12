@@ -35,7 +35,7 @@ export const PAGES = [
     id: 'kirastudios',
     title: 'K-RA STUDIOS',
     path: '/kirastudios',
-    image: '/assets/kirastudios_bg.png',
+    image: '/assets/kirastudios_main_bg_v2.png',
     designation: 'CREATIVE SANCTUM',
     accent: '#d946ef',
   },

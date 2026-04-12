@@ -9,6 +9,7 @@ const SKILL_CARDS = [
     id: "game-dev-world-building",
     title: "Game-Development/World-Building Design",
     shortDesc: "Real-time engine workflows, custom lore bibles, and prototype builds.",
+    backgroundImage: "/assets/kira_game_dev_bg.png",
     capabilities: [
       "Real-time engine workflows (Unity/Unreal Engine)",
       "Gameplay/systems/QOL MODs",
@@ -67,6 +68,7 @@ const SKILL_CARDS = [
     id: "narrative-design",
     title: "Narrative Design & Interactive Storytelling Systems",
     shortDesc: "Branching dialogues, lore bibles, and player experience flows.",
+    backgroundImage: "/assets/kira_narrative_design_bg.png",
     capabilities: [
       "Branching dialogue trees & choice-driven narratives",
       "Lore bibles, faction backstories, character arcs",
@@ -94,6 +96,7 @@ const SKILL_CARDS = [
     id: "procedural-generation",
     title: "Procedural Generation & Dynamic World Pipelines",
     shortDesc: "Procedural terrain, dynamic NPCs, and runtime optimization.",
+    backgroundImage: "/assets/kira_procedural_gen_bg.png",
     capabilities: [
       "Terrain, city, dungeon & ecosystem procedural systems",
       "Dynamic NPC behaviors & event generation",
@@ -119,6 +122,7 @@ const SKILL_CARDS = [
     id: "vr-ar-xr",
     title: "VR/AR/XR Experience Prototyping",
     shortDesc: "Immersive interaction design and cross-device spatial environments.",
+    backgroundImage: "/assets/kira_xr_proto_bg.png",
     capabilities: [
       "Full XR scene builds & interaction design",
       "Hand tracking, spatial UI, locomotion systems",
@@ -144,6 +148,7 @@ const SKILL_CARDS = [
     id: "audio-design",
     title: "Full Audio Design & Immersive Sound Systems",
     shortDesc: "Adaptive music, Foley, and spatial audio integration engines.",
+    backgroundImage: "/assets/kira_audio_design_bg.png",
     capabilities: [
       "Adaptive music & dynamic audio engines",
       "Foley, voice direction, soundscape design",
@@ -169,6 +174,7 @@ const SKILL_CARDS = [
     id: "game-economy",
     title: "Game Economy, Balancing & Live-Service Ops",
     shortDesc: "Economy loops, battle-pass architecture, and churn analysis.",
+    backgroundImage: "/assets/kira_game_economy_bg.png",
     capabilities: [
       "Economy design (currencies, sinks, progression)",
       "Meta & balancing systems with data-driven iteration",
@@ -322,29 +328,43 @@ export default function KiraStudios() {
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header title="SATCORP" />
-      <div className="portal-bg" style={{ backgroundImage: 'url(/assets/kirastudios_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
+      <div className="portal-bg" style={{ backgroundImage: 'url(/assets/kirastudios_main_bg_v2.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
       <GalaxyBackground />
       
       <style dangerouslySetInnerHTML={{__html: `
         .pulse-operator-wrapper .portal-main { flex: 1; padding-bottom: 80px; position: relative; z-index: 10; }
         .pulse-skill-card {
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(0, 0, 0, 0.6);
           border: 1px solid rgba(217, 70, 239, 0.2);
           border-radius: 8px;
           padding: 24px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           overflow: hidden;
-          min-height: 180px;
+          min-height: 200px;
           display: flex;
           flex-direction: column;
+          justify-content: flex-end;
+          background-size: cover;
+          background-position: center;
         }
         .pulse-skill-card:hover {
-          border-color: rgba(217, 70, 239, 0.6);
-          box-shadow: 0 0 20px rgba(217, 70, 239, 0.1);
-          transform: translateY(-2px);
+          border-color: rgba(217, 70, 239, 0.8);
+          box-shadow: 0 0 30px rgba(217, 70, 239, 0.2), inset 0 0 20px rgba(217, 70, 239, 0.1);
+          transform: translateY(-5px) scale(1.01);
         }
+        .pulse-skill-card .card-bg-overlay {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 80%);
+          z-index: 1;
+          transition: opacity 0.3s ease;
+        }
+        .pulse-skill-card:hover .card-bg-overlay {
+          background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+        }
+        
         .pulse-skill-card::before {
           content: '';
           position: absolute;
@@ -472,8 +492,10 @@ export default function KiraStudios() {
             <div 
               key={card.id} 
               className="pulse-skill-card"
+              style={{ backgroundImage: card.backgroundImage ? `url(${card.backgroundImage})` : 'none' }}
               onClick={() => setActiveCard(card)}
             >
+              <div className="card-bg-overlay" />
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
             </div>
