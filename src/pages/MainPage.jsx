@@ -35,7 +35,6 @@ export default function MainPage() {
         <h1 className="op-main-title">
           Core Identity <em>/</em> Operator Value
         </h1>
-        <p className="op-sub">CLASSIFIED OPERATIONAL PROFILE — CLEARANCE LEVEL UNRESTRICTED</p>
         
         <div className="op-actions" style={{ marginBottom: '32px' }}>
           <a 
@@ -76,7 +75,7 @@ export default function MainPage() {
       {/* Skill Cards */}
       <section className="skills-section">
         <div className="section-header-row">
-          <span className="section-label-text">// SKILL CATEGORY DEPLOYMENT</span>
+          <span className="section-label-text">// SERVICE CATEGORY DEPLOYMENT</span>
           <div className="section-rule" />
         </div>
 

@@ -18,7 +18,8 @@ export default function LorePage({ config }) {
     badgeLabel, badgeDotColor,
     sectorName, designation,
     lore, pills, extraContent,
-    leftBorderColor, discordLink
+    leftBorderColor, discordLink,
+    footerCopy
   } = config
 
   return (
@@ -60,12 +61,14 @@ export default function LorePage({ config }) {
             </div>
 
             {/* Lore text */}
-            <div
-              className="lore-text-card"
-              style={{ borderLeft: `2px solid ${accent}` }}
-            >
-              <p>{lore}</p>
-            </div>
+            {lore && (
+              <div
+                className="lore-text-card"
+                style={{ borderLeft: `2px solid ${accent}` }}
+              >
+                <p>{lore}</p>
+              </div>
+            )}
 
             {/* Discord Link */}
             {discordLink && (
@@ -123,7 +126,7 @@ export default function LorePage({ config }) {
         </div>
       </div>
 
-      <Footer />
+      <Footer copyText={footerCopy} />
     </div>
   )
 }

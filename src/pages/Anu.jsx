@@ -222,7 +222,7 @@ export default function Anu() {
 
   return (
     <div className="page-wrapper portal-page anu-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header title="SATCORP" />
+      <Header title="ANU" />
       <div className="portal-bg" style={{ backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(30,15,5,0.7) 50%, rgba(10,5,0,0.95) 100%), url(/assets/anu_bg_gold.png)' }} />
       <GalaxyBackground />
       
@@ -371,12 +371,12 @@ export default function Anu() {
         <div style={{ marginBottom: '40px' }}>
           <div className="portal-eyebrow">
             <div className="op-eyebrow-line" style={{ background: '#ffca28' }} />
-            <span className="op-eyebrow-text" style={{ color: '#ffca28' }}>CONCIERGE OPERATOR NODE</span>
+            <span className="op-eyebrow-text" style={{ color: '#ffca28' }}>SATCORP OPERATOR NODE</span>
           </div>
           <h1 className="portal-title">
-            ANU <span className="portal-title-accent" style={{ color: '#ffca28' }}>SKILLS</span>
+            TACTICAL <span className="portal-title-accent" style={{ color: '#ffca28' }}>CONCIERGE SERVICES</span>
           </h1>
-          <p className="portal-subtitle">SELECT A CAPABILITY CHASSIS TO INITIATE CONCIERGE PROTOCOLS</p>
+          <p className="portal-subtitle">SELECT A CAPABILITY CHASSIS TO INITIATE SATCORP PROTOCOLS</p>
         </div>
 
         <div style={{

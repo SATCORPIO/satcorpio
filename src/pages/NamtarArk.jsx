@@ -17,7 +17,8 @@ export default function NamtarArk() {
         pills: [
           { label: 'STATUS', value: 'COMING SOON', color: '#22c55e', status: 'wait' },
         ],
-        discordLink: 'https://discord.gg/UkWzc8FvZT'
+        discordLink: 'https://discord.gg/UkWzc8FvZT',
+        footerCopy: '2026 · Ki-Ra Studios'
       }}
     />
   )

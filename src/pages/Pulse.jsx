@@ -263,7 +263,7 @@ export default function Pulse() {
 
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header title="SATCORP" />
+      <Header title="PULSΞ" />
       <div className="portal-bg" style={{ backgroundImage: 'url(/assets/pulse_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5 }} />
       <GalaxyBackground />
       
@@ -408,12 +408,12 @@ export default function Pulse() {
         <div style={{ marginBottom: '40px' }}>
           <div className="portal-eyebrow">
             <div className="op-eyebrow-line" style={{ background: 'var(--accent-cyan)' }} />
-            <span className="op-eyebrow-text" style={{ color: 'var(--accent-cyan)' }}>PULSΞ – TASK FORCE BRANCH</span>
+            <span className="op-eyebrow-text" style={{ color: 'var(--accent-cyan)' }}>PULSΞ /// LIVE BROADCAST BRANCH</span>
           </div>
           <h1 className="portal-title">
             BROADCAST / <span className="portal-title-accent">CREATOR HUB</span>
           </h1>
-          <p className="portal-subtitle">SELECT A SKILL MODULE TO INITIATE SERVICE PROTOCOLS</p>
+          <p className="portal-subtitle">SELECT A SERVICE MODULE TO INITIATE SATCORP PROTOCOLS</p>
         </div>
 
         <div style={{

@@ -17,6 +17,7 @@ export default function Namtar() {
         pills: [
           { label: 'STATUS', value: 'COMING SOON', color: '#d97706', status: 'wait' },
         ],
+        footerCopy: '2026 · Ki-Ra Studios'
       }}
     />
   )

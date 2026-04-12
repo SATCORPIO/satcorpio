@@ -677,7 +677,7 @@ img { max-width: 100%; display: block; }
    ============================================================ */
 .site-footer {
   padding: 22px 40px; border-top: 1px solid var(--glass-border);
-  display: flex; justify-content: center; align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   background: rgba(0,0,0,0.92); position: relative; z-index: 10;
 }
 .footer-copy { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.4em; color: var(--text-muted); text-transform: uppercase; }

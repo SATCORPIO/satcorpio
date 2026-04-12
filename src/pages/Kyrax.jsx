@@ -221,7 +221,7 @@ export default function Kyrax() {
 
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header title="SATCORP" />
+      <Header title="KYRAX" />
       <div className="portal-bg" style={{ backgroundImage: 'url(/assets/kyrax_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
       <GalaxyBackground />
       
@@ -363,12 +363,12 @@ export default function Kyrax() {
         <div style={{ marginBottom: '40px' }}>
           <div className="portal-eyebrow">
             <div className="op-eyebrow-line" style={{ background: '#3b82f6' }} />
-            <span className="op-eyebrow-text" style={{ color: '#3b82f6' }}>KYRAX – AI CONCIERGE</span>
+            <span className="op-eyebrow-text" style={{ color: '#3b82f6' }}>TACTICAL INTELLIGENCE WING</span>
           </div>
           <h1 className="portal-title">
-            TACTICAL <span className="portal-title-accent" style={{ color: '#3b82f6' }}>WARFARE WING</span>
+            KYRAX <span className="portal-title-accent" style={{ color: '#3b82f6' }}>/// AI CONCIERGE</span>
           </h1>
-          <p className="portal-subtitle">SELECT A SKILL MODULE TO INITIATE SERVICE PROTOCOLS</p>
+          <p className="portal-subtitle">SELECT A SERVICE MODULE TO INITIATE SATCORP PROTOCOLS</p>
         </div>
 
         <div style={{

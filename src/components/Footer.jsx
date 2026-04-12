@@ -1,8 +1,8 @@
-export default function Footer() {
+export default function Footer({ copyText = '2026 SATCORP' }) {
   return (
     <footer className="site-footer">
       <p className="footer-copy">
-        <em>2026</em> &nbsp;·&nbsp; SATCORP &nbsp;·&nbsp; ALL OPERATIONS CLASSIFIED
+        {copyText}
       </p>
     </footer>
   )

@@ -327,7 +327,7 @@ export default function KiraStudios() {
 
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header title="SATCORP" />
+      <Header title="KI-RA STUDIOS" />
       <div className="portal-bg" style={{ backgroundImage: 'url(/assets/kirastudios_main_bg_v2.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
       <GalaxyBackground />
       
@@ -475,12 +475,12 @@ export default function KiraStudios() {
         <div style={{ marginBottom: '40px' }}>
           <div className="portal-eyebrow">
             <div className="op-eyebrow-line" style={{ background: '#d946ef' }} />
-            <span className="op-eyebrow-text" style={{ color: '#d946ef' }}>KI-RA STUDIOS – TASK FORCE BRANCH</span>
+            <span className="op-eyebrow-text" style={{ color: '#d946ef' }}>KI-RA STUDIOS /// TASK FORCE BRANCH</span>
           </div>
           <h1 className="portal-title">
             WORLD-BUILDING / <span className="portal-title-accent" style={{ color: '#d946ef' }}>GAME DEV STUDIO</span>
           </h1>
-          <p className="portal-subtitle">SELECT A SKILL MODULE TO INITIATE SERVICE PROTOCOLS</p>
+          <p className="portal-subtitle">SELECT A SERVICE MODULE TO INITIATE SATCORP PROTOCOLS</p>
         </div>
 
         <div style={{

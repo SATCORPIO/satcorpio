@@ -13,7 +13,7 @@ export default function DysunsRealm() {
         badgeDotColor: '#a855f7',
         sectorName: "DYSUN'S REALM",
         designation: '// SOVEREIGN COSMIC DOMAIN · APEX AUTHORITY · BEYOND MEASURE',
-        lore: `DYSUN'S REALM is the sovereign domain — a cosmic jurisdiction beyond conventional authority. This is the seat of absolute power within the SATCORP hierarchy, where the rules of the operational world do not apply in the way they do elsewhere. The Realm exists at a level that most assets will never interface with directly. It is the reason SATCORP operates with the certainty it does: because at its core, the Realm has already seen the outcome.`,
+        lore: '',
         pills: [
           { label: 'STATUS', value: 'SOVEREIGN — ABSOLUTE', color: '#a855f7', status: 'on' },
           { label: 'JURISDICTION', value: 'UNRESTRICTED', color: '#9333ea', status: 'on' },
