@@ -5,7 +5,7 @@ export default function DysunsRealm() {
     <LorePage
       config={{
         headerTitle: "DYSUN'S REALM",
-        bgImage: '/assets/dysunsrealm_bg.png',
+        bgImage: '/assets/dysunsrealm_v4_bg.png',
         overlayGradient: 'linear-gradient(135deg, rgba(5,0,15,0.9) 0%, rgba(15,0,40,0.76) 50%, rgba(0,0,0,0.93) 100%)',
         accent: '#a855f7',
         accentGlow: 'rgba(168,85,247,0.45)',

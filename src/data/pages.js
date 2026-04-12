@@ -67,7 +67,7 @@ export const PAGES = [
     id: 'dysunsrealm',
     title: "DYSUN'S REALM",
     path: '/dysunsrealm',
-    image: '/assets/dysunsrealm_bg.png',
+    image: '/assets/dysunsrealm_v4_bg.png',
     designation: 'SOVEREIGN DOMAIN',
     accent: '#a855f7',
   },
