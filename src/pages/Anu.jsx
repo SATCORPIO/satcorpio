@@ -401,7 +401,7 @@ export default function Anu() {
       </main>
 
       <div className="anu-footer">
-        <div>2026 ANU</div>
+        <div>2026 Ki-Ra Studios</div>
         <div>SATCORP Concierge Services</div>
       </div>
 

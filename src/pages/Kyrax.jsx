@@ -392,8 +392,8 @@ export default function Kyrax() {
       </main>
 
       <div className="pulse-footer">
-        <div>2026 KYRAX</div>
-        <div>SATCORP Tactical Warfare // Strike Tier</div>
+        <div>2026 Ki-Ra Studios</div>
+        <div>SATCORP Tactical Intelligence</div>
       </div>
 
       {/* SKILL DECK MODAL */}

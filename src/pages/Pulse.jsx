@@ -437,8 +437,8 @@ export default function Pulse() {
       </main>
 
       <div className="pulse-footer">
-        <div>2026 PULSE</div>
-        <div>SATCORP Signal Intel // Broadcast Division</div>
+        <div>2026 Ki-Ra Studios</div>
+        <div>SATCORP Broadcast Hub // Broadcast Division</div>
       </div>
 
       {/* SKILL DECK MODAL */}

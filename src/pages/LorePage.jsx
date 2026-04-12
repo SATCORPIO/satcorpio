@@ -117,11 +117,7 @@ export default function LorePage({ config }) {
             {/* Extra content slot */}
             {extraContent}
 
-            {/* Coming soon tag */}
-            <div className="lore-cs-tag">
-              <div className="lore-cs-pulse" style={{ background: accent }} />
-              <span className="lore-cs-text">SECTOR INTEL INCOMING — STAND BY</span>
-            </div>
+
           </div>
         </div>
       </div>

@@ -504,7 +504,7 @@ export default function KiraStudios() {
       </main>
 
       <div className="pulse-footer">
-        <div>2026 KI-RA STUDIOS</div>
+        <div>2026 Ki-Ra Studios</div>
         <div>SATCORP Creative Sanctum // Artisan Tier</div>
       </div>
 

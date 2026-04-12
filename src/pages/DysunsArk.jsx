@@ -9,7 +9,7 @@ export default function DysunsArk() {
         overlayGradient: 'linear-gradient(135deg, rgba(0,8,6,0.9) 0%, rgba(0,20,16,0.76) 50%, rgba(0,0,0,0.93) 100%)',
         accent: '#14b8a6',
         accentGlow: 'rgba(20,184,166,0.4)',
-        badgeLabel: "MOBILE COMMAND · DYSUN'S VESSEL · TRAVERSING",
+        badgeLabel: "ASA COMMAND · DYSUN'S VESSEL · TRAVERSING",
         badgeDotColor: '#14b8a6',
         sectorName: "DYSUN'S ARK",
         designation: '// IN DEVELOPMENT',
