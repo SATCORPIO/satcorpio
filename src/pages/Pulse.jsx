@@ -9,6 +9,7 @@ const SKILL_CARDS = [
     id: "stream-design",
     title: "Streaming/Broadcast/Overlay Design",
     shortDesc: "OBS scene architecture, UI design, and broadcast visual kits.",
+    backgroundImage: "/assets/pulse_stream_design_bg.png",
     capabilities: [
       "OBS scene architecture/overlay design",
       "Alert/HUD style UI design",
@@ -17,7 +18,6 @@ const SKILL_CARDS = [
       "Animated overlays/scene layouts",
       "Creator-focused visual systems"
     ],
-    image: "/assets/pulse_stream_design.png",
     services: [
       "OBS scene architecture/overlay design",
       "Alert/HUD style UI design",
@@ -31,6 +31,7 @@ const SKILL_CARDS = [
     id: "video-pipelines",
     title: "Full Video Editing & Post-Production Pipelines",
     shortDesc: "Long-form cinematic edits, VFX, AI-assisted cutting, and live-to-VOD.",
+    backgroundImage: "/assets/pulse_video_editing_bg.png",
     capabilities: [
       "Long-form & cinematic editing",
       "Color grading, VFX, motion graphics integration",
@@ -39,7 +40,6 @@ const SKILL_CARDS = [
       "Subtitle & accessibility post"
     ],
     toolsTech: ["DaVinci Resolve", "Premiere Pro", "CapCut", "Runway Gen-3", "Topaz"],
-    image: "/assets/pulse_video_editing.png",
     deliverables: ["Final masters + project files + asset libraries"],
     services: [
       "Long-form & cinematic editing",
@@ -53,6 +53,7 @@ const SKILL_CARDS = [
     id: "short-form-optimization",
     title: "Short-Form Content Strategy & Optimization Systems",
     shortDesc: "Viral frameworks, platform targeting, and batch production.",
+    backgroundImage: "/assets/pulse_short_form_bg.png",
     capabilities: [
       "Viral hook frameworks & 15–60s content blueprints",
       "Platform-specific optimization (algorithm targeting)",
@@ -73,6 +74,7 @@ const SKILL_CARDS = [
     id: "syndication-automation",
     title: "Multi-Platform Syndication & Automation Hubs",
     shortDesc: "Auto-clipping, cross-posting, and one-to-many publishing.",
+    backgroundImage: "/assets/pulse_automation_bg.png",
     capabilities: [
       "One-to-many publishing pipelines",
       "Auto-clipping & cross-posting",
@@ -92,6 +94,7 @@ const SKILL_CARDS = [
     id: "virtual-event-command",
     title: "Virtual Event / Live Production Command Systems",
     shortDesc: "Virtual summit production, multi-stream routing, and event command.",
+    backgroundImage: "/assets/pulse_virtual_events_bg.png",
     capabilities: [
       "End-to-end virtual summit & concert production",
       "Multi-stream routing & guest management",
@@ -111,6 +114,7 @@ const SKILL_CARDS = [
     id: "creator-merch-sys",
     title: "Creator Merch & Hybrid Product Visual Systems",
     shortDesc: "POD mockups, merch collection design, and 3D visualization.",
+    backgroundImage: "/assets/pulse_merch_visuals_bg.png",
     capabilities: [
       "Print-on-demand mockup pipelines",
       "Merch branding & collection design",
@@ -260,74 +264,72 @@ export default function Pulse() {
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header title="SATCORP" />
-      <div className="portal-bg" style={{ backgroundImage: 'url(/assets/pulse_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
+      <div className="portal-bg" style={{ backgroundImage: 'url(/assets/pulse_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5 }} />
       <GalaxyBackground />
       
       <style dangerouslySetInnerHTML={{__html: `
         .pulse-operator-wrapper .portal-main { flex: 1; padding-bottom: 80px; position: relative; z-index: 10; }
         .pulse-skill-card {
-          background: rgba(0, 0, 0, 0.4);
+          background: rgba(0, 0, 0, 0.6);
           border: 1px solid rgba(6, 182, 212, 0.2);
           border-radius: 8px;
           padding: 24px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           overflow: hidden;
-          min-height: 180px;
+          min-height: 200px;
           display: flex;
           flex-direction: column;
-        }
-        .pulse-skill-card:hover {
-          border-color: rgba(6, 182, 212, 0.6);
-          box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
-          transform: translateY(-2px);
-        }
-        .pulse-skill-card .card-bg {
-          position: absolute;
-          top: 0; left: 0; right: 0; bottom: 0;
+          justify-content: flex-end;
           background-size: cover;
           background-position: center;
-          opacity: 0.4;
-          transition: opacity 0.3s ease, transform 0.5s ease;
-          z-index: 1;
         }
-        .pulse-skill-card:hover .card-bg {
-          opacity: 0.6;
-          transform: scale(1.05);
+        .pulse-skill-card:hover {
+          border-color: rgba(6, 182, 212, 0.8);
+          box-shadow: 0 0 30px rgba(6, 182, 212, 0.2), inset 0 0 20px rgba(6, 182, 212, 0.1);
+          transform: translateY(-5px) scale(1.02);
         }
-        .pulse-skill-card::before {
-          content: '';
+        .pulse-skill-card .card-bg-overlay {
           position: absolute;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, rgba(6,182,212,0.1) 0%, transparent 100%);
-          opacity: 0;
+          background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 80%);
+          z-index: 1;
           transition: opacity 0.3s ease;
         }
-        .pulse-skill-card:hover::before { opacity: 1; }
+        .pulse-skill-card:hover .card-bg-overlay {
+          background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+        }
         
         .pulse-skill-card .card-title {
           font-family: var(--font-header), monospace;
-          color: var(--accent-cyan);
-          font-size: 1.25rem;
+          color: #fff;
+          font-size: 1.2rem;
           font-weight: 700;
           letter-spacing: 0.05em;
-          margin-bottom: 12px;
+          margin-bottom: 8px;
           z-index: 2;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+          transition: color 0.3s ease;
+        }
+        .pulse-skill-card:hover .card-title {
+          color: var(--accent-cyan);
         }
         
         .pulse-skill-card .card-short-desc {
-          font-size: 0.9rem;
-          color: rgba(255, 255, 255, 0.7);
-          line-height: 1.5;
-          opacity: 0;
-          transform: translateY(10px);
-          transition: all 0.3s ease;
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 1.4;
           z-index: 2;
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          transition: all 0.4s ease;
         }
         .pulse-skill-card:hover .card-short-desc {
           opacity: 1;
-          transform: translateY(0);
+          max-height: 100px;
+          margin-top: 8px;
         }
 
         .skill-deck-modal {
@@ -423,14 +425,10 @@ export default function Pulse() {
             <div 
               key={card.id} 
               className="pulse-skill-card"
+              style={{ backgroundImage: card.backgroundImage ? `url(${card.backgroundImage})` : 'none' }}
               onClick={() => setActiveCard(card)}
             >
-              {card.image && (
-                <div 
-                  className="card-bg" 
-                  style={{ backgroundImage: `url(${card.image})` }}
-                />
-              )}
+              <div className="card-bg-overlay" />
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
             </div>

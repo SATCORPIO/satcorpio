@@ -27,7 +27,7 @@ export const PAGES = [
     id: 'pulse',
     title: 'PULSE',
     path: '/pulse',
-    image: '/assets/pulse_bg.png',
+    image: '/assets/pulse_menu_card.png',
     designation: 'SIGNAL INTEL',
     accent: '#06b6d4',
   },
