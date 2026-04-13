@@ -69,15 +69,15 @@ async function prerender() {
       
       try {
         await page.goto(`http://localhost:${port}${route}`, {
-          waitUntil: 'networkidle2', // More resilient than networkidle0
-          timeout: 120000 // Increased to 120s for slow builds
+          waitUntil: 'domcontentloaded', // Fast trigger
+          timeout: 45000 // Reasonable timeout
         });
       } catch (gotoErr) {
-        console.warn(`⚠️ Warning: Navigation to ${route} timed out or failed, attempting to proceed anyway...`);
+        console.warn(`⚠️ Warning: Initial load for ${route} timed out, attempting to wait and capture anyway...`);
       }
 
-      // Give it a moment for any client-side JS/animations
-      await new Promise(r => setTimeout(r, 1000));
+      // 3. Wait for hydration/rendering to stabilize (5s is plenty for most React apps)
+      await new Promise(r => setTimeout(r, 5000));
 
       const html = await page.content();
 
