@@ -13,7 +13,7 @@ const OP_VALUES = [
   { bold: 'End-to-end problem solver', rest: ' bridging design / automation / branding / systems' },
   { bold: 'Translates vague ideas', rest: ' into deployable assets (web / brand / workflow / media)' },
   { bold: 'High-performance workstation', rest: ' driven delivery (RTX workflows / rapid iteration)' },
-  { bold: 'Client-first concierge model:', rest: ' clarity → scope → execution → polish' },
+  { bold: 'Client-first concierge model:', rest: ' clarity â†’ scope â†’ execution â†’ polish' },
 ]
 
 export default function MainPage() {
@@ -23,10 +23,10 @@ export default function MainPage() {
   return (
     <div className="page-wrapper main-page">
       <Helmet>
-        <title>SATCORP — Creative & Technology Organization</title>
-        <meta name="description" content="Multi-division creative and technology organization — brand identity, web systems, motion design, no-code builds, and strategic consulting." />
-        <meta property="og:title" content="SATCORP — Creative & Technology Organization" />
-        <meta property="og:description" content="Multi-division creative and technology organization — brand identity, web systems, motion design, no-code builds, and strategic consulting." />
+        <title>SATCORP â€” Creative & Technology Organization</title>
+        <meta name="description" content="Multi-division creative and technology organization â€” brand identity, web systems, motion design, no-code builds, and strategic consulting." />
+        <meta property="og:title" content="SATCORP â€” Creative & Technology Organization" />
+        <meta property="og:description" content="Multi-division creative and technology organization â€” brand identity, web systems, motion design, no-code builds, and strategic consulting." />
         <meta property="og:url" content="https://satcorp.io/" />
         <meta property="og:image" content="https://satcorp.io/og/satcorp.png" />
         <meta property="og:image:width" content="1200" />
@@ -40,7 +40,7 @@ export default function MainPage() {
         "name": "SATCORP",
         "url": "https://satcorp.io",
         "logo": "https://satcorp.io/og/satcorp.png",
-        "description": "Multi-division creative and technology organization — brand identity, web systems, motion design, no-code builds, and strategic consulting.",
+        "description": "Multi-division creative and technology organization â€” brand identity, web systems, motion design, no-code builds, and strategic consulting.",
         "sameAs": []
       }} />
       <div className="main-bg-container">

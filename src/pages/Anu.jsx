@@ -98,9 +98,9 @@ export default function Anu() {
   return (
     <div className="page-wrapper portal-page anu-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Helmet>
-        <title>ANU — Systems Architecture & Consulting</title>
+        <title>ANU â€” Systems Architecture & Consulting</title>
         <meta name="description" content="SATCORP OPERATOR NODE - TACTICAL CONCIERGE SERVICES. Systems Architecture & Consulting, Scope clarification, CRM lifecycle, and financial operations." />
-        <meta property="og:title" content="ANU — Systems Architecture & Consulting" />
+        <meta property="og:title" content="ANU â€” Systems Architecture & Consulting" />
         <meta property="og:description" content="SATCORP OPERATOR NODE - TACTICAL CONCIERGE SERVICES. Systems Architecture & Consulting, Scope clarification, CRM lifecycle, and financial operations." />
         <meta property="og:url" content="https://satcorp.io/anu" />
         <meta property="og:image" content="https://satcorp.io/og/anu.png" />

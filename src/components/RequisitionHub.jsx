@@ -75,13 +75,13 @@ export default function RequisitionHub({
     const contacts = Object.keys(contactMethods).filter(m => contactMethods[m]).map(m => `**${m}**: ${contactDetails[m] || 'N/A'}`).join('\n');
 
     const embed = {
-      title: `🎯 NEW SERVICE REQUISITION — ${activeCard.title.toUpperCase()}`,
+      title: `ðŸŽ¯ NEW SERVICE REQUISITION â€” ${activeCard.title.toUpperCase()}`,
       color: parseInt(theme.color.replace('#', ''), 16),
       fields: [
-        { name: '📋 Objective Modules', value: serviceLines || 'None selected', inline: false },
-        { name: '👤 Entity Info', value: `**Type:** ${clientType}\n**Name:** ${clientName}`, inline: true },
-        { name: '📞 Comm-Links', value: contacts || 'None provided', inline: true },
-        { name: '📝 Mission Brief', value: briefDescription || 'N/A', inline: false },
+        { name: 'ðŸ“‹ Objective Modules', value: serviceLines || 'None selected', inline: false },
+        { name: 'ðŸ‘¤ Entity Info', value: `**Type:** ${clientType}\n**Name:** ${clientName}`, inline: true },
+        { name: 'ðŸ“ž Comm-Links', value: contacts || 'None provided', inline: true },
+        { name: 'ðŸ“ Mission Brief', value: briefDescription || 'N/A', inline: false },
       ],
       footer: { text: `${divisionTag} // Requisition Terminal` },
       timestamp: new Date().toISOString(),
@@ -168,7 +168,7 @@ export default function RequisitionHub({
         <div className="req-form-column">
           {submitSuccess ? (
             <div className="req-success">
-              <div className="req-success-icon">✓</div>
+              <div className="req-success-icon">âœ“</div>
               <h3 className="success-title">TRANSMISSION SUCCESSFUL</h3>
               <p className="success-text">
                 Your requisition has been encrypted and routed to the {divisionTag}. 
@@ -186,7 +186,7 @@ export default function RequisitionHub({
             <>
               <div className="req-form-title">
                 <span>SERVICE REQUISITION</span>
-                <button className="req-close-btn" onClick={() => { onClose(); resetForm(); }}>×</button>
+                <button className="req-close-btn" onClick={() => { onClose(); resetForm(); }}>Ã—</button>
               </div>
 
               <form onSubmit={handleSubmit}>
@@ -255,7 +255,7 @@ export default function RequisitionHub({
                     <span style={{ fontSize: '0.9rem' }}>
                       {Object.entries(contactMethods).filter(([_,v]) => v).map(([k]) => k).join(', ') || 'Select Channels...'}
                     </span>
-                    <span>▼</span>
+                    <span>â–¼</span>
                   </div>
                   
                   {showContactDropdown && (

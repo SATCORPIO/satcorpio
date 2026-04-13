@@ -19,7 +19,7 @@ const SKILL_CARDS = [
       "Environment/blockout/level prototyping",
       "Interactive prototypes/vertical slices",
       "Mobile game prototyping (iOS/Android focus)",
-      "Technical art pipelines (assets→engine)",
+      "Technical art pipelines (assetsâ†’engine)",
       "Performance-aware design (LOD/batching/optimization)",
       "Cross-platform (PC/Mobile/WebGL)",
       "HUD/UI systems for games/interactive apps",
@@ -28,10 +28,10 @@ const SKILL_CARDS = [
       "Poster/cinematic key art"
     ],
     toolsEngines: [
-      "Blender – Modeling/Sculpting/Uvs/Animations/Export pipelines",
-      "Unity – 2D/3D Games/Mobile-first builds/Rapid Prototyping",
-      "Unreal Engine – Cinematic visuals/High-fidelity environments/Blueprints",
-      "Substance (as needed) – Materials/Texturing",
+      "Blender â€“ Modeling/Sculpting/Uvs/Animations/Export pipelines",
+      "Unity â€“ 2D/3D Games/Mobile-first builds/Rapid Prototyping",
+      "Unreal Engine â€“ Cinematic visuals/High-fidelity environments/Blueprints",
+      "Substance (as needed) â€“ Materials/Texturing",
       "Engine-ready export standards (FBX/GLTF/PNG/EXR)"
     ],
     gameAdjacentFocus: [
@@ -57,7 +57,7 @@ const SKILL_CARDS = [
       "Environment/blockout/level prototyping",
       "Interactive prototypes/vertical slices",
       "Mobile game prototyping (iOS/Android focus)",
-      "Technical art pipelines (assets→engine)",
+      "Technical art pipelines (assetsâ†’engine)",
       "Performance-aware design (LOD/batching/optimization)",
       "Cross-platform (PC/Mobile/WebGL)",
       "HUD/UI systems for games/interactive apps",
@@ -77,7 +77,7 @@ const SKILL_CARDS = [
       "Quest & progression system design",
       "World canon documentation & consistency engines",
       "Emotional beat mapping & player experience flows",
-      "Transmedia storytelling extensions (game → content → merch)"
+      "Transmedia storytelling extensions (game â†’ content â†’ merch)"
     ],
     toolsTech: [
       "Yarn Spinner", "Twine", "Ink", "Notion", "World Anvil"
@@ -91,7 +91,7 @@ const SKILL_CARDS = [
       "Quest & progression system design",
       "World canon documentation & consistency engines",
       "Emotional beat mapping & player experience flows",
-      "Transmedia storytelling extensions (game → content → merch)"
+      "Transmedia storytelling extensions (game â†’ content â†’ merch)"
     ]
   },
   {
@@ -203,9 +203,9 @@ export default function KiraStudios() {
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Helmet>
-        <title>KI-RA Studios — SATCORP</title>
+        <title>KI-RA Studios â€” SATCORP</title>
         <meta name="description" content="KI-RA STUDIOS /// TASK FORCE BRANCH - WORLD-BUILDING / GAME DEV STUDIO. Game development, narrative design, procedural generation, and immersive spatial environments." />
-        <meta property="og:title" content="KI-RA Studios — SATCORP" />
+        <meta property="og:title" content="KI-RA Studios â€” SATCORP" />
         <meta property="og:description" content="KI-RA STUDIOS /// TASK FORCE BRANCH - WORLD-BUILDING / GAME DEV STUDIO. Game development, narrative design, procedural generation, and immersive spatial environments." />
         <meta property="og:url" content="https://satcorp.io/kirastudios" />
         <meta property="og:image" content="https://satcorp.io/og/ki-ra.png" />
