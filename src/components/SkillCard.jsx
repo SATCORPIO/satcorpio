@@ -1,3 +1,7 @@
+import React from 'react';
+import { motion, useMotionTemplate } from 'framer-motion';
+import useCardTilt from '../hooks/useCardTilt';
+
 export default function SkillCard({ card, onSelect }) {
   const { 
     ref, rotateX, rotateY, glossX, glossY, 

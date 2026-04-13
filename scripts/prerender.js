@@ -36,6 +36,7 @@ async function prerender() {
   console.log(`📡 Static server running at http://localhost:${port}`);
 
   let browser;
+  const results = [];
   try {
     const isVercel = process.env.VERCEL === '1';
     
@@ -45,6 +46,7 @@ async function prerender() {
     const localChromePaths = [
       'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
       'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
       'C:\\Users\\' + (process.env.USERNAME || 'SATCO') + '\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe'
     ];
     
@@ -63,6 +65,10 @@ async function prerender() {
     console.log('🌐 Browser launched');
 
     const page = await browser.newPage();
+    
+    // Add console logging
+    page.on('console', msg => console.log('🌐 BROWSER:', msg.text()));
+    page.on('pageerror', err => console.error('🌐 BROWSER ERROR:', err.message));
 
     for (const route of ROUTES) {
       console.log(`📄 Prerendering route: ${route}`);
@@ -76,19 +82,13 @@ async function prerender() {
         console.warn(`⚠️ Warning: Initial load for ${route} timed out, attempting to wait and capture anyway...`);
       }
 
-      // 3. Wait for hydration/rendering to stabilize (5s is plenty for most React apps)
-      await new Promise(r => setTimeout(r, 5000));
+      // 3. Wait for hydration/rendering to stabilize (8s for boot sequences)
+      await new Promise(r => setTimeout(r, 8000));
 
       const html = await page.content();
 
-      // Determine output path
-      const folderPath = path.join(DIST_DIR, route === '/' ? '' : route);
-      if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath, { recursive: true });
-      }
-
-      fs.writeFileSync(path.join(folderPath, 'index.html'), html);
-      console.log(`✅ Saved: ${route} -> ${folderPath}/index.html`);
+      results.push({ route, html });
+      console.log(`✅ Captured: ${route}`);
     }
 
   } catch (err) {
@@ -96,8 +96,23 @@ async function prerender() {
     process.exit(1);
   } finally {
     if (browser) await browser.close();
-    server.close();
-    console.log('🏁 Prerender sequence complete.');
+    // Handle server shutdown and write results to disk
+    server.close(() => {
+      console.log('📡 Static server stopped');
+      
+      console.log('💾 Writing results to disk...');
+      for (const { route, html } of results) {
+        const folderPath = path.join(DIST_DIR, route === '/' ? '' : route);
+        if (!fs.existsSync(folderPath)) {
+          fs.mkdirSync(folderPath, { recursive: true });
+        }
+        fs.writeFileSync(path.join(folderPath, 'index.html'), html);
+        console.log(`✅ Saved: ${route}`);
+      }
+      
+      console.log('🏁 Prerender sequence complete.');
+      process.exit(0);
+    });
   }
 }
 
