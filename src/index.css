@@ -770,13 +770,17 @@ img { max-width: 100%; display: block; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
-  .operator-section, .skills-section { padding-left: 20px; padding-right: 20px; }
-  .lore-hero-inner { padding: 60px 20px; }
-  .site-footer { padding: 18px 20px; }
-  .skill-deck-body { max-height: 50vh; }
-  .order-body { padding: 20px; }
-  .order-head { padding: 18px 20px; }
-  .order-foot { padding: 14px 20px; }
+  .operator-section, .skills-section { padding-left: 16px; padding-right: 16px; }
+  .lore-hero-inner { padding: 60px 16px; }
+  .site-header { padding: 0 16px; }
+  .site-footer { padding: 18px 16px; flex-direction: column; gap: 12px; text-align: center; }
+  .skill-deck-body { max-height: 50vh; padding: 20px 16px; }
+  .order-panel { width: 100%; height: 100%; max-height: 100vh; border-radius: 0; margin: 0; }
+  .order-body { padding: 20px 16px; overflow-y: auto; }
+  .order-head { padding: 18px 16px; }
+  .order-foot { padding: 14px 16px; flex-wrap: wrap; }
+  .order-head-label { font-size: 0.5rem; }
+  .order-head-title { font-size: 0.9rem; }
 }
 
 /* ============================================================
@@ -1020,8 +1024,17 @@ img { max-width: 100%; display: block; }
     --text-secondary: #aaa;
     --text-muted: #777;
   }
-  .portal-main { padding: 20px 20px 60px; } 
+  .portal-main { padding: 20px 16px 100px; } 
   .portal-title { font-size: 1.8rem; } 
+  .portal-topbar { padding: 10px; margin-bottom: 24px; }
+  .pulse-footer { 
+    position: relative !important; 
+    height: auto !important; 
+    padding: 20px 16px !important; 
+    flex-direction: column; 
+    gap: 8px; 
+    text-align: center; 
+  }
 }
 
 /* ============================================================
@@ -1340,22 +1353,74 @@ img { max-width: 100%; display: block; }
   text-shadow: 0 0 20px var(--division-bg-glow, transparent);
 }
 
-/* Responsive Stacking */
-@media (max-width: 900px) {
+/* Responsive Stacking & Optimization */
+@media (max-width: 1024px) {
   .requisition-hub-panel {
     grid-template-columns: 1fr;
-    height: 95vh;
+    height: 94vh;
+    max-height: 900px;
+    width: 95vw;
     overflow-y: auto;
   }
   .req-info-column {
-    padding: 30px;
+    padding: 30px 24px;
     border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .req-form-column {
-    padding: 30px;
+    padding: 30px 24px;
+    background: rgba(0,0,0,0.4);
+  }
+  .req-module-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
 }
+
+@media (max-width: 768px) {
+  .requisition-hub-overlay {
+    padding: 10px;
+  }
+  .requisition-hub-panel {
+    height: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    width: 100vw;
+  }
+  .req-info-column, .req-form-column {
+    padding: 24px 16px;
+  }
+  .req-module-title {
+    font-size: 1.3rem;
+  }
+  .req-section-title {
+    font-size: 0.65rem;
+  }
+  .req-label {
+    font-size: 0.6rem;
+  }
+  .req-input, .req-textarea, .req-select {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+  .req-service-option {
+    padding: 12px;
+  }
+  .req-service-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .req-form-group {
+    margin-bottom: 18px;
+  }
+  .req-submit-btn {
+    padding: 14px;
+    font-size: 0.8rem;
+  }
+}
+
 
 /* Fix ENTITY STATUS dropdown visibility */
 .req-select {
