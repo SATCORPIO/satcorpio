@@ -186,7 +186,7 @@ export default function RequisitionHub({
             <>
               <div className="req-form-title">
                 <span>SERVICE REQUISITION</span>
-                <button className="req-close-btn" onClick={() => { onClose(); resetForm(); }}>Ã—</button>
+                <button className="req-close-btn" onClick={() => { onClose(); resetForm(); }}>×</button>
               </div>
 
               <form onSubmit={handleSubmit}>

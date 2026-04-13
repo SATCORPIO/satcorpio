@@ -1153,7 +1153,7 @@ img { max-width: 100%; display: block; }
 }
 
 .req-list-item::before {
-  content: '?';
+  content: '▸';
   position: absolute;
   left: 0;
   color: var(--division-color, var(--accent));
@@ -1275,7 +1275,7 @@ img { max-width: 100%; display: block; }
 }
 
 .req-checkbox::after {
-  content: '?';
+  content: '✓';
   color: #000;
   font-size: 12px;
   font-weight: 900;
