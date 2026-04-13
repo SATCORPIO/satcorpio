@@ -361,10 +361,12 @@
 }
 
 .range-val {
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: bold;
   color: var(--ark-teal);
-  min-width: 25px;
+  min-width: 20px;
+  font-family: 'Share Tech Mono', monospace;
+  text-shadow: 0 0 8px var(--ark-teal-glow);
 }
 
 /* Submit Area */
@@ -485,9 +487,12 @@
 }
 
 @media (max-width: 600px) {
+  .namtar-survey-page {
+    align-items: flex-start;
+  }
   .phone-container {
     background-size: 346%; /* Scale so screen width is ~100% of viewport */
-    background-position: center 22%; /* Align with the terminal screen area */
+    background-position: center 8%; /* Align with the terminal screen area - shifted UP */
     transform: none !important;
     width: 100vw;
     height: 100vh;
@@ -499,7 +504,7 @@
     height: 100%;
     left: 0;
     top: 0;
-    padding: 30px 20px 80px; /* Safe area padding, bottom for scrolling space */
+    padding: 20px 20px 80px; /* Reclaimed top space, bottom for scrolling space */
     background: rgba(2, 15, 18, 0.4); /* Subtle overlay for readability over zoomed frame */
     backdrop-filter: blur(2px);
   }

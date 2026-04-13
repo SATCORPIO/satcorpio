@@ -12,7 +12,7 @@ const BOOT_LINES = [
   { text: 'LOADING CALIBRATION SUBSYSTEM ... OK', cls: 'green', delay: 900 },
   { text: 'MOUNTING SURVIVOR DATABASE ... OK', cls: 'green', delay: 1300 },
   { text: 'INTEGRITY CHECK: PASSED [SHA256 VERIFIED]', cls: 'green', delay: 1700 },
-  { text: 'AUTH LAYER: ACTIVE â€” TIER 3 CLEARANCE REQUIRED', cls: 'yellow', delay: 2100 },
+  { text: 'AUTH LAYER: ACTIVE — TIER 3 CLEARANCE REQUIRED', cls: 'yellow', delay: 2100 },
   { text: 'LOADING QUESTION MATRIX ...', cls: 'green', delay: 2600 },
   { text: '  > MODULE 01: IDENTITY CALIBRATION ........', cls: 'dim', delay: 3000 },
   { text: '  > MODULE 02: BEHAVIORAL MAPPING ..........', cls: 'dim', delay: 3300 },
@@ -109,7 +109,7 @@ export default function NamtarSurvey() {
       'q19':'Economy Participation','q20':'World Events',
       'q21':'Community Size','q22':'Rule Strictness',
       'q23':'Stays Long-Term For','q24':'Leaves Server For',
-      'q25':'Interest Rating (1â€“10)','q26':'Join At Launch?',
+      'q25':'Interest Rating (1–10)','q26':'Join At Launch?',
       'q27':'Additional Comments','q-bonus':'Elite Credentials'
     };
 
@@ -127,21 +127,21 @@ export default function NamtarSurvey() {
     const msg1 = {
       username: 'KYRAX SATCORP AI',
       embeds: [{
-        title: `âš¡ NAMTAR SURVEY â€” ${gamertag} [1/2]`,
+        title: `⚡ NAMTAR SURVEY — ${gamertag} [1/2]`,
         description: `New survivor registration received.\n**Submitted:** ${timestamp}`,
         color: 0x00E5CC,
         fields: buildFields(sectionMap1),
-        footer: { text: 'Ki-Ra Studios | NAMTAR Survey â€” Profile & Prefs' }
+        footer: { text: 'Ki-Ra Studios | NAMTAR Survey — Profile & Prefs' }
       }]
     };
 
     const msg2 = {
       username: 'KYRAX SATCORP AI',
       embeds: [{
-        title: `âš¡ NAMTAR SURVEY â€” ${gamertag} [2/2]`,
+        title: `⚡ NAMTAR SURVEY — ${gamertag} [2/2]`,
         color: 0xFF6B1A,
         fields: buildFields(sectionMap2),
-        footer: { text: 'Ki-Ra Studios | NAMTAR Survey â€” QoL, Mods, Vision & Final' }
+        footer: { text: 'Ki-Ra Studios | NAMTAR Survey — QoL, Mods, Vision & Final' }
       }]
     };
 
@@ -252,9 +252,9 @@ export default function NamtarSurvey() {
                   <div className="q-label">QUESTION 03</div>
                   <div className="q-text">Average Play Time Per Week:</div>
                   <div className="options-grid">
-                    <OptionBtn qKey="q3" val="1â€“5 hrs" />
-                    <OptionBtn qKey="q3" val="5â€“15 hrs" />
-                    <OptionBtn qKey="q3" val="15â€“30 hrs" />
+                    <OptionBtn qKey="q3" val="1–5 hrs" />
+                    <OptionBtn qKey="q3" val="5–15 hrs" />
+                    <OptionBtn qKey="q3" val="15–30 hrs" />
                     <OptionBtn qKey="q3" val="30+ hrs" />
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export default function NamtarSurvey() {
                   <div className="q-note">Select all that apply</div>
                   <div className="options-grid">
                     <OptionBtn qKey="q4" val="Solo" multi />
-                    <OptionBtn qKey="q4" val="Small Tribe (2â€“5)" multi />
+                    <OptionBtn qKey="q4" val="Small Tribe (2–5)" multi />
                     <OptionBtn qKey="q4" val="Large Tribe (6+)" multi />
                     <OptionBtn qKey="q4" val="PvE" multi />
                     <OptionBtn qKey="q4" val="PvP" multi pvp />
@@ -479,8 +479,8 @@ export default function NamtarSurvey() {
                   <div className="q-label">QUESTION 17</div>
                   <div className="q-text">Do you prefer:</div>
                   <div className="options-grid">
-                    <OptionBtn qKey="q17" val="Light Modded (5â€“10 mods)" />
-                    <OptionBtn qKey="q17" val="Medium Modded (10â€“20 mods)" />
+                    <OptionBtn qKey="q17" val="Light Modded (5–10 mods)" />
+                    <OptionBtn qKey="q17" val="Medium Modded (10–20 mods)" />
                     <OptionBtn qKey="q17" val="Heavily Modded (20+ mods)" />
                     <OptionBtn qKey="q17" val="Vanilla+ (minimal changes)" />
                   </div>
@@ -556,7 +556,7 @@ export default function NamtarSurvey() {
                   <div className="q-label">QUESTION 21</div>
                   <div className="q-text">Preferred Community Size:</div>
                   <div className="options-grid">
-                    <OptionBtn qKey="q21" val="20â€“30 players" />
+                    <OptionBtn qKey="q21" val="20–30 players" />
                     <OptionBtn qKey="q21" val="50 players" />
                     <OptionBtn qKey="q21" val="100+ players" />
                   </div>
@@ -589,7 +589,7 @@ export default function NamtarSurvey() {
                 <div className="question-card">
                   <div className="q-label">QUESTION 24</div>
                   <div className="q-text">What makes you leave a server?</div>
-                  <textarea className="ark-input" name="q24" value={answers.q24} onChange={handleChange} placeholder="Be honest â€” this helps us improve..." style={{minHeight: '90px'}} />
+                  <textarea className="ark-input" name="q24" value={answers.q24} onChange={handleChange} placeholder="Be honest — this helps us improve..." style={{minHeight: '90px'}} />
                 </div>
 
                 {/* SECTION X */}
@@ -602,7 +602,7 @@ export default function NamtarSurvey() {
 
                 <div className="question-card">
                   <div className="q-label">QUESTION 25</div>
-                  <div className="q-text">Rate your interest in the NAMTAR Ark server (1â€“10):</div>
+                  <div className="q-text">Rate your interest in the NAMTAR Ark server (1–10):</div>
                   <div className="range-wrap">
                     <span style={{fontSize: '0.7rem', color: 'rgba(0,229,204,0.5)'}}>1</span>
                     <input 
@@ -645,7 +645,7 @@ export default function NamtarSurvey() {
                 </div>
 
                 <div className="question-card" style={{borderLeftColor: 'var(--ark-orange)'}}>
-                  <div className="q-label" style={{color: 'var(--ark-amber)'}}>BONUS SECTION â€” OPTIONAL</div>
+                  <div className="q-label" style={{color: 'var(--ark-amber)'}}>BONUS SECTION — OPTIONAL</div>
                   <div className="q-text">If you plan to run elite tribes, check your credentials:</div>
                   <div className="q-note">Select all that apply</div>
                   <div className="options-grid">
@@ -663,7 +663,7 @@ export default function NamtarSurvey() {
                     Transmission channels standing by. Your answers will be encrypted and delivered directly to the Ki-Ra Studios command relay. Once submitted, your Survivor profile will be logged in the NAMTAR registry. The gates are watching.
                   </div>
                   <button type="button" id="submit-btn" onClick={submitSurvey} disabled={submitting}>
-                    {submitting ? 'âŸ³ TRANSMITTING...' : 'â–¶ TRANSMIT TO NAMTAR'}
+                    {submitting ? '⟳ TRANSMITTING...' : '▶ TRANSMIT TO NAMTAR'}
                   </button>
                   <div className="submit-note">KYRAX // SATCORP SECURE CHANNEL // TRANSMISSION ENCRYPTED</div>
                 </div>
@@ -681,7 +681,7 @@ export default function NamtarSurvey() {
 
             <div className="ty-transmission">
               <h2>Survivor Transmission Received.</h2>
-              <p>Thank you for filling out our survey â€” your input will be a great help to the Ki-Ra Studios team as we calibrate the upcoming <strong>NAMTAR</strong> server experience.</p>
+              <p>Thank you for filling out our survey — your input will be a great help to the Ki-Ra Studios team as we calibrate the upcoming <strong>NAMTAR</strong> server experience.</p>
               <p>Your voice directly shapes:</p>
               <div className="ty-shapes">
                 <div className="ty-shape">Server Rates</div>
@@ -692,13 +692,13 @@ export default function NamtarSurvey() {
             </div>
 
             <div className="ty-reward">
-              <h3>âš¡ SURVIVOR REWARD CONFIRMED</h3>
+              <h3>⚡ SURVIVOR REWARD CONFIRMED</h3>
               <p>With the completion of this survey, you will receive a complimentary <strong>Starter Kit</strong> after launch. Details will be announced inside the community channels prior to deployment.</p>
             </div>
 
             <div className="ty-discord-panel">
-              <h3>ðŸ“¡ STAY CONNECTED</h3>
-              <p style={{color: '#a8c0d8', fontSize: '0.88rem', marginBottom: '12px'}}>To receive launch updates, event announcements, lore drops, and early access information â€” join the NAMTAR community:</p>
+              <h3>📡 STAY CONNECTED</h3>
+              <p style={{color: '#a8c0d8', fontSize: '0.88rem', marginBottom: '12px'}}>To receive launch updates, event announcements, lore drops, and early access information — join the NAMTAR community:</p>
               <ul>
                 <li>Launch countdown begins</li>
                 <li>Event schedules are posted</li>
@@ -714,8 +714,8 @@ export default function NamtarSurvey() {
             </div>
 
             <div className="ty-discord-panel" style={{borderColor: 'rgba(255,107,26,0.3)'}}>
-              <h3 style={{color: 'var(--ark-amber)'}}>ðŸŒ EXPAND BEYOND NAMTAR</h3>
-              <p style={{color: '#a8c0d8', fontSize: '0.88rem', marginBottom: '12px'}}>For Ki-Ra Studios mods, custom worlds, and ongoing game development projects â€” join the SATCORP Community:</p>
+              <h3 style={{color: 'var(--ark-amber)'}}>🌐 EXPAND BEYOND NAMTAR</h3>
+              <p style={{color: '#a8c0d8', fontSize: '0.88rem', marginBottom: '12px'}}>For Ki-Ra Studios mods, custom worlds, and ongoing game development projects — join the SATCORP Community:</p>
               <div>
                 <a href="https://discord.gg/KqphHMq6vS" target="_blank" rel="noreferrer" className="discord-link" style={{borderColor: 'rgba(255,107,26,0.4)', color: '#ffb060'}}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
@@ -730,7 +730,7 @@ export default function NamtarSurvey() {
               <p>Prepare.</p>
               <p>Recruit.</p>
               <p>Survive.</p>
-              <div className="sig">â€” KI-RA STUDIOS DEVELOPMENT TEAM</div>
+              <div className="sig">— KI-RA STUDIOS DEVELOPMENT TEAM</div>
             </div>
           </div>
         )}

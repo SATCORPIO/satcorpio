@@ -75,13 +75,13 @@ export default function RequisitionHub({
     const contacts = Object.keys(contactMethods).filter(m => contactMethods[m]).map(m => `**${m}**: ${contactDetails[m] || 'N/A'}`).join('\n');
 
     const embed = {
-      title: `ðŸŽ¯ NEW SERVICE REQUISITION â€” ${activeCard.title.toUpperCase()}`,
+      title: `🎯 NEW SERVICE REQUISITION — ${activeCard.title.toUpperCase()}`,
       color: parseInt(theme.color.replace('#', ''), 16),
       fields: [
-        { name: 'ðŸ“‹ Objective Modules', value: serviceLines || 'None selected', inline: false },
-        { name: 'ðŸ‘¤ Entity Info', value: `**Type:** ${clientType}\n**Name:** ${clientName}`, inline: true },
-        { name: 'ðŸ“ž Comm-Links', value: contacts || 'None provided', inline: true },
-        { name: 'ðŸ“ Mission Brief', value: briefDescription || 'N/A', inline: false },
+        { name: '📋 Objective Modules', value: serviceLines || 'None selected', inline: false },
+        { name: '👤 Entity Info', value: `**Type:** ${clientType}\n**Name:** ${clientName}`, inline: true },
+        { name: '📞 Comm-Links', value: contacts || 'None provided', inline: true },
+        { name: '📜 Mission Brief', value: briefDescription || 'N/A', inline: false },
       ],
       footer: { text: `${divisionTag} // Requisition Terminal` },
       timestamp: new Date().toISOString(),
@@ -168,7 +168,7 @@ export default function RequisitionHub({
         <div className="req-form-column">
           {submitSuccess ? (
             <div className="req-success">
-              <div className="req-success-icon">âœ“</div>
+              <div className="req-success-icon">✓</div>
               <h3 className="success-title">TRANSMISSION SUCCESSFUL</h3>
               <p className="success-text">
                 Your requisition has been encrypted and routed to the {divisionTag}. 
@@ -255,19 +255,21 @@ export default function RequisitionHub({
                     <span style={{ fontSize: '0.9rem' }}>
                       {Object.entries(contactMethods).filter(([_,v]) => v).map(([k]) => k).join(', ') || 'Select Channels...'}
                     </span>
-                    <span>â–¼</span>
+                    <span>▼</span>
                   </div>
                   
                   {showContactDropdown && (
                     <div style={{ 
                       marginTop: '4px', background: '#111', border: '1px solid rgba(255,255,255,0.1)', 
-                      borderRadius: '4px', overflow: 'hidden', position: 'absolute', width: 'calc(100% - 80px)', zIndex: 10
+                      borderRadius: '4px', overflow: 'hidden', position: 'absolute', width: '100%', 
+                      left: 0, top: 'calc(100% - 10px)', zIndex: 100,
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
                     }}>
                       {Object.keys(contactMethods).map(method => (
                         <div 
                           key={method}
                           style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', borderBottom: '1px solid rgba(255,255,255,0.05)' }}
-                          onClick={() => toggleContactMethod(method)}
+                          onClick={(e) => { e.stopPropagation(); toggleContactMethod(method); }}
                         >
                           <div style={{ 
                             width: '14px', height: '14px', border: `1px solid ${theme.color}`, 

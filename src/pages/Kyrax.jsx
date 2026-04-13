@@ -97,9 +97,9 @@ export default function Kyrax() {
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Helmet>
-        <title>KYRAX â€” Tactical Intelligence Wing</title>
+        <title>KYRAX — Tactical Intelligence Wing</title>
         <meta name="description" content="TACTICAL INTELLIGENCE WING - KYRAX /// AI CONCIERGE. AI-Enhanced Creative Workflows, Multi-Agent Orchestration, and Autonomous Research." />
-        <meta property="og:title" content="KYRAX â€” Tactical Intelligence Wing" />
+        <meta property="og:title" content="KYRAX — Tactical Intelligence Wing" />
         <meta property="og:description" content="TACTICAL INTELLIGENCE WING - KYRAX /// AI CONCIERGE. AI-Enhanced Creative Workflows, Multi-Agent Orchestration, and Autonomous Research." />
         <meta property="og:url" content="https://satcorp.io/kyrax" />
         <meta property="og:image" content="https://satcorp.io/og/kyrax.png" />

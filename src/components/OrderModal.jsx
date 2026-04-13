@@ -64,16 +64,16 @@ export default function OrderModal({ card, onClose }) {
       ).join('\n')
 
       const embed = {
-        title: 'ðŸŽ¯ NEW SERVICE REQUEST â€” SATCORP',
+        title: '🎯 NEW SERVICE REQUEST — SATCORP',
         color: 0x00ff41,
         fields: [
-          { name: 'ðŸ“‹ Services Requested', value: serviceLines || 'N/A', inline: false },
-          { name: 'ðŸ‘¤ Client Type', value: clientType, inline: true },
-          { name: 'ðŸªª Name', value: clientName, inline: true },
-          { name: 'ðŸ“ž Contact Info', value: contactLines || 'N/A', inline: false },
-          { name: 'ðŸ“ Project Brief', value: briefDesc || 'N/A', inline: false },
+          { name: '📋 Services Requested', value: serviceLines || 'N/A', inline: false },
+          { name: '👤 Client Type', value: clientType, inline: true },
+          { name: '🚪 Name', value: clientName, inline: true },
+          { name: '📞 Contact Info', value: contactLines || 'N/A', inline: false },
+          { name: '📜 Project Brief', value: briefDesc || 'N/A', inline: false },
         ],
-        footer: { text: 'SATCORP Service Request System â€” satcorp.io' },
+        footer: { text: 'SATCORP Service Request System — satcorp.io' },
         timestamp: new Date().toISOString(),
       }
 
@@ -114,12 +114,12 @@ export default function OrderModal({ card, onClose }) {
         <div className="order-head">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             <div>
-              <div className="order-head-label">// SERVICE REQUEST â€” {card.title.toUpperCase()}</div>
+              <div className="order-head-label">// SERVICE REQUEST — {card.title.toUpperCase()}</div>
               <div className="order-head-title">
                 {submitted ? 'Request Transmitted' : `Step ${step} of ${TOTAL_STEPS}`}
               </div>
             </div>
-            <button className="modal-x" onClick={onClose} aria-label="Close">âœ•</button>
+            <button className="modal-x" onClick={onClose} aria-label="Close">✕</button>
           </div>
           {!submitted && (
             <div className="order-step-bar" role="progressbar" aria-valuenow={step} aria-valuemax={TOTAL_STEPS}>
@@ -134,10 +134,10 @@ export default function OrderModal({ card, onClose }) {
         <div className="order-body">
           {submitted ? (
             <div className="submit-success">
-              <div className="success-icon">âœ…</div>
+              <div className="success-icon">✅</div>
               <div className="success-title">Request Transmitted</div>
               <p className="success-text">
-                Your service request has been received by SATCORP Command. Expect contact through your provided channels within 24â€“48 hours.
+                Your service request has been received by SATCORP Command. Expect contact through your provided channels within 24–48 hours.
               </p>
             </div>
           ) : (
@@ -278,7 +278,7 @@ export default function OrderModal({ card, onClose }) {
                   </div>
                   {error && (
                     <div style={{ color: '#ef4444', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', marginTop: '8px' }}>
-                      âš  {error}
+                      ⚠️ {error}
                     </div>
                   )}
                 </div>
@@ -293,7 +293,7 @@ export default function OrderModal({ card, onClose }) {
             <div style={{ display: 'flex', gap: '10px' }}>
               {step > 1 && (
                 <button className="btn-secondary" onClick={() => setStep(s => s - 1)} disabled={sending}>
-                  â† Back
+                  ← Back
                 </button>
               )}
               <button className="btn-secondary" onClick={onClose} disabled={sending}>
@@ -307,7 +307,7 @@ export default function OrderModal({ card, onClose }) {
               disabled={!canNext() || sending}
               style={{ opacity: (!canNext() || sending) ? 0.45 : 1 }}
             >
-              {sending ? 'Transmitting...' : step === TOTAL_STEPS ? 'Submit Request' : 'Next â†’'}
+              {sending ? 'Transmitting...' : step === TOTAL_STEPS ? 'Submit Request' : 'Next →'}
             </button>
           </div>
         )}

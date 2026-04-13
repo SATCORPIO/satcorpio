@@ -45,7 +45,7 @@ export default function SkillCard({ card, onSelect }) {
         <h3 className="skill-card-title">{card.title}</h3>
         <p className="skill-card-desc">{card.shortDesc}</p>
       </div>
-      <span className="skill-card-cta">INQUIRE â–¸</span>
+      <span className="skill-card-cta">INQUIRE ▸</span>
     </motion.button>
   )
 }

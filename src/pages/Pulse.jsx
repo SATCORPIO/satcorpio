@@ -57,7 +57,7 @@ const SKILL_CARDS = [
     shortDesc: "Viral frameworks, platform targeting, and batch production.",
     backgroundImage: "/assets/pulse_short_form_bg.png",
     capabilities: [
-      "Viral hook frameworks & 15â€“60s content blueprints",
+      "Viral hook frameworks & 15–60s content blueprints",
       "Platform-specific optimization (algorithm targeting)",
       "Batch production & repurposing systems",
       "Thumbnail & caption testing loops",
@@ -65,7 +65,7 @@ const SKILL_CARDS = [
     ],
     deliverables: ["30-day content calendars + template packs"],
     services: [
-      "Viral hook frameworks & 15â€“60s content blueprints",
+      "Viral hook frameworks & 15–60s content blueprints",
       "Platform-specific optimization (algorithm targeting)",
       "Batch production & repurposing systems",
       "Thumbnail & caption testing loops",
@@ -139,9 +139,9 @@ export default function Pulse() {
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Helmet>
-        <title>PULSE â€” Broadcast & Creator Hub</title>
+        <title>PULSE — Broadcast & Creator Hub</title>
         <meta name="description" content="PULSE /// LIVE BROADCAST BRANCH - BROADCAST / CREATOR HUB. Streaming design, video pipelines, short-form optimization, and virtual event command." />
-        <meta property="og:title" content="PULSE â€” Broadcast & Creator Hub" />
+        <meta property="og:title" content="PULSE — Broadcast & Creator Hub" />
         <meta property="og:description" content="PULSE /// LIVE BROADCAST BRANCH - BROADCAST / CREATOR HUB. Streaming design, video pipelines, short-form optimization, and virtual event command." />
         <meta property="og:url" content="https://satcorp.io/pulse" />
         <meta property="og:image" content="https://satcorp.io/og/pulse.png" />

@@ -28,15 +28,15 @@ export default function Brief() {
     setIsSubmitting(true);
 
     const embed = {
-      title: 'ðŸŽ¯ NEW PROJECT BRIEF â€” SATCORP',
+      title: '🎯 NEW PROJECT BRIEF — SATCORP',
       color: 0x00ff41,
       fields: [
-        { name: 'ðŸªª Client Name', value: formData.name || 'N/A', inline: true },
-        { name: 'ðŸ“§ Contact', value: formData.email || 'N/A', inline: true },
-        { name: 'ðŸ› ï¸ Project Type', value: formData.projectType, inline: true },
-        { name: 'ðŸ’° Budget Range', value: formData.budget || 'N/A', inline: true },
-        { name: 'â³ Timeline', value: formData.timeline || 'N/A', inline: true },
-        { name: 'ðŸ“ Objectives', value: formData.objective || 'N/A', inline: false },
+        { name: '🚪 Client Name', value: formData.name || 'N/A', inline: true },
+        { name: '📧 Contact', value: formData.email || 'N/A', inline: true },
+        { name: '🛠️ Project Type', value: formData.projectType, inline: true },
+        { name: '💰 Budget Range', value: formData.budget || 'N/A', inline: true },
+        { name: '⏳ Timeline', value: formData.timeline || 'N/A', inline: true },
+        { name: '📜 Objectives', value: formData.objective || 'N/A', inline: false },
       ],
       footer: { text: 'SATCORP Intake System // Intelligence Architecture' },
       timestamp: new Date().toISOString(),
@@ -108,7 +108,7 @@ export default function Brief() {
         <div className="op-value-grid" style={{ gridTemplateColumns: '1fr', padding: '0' }}>
           {submitSuccess ? (
             <div className="submit-success" style={{ padding: '60px 20px' }}>
-              <div className="success-icon" style={{ color: 'var(--accent)' }}>ðŸ“¡</div>
+              <div className="success-icon" style={{ color: 'var(--accent)' }}>📡</div>
               <h2 className="success-title">CONSULTATION REQUESTED</h2>
               <p className="success-text">Your data packet has been received. An operator will establish contact shortly.</p>
               <button className="btn-primary" style={{ marginTop: '24px' }} onClick={() => window.location.href = '/'}>RETURN TO HQ</button>
