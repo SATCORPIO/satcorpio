@@ -41,13 +41,22 @@ async function prerender() {
     
     console.log(`🖥️ Environment: ${isVercel ? 'Vercel (Serverless)' : 'Local'}`);
 
-    // 2. Launch browser
+      // 2. Launch browser
+    const localChromePaths = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Users\\' + (process.env.USERNAME || 'SATCO') + '\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe'
+    ];
+    
+    let executablePath = isVercel ? await chromium.executablePath() : null;
+    if (!isVercel) {
+      executablePath = localChromePaths.find(p => fs.existsSync(p)) || 'chrome.exe';
+    }
+
     browser = await launch({
       args: isVercel ? chromium.args : ['--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: chromium.defaultViewport,
-      executablePath: isVercel 
-        ? await chromium.executablePath() 
-        : 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', // Typical Windows path
+      executablePath,
       headless: isVercel ? chromium.headless : true,
     });
 
@@ -58,10 +67,14 @@ async function prerender() {
     for (const route of ROUTES) {
       console.log(`📄 Prerendering route: ${route}`);
       
-      await page.goto(`http://localhost:${port}${route}`, {
-        waitUntil: 'networkidle0',
-        timeout: 60000
-      });
+      try {
+        await page.goto(`http://localhost:${port}${route}`, {
+          waitUntil: 'networkidle2', // More resilient than networkidle0
+          timeout: 120000 // Increased to 120s for slow builds
+        });
+      } catch (gotoErr) {
+        console.warn(`⚠️ Warning: Navigation to ${route} timed out or failed, attempting to proceed anyway...`);
+      }
 
       // Give it a moment for any client-side JS/animations
       await new Promise(r => setTimeout(r, 1000));
