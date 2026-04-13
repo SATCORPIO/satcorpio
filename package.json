@@ -6,19 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "react-snap",
+    "postbuild": "node scripts/prerender.js",
     "lint": "eslint .",
     "preview": "vite preview"
-  },
-  "reactSnap": {
-    "source": "dist",
-    "include": [
-      "/",
-      "/anu",
-      "/kyrax",
-      "/pulse",
-      "/kirastudios"
-    ]
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
@@ -33,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@sparticuz/chromium": "^147.0.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
@@ -40,8 +31,9 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
-    "react-snap": "^1.23.0",
+    "puppeteer-core": "^24.40.0",
     "rollup-plugin-visualizer": "^7.0.1",
+    "sirv": "^3.0.2",
     "vite": "^8.0.4"
   }
 }
