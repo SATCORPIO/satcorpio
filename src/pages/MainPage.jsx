@@ -1,8 +1,11 @@
+import { Helmet } from 'react-helmet-async'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SkillCard from '../components/SkillCard'
+import JsonLd from '../components/JsonLd'
 import { SKILL_CARDS } from '../data/skillCards'
 import { PAGES } from '../data/pages'
+import MagneticWrapper from '../components/MagneticWrapper'
 
 const OP_VALUES = [
   { bold: 'End-to-end problem solver', rest: ' bridging design / automation / branding / systems' },
@@ -16,9 +19,29 @@ export default function MainPage() {
 
   return (
     <div className="page-wrapper main-page">
+      <Helmet>
+        <title>SATCORP — Creative & Technology Organization</title>
+        <meta name="description" content="Multi-division creative and technology organization — brand identity, web systems, motion design, no-code builds, and strategic consulting." />
+        <meta property="og:title" content="SATCORP — Creative & Technology Organization" />
+        <meta property="og:description" content="Multi-division creative and technology organization — brand identity, web systems, motion design, no-code builds, and strategic consulting." />
+        <meta property="og:url" content="https://satcorp.io/" />
+        <meta property="og:image" content="https://satcorp.io/og/satcorp.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://satcorp.io/og/satcorp.png" />
+      </Helmet>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "SATCORP",
+        "url": "https://satcorp.io",
+        "logo": "https://satcorp.io/og/satcorp.png",
+        "description": "Multi-division creative and technology organization — brand identity, web systems, motion design, no-code builds, and strategic consulting.",
+        "sameAs": []
+      }} />
       <div className="main-bg-container">
-        <div 
-          className="main-bg-img" 
+        <div className="main-bg-img" 
           style={{ backgroundImage: `url(${mainPageData?.image})` }} 
         />
         <div className="main-bg-overlay" />
@@ -37,27 +60,29 @@ export default function MainPage() {
         </h1>
         
         <div className="op-actions" style={{ marginBottom: '32px' }}>
-          <a 
-            href="https://discord.gg/KqphHMq6vS" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="btn-ghost"
-            style={{ 
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}
-          >
-            <span style={{ 
-              width: '8px', 
-              height: '8px', 
-              borderRadius: '50%', 
-              background: 'var(--accent)',
-              boxShadow: '0 0 10px var(--accent)',
-              animation: 'blinkDot 1.6s ease-in-out infinite'
-            }} />
-            JOIN COMMUNICATION HUB
-          </a>
+          <MagneticWrapper strength={0.2}>
+            <a 
+              href="https://discord.gg/KqphHMq6vS" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="btn-ghost"
+              style={{ 
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}
+            >
+              <span style={{ 
+                width: '8px', 
+                height: '8px', 
+                borderRadius: '50%', 
+                background: 'var(--accent)',
+                boxShadow: '0 0 10px var(--accent)',
+                animation: 'blinkDot 1.6s ease-in-out infinite'
+              }} />
+              JOIN COMMUNICATION HUB
+            </a>
+          </MagneticWrapper>
         </div>
 
         <div className="op-value-grid">
@@ -86,7 +111,7 @@ export default function MainPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer copyText="2026 SATCORP" />
     </div>
   )
 }

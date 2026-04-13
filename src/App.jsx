@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import MainPage from './pages/MainPage'
@@ -11,6 +12,7 @@ import Frostheim from './pages/Frostheim'
 import DysunsRealm from './pages/DysunsRealm'
 import DysunsArk from './pages/DysunsArk'
 import NamtarSurvey from './pages/NamtarSurvey'
+import Brief from './pages/Brief'
 import AdminPortal from './pages/portals/AdminPortal'
 import OperatorPortal from './pages/portals/OperatorPortal'
 import ClientPortal from './pages/portals/ClientPortal'
@@ -32,6 +34,9 @@ function ProtectedRoute({ element, allowedRole, moduleKey }) {
   return element
 }
 
+import TacticalCursor from './components/TacticalCursor'
+import CommandConsole from './components/CommandConsole'
+
 function AppRoutes() {
   return (
     <Routes>
@@ -46,6 +51,7 @@ function AppRoutes() {
       <Route path="/dysunsrealm" element={<DysunsRealm />} />
       <Route path="/dysunsark" element={<DysunsArk />} />
       <Route path="/namtarsurvey" element={<NamtarSurvey />} />
+      <Route path="/brief" element={<Brief />} />
 
       {/* Portal routes — role-gated */}
       <Route path="/portal/admin/:userId"    element={<ProtectedRoute element={<AdminPortal />}    allowedRole="admin" />} />
@@ -69,9 +75,29 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const [consoleOpen, setConsoleOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setConsoleOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  React.useEffect(() => {
+    // Dispatch event for prerendering
+    document.dispatchEvent(new Event('render-complete'))
+  }, [])
+
   return (
     <BrowserRouter>
       <AuthProvider>
+        <TacticalCursor />
+        <CommandConsole isOpen={consoleOpen} onClose={() => setConsoleOpen(false)} />
         <AppRoutes />
       </AuthProvider>
     </BrowserRouter>

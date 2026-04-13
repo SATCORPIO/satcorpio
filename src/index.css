@@ -125,6 +125,40 @@ img { max-width: 100%; display: block; }
 .header-title-btn:hover::after { width: calc(100% - 36px); }
 .header-right { display: flex; justify-content: flex-end; }
 
+/* Scan-line hover effect for links */
+.nav-link, a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost):not(.page-card):not(.skill-card) {
+  position: relative;
+  transition: color var(--trans-fast);
+}
+
+.nav-link::after, a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost):not(.page-card):not(.skill-card)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 100%; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+
+.nav-link:hover::after, a:not(.btn-primary):not(.btn-secondary):not(.btn-ghost):not(.page-card):not(.skill-card):hover::after {
+  transform: scaleX(1);
+}
+
+/* Tactical Cursor Utilities */
+[data-cursor="hover"] {
+  cursor: none !important;
+}
+
+/* Ensure 3D rendering for tilt */
+.skill-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+
 /* Hamburger */
 .hamburger-btn {
   display: flex; flex-direction: column; justify-content: center; gap: 5px;

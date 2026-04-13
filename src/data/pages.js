@@ -25,7 +25,7 @@ export const PAGES = [
   },
   {
     id: 'pulse',
-    title: 'PULSΞ',
+    title: 'PULSE',
     path: '/pulse',
     image: '/assets/pulse_menu_card.png',
     designation: 'BROADCAST HUB',

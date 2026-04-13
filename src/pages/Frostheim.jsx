@@ -17,7 +17,8 @@ export default function Frostheim() {
         pills: [
           { label: 'STATUS', value: 'COMING SOON', color: '#bae6fd', status: 'wait' },
         ],
-        discordLink: 'https://discord.gg/UkWzc8FvZT'
+        discordLink: 'https://discord.gg/UkWzc8FvZT',
+        footerCopy: '2026 Ki-Ra Studios'
       }}
     />
   )

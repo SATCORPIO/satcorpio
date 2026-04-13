@@ -4,6 +4,7 @@ export default function Footer({ copyText = '2026 Ki-Ra Studios' }) {
       <p className="footer-copy">
         {copyText}
       </p>
+      <span className="cmd-hint">⌘K // COMMAND INTERFACE</span>
     </footer>
   )
 }

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import GalaxyBackground from '../components/GalaxyBackground';
+import JsonLd from '../components/JsonLd';
+import TacticalCardWrapper from '../components/TacticalCardWrapper';
 
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1492038802544267395/XHgcF2P_gMzDELXeuL2mw6LfKrNsj2HyhLagC5jHqgmc1MHX15mK3NaMmIAGgc_8JVVv';
 
@@ -263,7 +266,28 @@ export default function Pulse() {
 
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header title="PULSΞ" />
+      <Helmet>
+        <title>PULSE — Broadcast & Creator Hub</title>
+        <meta name="description" content="PULSE /// LIVE BROADCAST BRANCH - BROADCAST / CREATOR HUB. Streaming design, video pipelines, short-form optimization, and virtual event command." />
+        <meta property="og:title" content="PULSE — Broadcast & Creator Hub" />
+        <meta property="og:description" content="PULSE /// LIVE BROADCAST BRANCH - BROADCAST / CREATOR HUB. Streaming design, video pipelines, short-form optimization, and virtual event command." />
+        <meta property="og:url" content="https://satcorp.io/pulse" />
+        <meta property="og:image" content="https://satcorp.io/og/pulse.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://satcorp.io/og/pulse.png" />
+      </Helmet>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Motion Design & Animation",
+        "provider": { "@type": "Organization", "name": "SATCORP", "url": "https://satcorp.io" },
+        "name": "PULSE",
+        "url": "https://satcorp.io/pulse",
+        "description": "PULSE /// LIVE BROADCAST BRANCH - BROADCAST / CREATOR HUB. Streaming design, video pipelines, short-form optimization, and virtual event command."
+      }} />
+      <Header title="PULSE" />
       <div className="portal-bg" style={{ backgroundImage: 'url(/assets/pulse_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5 }} />
       <GalaxyBackground />
       
@@ -408,7 +432,7 @@ export default function Pulse() {
         <div style={{ marginBottom: '40px' }}>
           <div className="portal-eyebrow">
             <div className="op-eyebrow-line" style={{ background: 'var(--accent-cyan)' }} />
-            <span className="op-eyebrow-text" style={{ color: 'var(--accent-cyan)' }}>PULSΞ /// LIVE BROADCAST BRANCH</span>
+            <span className="op-eyebrow-text" style={{ color: 'var(--accent-cyan)' }}>PULSE /// LIVE BROADCAST BRANCH</span>
           </div>
           <h1 className="portal-title">
             BROADCAST / <span className="portal-title-accent">CREATOR HUB</span>
@@ -422,22 +446,22 @@ export default function Pulse() {
           gap: '24px'
         }}>
           {SKILL_CARDS.map(card => (
-            <div 
-              key={card.id} 
+            <TacticalCardWrapper
+              key={card.id}
               className="pulse-skill-card"
-              style={{ backgroundImage: card.backgroundImage ? `url(${card.backgroundImage})` : 'none' }}
               onClick={() => setActiveCard(card)}
+              style={{ backgroundImage: card.backgroundImage ? `url(${card.backgroundImage})` : 'none' }}
             >
               <div className="card-bg-overlay" />
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
-            </div>
+            </TacticalCardWrapper>
           ))}
         </div>
       </main>
 
       <div className="pulse-footer">
-        <div>2026 Ki-Ra Studios</div>
+        <div>2026 PULSE</div>
         <div>SATCORP Broadcast Hub // Broadcast Division</div>
       </div>
 

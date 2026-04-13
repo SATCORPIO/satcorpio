@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import GalaxyBackground from '../components/GalaxyBackground';
+import JsonLd from '../components/JsonLd';
+import TacticalCardWrapper from '../components/TacticalCardWrapper';
 
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1492038802544267395/XHgcF2P_gMzDELXeuL2mw6LfKrNsj2HyhLagC5jHqgmc1MHX15mK3NaMmIAGgc_8JVVv';
 
@@ -327,6 +330,27 @@ export default function KiraStudios() {
 
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Helmet>
+        <title>KI-RA Studios — SATCORP</title>
+        <meta name="description" content="KI-RA STUDIOS /// TASK FORCE BRANCH - WORLD-BUILDING / GAME DEV STUDIO. Game development, narrative design, procedural generation, and immersive spatial environments." />
+        <meta property="og:title" content="KI-RA Studios — SATCORP" />
+        <meta property="og:description" content="KI-RA STUDIOS /// TASK FORCE BRANCH - WORLD-BUILDING / GAME DEV STUDIO. Game development, narrative design, procedural generation, and immersive spatial environments." />
+        <meta property="og:url" content="https://satcorp.io/kirastudios" />
+        <meta property="og:image" content="https://satcorp.io/og/ki-ra.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://satcorp.io/og/ki-ra.png" />
+      </Helmet>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Brand Identity & Visual Systems",
+        "provider": { "@type": "Organization", "name": "SATCORP", "url": "https://satcorp.io" },
+        "name": "KI-RA Studios",
+        "url": "https://satcorp.io/kirastudios",
+        "description": "KI-RA STUDIOS /// TASK FORCE BRANCH - WORLD-BUILDING / GAME DEV STUDIO. Game development, narrative design, procedural generation, and immersive spatial environments."
+      }} />
       <Header title="KI-RA STUDIOS" />
       <div className="portal-bg" style={{ backgroundImage: 'url(/assets/kirastudios_main_bg_v2.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
       <GalaxyBackground />
@@ -489,16 +513,16 @@ export default function KiraStudios() {
           gap: '24px'
         }}>
           {SKILL_CARDS.map(card => (
-            <div 
-              key={card.id} 
+            <TacticalCardWrapper
+              key={card.id}
               className="pulse-skill-card"
-              style={{ backgroundImage: card.backgroundImage ? `url(${card.backgroundImage})` : 'none' }}
               onClick={() => setActiveCard(card)}
+              style={{ backgroundImage: card.backgroundImage ? `url(${card.backgroundImage})` : 'none' }}
             >
               <div className="card-bg-overlay" />
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
-            </div>
+            </TacticalCardWrapper>
           ))}
         </div>
       </main>

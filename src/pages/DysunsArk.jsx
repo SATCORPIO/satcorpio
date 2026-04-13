@@ -17,7 +17,8 @@ export default function DysunsArk() {
         pills: [
           { label: 'STATUS', value: 'COMING SOON', color: '#14b8a6', status: 'wait' },
         ],
-        discordLink: 'https://discord.gg/nTCBH8Qac7'
+        discordLink: 'https://discord.gg/nTCBH8Qac7',
+        footerCopy: '2026 Ki-Ra Studios'
       }}
     />
   )

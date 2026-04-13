@@ -1,5 +1,6 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import MagneticWrapper from '../components/MagneticWrapper'
 
 /**
  * Reusable lore page template for all sub-sector pages.
@@ -73,28 +74,30 @@ export default function LorePage({ config }) {
             {/* Discord Link */}
             {discordLink && (
               <div style={{ marginBottom: '40px' }}>
-                <a 
-                  href={discordLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="btn-ghost"
-                  style={{ 
-                    borderColor: accent, 
-                    color: accent,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '10px'
-                  }}
-                >
-                  <span style={{ 
-                    width: '6px', 
-                    height: '6px', 
-                    borderRadius: '50%', 
-                    background: accent,
-                    boxShadow: `0 0 8px ${accent}`
-                  }} />
-                  JOIN COMMUNITY DISCORD
-                </a>
+                <MagneticWrapper strength={0.2} range={100}>
+                  <a 
+                    href={discordLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn-ghost"
+                    style={{ 
+                      borderColor: accent, 
+                      color: accent,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '10px'
+                    }}
+                  >
+                    <span style={{ 
+                      width: '6px', 
+                      height: '6px', 
+                      borderRadius: '50%', 
+                      background: accent,
+                      boxShadow: `0 0 8px ${accent}`
+                    }} />
+                    JOIN COMMUNITY DISCORD
+                  </a>
+                </MagneticWrapper>
               </div>
             )}
 

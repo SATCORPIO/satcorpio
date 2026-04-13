@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import GalaxyBackground from '../components/GalaxyBackground';
+import JsonLd from '../components/JsonLd';
+import TacticalCardWrapper from '../components/TacticalCardWrapper';
 
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1492038802544267395/XHgcF2P_gMzDELXeuL2mw6LfKrNsj2HyhLagC5jHqgmc1MHX15mK3NaMmIAGgc_8JVVv';
 
@@ -222,6 +225,27 @@ export default function Anu() {
 
   return (
     <div className="page-wrapper portal-page anu-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Helmet>
+        <title>ANU — Systems Architecture & Consulting</title>
+        <meta name="description" content="SATCORP OPERATOR NODE - TACTICAL CONCIERGE SERVICES. Systems Architecture & Consulting, Scope clarification, CRM lifecycle, and financial operations." />
+        <meta property="og:title" content="ANU — Systems Architecture & Consulting" />
+        <meta property="og:description" content="SATCORP OPERATOR NODE - TACTICAL CONCIERGE SERVICES. Systems Architecture & Consulting, Scope clarification, CRM lifecycle, and financial operations." />
+        <meta property="og:url" content="https://satcorp.io/anu" />
+        <meta property="og:image" content="https://satcorp.io/og/anu.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://satcorp.io/og/anu.png" />
+      </Helmet>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Systems Architecture & Consulting",
+        "provider": { "@type": "Organization", "name": "SATCORP", "url": "https://satcorp.io" },
+        "name": "ANU",
+        "url": "https://satcorp.io/anu",
+        "description": "SATCORP OPERATOR NODE - TACTICAL CONCIERGE SERVICES. Systems Architecture & Consulting, Scope clarification, CRM lifecycle, and financial operations."
+      }} />
       <Header title="ANU" />
       <div className="portal-bg" style={{ backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(30,15,5,0.7) 50%, rgba(10,5,0,0.95) 100%), url(/assets/anu_bg_gold.png)' }} />
       <GalaxyBackground />
@@ -385,8 +409,8 @@ export default function Anu() {
           gap: '24px'
         }}>
           {SKILL_CARDS.map(card => (
-            <div 
-              key={card.id} 
+            <TacticalCardWrapper
+              key={card.id}
               className="anu-skill-card"
               onClick={() => setActiveCard(card)}
               style={{
@@ -395,13 +419,13 @@ export default function Anu() {
             >
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
-            </div>
+            </TacticalCardWrapper>
           ))}
         </div>
       </main>
 
       <div className="anu-footer">
-        <div>2026 Ki-Ra Studios</div>
+        <div>2026 SATCORP</div>
         <div>SATCORP Concierge Services</div>
       </div>
 

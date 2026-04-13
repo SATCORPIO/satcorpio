@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import GalaxyBackground from '../components/GalaxyBackground';
+import JsonLd from '../components/JsonLd';
+import TacticalCardWrapper from '../components/TacticalCardWrapper';
 
 const WEBHOOK_URL = 'https://discord.com/api/webhooks/1492038802544267395/XHgcF2P_gMzDELXeuL2mw6LfKrNsj2HyhLagC5jHqgmc1MHX15mK3NaMmIAGgc_8JVVv';
 
@@ -221,6 +224,27 @@ export default function Kyrax() {
 
   return (
     <div className="page-wrapper portal-page pulse-operator-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Helmet>
+        <title>KYRAX — Tactical Intelligence Wing</title>
+        <meta name="description" content="TACTICAL INTELLIGENCE WING - KYRAX /// AI CONCIERGE. AI-Enhanced Creative Workflows, Multi-Agent Orchestration, and Autonomous Research." />
+        <meta property="og:title" content="KYRAX — Tactical Intelligence Wing" />
+        <meta property="og:description" content="TACTICAL INTELLIGENCE WING - KYRAX /// AI CONCIERGE. AI-Enhanced Creative Workflows, Multi-Agent Orchestration, and Autonomous Research." />
+        <meta property="og:url" content="https://satcorp.io/kyrax" />
+        <meta property="og:image" content="https://satcorp.io/og/kyrax.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://satcorp.io/og/kyrax.png" />
+      </Helmet>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "No-Code / Low-Code Product Builds",
+        "provider": { "@type": "Organization", "name": "SATCORP", "url": "https://satcorp.io" },
+        "name": "KYRAX",
+        "url": "https://satcorp.io/kyrax",
+        "description": "TACTICAL INTELLIGENCE WING - KYRAX /// AI CONCIERGE. AI-Enhanced Creative Workflows, Multi-Agent Orchestration, and Autonomous Research."
+      }} />
       <Header title="KYRAX" />
       <div className="portal-bg" style={{ backgroundImage: 'url(/assets/kyrax_bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.3 }} />
       <GalaxyBackground />
@@ -377,22 +401,22 @@ export default function Kyrax() {
           gap: '24px'
         }}>
           {SKILL_CARDS.map(card => (
-            <div 
-              key={card.id} 
+            <TacticalCardWrapper
+              key={card.id}
               className="pulse-skill-card"
-              style={{ backgroundImage: card.image ? `url(${card.image})` : 'none' }}
               onClick={() => setActiveCard(card)}
+              style={{ backgroundImage: card.image ? `url(${card.image})` : 'none' }}
             >
               <div className="card-overlay" />
               <div className="card-title">{card.title}</div>
               <div className="card-short-desc">{card.shortDesc}</div>
-            </div>
+            </TacticalCardWrapper>
           ))}
         </div>
       </main>
 
       <div className="pulse-footer">
-        <div>2026 Ki-Ra Studios</div>
+        <div>2026 SATCORP</div>
         <div>SATCORP Tactical Intelligence</div>
       </div>
 
