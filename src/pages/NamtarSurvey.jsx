@@ -25,78 +25,11 @@ const BOOT_LINES = [
 
 const BOOT_TOTAL_MS = 5200;
 
-function RainCanvas({ className, style, id }) {
-  const canvasRef = useRef(null);
-  
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    
-    let w = window.innerWidth;
-    let h = window.innerHeight;
-    canvas.width = w;
-    canvas.height = h;
-
-    const handleResize = () => {
-      w = window.innerWidth;
-      h = window.innerHeight;
-      canvas.width = w;
-      canvas.height = h;
-      
-      // Re-initialize drops on resize for better coverage
-      const dropCount = Math.min(800, Math.floor(w * 1.5));
-      drops.length = 0;
-      for (let i = 0; i < dropCount; i++) {
-        drops.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          len: 20 + Math.random() * 40,
-          speed: 15 + Math.random() * 20,
-          op: 0.2 + Math.random() * 0.6
-        });
-      }
-    };
-    
-    const drops = [];
-    handleResize(); // Initial setup
-    window.addEventListener('resize', handleResize);
-
-    let animationId;
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-      drops.forEach(d => {
-        ctx.beginPath();
-        ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x + 4, d.y + d.len);
-        ctx.strokeStyle = `rgba(175,235,255,${d.op})`;
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-        d.y += d.speed;
-        d.x += 4;
-        if (d.y > h) {
-          d.y = -d.len;
-          d.x = Math.random() * (w + 300) - 300; 
-        }
-      });
-      animationId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} id={id} className={className} style={style} />;
-}
-
 export default function NamtarSurvey() {
   const [bootVisible, setBootVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [visibleLines, setVisibleLines] = useState([]);
-  const [lightningOpacity, setLightningOpacity] = useState(0);
+
 
   const [answers, setAnswers] = useState({
     q1: '', q2: '', q3: '', q4: [], q5: '', q6: '', q7: '', q8: '', q8maps: [], 'q8-custom-map': '',
@@ -143,38 +76,6 @@ export default function NamtarSurvey() {
     return () => clearTimeout(fadeTimer);
   }, []);
 
-  // Lightning effect (Boot)
-  useEffect(() => {
-    let timeoutIds = [];
-    const doLightning = () => {
-      if (!bootVisible) return;
-      setLightningOpacity(1);
-      timeoutIds.push(setTimeout(() => setLightningOpacity(0), 70));
-      timeoutIds.push(setTimeout(() => {
-        setLightningOpacity(0.5);
-        timeoutIds.push(setTimeout(() => setLightningOpacity(0), 60));
-      }, 110));
-      timeoutIds.push(setTimeout(doLightning, 4000 + Math.random() * 12000));
-    };
-    timeoutIds.push(setTimeout(doLightning, 2500));
-    return () => timeoutIds.forEach(clearTimeout);
-  }, [bootVisible]);
-
-  // General lightning when boot is done
-  const [generalFlash, setGeneralFlash] = useState(0);
-  useEffect(() => {
-    if (bootVisible) return;
-    let tId;
-    const doFlash = () => {
-      setGeneralFlash(1);
-      setTimeout(() => setGeneralFlash(0), 80);
-      setTimeout(() => setGeneralFlash(0.7), 120);
-      setTimeout(() => setGeneralFlash(0), 200);
-      tId = setTimeout(doFlash, 5000 + Math.random() * 20000);
-    };
-    tId = setTimeout(doFlash, 4000);
-    return () => clearTimeout(tId);
-  }, [bootVisible]);
 
   const OptionBtn = ({ qKey, val, multi, pvp }) => {
     const isSelected = multi ? answers[qKey]?.includes(val) : answers[qKey] === val;
@@ -273,85 +174,52 @@ export default function NamtarSurvey() {
 
   return (
     <div className="namtar-survey-page">
-      {bootVisible && (
-        <div id="survey-boot-screen" className={`survey-boot${fadeOut ? ' fade-out' : ''}`}>
-          <div style={{
-            position: 'absolute', inset: 0, zIndex: 0,
-            backgroundImage: 'url(/assets/namtar_trex_survival.png)',
-            backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.3)'
-          }} />
-          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.55, zIndex:2}} />
-          <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: lightningOpacity, transition: 'opacity 0.05s'}} />
+      <div className="phone-container">
+        <div className="phone-screen">
 
-          <div className="boot-content" style={{position:'relative', zIndex:10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
-            <div id="boot-kyrax">
-              <img src="/assets/wolf.png" alt="KYRAX" />
-            </div>
-            <div className="boot-terminal">
-            {BOOT_LINES.map((line, i) => (
-              visibleLines.includes(i) && (
-                <div key={i} className={`boot-line ${line.cls}`} style={{ animationDelay: '0ms' }}>
-                  {line.text}
-                  {i === visibleLines[visibleLines.length - 1] && i < BOOT_LINES.length - 1 && (
-                    <span className="boot-cursor" />
-                  )}
+          {bootVisible && (
+            <div id="survey-boot-screen" className={`survey-boot${fadeOut ? ' fade-out' : ''}`}>
+              <div id="boot-content">
+                <div id="boot-terminal">
+                  {BOOT_LINES.map((line, i) => (
+                    visibleLines.includes(i) && (
+                      <div key={i} className={`boot-line ${line.cls}`} style={{ animationDelay: '0ms' }}>
+                        {line.text}
+                        {i === visibleLines[visibleLines.length - 1] && i < BOOT_LINES.length - 1 && (
+                          <span className="boot-cursor" />
+                        )}
+                      </div>
+                    )
+                  ))}
                 </div>
-              )
-            ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Background for Survey Setup */}
-      {!bootVisible && (
-        <div id="scene" style={{zIndex: 0}}>
-          <div style={{
-            position: 'absolute', inset: 0, zIndex: 0,
-            backgroundImage: 'url(/assets/namtar_trex_bg.png)',
-            backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.2)'
-          }} />
-          <RainCanvas style={{position:'absolute', inset:0, pointerEvents:'none', opacity:0.65, zIndex: 2}} />
-          <div style={{position:'absolute', inset:0, background:'rgba(80,200,255,0.06)', pointerEvents:'none', zIndex:3, opacity: generalFlash, transition: 'opacity 0.05s'}} />
-        </div>
-      )}
-
-      {/* Main Content */}
-      <div id="content" style={{display: bootVisible ? 'none' : 'block', position: 'relative', zIndex: 10}}>
-        <div className="corner corner-tl" />
-        <div className="corner corner-tr" />
-        <div className="corner corner-bl" />
-        <div className="corner corner-br" />
-
-        {!submitted ? (
-          <>
-            <header className="survey-page-header">
-              <div className="studio-badge">KI-RA STUDIOS PRESENTS</div>
-              <div className="namtar-logo">NAMTAR</div>
-              <div className="ark-subtitle">ARK: SURVIVAL ASCENDED</div>
-              <div className="divider" />
-              <div className="studio-badge" style={{fontSize: '0.75rem', letterSpacing: '0.3em', color: '#c8e8f0', opacity: 0.6, marginTop: '8px'}}>
-                SURVIVOR REGISTRATION & SERVER CALIBRATION SURVEY
               </div>
-            </header>
+            </div>
+          )}
 
-            <div id="kyrax-panel">
-              <div className="kyrax-container">
-                <div className="kyrax-avatar">
-                  <img src="/assets/wolf.png" alt="KYRAX" />
-                  <div className="kyrax-ring" />
-                </div>
-                <div className="kyrax-text">
-                  <div className="kyrax-name">KYRAX</div>
-                  <div className="kyrax-role">SATCORP // SURVEY LEAD</div>
-                  <div className="kyrax-msg">
-                    Greetings, Survivor. I am <span className="highlight">KYRAX</span>, SATCORP's artificial intelligence — your guide through the NAMTAR calibration process.<br/><br/>
-                    Before the gates open, <span className="highlight">Ki-Ra Studios</span> needs to understand your playstyle, preferences, and ambitions. Your input will directly shape the server's rates, systems, and world design.<br/><br/>
-                    Complete this survey carefully. <span className="highlight">Every answer matters.</span>
+          <div id="content" className="device-content" style={{ display: bootVisible ? 'none' : 'block' }}>
+            {!submitted ? (
+              <>
+                <header className="survey-page-header">
+                  <div className="studio-badge">KI-RA STUDIOS PRESENTS</div>
+                  <div className="namtar-logo">NAMTAR</div>
+                  <div className="ark-subtitle">ARK: SURVIVAL ASCENDED</div>
+                  <div className="divider" theme="phone" />
+                  <div className="studio-badge" style={{ fontSize: '0.65rem', letterSpacing: '0.2em', color: '#c8e8f0', opacity: 0.6, marginTop: '8px' }}>
+                    SURVIVOR REGISTRATION & CALIBRATION
+                  </div>
+                </header>
+
+                <div id="kyrax-panel">
+                  <div className="kyrax-container">
+                    <div className="kyrax-text">
+                      <div className="kyrax-name">KYRAX</div>
+                      <div className="kyrax-msg">
+                        Greetings, Survivor. I am <span className="highlight">KYRAX</span>. Complete this calibration carefully. <span className="highlight">Every answer matters.</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+
 
             <div id="survey-wrap">
               <form id="survey-form" onSubmit={(e) => e.preventDefault()}>
@@ -868,5 +736,7 @@ export default function NamtarSurvey() {
         )}
       </div>
     </div>
-  );
+  </div>
+</div>
+);
 }

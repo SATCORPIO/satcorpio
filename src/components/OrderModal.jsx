@@ -186,23 +186,19 @@ export default function OrderModal({ card, onClose }) {
               {/* Step 3: Client type */}
               {step === 3 && (
                 <div>
-                  <div className="form-group">
-                    <div className="form-label">Client Type <span className="req">*</span></div>
-                    <div className="radio-row">
-                      {['Personal', 'Business'].map(t => (
-                        <label key={t} className={`radio-block${clientType === t ? ' sel' : ''}`}>
-                          <input
-                            type="radio"
-                            name="clientType"
-                            id={`client-${t}`}
-                            checked={clientType === t}
-                            onChange={() => setClientType(t)}
-                          />
-                          <span className="radio-text">{t}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
+                <div className="form-group">
+                  <label className="form-label">2. ENTITY STATUS <span className="req">*</span></label>
+                  <select
+                    className="req-select"
+                    value={clientType}
+                    onChange={(e) => setClientType(e.target.value)}
+                    required
+                  >
+                    <option value="" disabled>Select Status...</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Business">Business</option>
+                  </select>
+                </div>
                   {clientType && (
                     <div className="form-group">
                       <label className="form-label" htmlFor="client-name">

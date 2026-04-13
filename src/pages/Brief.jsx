@@ -92,7 +92,7 @@ export default function Brief() {
         }
         select.form-input option {
           background-color: #0c0c0c;
-          color: #e4e4e4;
+          color: #fff;
           padding: 10px;
         }
       `}} />

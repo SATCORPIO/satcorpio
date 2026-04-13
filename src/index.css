@@ -1023,3 +1023,351 @@ img { max-width: 100%; display: block; }
   .portal-main { padding: 20px 20px 60px; } 
   .portal-title { font-size: 1.8rem; } 
 }
+
+/* ============================================================
+   SERVICE REQUISITION HUB — PREMIUM REDESIGN
+   ============================================================ */
+:root {
+  --hub-backdrop: rgba(0, 0, 0, 0.85);
+  --hub-glass: rgba(10, 10, 12, 0.98);
+  --hub-border: rgba(255, 255, 255, 0.1);
+  --hub-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.requisition-hub-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--hub-backdrop);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: hubFadeIn 0.3s ease-out;
+}
+
+@keyframes hubFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.requisition-hub-panel {
+  width: 100%;
+  max-width: 1100px;
+  height: 90vh;
+  background: var(--hub-glass);
+  border: 1px solid var(--division-color, var(--hub-border));
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 
+              0 0 20px var(--division-bg-glow, transparent);
+  animation: hubPanelSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@keyframes hubPanelSlide {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Info Column */
+.req-info-column {
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.req-division-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  color: var(--division-color, #fff);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.req-division-tag::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--division-color, #fff);
+}
+
+.req-module-title {
+  font-family: var(--font-tactical);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #fff;
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.req-section {
+  margin-bottom: 32px;
+  animation: hubItemFade 0.6s ease-out both;
+}
+
+.req-section:nth-child(1) { animation-delay: 0.1s; }
+.req-section:nth-child(2) { animation-delay: 0.2s; }
+.req-section:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes hubItemFade {
+  from { opacity: 0; transform: translateX(-15px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.req-section-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--division-color, #888);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 6px;
+}
+
+.req-list {
+  list-style: none;
+  padding: 0;
+}
+
+.req-list-item {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.req-list-item::before {
+  content: '?';
+  position: absolute;
+  left: 0;
+  color: var(--division-color, var(--accent));
+}
+
+/* Form Column */
+.req-form-column {
+  padding: 40px;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.2);
+}
+
+.req-form-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: #fff;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.req-close-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: var(--hub-transition);
+  cursor: pointer;
+}
+
+.req-close-btn:hover {
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* Custom Inputs */
+.req-form-group {
+  margin-bottom: 24px;
+}
+
+.req-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.req-input, .req-textarea, .req-select {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: var(--hub-transition);
+  outline: none;
+}
+
+.req-input:focus, .req-textarea:focus, .req-select:focus {
+  border-color: var(--division-color, #fff);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 15px var(--division-bg-glow, transparent);
+}
+
+.req-service-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.req-service-option {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 6px;
+  padding: 16px;
+  cursor: pointer;
+  transition: var(--hub-transition);
+}
+
+.req-service-option:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.req-service-option.selected {
+  border-color: var(--division-color, var(--accent));
+  background: rgba(255,255,255, 0.05);
+}
+
+.req-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.req-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--hub-transition);
+  background: transparent;
+}
+
+.req-service-option.selected .req-checkbox {
+  background: var(--division-color, var(--accent));
+  border-color: var(--division-color, var(--accent));
+}
+
+.req-checkbox::after {
+  content: '?';
+  color: #000;
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0;
+  transition: var(--hub-transition);
+}
+
+.req-service-option.selected .req-checkbox::after {
+  opacity: 1;
+}
+
+.req-service-name {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.req-submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--division-color, #fff);
+  color: #000;
+  font-family: var(--font-tactical);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  border-radius: 4px;
+  transition: var(--hub-transition);
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+}
+
+.req-submit-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+  box-shadow: 0 0 25px var(--division-color, #fff);
+  transform: translateY(-2px);
+}
+
+.req-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success State */
+.req-success {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  animation: hubFadeIn 0.5s ease;
+}
+
+.req-success-icon {
+  font-size: 4rem;
+  color: var(--division-color, #fff);
+  text-shadow: 0 0 20px var(--division-bg-glow, transparent);
+}
+
+/* Responsive Stacking */
+@media (max-width: 900px) {
+  .requisition-hub-panel {
+    grid-template-columns: 1fr;
+    height: 95vh;
+    overflow-y: auto;
+  }
+  .req-info-column {
+    padding: 30px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .req-form-column {
+    padding: 30px;
+  }
+}
+
+/* Fix ENTITY STATUS dropdown visibility */
+.req-select {
+  background-color: #0c0c0c !important;
+  color: #fff !important;
+  appearance: none !important;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' fill=\'rgba(255,255,255,0.5)\' viewBox=\'0 0 16 16\'%3E%3Cpath d=\'M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z\'/%3E%3C/svg%3E') !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  padding-right: 40px !important;
+}
+.req-select option {
+  background-color: #0c0c0c !important;
+  color: #fff !important;
+}

@@ -1,7 +1,9 @@
+import React, { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SkillCard from '../components/SkillCard'
+import RequisitionHub from '../components/RequisitionHub'
 import JsonLd from '../components/JsonLd'
 import { SKILL_CARDS } from '../data/skillCards'
 import { PAGES } from '../data/pages'
@@ -15,6 +17,7 @@ const OP_VALUES = [
 ]
 
 export default function MainPage() {
+  const [activeCard, setActiveCard] = useState(null)
   const mainPageData = PAGES.find(p => p.id === 'main')
 
   return (
@@ -106,12 +109,26 @@ export default function MainPage() {
 
         <div className="skills-grid">
           {SKILL_CARDS.map(card => (
-            <SkillCard key={card.id} card={card} />
+            <SkillCard key={card.id} card={card} onSelect={setActiveCard} />
           ))}
         </div>
       </section>
 
       <Footer copyText="2026 SATCORP" />
+
+      {/* SERVICE REQUISITION HUB */}
+      {activeCard && (
+        <RequisitionHub 
+          activeCard={activeCard} 
+          onClose={() => setActiveCard(null)} 
+          divisionTag="SATCORP OPERATIONS"
+          theme={{
+            color: '#00ff41',
+            glow: 'rgba(0, 255, 65, 0.35)',
+            rgb: '0, 255, 65'
+          }}
+        />
+      )}
     </div>
   )
 }
