@@ -492,7 +492,7 @@
   }
   .phone-container {
     background-size: 346%; /* Scale so screen width is ~100% of viewport */
-    background-position: center 8%; /* Align with the terminal screen area - shifted UP */
+    background-position: center 0%; /* Align with the terminal screen area - shifted UP to flush with top */
     transform: none !important;
     width: 100vw;
     height: 100vh;
