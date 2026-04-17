@@ -29,7 +29,7 @@ export default function Header({ title }) {
     const role = currentUser.role
     const userSlug = currentUser.username.split('@')[0]
     if (role === 'admin')    navigate(`/portal/admin/${userSlug}`)
-    else if (role === 'operator') navigate(`/portal/OP/${userSlug}`)
+    else if (role === 'developer') navigate(`/portal/dev/${userSlug}`)
     else                     navigate(`/portal/Contact/${userSlug}`)
   }
 

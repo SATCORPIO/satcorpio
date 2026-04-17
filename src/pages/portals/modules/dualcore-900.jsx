@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ModuleExitButton from "../../../components/ModuleExitButton";
 
 /* ════════════════════════════════════════════════════════════════════════════
    DUALCORE 900 — INTEGRATED DUAL-ENGINE GENERATOR
@@ -535,6 +536,7 @@ export default function App(){
 
   return(
     <div className="app">
+      <ModuleExitButton />
       <style>{CSS}</style>
 
       {/* MASTHEAD */}

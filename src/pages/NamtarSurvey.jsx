@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ModuleExitButton from '../components/ModuleExitButton';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './NamtarSurvey.css';
@@ -174,6 +175,7 @@ export default function NamtarSurvey() {
 
   return (
     <div className="namtar-survey-page">
+      <ModuleExitButton />
       <div className="phone-container">
         <div className="phone-screen">
 

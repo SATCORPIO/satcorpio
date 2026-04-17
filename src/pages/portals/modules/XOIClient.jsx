@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ModuleExitButton from "../../../components/ModuleExitButton";
 import {
   Shield,
   Settings,
@@ -203,6 +204,7 @@ const XOIClient = () => {
 
   return (
     <div className="xoi-client-wrapper">
+      <ModuleExitButton />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 

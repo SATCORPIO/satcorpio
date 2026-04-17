@@ -603,6 +603,7 @@ export default function App(){
 
   return(
     <div className="app">
+      <ModuleExitButton />
       <style>{CSS}</style>
 
       {/* MASTHEAD */}

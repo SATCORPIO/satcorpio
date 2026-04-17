@@ -14,7 +14,7 @@ import DysunsArk from './pages/DysunsArk'
 import NamtarSurvey from './pages/NamtarSurvey'
 import Brief from './pages/Brief'
 import AdminPortal from './pages/portals/AdminPortal'
-import OperatorPortal from './pages/portals/OperatorPortal'
+import DevPortal from './pages/portals/DevPortal'
 import ClientPortal from './pages/portals/ClientPortal'
 // Portal modules
 import Par450k      from './pages/portals/modules/450kPar'
@@ -55,8 +55,8 @@ function AppRoutes() {
 
       {/* Portal routes — role-gated */}
       <Route path="/portal/admin/:userId"    element={<ProtectedRoute element={<AdminPortal />}    allowedRole="admin" />} />
-      <Route path="/portal/OP/:userId" element={<ProtectedRoute element={<OperatorPortal />} allowedRole="operator" />} />
-      <Route path="/portal/Contact/:userId"   element={<ProtectedRoute element={<ClientPortal />}   allowedRole="client" />} />
+      <Route path="/portal/dev/:userId"      element={<ProtectedRoute element={<DevPortal />}      allowedRole="developer" />} />
+      <Route path="/portal/Contact/:userId"  element={<ProtectedRoute element={<ClientPortal />}   allowedRole="client" />} />
 
       {/* Module routes — user + module-key gated */}
       <Route path="/portal/modules/450kpar"      element={<ProtectedRoute element={<Par450k />}     moduleKey="450kpar" />} />

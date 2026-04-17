@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import ModuleExitButton from "../../../components/ModuleExitButton";
 
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -305,6 +306,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <ModuleExitButton />
       <style>{CSS}</style>
       <div className="hdr">
         <div className="hl">

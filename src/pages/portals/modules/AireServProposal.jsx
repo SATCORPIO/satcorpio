@@ -1,4 +1,5 @@
 import React from 'react';
+import ModuleExitButton from "../../../components/ModuleExitButton";
 import { 
   Shield, 
   FileText, 
@@ -23,6 +24,7 @@ import GalaxyBackground from '../../../components/GalaxyBackground';
 const AireServProposal = () => {
   return (
     <div className="aire-serv-wrapper min-height-100vh relative overflow-hidden bg-void text-primary font-body">
+      <ModuleExitButton />
       <GalaxyBackground />
       
       <style>{`
