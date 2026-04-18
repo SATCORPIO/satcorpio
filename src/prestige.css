@@ -1,0 +1,124 @@
+/* ============================================================
+   SATCORP PRESTIGE STYLES (CFCM Next-Level)
+   ============================================================ */
+
+/* ── THE 6 PILLARS OF POLISH ──────────────────────────── */
+.polish-pillars-section {
+  width: 100%; max-width: 1400px; margin: 0 auto;
+  padding: 80px 40px; position: relative; z-index: 10;
+}
+.polish-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  margin-top: 40px;
+}
+.pillar-item {
+  background: var(--glass-bg); backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border); border-radius: 2px;
+  padding: 30px; position: relative; overflow: hidden;
+  transition: all var(--trans-mid);
+}
+.pillar-item::before {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 3px; height: 0; background: var(--accent);
+  transition: height var(--trans-mid);
+}
+.pillar-item:hover {
+  background: rgba(0,255,65,0.015);
+  border-color: rgba(0,255,65,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.pillar-item:hover::before { height: 100%; }
+
+.pillar-count {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.3em; color: var(--accent);
+  margin-bottom: 16px; opacity: 0.8;
+}
+.pillar-name {
+  font-family: var(--font-tactical); font-size: 0.9rem;
+  font-weight: 700; letter-spacing: 0.12em;
+  color: #fff; text-transform: uppercase; margin-bottom: 8px;
+}
+.pillar-desc {
+  font-family: var(--font-body); font-size: 0.9rem;
+  color: var(--text-secondary); line-height: 1.5;
+}
+
+@media (max-width: 1024px) { .polish-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .polish-grid { grid-template-columns: 1fr; } .polish-pillars-section { padding: 40px 16px; } }
+
+/* ── INFRASTRUCTURE GATES ─────────────────────────────── */
+.infra-gates-section {
+  width: 100%; max-width: 1400px; margin: 0 auto;
+  padding: 0 40px 100px; position: relative; z-index: 10;
+}
+.infra-gates-container {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  background: linear-gradient(135deg, rgba(8,8,8,0.95) 0%, rgba(4,4,4,0.98) 100%);
+  border: 1px solid var(--glass-border); border-radius: 2px;
+  padding: 60px; gap: 60px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.infra-gates-container::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 100% 100%, rgba(232,180,34,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.infra-title {
+  font-family: var(--font-tactical); font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 900; color: #fff; text-transform: uppercase;
+  letter-spacing: 0.08em; margin: 12px 0 20px; line-height: 1.1;
+}
+.infra-desc {
+  font-family: var(--font-body); font-size: 1.1rem;
+  color: var(--text-secondary); line-height: 1.6; margin-bottom: 40px;
+}
+.infra-desc strong { color: var(--gold-bright); font-weight: 600; }
+
+.gates-list {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.gate-tag {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 8px 16px; border-radius: 1px;
+  display: flex; flex-direction: column; gap: 4px;
+  transition: all var(--trans-fast);
+}
+.gate-tag:hover {
+  background: rgba(232,180,34,0.05);
+  border-color: rgba(232,180,34,0.3);
+}
+.gate-num {
+  font-family: var(--font-mono); font-size: 0.45rem;
+  letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase;
+}
+.gate-label {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  letter-spacing: 0.05em; color: var(--text-primary); text-transform: uppercase; font-weight: 700;
+}
+
+.infra-gates-visual {
+  display: flex; justify-content: center; align-items: center;
+}
+.signature-showcase {
+  text-align: center;
+}
+.signature-label {
+  margin-top: 24px;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.5em; color: var(--gold);
+  text-transform: uppercase; opacity: 0.8;
+}
+
+@media (max-width: 1100px) {
+  .infra-gates-container { grid-template-columns: 1fr; padding: 40px; text-align: center; }
+  .gates-list { justify-content: center; }
+  .infra-gates-visual { order: -1; }
+}
+@media (max-width: 560px) {
+  .infra-gates-section { padding: 0 16px 80px; }
+  .infra-gates-container { padding: 30px 20px; }
+}

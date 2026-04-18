@@ -213,7 +213,7 @@ export default function ClientPortal() {
           {/* Document Hub & Approvals */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div className="portal-section-label" style={{ marginBottom: '4px' }}>
-               // DOCUMENT HUB & APPROVALS
+               // YOUR DOCUMENT HUB & APPROVALS
             </div>
             <div style={{
               background: 'rgba(255,255,255,0.02)',
@@ -222,17 +222,27 @@ export default function ClientPortal() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                  <div>
-                   <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#fff' }}>Phase 1: Project Intel JSON</div>
-                   <div style={{ fontSize: '9px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)' }}>View your extracted truth.</div>
+                   <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#fff' }}>Phase 1: Your Problem Statement & JSON</div>
+                   <div style={{ fontSize: '9px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)' }}>Verify the extracted objective truth.</div>
                  </div>
                  <button style={{ background: 'transparent', border: '1px solid #7c3aed', color: '#7c3aed', padding: '6px 12px', borderRadius: '4px', fontSize: '9px', cursor: 'pointer' }}>VIEW RECORD</button>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px', paddingBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                  <div>
-                   <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#fff' }}>Phase 2: System Blueprint</div>
-                   <div style={{ fontSize: '9px', fontFamily: 'monospace', color: '#f59e0b' }}>Awaiting your approval.</div>
+                   <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#fff' }}>Phase 2: Your System Blueprint</div>
+                   <div style={{ fontSize: '9px', fontFamily: 'monospace', color: '#f59e0b' }}>Awaiting your approval lock.</div>
                  </div>
                  <button style={{ background: '#f59e0b', border: 'none', color: '#000', padding: '6px 12px', borderRadius: '4px', fontSize: '9px', fontWeight: 'bold', cursor: 'pointer' }}>APPROVE SCOPE</button>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '12px' }}>
+                 <div>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                     <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#fff' }}>Phase 4: Your Delivery Certification</div>
+                     <span style={{ fontSize: '8px', padding: '2px 5px', borderRadius: '3px', background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>LOCKED</span>
+                   </div>
+                   <div style={{ fontSize: '9px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>Requires Launch Readiness, Scalability Proof & Polish Score.</div>
+                 </div>
+                 <button style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.2)', padding: '6px 12px', borderRadius: '4px', fontSize: '9px', cursor: 'not-allowed' }}>PENDING</button>
               </div>
             </div>
           </div>

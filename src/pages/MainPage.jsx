@@ -5,9 +5,10 @@ import Footer from '../components/Footer'
 import SkillCard from '../components/SkillCard'
 import RequisitionHub from '../components/RequisitionHub'
 import JsonLd from '../components/JsonLd'
-import { SKILL_CARDS } from '../data/skillCards'
 import { PAGES } from '../data/pages'
 import MagneticWrapper from '../components/MagneticWrapper'
+import SatcorpSignature from '../components/SatcorpSignature'
+import '../prestige.css'
 
 /* ── CFCM DATA ─────────────────────────────────────────────── */
 
@@ -33,45 +34,44 @@ const IDENTITY_NOT = [
 ]
 
 const ROADMAP = [
-  { time: 'Day 1–3',    phase: '1. Clarity Lock',      client: 'Receive "Project Map" summary.',         internal: 'Goal alignment & P0/P1 priority ranking.' },
-  { time: 'Day 3–7',    phase: '2. System Design',     client: 'Review "System Blueprint."',              internal: 'Architecture & phase sequencing.' },
-  { time: 'Week 1–3',   phase: '3. Core Build',        client: 'First live preview / demo.',              internal: 'MVP engine development.' },
-  { time: 'Week 3–5',   phase: '4. Connectivity',      client: 'Manual processes are replaced.',          internal: 'API & automation integration.' },
-  { time: 'Week 5–6',   phase: '5. Live Deployment',   client: 'The Go-Live Moment.',                    internal: 'Production setup & security lock.' },
-  { time: 'Week 6–8',   phase: '6. Optimization',      client: 'Friction points disappear.',              internal: 'Real-world behavior monitoring.' },
-  { time: 'Ongoing',    phase: '7. Polish & Scale',    client: 'A "Premium" system evolves.',            internal: 'UI/UX & infrastructure scaling.' },
+  { time: 'Week 1-2', phase: '1. Clarity & Scope',    client: 'Receive Project Map & 7-Point Blueprint.', internal: 'Diagnostic Lock & Architectural Engine sync.' },
+  { time: 'Week 2-4', phase: '2. Core Build',         client: 'First live preview / system connectivity.', internal: 'Workflow replacement begins (Gate 01-04).' },
+  { time: 'Week 4-5', phase: '3. Process Replacement', client: 'A manual process is fully replaced.',     internal: 'Connectivity & API hardening (Gate 05-07).' },
+  { time: 'Week 5-6', phase: '4. Deployment',         client: 'The Go-Live moment.',                      internal: 'Production deployment & Security lock.' },
+  { time: 'Week 6-8', phase: '5. Polish & Scale',     client: 'Prestige UI/UX & High-Performance.',        internal: '6-Pillar Polish Audit & Scaling setup.' },
+  { time: 'Ongoing',   phase: '6. SATCORP Signature',  client: 'Continuous optimization & certification.', internal: '10 Gates of Infrastructure Validation.' },
 ]
 
 const PHASES = [
   {
     number: '01',
     name: 'Clarity',
-    sub: 'Discovery → Truth Extraction',
-    desc: 'No building begins without absolute clarity. We translate vague ideas into ranked, monetizable business leverage maps using structured intake, problem synthesis, and a scored Priority Stack.',
+    sub: 'Diagnostic Engine → Truth Extraction',
+    desc: 'No building begins without absolute clarity. We translate vague ideas into a structured Problem Statement and Priority Stack (P0-P4) using the SATCORP Truth Extraction protocol.',
     directive: '"No Clarity → No Build"',
     color: '#00ff41',
   },
   {
     number: '02',
     name: 'Scope',
-    sub: 'System Design → Solution Architecture',
-    desc: 'Clarity defines the seed; Scope defines the tree. We auto-generate a 7-point System Blueprint, tech stack selection, and phased delivery plan — all locked to the Clarity output.',
+    sub: 'Architectural Engine → 7-Point Blueprint',
+    desc: 'The blueprint gates the build. We generate a 7-point System Blueprint covering feature extraction, data flow, and tech stack selection (Tiers 1-3) tailored to your ROI profile.',
     directive: '"Scope Controls Everything"',
     color: '#00cc33',
   },
   {
     number: '03',
     name: 'Execution',
-    sub: 'Build → Deploy → Iterate',
-    desc: 'The Onyx & Gold Standard. We move from blueprints to working systems through 8 execution gates — Core Build, Connectivity, QA, Deployment, Live Validation, Stabilization, and Handoff.',
+    sub: '8 Execution Gates → Core Build',
+    desc: 'We move through 8 strict Execution Gates. From Core Build and Connectivity to QA and Live Validation, ensuring the system replaces manual friction without breaking during growth.',
     directive: '"Execution is Phased, Not Chaotic"',
     color: '#e8b422',
   },
   {
     number: '04',
     name: 'Polish',
-    sub: 'Refinement → Scale → Prestige',
-    desc: 'The Concierge Feel layer. We transform a functional tool into a prestige asset — invisible complexity, visible simplicity. Systems must score ≥90/100 to earn the SATCORP Signature.',
+    sub: '6-Pillar Audit → SATCORP Signature',
+    desc: 'Functional is not enough. We apply a 6-Pillar Polish Score—UX, UI, Performance, Automation, Perception, and Hardening. Only assets scoring ≥90 earn the SATCORP Signature.',
     directive: '"Polish = Premium Positioning"',
     color: '#c9960c',
   },
@@ -80,23 +80,23 @@ const PHASES = [
 const HERO_STATS = [
   {
     icon: '◈',
-    value: 'Systems Concierge',
-    label: 'High-touch, end-to-end delivery from intake to infrastructure.',
+    value: 'Diagnostic Engine',
+    label: 'High-touch Truth Extraction before a single line of code is drafted.',
   },
   {
     icon: '◈',
     value: '8-Week Pipeline',
-    label: 'Structured lifecycle: Day 1 Clarity Lock → Week 8 Optimization.',
+    label: 'Structured path: Week 1-2 Clarity Lock → Week 8 Signature Delivery.',
   },
   {
     icon: '◈',
-    value: 'Phased Execution',
-    label: 'No chaos. No feature creep. Every layer is gated and validated.',
+    value: '10 Validation Gates',
+    label: 'Every system is hardened against 10 infrastructure quality gates.',
   },
   {
     icon: '◈',
     value: 'SATCORP Signature',
-    label: 'Systems scoring ≥90 on the Polish Evaluation earn elite certification.',
+    label: 'Elite certification for systems achieving a 90+ Polish Score.',
   },
 ]
 
@@ -164,7 +164,7 @@ export default function MainPage() {
             <p className="cfcm-hero-tagline">
               We don't just ship code —{' '}
               <em>we ship business maturity.</em>
-              {' '}After kickoff, your system moves through a structured build process where we design, develop, deploy, and continuously refine until it is fully operational in your business.
+              {' '}Your system moves through our <strong>Diagnostic Engine</strong> into a structured <strong>8-Week Pipeline</strong> where we design, architect, and harden every layer until it is a certified SATCORP asset.
             </p>
 
             <div className="cfcm-hero-actions">
@@ -252,9 +252,9 @@ export default function MainPage() {
         <div className="delivery-promise">
           <div className="delivery-promise-line" />
           <p className="delivery-promise-text">
-            The Delivery Promise: After kickoff, your system moves through a structured build process where we{' '}
-            <strong>design, develop, deploy, and continuously refine</strong>{' '}
-            it until it is fully operational in your business.
+            The Delivery Promise: After the <strong>Diagnostic Lock</strong>, your system moves through a gated architecture process where we{' '}
+            <strong>architect, build, deploy, and polish</strong>{' '}
+            until your business operations are frictionless.
           </p>
         </div>
       </section>
@@ -348,20 +348,62 @@ export default function MainPage() {
         </div>
       </div>
 
-      {/* ── CAPABILITY STACK ──────────────────────────────────── */}
-      <section className="capability-section" id="capability-stack">
+      {/* ── THE 6 PILLARS OF POLISH ──────────────────────────── */}
+      <section className="polish-pillars-section">
         <div className="section-heading-block">
           <div className="section-header-row">
-            <span className="section-label-text">// CAPABILITY STACK</span>
+            <span className="section-label-text">// THE 6 PILLARS OF POLISH</span>
             <div className="section-rule" />
           </div>
-          <p className="section-tagline">Select a capability to initiate service requisition.</p>
+          <p className="section-tagline">The difference between "functional" and "prestige" assets.</p>
         </div>
 
-        <div className="skills-grid">
-          {SKILL_CARDS.map(card => (
-            <SkillCard key={card.id} card={card} onSelect={setActiveCard} />
+        <div className="polish-grid">
+          {[
+            { name: 'UX Refinement', desc: 'Removing friction. Core actions take ≤ 3-5 steps.' },
+            { name: 'UI Consistency', desc: 'Absolute grid discipline and architectural authority.' },
+            { name: 'Performance', desc: 'Optimization of speed for instant user load states.' },
+            { name: 'Automation', desc: 'High workflow density to minimize human input dependency.' },
+            { name: 'Perception', desc: 'Micro-copy and animations that tell your dashboard story.' },
+            { name: 'Hardening', desc: 'Scalability measures and concurrency protection logic.' }
+          ].map((pillar, i) => (
+            <div key={pillar.name} className="pillar-item">
+              <div className="pillar-count">0{i + 1}</div>
+              <div className="pillar-name">{pillar.name}</div>
+              <p className="pillar-desc">{pillar.desc}</p>
+            </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── INFRASTRUCTURE GATES ─────────────────────────────── */}
+      <section className="infra-gates-section">
+        <div className="infra-gates-container">
+          <div className="infra-gates-content">
+            <div className="section-label-text">// INFRASTRUCTURE AUTHORITY</div>
+            <h2 className="infra-title">The 10 Gates of Validation</h2>
+            <p className="infra-desc">
+              Every build is subjected to the SATCORP Infrastructure Litmus Test. 
+              We ensure <strong>Employee Neutrality</strong>, <strong>Modular Decoupling</strong>, and <strong>Silent Recovery</strong>.
+            </p>
+            <div className="gates-list">
+              {[
+                'Stability', 'Scalability', 'Automation', 'Data Integrity', 'Observability',
+                'Readiness', 'Performance', 'Failsafe', 'Deployment', 'Qualification'
+              ].map((gate, i) => (
+                <div key={gate} className="gate-tag">
+                  <span className="gate-num">GATE {String(i + 1).padStart(2, '0')}</span>
+                  <span className="gate-label">{gate}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="infra-gates-visual">
+             <div className="signature-showcase">
+                <SatcorpSignature size={250} />
+                <div className="signature-label">CERTIFIED INFRASTRUCTURE</div>
+             </div>
+          </div>
         </div>
       </section>
 
@@ -382,9 +424,12 @@ export default function MainPage() {
               <button
                 id="cta-start-btn"
                 className="btn-gold"
-                onClick={() => document.getElementById('capability-stack')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                   // Placeholder for diagnostic entrance
+                   alert("Initiating Diagnostic Engine... Please wait for Truth Extraction.");
+                }}
               >
-                START CLARITY LOCK
+                INITIATE YOUR DIAGNOSTIC
               </button>
             </MagneticWrapper>
             <MagneticWrapper strength={0.2}>

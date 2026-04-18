@@ -9,14 +9,15 @@ export const MOCK_PROJECTS = [
     industry: 'Field Services',
     phase: 3,
     phaseLabel: 'EXECUTION',
-    gate: 3,
+    gate: 6,
     priority: 'P1',
     priorityLabel: 'Revenue',
     status: 'ACTIVE',
     startDate: '2026-03-24',
     weekInProgress: 3,
+    intakeValidation: { complete: true, defined: true, measurable: true, agreed: true },
     polishScore: null,
-    nextAction: 'Internal QA — Clear Gate 3 before deployment authorization',
+    nextAction: 'Internal QA — Clear Gate 6 (Readiness) before deployment authorization',
     modules: ['xoi-audit', 'xoi-client'],
   },
   {
@@ -32,6 +33,7 @@ export const MOCK_PROJECTS = [
     status: 'REVIEW',
     startDate: '2026-04-07',
     weekInProgress: 1,
+    intakeValidation: { complete: true, defined: true, measurable: true, agreed: true },
     polishScore: null,
     nextAction: 'Client review of System Blueprint — Awaiting sign-off to lock Scope',
     modules: ['aire-serv-proposal'],
@@ -43,14 +45,22 @@ export const MOCK_PROJECTS = [
     industry: 'Data Intelligence',
     phase: 4,
     phaseLabel: 'POLISH',
-    gate: null,
+    gate: 10,
     priority: 'P3',
     priorityLabel: 'Experience',
     status: 'POLISH',
     startDate: '2026-02-10',
     weekInProgress: 7,
-    polishScore: 87,
-    nextAction: 'Friction Score below SATCORP threshold — Simplify onboarding flow',
+    intakeValidation: { complete: true, defined: true, measurable: true, agreed: true },
+    polishScore: 84,
+    sixPillars: {
+      brand: 90,
+      consistency: 85,
+      friction: 65,  // Dragging the score down
+      prestige: 80,
+      base: 95
+    },
+    nextAction: 'Friction Score below SATCORP threshold (65/100) — Simplify onboarding flow',
     modules: [],
   },
   {
@@ -66,22 +76,25 @@ export const MOCK_PROJECTS = [
     status: 'INTAKE',
     startDate: '2026-04-14',
     weekInProgress: 0,
+    intakeValidation: { complete: true, defined: true, measurable: false, agreed: false },
     polishScore: null,
     nextAction: 'Complete 8-point Intake Form — Missing Quantifiable Impact field',
     modules: [],
   },
 ]
 
-// Execution Gate status — mapped to XOI Vision (active P3 project)
+// The 10 Gates of Infrastructure Validation (Scalable Infrastructure Guide)
 export const SYSTEM_GATES = [
-  { gate: 0, label: 'Readiness',     status: 'PASS' },
-  { gate: 1, label: 'Core Build',    status: 'PASS' },
-  { gate: 2, label: 'Connectivity',  status: 'PASS' },
-  { gate: 3, label: 'Internal QA',   status: 'ACTIVE' },
-  { gate: 4, label: 'Deployment',    status: 'PENDING' },
-  { gate: 5, label: 'Live Valid.',   status: 'PENDING' },
-  { gate: 6, label: 'Stabilize',     status: 'PENDING' },
-  { gate: 7, label: 'Handoff',       status: 'PENDING' },
+  { gate: 1,  label: 'Stability',     status: 'PASS' },
+  { gate: 2,  label: 'Scalability',   status: 'PASS' },
+  { gate: 3,  label: 'Automation',    status: 'PASS' },
+  { gate: 4,  label: 'Data Integrity',status: 'PASS' },
+  { gate: 5,  label: 'Observability', status: 'PASS' },
+  { gate: 6,  label: 'Readiness',     status: 'ACTIVE' },
+  { gate: 7,  label: 'Performance',   status: 'PENDING' },
+  { gate: 8,  label: 'Failsafe',      status: 'PENDING' },
+  { gate: 9,  label: 'Deployment',    status: 'PENDING' },
+  { gate: 10, label: 'Qualification', status: 'PENDING' },
 ]
 
 // Priority Stack aggregate across all active projects

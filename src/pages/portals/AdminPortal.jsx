@@ -135,19 +135,41 @@ function ProjectCard({ project }) {
         {project.company} · {project.industry}
       </div>
 
+      {/* Phase 1 Intake Rule: Universal Formula mock */}
+      {project.phase === 1 && (
+        <div style={{ marginBottom: '12px', padding: '10px', background: 'rgba(6, 182, 212, 0.05)', borderRadius: '6px', border: '1px dashed rgba(6, 182, 212, 0.2)' }}>
+          <div style={{ fontSize: '9px', fontFamily: 'monospace', color: '#06b6d4', marginBottom: '6px' }}>UNIVERSAL PROBLEM STATEMENT</div>
+          <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.4 }}>
+            <span style={{ color: '#fff' }}>[{project.company}]</span> is experiencing <span style={{ color: '#ef4444' }}>[client portal friction]</span> due to <span style={{ color: '#f59e0b' }}>[fragmented data]</span>, resulting in <span style={{ color: '#06b6d4' }}>[unmeasurable impact - FLAG]</span>.
+          </div>
+        </div>
+      )}
+
       {/* Polish score (Phase 4 only) */}
-      {project.polishScore !== null && (
-        <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '9px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)' }}>POLISH SCORE</span>
-          <span style={{
-            fontSize: '13px', fontWeight: '800',
-            color: project.polishScore >= 90 ? '#22c55e' : project.polishScore >= 70 ? '#f59e0b' : '#ef4444',
-          }}>
-            {project.polishScore}<span style={{ fontSize: '9px', opacity: 0.6 }}>/100</span>
-          </span>
-          {project.polishScore < 90 && (
-            <span style={{ fontSize: '9px', color: '#ef4444', fontFamily: 'monospace' }}>BELOW THRESHOLD</span>
-          )}
+      {project.polishScore !== null && project.sixPillars && (
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <span style={{ fontSize: '9px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)' }}>SIX-PILLAR POLISH</span>
+            <span style={{
+              fontSize: '13px', fontWeight: '800',
+              color: project.polishScore >= 90 ? '#22c55e' : project.polishScore >= 70 ? '#f59e0b' : '#ef4444',
+            }}>
+              {project.polishScore}<span style={{ fontSize: '9px', opacity: 0.6 }}>/100</span>
+            </span>
+            {project.polishScore < 90 && (
+              <span style={{ fontSize: '9px', color: '#ef4444', fontFamily: 'monospace' }}>BELOW THRESHOLD</span>
+            )}
+          </div>
+          {/* 5-pillar visual (Base is structural) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '3px' }}>
+            {['brand', 'consistency', 'friction', 'prestige', 'base'].map(k => (
+              <div key={k} style={{
+                height: '4px', borderRadius: '2px',
+                background: project.sixPillars[k] >= 90 ? '#22c55e' : project.sixPillars[k] >= 70 ? '#f59e0b' : '#ef4444',
+                opacity: 0.8
+              }} title={`${k}: ${project.sixPillars[k]}`} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -155,7 +177,7 @@ function ProjectCard({ project }) {
       {project.gate !== null && project.gate !== undefined && (
         <div style={{ marginBottom: '12px' }}>
           <div style={{ display: 'flex', gap: '3px', marginBottom: '5px' }}>
-            {[0,1,2,3,4,5,6,7].map(g => (
+            {[1,2,3,4,5,6,7,8,9,10].map(g => (
               <div key={g} style={{
                 height: '3px', flex: 1, borderRadius: '2px',
                 background: g < project.gate ? '#22c55e' : g === project.gate ? '#f59e0b' : 'rgba(255,255,255,0.08)',
@@ -164,7 +186,7 @@ function ProjectCard({ project }) {
             ))}
           </div>
           <div style={{ fontSize: '9px', fontFamily: 'monospace', color: 'rgba(255,255,255,0.28)' }}>
-            GATE {project.gate} / 7
+            GATE {project.gate} / 10 (INFRA)
           </div>
         </div>
       )}
@@ -323,9 +345,30 @@ export default function AdminPortal() {
               // LAYER 1: DIAGNOSTIC
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '8px', color: '#fff' }}>INTAKE ENGINE</h3>
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace', marginBottom: '18px', lineHeight: 1.5 }}>
-              Process client intel, target entities, and problems into structured JSON Objects & universal Problem Statements.
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace', marginBottom: '14px', lineHeight: 1.5 }}>
+              Process client intel into structured JSON Objects & Universal Problem Statements.
             </p>
+            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+              <div style={{ fontSize: '9px', fontFamily: 'monospace', color: '#06b6d4', marginBottom: '8px' }}>MANDATORY INTAKE VALIDATION</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {[
+                  { label: 'Is the SATCORP Intake Form complete?', check: 'complete' },
+                  { label: 'Is the core problem defined vs symptom?', check: 'defined' },
+                  { label: 'Is the impact quantifiable/measurable?', check: 'measurable' },
+                  { label: 'Has client agreed to truth extraction?', check: 'agreed' }
+                ].map((item, idx) => {
+                  const isValid = MOCK_PROJECTS[3].intakeValidation[item.check]; // Using Kira Command (INTAKE mode)
+                  return (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                       <div style={{ width: '12px', height: '12px', border: `1px solid ${isValid ? '#06b6d4' : 'rgba(255,255,255,0.2)'}`, borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                         {isValid && <span style={{ color: '#06b6d4', fontSize: '10px' }}>✓</span>}
+                       </div>
+                       <span style={{ fontSize: '10px', color: isValid ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.4)', textDecoration: isValid ? 'none' : 'line-through' }}>{item.label}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
             <button style={{
               background: '#06b6d4', color: '#000', border: 'none', padding: '10px 16px',
               borderRadius: '6px', fontSize: '10px', fontWeight: '800', letterSpacing: '0.1em', cursor: 'pointer'

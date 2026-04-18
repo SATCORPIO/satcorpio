@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { SYSTEM_GATES } from '../../data/projectData'
 
 export default function DevPortal() {
   const { currentUser, logout } = useAuth()
@@ -123,35 +124,46 @@ export default function DevPortal() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
               <div className="portal-section-label" style={{ marginBottom: '14px' }}>
-                // EXECUTION GATE TRACKER
+                // INFRASTRUCTURE VALIDATION (10 GATES)
               </div>
               <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '10px', padding: '20px' }}>
                 <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px', lineHeight: 1.5 }}>
-                  Work cannot advance until the gate above it is confirmed.
+                  Gate 10 triggers Polish Phase handoff. Gate failure results in immediate de-escalation to Execution.
                 </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {['G0: Readiness', 'G1: Core Build', 'G2: Connectivity', 'G3: QA'].map((g, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px', background: i < 2 ? 'rgba(34, 197, 94, 0.1)' : 'rgba(255,255,255,0.03)', borderRadius: '4px' }}>
-                      <span style={{ fontSize: '10px', fontFamily: 'monospace', color: i < 2 ? '#22c55e' : '#fff' }}>{g}</span>
-                      <span style={{ fontSize: '12px' }}>{i < 2 ? '✓' : '—'}</span>
-                    </div>
-                  ))}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {SYSTEM_GATES.map((gate, i) => {
+                    const isPASS = gate.status === 'PASS'
+                    const isACTIVE = gate.status === 'ACTIVE'
+                    return (
+                      <div key={i} style={{ 
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
+                        padding: '8px', 
+                        background: isPASS ? 'rgba(34, 197, 94, 0.1)' : isACTIVE ? 'rgba(245, 158, 11, 0.1)' : 'rgba(255,255,255,0.03)', 
+                        border: `1px solid ${isPASS ? 'rgba(34, 197, 94, 0.2)' : isACTIVE ? 'rgba(245, 158, 11, 0.3)' : 'transparent'}`,
+                        borderRadius: '4px' 
+                      }}>
+                        <span style={{ fontSize: '10px', fontFamily: 'monospace', color: isPASS ? '#22c55e' : isACTIVE ? '#f59e0b' : '#fff' }}>
+                          G{gate.gate}: {gate.label}
+                        </span>
+                        <span style={{ fontSize: '12px' }}>{isPASS ? '✓' : isACTIVE ? '●' : '—'}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+                
+                <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div style={{ fontSize: '9px', fontFamily: 'monospace', color: '#06b6d4', marginBottom: '8px' }}>FINAL VERDICT MECHANISM</div>
+                  <div style={{ display: 'flex', gap: '8px', fontSize: '10px' }}>
+                    <span style={{ color: '#ef4444', fontWeight: 'bold' }}>FAIL:</span>
+                    <span style={{ color: 'rgba(255,255,255,0.6)' }}>De-escalate to Execution</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px', fontSize: '10px', marginTop: '4px' }}>
+                    <span style={{ color: '#22c55e', fontWeight: 'bold' }}>PASS:</span>
+                    <span style={{ color: 'rgba(255,255,255,0.6)' }}>SATCORP Signature Status</span>
+                  </div>
                 </div>
               </div>
             </div>
-
-             <div style={{ background: 'rgba(6, 182, 212, 0.05)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '10px', padding: '20px' }}>
-              <div className="portal-section-label" style={{ marginBottom: '14px', color: '#06b6d4' }}>
-                // INFRASTRUCTURE VALIDATION
-              </div>
-               <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace', marginBottom: '16px' }}>
-                 10-gate technical lock. Gate 10 triggers Polish Phase handoff.
-               </p>
-               <button style={{
-                  background: '#06b6d4', color: '#000', border: 'none', padding: '10px 16px', width: '100%',
-                  borderRadius: '6px', fontSize: '10px', fontWeight: '800', letterSpacing: '0.1em', cursor: 'pointer'
-                }}>RUN INFRA AUDIT →</button>
-             </div>
           </div>
         </section>
 
