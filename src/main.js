@@ -7,7 +7,7 @@
    Blender project; the craft, HUD and telemetry are the mission-control frame
    built around them.
 
-   Scale is deliberately non-literal — the craft are drawn large against the
+   Scale is deliberately non-literal the craft are drawn large against the
    planet so they stay readable as tracking targets.
    ========================================================================== */
 import { Clock, Group, Raycaster, Sphere, Vector2, Vector3, Color } from 'three';
