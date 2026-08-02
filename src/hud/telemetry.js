@@ -2,7 +2,7 @@ import { PR } from '../core/config.js';
 
 /* Readouts are derived from the real camera rig rather than faked, so the
    numbers move with what the viewer is actually doing. Only the link-quality
-   meters are invented — there is no downlink to measure. */
+   meters are invented   there is no downlink to measure. */
 export function createTelemetry() {
   const lnkEl = document.getElementById('s-lnk');
   const sigEl = document.getElementById('t-sig');
