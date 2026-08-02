@@ -1,4 +1,4 @@
-# SATCORP — Namtar Orbital
+# SATCORP Namtar Orbital
 
 An interactive orbital view of the NAMTAR planetary system, used as the navigation
 surface for SATCORP's four divisions. Drag to orbit, click a craft to open its
@@ -21,8 +21,8 @@ npm run dev        # http://localhost:5173
 npm run build      # -> dist/
 ```
 
-The previous version — the whole site as one 1,292-line HTML file on three.js
-r128 — is kept at [`reference/legacy-index.html`](reference/legacy-index.html).
+The previous version the whole site as one 1,292-line HTML file on three.js
+r128 is kept at [`reference/legacy-index.html`](reference/legacy-index.html).
 It is not built or served; it is there because the HUD, content model, camera rig
 and craft geometry in this project were ported from it, and it is the thing to
 diff against when something behaves differently than it used to.
@@ -35,7 +35,7 @@ describe shapes three.js can generate in a line of code. What actually crosses
 over is the **maps** and the **shader parameters**.
 
 `blender_rebuild.py` is the source of truth for the look. Its node graphs were
-translated by hand into GLSL, keeping the same constants — the roughness split
+translated by hand into GLSL, keeping the same constants the roughness split
 between land and water, the night-side terminator falloff, the ring's density
 ramps, the atmosphere's limb tint. When something looks wrong, that file is the
 reference to check against, along with the stills in the NAMTAR project's
@@ -63,8 +63,8 @@ node scripts/verify-textures.mjs # checks no channel came out empty
 
 - Bakes Talos' Displace modifier into a normal map, so the moon ships as a smooth
   48×32 sphere instead of a displaced 384×192 one.
-- Emits a small height map for Veyra. Its relief is 1.2× its own radius — it is a
-  captured fragment, not a sphere — so a normal map cannot fake its silhouette
+- Emits a small height map for Veyra. Its relief is 1.2× its own radius it is a
+  captured fragment, not a sphere so a normal map cannot fake its silhouette
   and the vertices are displaced on the CPU at load instead.
 - Re-projects the Milky Way band from `build_starfield`'s flat compositor
   backdrop into an equirect image that can sit on a sky sphere. The 14,000 stars
