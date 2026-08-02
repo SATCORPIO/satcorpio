@@ -9,7 +9,7 @@ import { scramble } from './scramble.js';
  * because the planet is the only object a viewer can click that is not a craft,
  * and what it opens is about the game rather than a division.
  *
- * The markup is built once — the content is static — so opening is a class
+ * The markup is built once   the content is static   so opening is a class
  * toggle and costs nothing on a phone.
  */
 export function createNamtarCard() {
