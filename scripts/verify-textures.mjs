@@ -4,7 +4,7 @@
  * This exists because a silently-zeroed channel is invisible until it reaches a
  * shader: the mask's water channel was destroyed once already by sharp's
  * alpha premultiplication, and the failure looked like a 0.04 MB file rather
- * than an error. Coverage is cos(lat)-weighted — an equirect grid devotes as
+ * than an error. Coverage is cos(lat)-weighted   an equirect grid devotes as
  * many texels to the poles as to the equator, so an unweighted mean overstates
  * anything polar (ice) and understates everything else.
  *
@@ -16,18 +16,18 @@ import sharp from 'sharp';
 const OUT = path.resolve(import.meta.dirname, '../public/tex');
 
 /* Channel names, plus an expected coverage for channel 0 where the generators
-   report one. `at` is the threshold the generator used to define coverage —
+   report one. `at` is the threshold the generator used to define coverage  
    clouds count density > 0.10, not > 0.5, so checking them at 0.5 would flag a
    correct map. */
 const FILES = [
   { f: 'albedo', ch: ['R', 'G', 'B'] },
   { f: 'normal', ch: ['X', 'Y', 'Z'] },
   { f: 'mask', ch: ['water', 'ice', 'veg'],
-    expect: { ch: 0, at: 0.5, min: 45, max: 70, of: 'spec sec.4 — 58% ocean' } },
+    expect: { ch: 0, at: 0.5, min: 45, max: 70, of: 'spec sec.4   58% ocean' } },
   { f: 'clouds', ch: ['cover', 'top', 'convect'],
-    expect: { ch: 0, at: 0.1, min: 25, max: 50, of: 'gen_cloud_moon_maps — 38.5% coverage' } },
-  { f: 'night', ch: ['lights', 'rift', '—'],
-    expect: { ch: 0, at: 0.05, min: 0.02, max: 3, of: 'gen_planet_maps — 0.13% of surface lit' } },
+    expect: { ch: 0, at: 0.1, min: 25, max: 50, of: 'gen_cloud_moon_maps   38.5% coverage' } },
+  { f: 'night', ch: ['lights', 'rift', ' '],
+    expect: { ch: 0, at: 0.05, min: 0.02, max: 3, of: 'gen_planet_maps   0.13% of surface lit' } },
   { f: 'talos_albedo', ch: ['R', 'G', 'B'] },
   { f: 'talos_normal', ch: ['X', 'Y', 'Z'] },
   { f: 'milkyway', ch: ['R', 'G', 'B'] },
@@ -41,7 +41,7 @@ for (const { f, ch, expect } of FILES) {
   const { data, info } = await img.raw().toBuffer({ resolveWithObject: true });
 
   if (meta.hasAlpha) {
-    console.log(`${f}: FAIL — has an alpha channel; packed masks must be alpha-free`);
+    console.log(`${f}: FAIL   has an alpha channel; packed masks must be alpha-free`);
     bad++;
     continue;
   }
