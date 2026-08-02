@@ -10,7 +10,7 @@ moons all come from the NAMTAR Blender project; the spacecraft, HUD and telemetr
 are the mission-control frame built around them.
 
 > The NAMTAR project (the `.blend` scene, its Python generators and 283 MB of 8K
-> source maps) is a **separate local project and is not part of this repo** —
+> source maps) is a **separate local project and is not part of this repo**
 > paths to it below are from the machine this was authored on. Everything needed
 > to build and deploy the site is committed here; you only need that project to
 > regenerate textures from scratch.
