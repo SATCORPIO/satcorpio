@@ -61,7 +61,7 @@ export function createComposer(renderer, scene, camera) {
   const size = renderer.getDrawingBufferSize(new Vector2());
   /* UnrealBloomPass is five downsample/upsample pairs. Running the chain at half
      linear resolution on mobile quarters every one of those fills, and bloom is
-     a blur — there is nothing in it sharp enough to miss. */
+     a blur   there is nothing in it sharp enough to miss. */
   const bloomScale = MOBILE ? 0.5 : 1;
 
   /* Half float keeps the scene linear and over-range until OutputPass, which is
@@ -75,7 +75,7 @@ export function createComposer(renderer, scene, camera) {
   const composer = new EffectComposer(renderer, target);
   composer.addPass(new RenderPass(scene, camera));
 
-  /* Namtar is a dark world — the albedo map averages about 10% reflectance,
+  /* Namtar is a dark world   the albedo map averages about 10% reflectance,
      because open ocean is genuinely almost black. Bloom tuned for the old
      procedural planet swamped it, so the threshold sits high enough that only
      genuinely bright things glow: sun glint off water, cloud tops, the rift,
@@ -83,7 +83,7 @@ export function createComposer(renderer, scene, camera) {
   const bloom = new UnrealBloomPass(
     new Vector2(size.x * bloomScale, size.y * bloomScale),
     0.30,    // strength
-    0.35,    // radius — a wide radius smears cloud white across the whole disc
+    0.35,    // radius   a wide radius smears cloud white across the whole disc
     0.72     // threshold
   );
   composer.addPass(bloom);
