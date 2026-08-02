@@ -8,12 +8,12 @@ export const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const PR = 30;
 
 /* The Blender scene works at 1 unit = 1000 km with a planet radius of 8.25
-   (16,500 km diameter, spec sec.2). Everything imported from it — ring radii,
-   shell altitudes, moon sizes — is authored in those units and converted here. */
+   (16,500 km diameter, spec sec.2). Everything imported from it   ring radii,
+   shell altitudes, moon sizes   is authored in those units and converted here. */
 export const BU = PR / 8.25;
 
 /* Cloud shell altitude, straight from blender_rebuild.py. The atmosphere's
-   1.032 is deliberately not mirrored here — that column is only ~1 scene unit
+   1.032 is deliberately not mirrored here   that column is only ~1 scene unit
    thick and would be invisible on screen, so atmosphere.js derives its own
    shell from an exaggerated scale height and documents why. */
 export const CLOUD_TOP = 1.0105;
@@ -53,7 +53,7 @@ export const MOONS = {
   veyra: { radius: 0.125 * BU, orbit: 205, inc: -0.14, phase: 4.4, speed: 0.0045 },
 };
 
-/* Two texture tiers. Anything absent from the mobile set falls back to desktop —
+/* Two texture tiers. Anything absent from the mobile set falls back to desktop  
    talos_normal is 0.19 MB and has no cheaper version worth cutting. */
 export const MOBILE = matchMedia('(max-width: 900px)').matches;
 export const TEX_DIR = import.meta.env.BASE_URL + 'tex/';
@@ -68,14 +68,14 @@ export const COARSE = matchMedia('(pointer: coarse)').matches;
 /* Tessellation budget. The planet and its two shells are the heaviest geometry
    on screen and are drawn every frame at full-disc size, so this is where a
    phone gets its milliseconds back. At the default 225-unit range the mobile
-   planet silhouette is still smooth — the segments only start to show if you
+   planet silhouette is still smooth   the segments only start to show if you
    zoom past ~110, which the camera clamp does not allow on the limb. */
 export const SEG = MOBILE
   ? { planet: [96, 64], shell: [64, 44], ring: 256 }
   : { planet: [128, 96], shell: [96, 64], ring: 512 };
 
 /* Device pixel ratio ceiling. A modern phone reports 3, which means nine times
-   the fragments of a CSS pixel for a full-screen shader chain — far past the
+   the fragments of a CSS pixel for a full-screen shader chain   far past the
    point where anyone can see the difference on a 6-inch panel. The renderer
    starts here and the frame-time governor in main.js may lower it further. */
 export const MAX_DPR = MOBILE ? 1.25 : 1.6;
