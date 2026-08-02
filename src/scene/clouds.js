@@ -59,7 +59,7 @@ export function createClouds(tex) {
            profile decides opacity, so reading it straight as alpha puts cloud
            everywhere the map is merely non-zero. Thresholding well up the range
            is what restores the gaps between systems that the reference render
-           has — the deck should cover roughly a third of the disc, not all of
+           has   the deck should cover roughly a third of the disc, not all of
            it. */
         vec3 c = texture2D(uMap, vUv).rgb;
         /* Feathered wide and then gamma'd rather than thresholded tight. A
