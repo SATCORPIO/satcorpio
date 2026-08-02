@@ -22,9 +22,9 @@ export function createRouter({ onSelect }) {
 
   function renderPanel(id) {
     const d = DATA[id];
-    const subject = encodeURIComponent(`${d.name} — ${d.cta}`);
+    const subject = encodeURIComponent(`${d.name}   ${d.cta}`);
     panel.innerHTML = `<i class="edge"></i><i class="wipe"></i>
-      <div class="eyebrow"><span id="p-eye">${d.call} — ${d.name.toUpperCase()}</span></div>
+      <div class="eyebrow"><span id="p-eye">${d.call}   ${d.name.toUpperCase()}</span></div>
       <h2 id="p-title">${d.title}</h2><p class="lede">${d.lede}</p>
       ${d.groups.map((g) => `<div class="grp"><h3>${g.h}</h3><dl class="rows">
         ${g.rows.map((r) => `<div class="row"><dt>${r[0]}</dt><dd>${r[1]}<em>${r[2]}</em></dd></div>`).join('')}
@@ -35,7 +35,7 @@ export function createRouter({ onSelect }) {
     panel.classList.remove('sw');
     void panel.offsetWidth;                       // restart the wipe animation
     panel.classList.add('sw');
-    scramble(document.getElementById('p-eye'), `${d.call} — ${d.name.toUpperCase()}`, 420);
+    scramble(document.getElementById('p-eye'), `${d.call}   ${d.name.toUpperCase()}`, 420);
     scramble(document.getElementById('p-title'), d.title, 620);
   }
 
