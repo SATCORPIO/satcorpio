@@ -1,7 +1,7 @@
 import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from 'three';
 
 /* Spacecraft textures stay procedural. They are small, tile, and never need to
-   match an authored asset — baking them would add files to the payload for no
+   match an authored asset   baking them would add files to the payload for no
    visual gain. */
 
 function canvas(w, h) {
