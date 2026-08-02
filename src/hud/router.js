@@ -68,6 +68,8 @@ export function createRouter({ onSelect }) {
   document.getElementById('back').onclick = () => go('satcorp');
 
   addEventListener('keydown', (e) => {
+    // The Namtar briefing owns the keyboard while it is up.
+    if (document.body.classList.contains('modal-up')) return;
     if (e.key === 'Escape' && current !== 'satcorp') { go('satcorp'); return; }
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
     if (/^(INPUT|TEXTAREA)$/.test(document.activeElement?.tagName ?? '')) return;

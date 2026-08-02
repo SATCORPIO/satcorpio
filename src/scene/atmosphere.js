@@ -1,5 +1,5 @@
 import { Mesh, SphereGeometry, ShaderMaterial, Vector3, FrontSide, AdditiveBlending } from 'three';
-import { PR } from '../core/config.js';
+import { PR, SEG } from '../core/config.js';
 import { VALUE_NOISE_3D } from '../shaders/noise.js';
 
 /* Blender's scale heights are fractions of the planet radius: 0.0042 is the
@@ -184,7 +184,7 @@ export function createAtmosphere() {
     `,
   });
 
-  const mesh = new Mesh(new SphereGeometry(PR * SHELL, 96, 64), material);
+  const mesh = new Mesh(new SphereGeometry(PR * SHELL, ...SEG.shell), material);
   mesh.userData.uniforms = uniforms;
   mesh.renderOrder = 2;      // after the surface and the cloud deck
   return mesh;

@@ -1,5 +1,5 @@
 import { Mesh, SphereGeometry, MeshStandardMaterial, Vector3, ShaderChunk } from 'three';
-import { PR } from '../core/config.js';
+import { PR, SEG } from '../core/config.js';
 import { VALUE_NOISE_3D } from '../shaders/noise.js';
 
 /* String surgery on three's shaders is silent when it misses: the material
@@ -119,7 +119,7 @@ export function createSurface(tex) {
     shader.fragmentShader = frag;
   };
 
-  const mesh = new Mesh(new SphereGeometry(PR, 128, 96), material);
+  const mesh = new Mesh(new SphereGeometry(PR, ...SEG.planet), material);
   mesh.receiveShadow = true;
   mesh.userData.uniforms = uniforms;
   return mesh;

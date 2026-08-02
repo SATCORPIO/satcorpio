@@ -10,9 +10,11 @@
    Scale is deliberately non-literal — the craft are drawn large against the
    planet so they stay readable as tracking targets.
    ========================================================================== */
-import { Clock, Group, Raycaster, Vector2, Vector3, Color } from 'three';
+import { Clock, Group, Raycaster, Sphere, Vector2, Vector3, Color } from 'three';
 
-import { REDUCED, PR, SUNDIR, CRAFT_ORBITS } from './core/config.js';
+import {
+  REDUCED, PR, SUNDIR, CRAFT_ORBITS, COARSE, MAX_DPR, MIN_DPR,
+} from './core/config.js';
 import { DATA } from './content/data.js';
 
 import { createRenderer, createLights } from './scene/renderer.js';
@@ -32,6 +34,7 @@ import { createBoot } from './hud/boot.js';
 import { createTelemetry } from './hud/telemetry.js';
 import { createTag, createPin } from './hud/callouts.js';
 import { createLandmarks } from './hud/landmarks.js';
+import { createNamtarCard } from './hud/namtar.js';
 
 const { renderer, scene, camera } = createRenderer();
 const cv = renderer.domElement;
@@ -110,19 +113,73 @@ let py = 0;
 let moved = 0;
 const ptr = new Vector2(-9, -9);
 
-cv.addEventListener('pointerdown', (e) => {
+/* Live pointers, keyed by id. One is a drag, two are a pinch. Tracking them in
+   a map rather than with a boolean is what lets a phone zoom at all — the wheel
+   event below has no touch equivalent. */
+const pointers = new Map();
+let pinch = 0;
+
+function spread() {
+  const [a, b] = [...pointers.values()];
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+function zoom(d) {
+  const lo = focus ? 9 : 95;
+  const hi = focus ? 34 : 430;
+  cam.tRad = Math.max(lo, Math.min(hi, cam.tRad + d));
+}
+
+function aim(e) {
+  ptr.x = (e.clientX / innerWidth) * 2 - 1;
+  ptr.y = -(e.clientY / innerHeight) * 2 + 1;
+}
+
+function startDrag(x, y) {
   drag = true;
   moved = 0;
-  px = e.clientX;
-  py = e.clientY;
+  px = x;
+  py = y;
   cv.classList.add('dragging');
+}
+
+cv.addEventListener('pointerdown', (e) => {
+  pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
   cv.setPointerCapture(e.pointerId);
+
+  if (pointers.size === 2) {
+    // Second finger down: stop orbiting, start pinching.
+    drag = false;
+    cv.classList.remove('dragging');
+    pinch = spread();
+    return;
+  }
+  // Three or more: no gesture. Drop the pinch reference so coming back down to
+  // two fingers re-arms against where they are now rather than jumping.
+  if (pointers.size > 2) { pinch = 0; return; }
+
+  startDrag(e.clientX, e.clientY);
+  /* Touch has no hover, so the pick a mouse would have done on its way in has
+     to happen here — otherwise a tap lands with nothing under the cursor and
+     the click below has nothing to select. */
+  aim(e);
+  if (!focus) pick();
 });
-cv.addEventListener('pointerup', () => {
-  drag = false;
-  cv.classList.remove('dragging');
-});
+
 cv.addEventListener('pointermove', (e) => {
+  if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+  if (pointers.size === 2) {
+    const d = spread();
+    /* Pinching apart pulls the camera in, which is the gesture everyone
+       expects. The rates put a full-screen pinch at roughly two-thirds of each
+       range — enough to cross most of it in one gesture, not so much that a
+       small adjustment slams into a clamp. */
+    if (pinch) zoom((pinch - d) * (focus ? 0.055 : 0.55));
+    pinch = d;
+    return;
+  }
+
   if (drag) {
     const dx = e.clientX - px;
     const dy = e.clientY - py;
@@ -132,29 +189,53 @@ cv.addEventListener('pointermove', (e) => {
     px = e.clientX;
     py = e.clientY;
   }
-  ptr.x = (e.clientX / innerWidth) * 2 - 1;
-  ptr.y = -(e.clientY / innerHeight) * 2 + 1;
+  aim(e);
 });
+
+function release(e) {
+  pointers.delete(e.pointerId);
+  if (pointers.size < 2) pinch = 0;
+  if (pointers.size === 1) {
+    // Coming out of a pinch with a finger still down: hand it the drag, and
+    // treat it as a fresh gesture so the leftover travel is not a click.
+    const [p] = [...pointers.values()];
+    startDrag(p.x, p.y);
+    moved = 99;
+  } else if (pointers.size === 0) {
+    drag = false;
+    cv.classList.remove('dragging');
+  }
+}
+cv.addEventListener('pointerup', release);
+cv.addEventListener('pointercancel', release);
+
 addEventListener('wheel', (e) => {
-  const lo = focus ? 9 : 95;
-  const hi = focus ? 34 : 430;
-  cam.tRad = Math.max(lo, Math.min(hi, cam.tRad + e.deltaY * (focus ? 0.02 : 0.1)));
+  zoom(e.deltaY * (focus ? 0.02 : 0.1));
 }, { passive: true });
 
 /* ----------------------------------------------------------------- picking */
 const ray = new Raycaster();
 const tag = createTag();
 const pin = createPin();
+const CRAFT_GROUPS = CRAFT.map((c) => c.group);
+/* Namtar is a sphere of known radius at the origin, so hit-testing it is one
+   quadratic rather than the ~12k ray-triangle tests a mesh raycast would run
+   every frame. */
+const NAMTAR = new Sphere(new Vector3(0, 0, 0), PR);
+const hitPoint = new Vector3();
 let hover = null;
+let onPlanet = false;
 
 cv.addEventListener('click', () => {
-  // A drag that ends over a craft is not a click on it.
-  if (hover && moved < 8) router.go(hover.id);
+  // A drag that ends over something is not a click on it.
+  if (moved >= 8) return;
+  if (hover) router.go(hover.id);
+  else if (onPlanet && !focus) namtar.open();
 });
 
 function pick() {
   ray.setFromCamera(ptr, camera);
-  const hits = ray.intersectObjects(CRAFT.map((c) => c.group), true);
+  const hits = ray.intersectObjects(CRAFT_GROUPS, true);
   let found = null;
   if (hits.length) {
     let o = hits[0].object;
@@ -165,15 +246,28 @@ function pick() {
   }
   if (found !== hover) {
     hover = found;
-    cv.classList.toggle('over', !!found);
     if (found) tag.lock(DATA[found.id]);
     else tag.clear();
   }
   if (hover) tag.place(hover.group.position, camera);
+
+  // A craft in front of the disc wins; the planet is only pickable behind it.
+  onPlanet = !found && ray.ray.intersectSphere(NAMTAR, hitPoint) !== null;
+  cv.classList.toggle('over', !!found || onPlanet);
 }
 
 /* ------------------------------------------------------------------- HUD */
 const telemetry = createTelemetry();
+const namtar = createNamtarCard();
+
+/* The limb callout is the discoverable half of the planet click — the hit area
+   itself is the whole disc, which nothing on screen announces. */
+document.getElementById('pin').querySelector('.bx').addEventListener('click', () => namtar.open());
+
+// A phone has no cursor to put over anything, so the deck says "tap" instead.
+document.getElementById('deck-hint').textContent = COARSE
+  ? 'DRAG TO ORBIT · PINCH TO ZOOM · TAP A CRAFT OR NAMTAR'
+  : 'DRAG TO ORBIT · SELECT A CRAFT OR NAMTAR';
 
 const router = createRouter({
   onSelect(id) {
@@ -186,6 +280,7 @@ const router = createRouter({
       // request should stop it here too, not only in the focused view.
       tOrbitScale = REDUCED ? 0 : 1;
     } else {
+      namtar.close();
       focus = CRAFT.find((c) => c.id === id);
       cam.tRad = 15;
       cam.tPhi = 1.32;
@@ -213,10 +308,48 @@ const tmp = new Vector3();
 const sunLocal = new Vector3();
 const TAU = Math.PI * 2;
 
+/* Resolution governor.
+   Every phone is a different GPU and none of them say so, and the tiers in
+   config.js are a guess made from viewport width. This measures instead: a
+   second of frame times, and if the device cannot hold the target the
+   framebuffer shrinks a quarter step.
+
+   It only ever steps down. A ratio that walks both ways oscillates — dropping
+   resolution raises the frame rate, which is exactly the condition for putting
+   it back — and a scene that visibly resamples itself once a second is worse
+   than one that is simply a little soft. Two steps is the floor, and the first
+   three seconds are ignored so texture uploads and shader compilation do not
+   get mistaken for a slow GPU. */
+const DPR_CEIL = Math.min(devicePixelRatio, MAX_DPR);
+let dpr = DPR_CEIL;
+let perfT = 0;
+let perfN = 0;
+let warmup = 3;
+
+function governor(dt) {
+  if (dpr <= MIN_DPR) return;
+  if (warmup > 0) { warmup -= dt; return; }
+  perfT += dt;
+  perfN++;
+  if (perfT < 1) return;
+  const fps = perfN / perfT;
+  perfT = 0;
+  perfN = 0;
+  if (fps >= 40) return;
+  dpr = Math.max(MIN_DPR, dpr - 0.25);
+  renderer.setPixelRatio(dpr);
+  composer.resize();
+}
+
 function tick() {
   requestAnimationFrame(tick);
+  /* A backgrounded tab already stops getting frames, but an on-screen page
+     under a native share sheet or a locked phone does not always — and this
+     scene is not cheap to keep drawing to nobody. */
+  if (document.hidden) { clock.getDelta(); return; }
   const dt = Math.min(clock.getDelta(), 0.05);
   const t = clock.elapsedTime;
+  governor(dt);
   orbitScale += (tOrbitScale - orbitScale) * Math.min(1, dt * 2.4);
 
   /* The surface shader needs the sun in the planet's own frame, because the
@@ -316,11 +449,42 @@ function tick() {
   composer.render(t);
 }
 
-addEventListener('resize', () => {
-  camera.aspect = innerWidth / innerHeight;
+/* Mobile browsers fire resize on every pixel of URL-bar travel, and each one
+   here reallocates the composer's half-float target plus five bloom mips —
+   dozens of times during one flick. Settling first turns that into a single
+   reallocation; in the interim the canvas is CSS-stretched over the few pixels
+   that changed, which nobody can see and the next frame corrects. */
+let sizeW = innerWidth;
+let sizeH = innerHeight;
+let settle = 0;
+
+function resize() {
+  settle = 0;
+  /* Never divide by a zero height. A viewport can momentarily report 0 — a
+     backgrounded tab, an iOS view transition, a hidden iframe — and the
+     resulting NaN aspect makes projectionMatrixInverse NaN as well. That state
+     is permanent: unproject stops working, so picking answers "yes" to every
+     ray, and nothing later puts it back. The empty viewport is transient; the
+     damage is not, so it is refused here. */
+  const w = Math.max(1, innerWidth);
+  const h = Math.max(1, innerHeight);
+  if (w === sizeW && h === sizeH) return;
+  sizeW = w;
+  sizeH = h;
+  camera.aspect = w / h;
   camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
+  renderer.setSize(w, h);
   composer.resize();
+}
+
+addEventListener('resize', () => {
+  clearTimeout(settle);
+  settle = setTimeout(resize, 140);
+});
+// The new metrics are not in yet when this fires on iOS.
+addEventListener('orientationchange', () => {
+  clearTimeout(settle);
+  settle = setTimeout(resize, 260);
 });
 
 router.start();

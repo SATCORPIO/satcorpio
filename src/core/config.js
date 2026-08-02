@@ -59,3 +59,24 @@ export const MOBILE = matchMedia('(max-width: 900px)').matches;
 export const TEX_DIR = import.meta.env.BASE_URL + 'tex/';
 export const TEX_TIER = MOBILE ? TEX_DIR + '2k/' : TEX_DIR;
 export const TEX_ONLY_DESKTOP = new Set(['talos_normal']);
+
+/* Touch, as opposed to small: a phone needs bigger hit targets and a pinch
+   gesture whatever its viewport reports, and a narrow desktop window needs
+   neither. Kept separate from MOBILE, which is about GPU budget. */
+export const COARSE = matchMedia('(pointer: coarse)').matches;
+
+/* Tessellation budget. The planet and its two shells are the heaviest geometry
+   on screen and are drawn every frame at full-disc size, so this is where a
+   phone gets its milliseconds back. At the default 225-unit range the mobile
+   planet silhouette is still smooth — the segments only start to show if you
+   zoom past ~110, which the camera clamp does not allow on the limb. */
+export const SEG = MOBILE
+  ? { planet: [96, 64], shell: [64, 44], ring: 256 }
+  : { planet: [128, 96], shell: [96, 64], ring: 512 };
+
+/* Device pixel ratio ceiling. A modern phone reports 3, which means nine times
+   the fragments of a CSS pixel for a full-screen shader chain — far past the
+   point where anyone can see the difference on a 6-inch panel. The renderer
+   starts here and the frame-time governor in main.js may lower it further. */
+export const MAX_DPR = MOBILE ? 1.25 : 1.6;
+export const MIN_DPR = MOBILE ? 0.75 : 1;

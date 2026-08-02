@@ -3,8 +3,9 @@
    from here. */
 export const DATA = {
   satcorp: {
+    /* No `title`: the orbital view has no panel, and its deck leads with the
+       lede instead of a headline. Every other division needs one. */
     call: 'STATION', name: 'SATCORP', color: '#9FE0F5',
-    title: 'Four divisions in a shared orbit.',
     lede: 'A creative and technology operation. Brand systems, live community platforms, automation, and the architecture that ties them together — run as one practice instead of four vendors.',
     groups: [
       { h: 'Method — CFCM', rows: [
@@ -78,6 +79,37 @@ export const DATA = {
 export const ORDER = ['satcorp', 'kira', 'pulse', 'kyrax', 'anu'];
 
 export const CONTACT = 'anu@satcorp.io';
+
+/* Namtar itself is clickable, and this is what opens. The planetary figures are
+   from NAMTAR_Planetary_Design_Document sec.2/9; the rest describes the game
+   being built on top of that world. This is the only place that copy lives —
+   edit it here and both the modal and its stat grid follow. */
+export const NAMTAR_GAME = {
+  eyebrow: 'SATCORP · INTERACTIVE',
+  title: 'THE NAMTAR GAME',
+  tagline: 'The world you are orbiting, from the ground.',
+  body: [
+    'Namtar is a rocky oceanic super-Earth — 1.3× Earth across, 1.2 G at the '
+    + 'surface, 58% ocean, and geologically still very much awake. Everything on '
+    + 'this screen is built from its survey data: the same maps, the same debris '
+    + 'arc, the same two moons.',
+    'The game drops you underneath all of it. You make landfall on a world that '
+    + 'has been mapped from orbit and walked by almost no one — the volcanic '
+    + 'fracture that glows through the night side, the closed basin holding the '
+    + 'densest life signal on the planet, and a desert continent with no surface '
+    + 'water at all. Survey it, survive it, and work out what the earlier surveys '
+    + 'missed.',
+  ],
+  stats: [
+    ['WORLD', 'Namtar · super-Earth'],
+    ['GRAVITY', '1.2 G'],
+    ['SURFACE', '58% ocean · 5 plates'],
+    ['SATELLITES', 'Talos · Veyra'],
+    ['BUILT BY', 'SATCORP · Ki-Ra Studios'],
+    ['STATUS', 'In development'],
+  ],
+  cta: { label: 'GET DEVELOPMENT UPDATES', subject: 'The Namtar Game — updates' },
+};
 
 /* Surface features, from NAMTAR_Planetary_Design_Document sec.10. Coordinates
    come from textures/namtar_landmarks.json at load; only `ring` is positioned

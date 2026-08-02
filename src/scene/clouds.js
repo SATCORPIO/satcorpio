@@ -1,5 +1,5 @@
 import { Mesh, SphereGeometry, ShaderMaterial, Vector3, DoubleSide } from 'three';
-import { PR, CLOUD_TOP } from '../core/config.js';
+import { PR, CLOUD_TOP, SEG } from '../core/config.js';
 
 /**
  * The cloud deck.
@@ -116,7 +116,7 @@ export function createClouds(tex) {
     `,
   });
 
-  const mesh = new Mesh(new SphereGeometry(PR * CLOUD_TOP, 96, 64), material);
+  const mesh = new Mesh(new SphereGeometry(PR * CLOUD_TOP, ...SEG.shell), material);
   mesh.userData.uniforms = uniforms;
   return mesh;
 }

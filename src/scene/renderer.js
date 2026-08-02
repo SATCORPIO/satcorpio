@@ -1,9 +1,9 @@
 import {
   WebGLRenderer, Scene, PerspectiveCamera, PMREMGenerator, CanvasTexture,
   EquirectangularReflectionMapping, SRGBColorSpace, AgXToneMapping,
-  DirectionalLight, HemisphereLight, PCFSoftShadowMap,
+  DirectionalLight, HemisphereLight, PCFSoftShadowMap, PCFShadowMap,
 } from 'three';
-import { SUNDIR, RIM_LAYER, MOBILE } from '../core/config.js';
+import { SUNDIR, RIM_LAYER, MOBILE, MAX_DPR } from '../core/config.js';
 
 function canvas(w, h) {
   const c = document.createElement('canvas');
@@ -16,8 +16,14 @@ function canvas(w, h) {
    planet deliberately takes almost none of this (envMapIntensity ~0.14) — a
    world lit by its environment map loses the hard terminator. */
 function envTexture() {
-  const c = canvas(1024, 512);
+  /* Half size on mobile. This is only ever read through PMREM's blurred
+     mip chain, so the detail is thrown away anyway — but generating it costs
+     real time on the first frame, which on a phone is the frame the viewer is
+     already waiting on. */
+  const S = MOBILE ? 0.5 : 1;
+  const c = canvas(1024 * S, 512 * S);
   const x = c.getContext('2d');
+  x.scale(S, S);
   const g = x.createLinearGradient(0, 0, 0, 512);
   g.addColorStop(0, '#05070c');
   g.addColorStop(0.5, '#0a1018');
@@ -36,9 +42,10 @@ function envTexture() {
   s.addColorStop(1, 'rgba(255,225,170,0)');
   x.fillStyle = s;
   x.fillRect(0, 0, 1024, 512);
-  for (let i = 0; i < 700; i++) {
+  // one device pixel each, whatever the scale the canvas was authored at
+  for (let i = 0; i < 700 * S; i++) {
     x.fillStyle = `rgba(255,255,255,${Math.random() * 0.5})`;
-    x.fillRect(Math.random() * 1024, Math.random() * 512, 1, 1);
+    x.fillRect(Math.random() * 1024, Math.random() * 512, 1 / S, 1 / S);
   }
   const t = new CanvasTexture(c);
   t.mapping = EquirectangularReflectionMapping;
@@ -47,8 +54,11 @@ function envTexture() {
 }
 
 export function createRenderer() {
-  const renderer = new WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE ? 1.5 : 1.6));
+  /* MSAA on the default framebuffer is wasted here — every pass after the first
+     renders into the composer's own target, which carries its own `samples`.
+     Asking for it anyway costs a phone an extra multisampled backbuffer. */
+  const renderer = new WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, MAX_DPR));
   renderer.setSize(innerWidth, innerHeight);
   /* AgX is what the Blender renders were tone-mapped with, so matching it here
      is what keeps the limb and the terminator looking like the stills. */
@@ -59,11 +69,16 @@ export function createRenderer() {
      why the cloud tops do not blow out at this setting. */
   renderer.toneMappingExposure = 1.75;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = PCFSoftShadowMap;
+  /* The soft filter takes many taps per fragment. Shadows only carry real
+     information in the focused close-up, where the craft is a handful of boxes,
+     so a phone gets the cheap filter and a smaller map instead of losing them. */
+  renderer.shadowMap.type = MOBILE ? PCFShadowMap : PCFSoftShadowMap;
   document.body.appendChild(renderer.domElement);
 
   const scene = new Scene();
-  const camera = new PerspectiveCamera(34, innerWidth / innerHeight, 0.5, 6000);
+  // Guarded the same way as the resize path: a zero height here would bake a
+  // NaN into the projection matrix before the first frame.
+  const camera = new PerspectiveCamera(34, Math.max(1, innerWidth) / Math.max(1, innerHeight), 0.5, 6000);
 
   const pmrem = new PMREMGenerator(renderer);
   const env = envTexture();
@@ -78,7 +93,7 @@ export function createLights(scene) {
   const sun = new DirectionalLight(0xfff4e2, 3.1);
   sun.position.copy(SUNDIR).multiplyScalar(300);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(MOBILE ? 1024 : 2048, MOBILE ? 1024 : 2048);
+  sun.shadow.mapSize.set(MOBILE ? 512 : 2048, MOBILE ? 512 : 2048);
   const sc = sun.shadow.camera;
   sc.near = 170;
   sc.far = 470;

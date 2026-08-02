@@ -1,5 +1,5 @@
 import { Mesh, RingGeometry, ShaderMaterial, Vector3, DoubleSide } from 'three';
-import { RING_IN, RING_OUT, RING_TILT, RING_SPIN } from '../core/config.js';
+import { RING_IN, RING_OUT, RING_TILT, RING_SPIN, SEG } from '../core/config.js';
 import { VALUE_NOISE_3D } from '../shaders/noise.js';
 
 /**
@@ -8,8 +8,8 @@ import { VALUE_NOISE_3D } from '../shaders/noise.js';
  * Not a closed annulus: spec sec.8 has this as the remains of a moon that came
  * apart, so it holds a broken arc. Blender builds the structure from colour
  * ramps over a 1536x32 mesh (build_rings); the same ramps are evaluated in the
- * shader here against a 512-segment ring, which costs one draw call and keeps
- * the ringlets crisp at any zoom instead of baking them to a texture.
+ * shader here against a SEG.ring-segment annulus, which costs one draw call and
+ * keeps the ringlets crisp at any zoom instead of baking them to a texture.
  */
 export function createRing() {
   const uniforms = {
@@ -104,7 +104,7 @@ export function createRing() {
     `,
   });
 
-  const mesh = new Mesh(new RingGeometry(RING_IN, RING_OUT, 512, 4), material);
+  const mesh = new Mesh(new RingGeometry(RING_IN, RING_OUT, SEG.ring, 4), material);
   /* Flat in XY as generated; laid into the orbital plane and then tilted off it.
      The ring spans 47–64 units and the kira (46) and pulse (62) craft orbit
      inside that range — tilting the plane means they cross the arc at a visible

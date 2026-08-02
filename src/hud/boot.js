@@ -1,6 +1,4 @@
 import { REDUCED } from '../core/config.js';
-import { DATA } from '../content/data.js';
-import { scramble } from './scramble.js';
 
 const LINES = [
   '> HANDSHAKE · NAMTAR GROUND SEGMENT',
@@ -32,7 +30,6 @@ export function createBoot(ready) {
     pct.textContent = '100%';
     boot.classList.add('gone');
     document.body.classList.add('up');
-    scramble(document.getElementById('deck-h'), DATA.satcorp.title, 700);
     setTimeout(() => boot.remove(), 900);
   }
 

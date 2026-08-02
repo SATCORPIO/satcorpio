@@ -2,7 +2,8 @@
 
 An interactive orbital view of the NAMTAR planetary system, used as the navigation
 surface for SATCORP's four divisions. Drag to orbit, click a craft to open its
-division, click a surface feature to read about it.
+division, click a surface feature to read about it, click Namtar itself for the
+briefing on the game set there.
 
 Built with Vite and three.js. The planet, clouds, atmosphere, debris ring and
 moons all come from the NAMTAR Blender project; the spacecraft, HUD and telemetry
@@ -133,6 +134,45 @@ JS) and roughly 640 KB on mobile, which loads a half-resolution tier from
 
 Everything animated is gated behind `prefers-reduced-motion`, including planetary
 rotation, cloud drift, the survey sweep, and both craft and moon orbits.
+
+### The mobile tier
+
+`MOBILE` in `src/core/config.js` is one media query, evaluated once at load, and
+everything below keys off it:
+
+| | Desktop | Mobile |
+|---|---|---|
+| Planet / shell / ring segments (`SEG`) | 128×96, 96×64, 512 | 96×64, 64×44, 256 |
+| Pixel ratio ceiling (`MAX_DPR`) | 1.6 | 1.25 |
+| Shadow map, filter | 2048, PCF soft | 512, PCF |
+| Bloom chain resolution | full | half |
+| Composer MSAA | 4× | off |
+| Stars | 6,500 | 3,500 |
+| Grain overlay, `backdrop-filter` | on | off |
+
+Two of those are not about the GPU's shader budget at all. A full-screen
+`mix-blend-mode: overlay` layer and a `backdrop-filter` over a live canvas both
+force the *compositor* to keep and re-read a copy of everything beneath them,
+every frame — on a phone that is the most expensive non-WebGL work on the page,
+and it is spent on film grain and a blur nobody can see over a moving scene.
+
+Width is only a guess at what a device can do, so `main.js` also runs a
+resolution governor: a second of frame times, and if the device cannot hold 40
+fps the framebuffer drops a quarter step, to a floor of 0.75. It only ever steps
+down — a ratio that walks both ways oscillates, because lowering the resolution
+creates exactly the conditions for raising it again.
+
+Resize is debounced by 140 ms. Mobile browsers fire it on every pixel of URL-bar
+travel, and each one otherwise reallocates the composer's half-float target plus
+five bloom mips.
+
+### Touch
+
+There is no hover on a phone, so `pointerdown` runs the pick that a mouse would
+have done on its way in — without it a tap lands with nothing under the cursor
+and selects nothing. Two pointers are a pinch (the wheel event has no touch
+equivalent); one is a drag. Surface-feature pins carry an invisible 40px pad
+because the visible dot is 7px.
 
 ## Dev handle
 
