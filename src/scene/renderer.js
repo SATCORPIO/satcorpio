@@ -13,11 +13,11 @@ function canvas(w, h) {
 }
 
 /* Dim starlit space plus a sun, used for real reflections on the craft. The
-   planet deliberately takes almost none of this (envMapIntensity ~0.14) — a
+   planet deliberately takes almost none of this (envMapIntensity ~0.14)   a
    world lit by its environment map loses the hard terminator. */
 function envTexture() {
   /* Half size on mobile. This is only ever read through PMREM's blurred
-     mip chain, so the detail is thrown away anyway — but generating it costs
+     mip chain, so the detail is thrown away anyway   but generating it costs
      real time on the first frame, which on a phone is the frame the viewer is
      already waiting on. */
   const S = MOBILE ? 0.5 : 1;
@@ -54,7 +54,7 @@ function envTexture() {
 }
 
 export function createRenderer() {
-  /* MSAA on the default framebuffer is wasted here — every pass after the first
+  /* MSAA on the default framebuffer is wasted here   every pass after the first
      renders into the composer's own target, which carries its own `samples`.
      Asking for it anyway costs a phone an extra multisampled backbuffer. */
   const renderer = new WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
@@ -63,8 +63,8 @@ export function createRenderer() {
   /* AgX is what the Blender renders were tone-mapped with, so matching it here
      is what keeps the limb and the terminator looking like the stills. */
   renderer.toneMapping = AgXToneMapping;
-  /* Namtar's oceans sit near the bottom of the range — the albedo map is only
-     about 10% reflectance — so the exposure is pushed well past 1 to lift them
+  /* Namtar's oceans sit near the bottom of the range   the albedo map is only
+     about 10% reflectance   so the exposure is pushed well past 1 to lift them
      into a readable teal. AgX holds the highlights while that happens, which is
      why the cloud tops do not blow out at this setting. */
   renderer.toneMappingExposure = 1.75;
