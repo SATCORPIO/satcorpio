@@ -56,7 +56,7 @@ export function loadTextures(maxAnisotropy, onProgress) {
 
 /**
  * Veyra's relief is 1.2x its own radius, so its silhouette cannot be faked with
- * a normal map — the height field is read back through a canvas and used to
+ * a normal map   the height field is read back through a canvas and used to
  * move vertices instead. Returns {data, width, height} with height in [0,1].
  */
 export async function loadHeightField(url) {
