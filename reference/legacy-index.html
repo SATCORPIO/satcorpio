@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SATCORP — Namtar Orbital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Chakra+Petch:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  /* accent is animatable so division changes cross-fade instead of snapping */
+  @property --accent{syntax:'<color>';inherits:true;initial-value:#9FE0F5}
+
+  :root{
+    --bg:#05070B; --ink:#E9EDF3; --muted:#78828F; --line:rgba(255,255,255,.09);
+    --accent:#9FE0F5; --accent-dim:rgba(159,224,245,.20);
+    --display:'Orbitron',system-ui,sans-serif;
+    --body:'Chakra Petch',system-ui,sans-serif;
+    --mono:'Share Tech Mono',ui-monospace,monospace;
+    --notch:14px;
+  }
+  :root{
+    --accent-dim:color-mix(in srgb,var(--accent) 22%,transparent);
+    --accent-ghost:color-mix(in srgb,var(--accent) 9%,transparent);
+    --accent-glow:color-mix(in srgb,var(--accent) 38%,transparent);
+  }
+  html{transition:--accent .65s cubic-bezier(.4,0,.2,1)}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);overflow:hidden;-webkit-font-smoothing:antialiased}
+  canvas{display:block;position:fixed;inset:0;z-index:0;touch-action:none;cursor:grab}
+  canvas.dragging{cursor:grabbing}
+  canvas.over{cursor:crosshair}
+
+  /* ---------------------------------------------------------- HUD chrome */
+  .grain{position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.14;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='.5'/></svg>");
+    mix-blend-mode:overlay}
+  .scan{position:fixed;inset:0;z-index:39;pointer-events:none;opacity:.24;
+    background:repeating-linear-gradient(to bottom,rgba(255,255,255,.022) 0 1px,transparent 1px 4px)}
+  .vig{position:fixed;inset:0;z-index:38;pointer-events:none;
+    background:radial-gradient(125% 95% at 50% 42%,transparent 44%,rgba(0,0,0,.62) 100%)}
+
+  .brk{position:fixed;z-index:41;width:26px;height:26px;pointer-events:none;
+    border:1px solid var(--accent);opacity:0;transition:opacity .8s ease .3s}
+  body.up .brk{opacity:.34}
+  .brk::after{content:'';position:absolute;width:4px;height:4px;background:var(--accent);opacity:.7}
+  .brk.tl{top:20px;left:20px;border-right:0;border-bottom:0}
+  .brk.tl::after{top:-1px;left:-1px}
+  .brk.tr{top:20px;right:20px;border-left:0;border-bottom:0}
+  .brk.tr::after{top:-1px;right:-1px}
+  .brk.bl{bottom:20px;left:20px;border-right:0;border-top:0}
+  .brk.bl::after{bottom:-1px;left:-1px}
+  .brk.br{bottom:20px;right:20px;border-left:0;border-top:0}
+  .brk.br::after{bottom:-1px;right:-1px}
+
+  /* measurement rail under the header — console furniture, reads as instrumentation */
+  .rail{position:fixed;z-index:28;top:94px;left:38px;right:38px;height:9px;pointer-events:none;
+    opacity:0;transition:opacity 1s ease .5s;overflow:hidden}
+  body.up .rail{opacity:.55}
+  .rail::before{content:'';position:absolute;inset:0;
+    background:repeating-linear-gradient(to right,var(--line) 0 1px,transparent 1px 26px);
+    -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent)}
+  .rail::after{content:'';position:absolute;top:0;bottom:0;width:180px;
+    background:linear-gradient(to right,transparent,var(--accent-dim),transparent);
+    animation:railsweep 9s linear infinite}
+  @keyframes railsweep{0%{transform:translateX(-200px)}100%{transform:translateX(calc(100vw + 200px))}}
+
+  /* ------------------------------------------------------------- header */
+  header{position:fixed;top:0;left:0;right:0;z-index:30;padding:32px 38px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;pointer-events:none}
+  .mark{pointer-events:auto;background:none;border:0;padding:0;text-align:left;color:inherit;cursor:pointer;
+    position:relative}
+  .mark b{display:block;font-family:var(--display);font-weight:900;font-size:18px;letter-spacing:.32em;
+    text-shadow:0 0 22px var(--accent-glow);transition:text-shadow .5s}
+  .mark:hover b{text-shadow:0 0 30px var(--accent)}
+  .mark span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--muted);margin-top:6px}
+  .mark:focus-visible{outline:1px solid var(--accent);outline-offset:8px}
+
+  .stat{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--muted);text-align:right;line-height:1.9}
+  .stat i{font-style:normal;color:var(--accent)}
+  .stat .lnk{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:5px}
+  .stat .lnk b{width:3px;height:9px;background:var(--accent);opacity:.18;transition:opacity .35s}
+  .stat .lnk b.on{opacity:.95;box-shadow:0 0 7px var(--accent-glow)}
+
+  /* ---------------------------------------------------------------- nav */
+  nav{position:fixed;z-index:31;left:38px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column}
+  nav button{position:relative;background:none;border:0;border-left:1px solid var(--line);color:var(--muted);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.20em;padding:12px 0 12px 18px;
+    text-align:left;cursor:pointer;transition:color .25s,padding-left .3s cubic-bezier(.2,.8,.2,1)}
+  nav button::before{content:'';position:absolute;left:-1px;top:50%;width:1px;height:0;background:var(--accent);
+    transform:translateY(-50%);transition:height .35s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 8px var(--accent)}
+  nav button::after{content:'';position:absolute;left:8px;top:50%;width:3px;height:3px;margin-top:-1.5px;
+    background:var(--accent);opacity:0;transform:scale(.4);transition:opacity .3s,transform .3s}
+  nav button:hover{color:var(--ink);padding-left:24px}
+  nav button:hover::before{height:100%}
+  nav button.on{color:var(--accent)}
+  nav button.on::before{height:100%}
+  nav button.on::after{opacity:1;transform:scale(1)}
+  nav button:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+
+  /* --------------------------------------------------------------- deck */
+  .deck{position:fixed;z-index:29;left:38px;bottom:104px;width:min(46vw,430px);pointer-events:none;
+    transition:opacity .5s ease,transform .5s ease}
+  .deck h1{font-family:var(--display);font-weight:700;font-size:clamp(23px,2.9vw,36px);
+    letter-spacing:.09em;line-height:1.24;margin:0 0 18px;text-shadow:0 0 40px rgba(0,0,0,.9)}
+  .deck p{margin:0;color:#98A3B1;font-size:14.5px;line-height:1.7;font-weight:300;
+    text-shadow:0 0 30px rgba(5,7,11,.95)}
+  .deck .hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--accent);
+    margin-top:26px;display:flex;align-items:center;gap:10px}
+  .deck .hint::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 0 var(--accent-glow);animation:ping 2.6s ease-out infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 var(--accent-glow)}70%{box-shadow:0 0 0 11px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  body.focused .deck{opacity:0;transform:translateY(12px)}
+
+  /* -------------------------------------------------------------- panel */
+  .panel{position:fixed;z-index:32;right:0;top:0;bottom:0;width:min(48vw,540px);
+    padding:106px 48px 96px;overflow-y:auto;overscroll-behavior:contain;
+    border-left:1px solid var(--line);
+    background:
+      linear-gradient(to left,rgba(5,7,11,.90) 54%,rgba(5,7,11,.35) 82%,rgba(5,7,11,0)),
+      repeating-linear-gradient(to bottom,var(--accent-ghost) 0 1px,transparent 1px 46px);
+    -webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1);
+    opacity:0;transform:translateX(24px);pointer-events:none;
+    transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+  body.focused .panel{opacity:1;transform:none;pointer-events:auto}
+  .panel::-webkit-scrollbar{width:2px}
+  .panel::-webkit-scrollbar-thumb{background:var(--accent-dim)}
+  .panel .edge{position:absolute;left:-1px;top:0;bottom:0;width:1px;pointer-events:none;
+    background:linear-gradient(to bottom,transparent,var(--accent),transparent);opacity:.75}
+  /* one-shot scan wipe each time a division loads */
+  .panel .wipe{position:absolute;left:0;right:0;top:0;height:120px;pointer-events:none;opacity:0;
+    background:linear-gradient(to bottom,transparent,var(--accent-dim),transparent)}
+  .panel.sw .wipe{animation:wipe .9s cubic-bezier(.3,.7,.3,1) forwards}
+  @keyframes wipe{0%{opacity:.9;transform:translateY(-120px)}100%{opacity:0;transform:translateY(100vh)}}
+
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:var(--accent);
+    display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow::before{content:'';width:6px;height:6px;background:var(--accent);
+    box-shadow:0 0 10px var(--accent);flex:none}
+  .eyebrow::after{content:'';flex:1;height:1px;
+    background:linear-gradient(to right,var(--accent-dim),transparent)}
+  .panel h2{font-family:var(--display);font-weight:700;font-size:clamp(24px,3vw,34px);
+    letter-spacing:.07em;margin:0 0 18px;line-height:1.2}
+  .lede{font-size:15.5px;line-height:1.75;color:#B9C2CE;font-weight:300;margin:0 0 36px;max-width:44ch}
+  .grp{margin-bottom:34px}
+  .grp h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--muted);
+    font-weight:400;margin:0 0 14px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  .grp h3::after{content:'';flex:1;height:1px;background:var(--line)}
+  .rows{border-top:1px solid var(--line);margin:0}
+  .row{position:relative;display:grid;grid-template-columns:34px 1fr;gap:16px;align-items:baseline;
+    padding:14px 12px 14px 0;border-bottom:1px solid var(--line);
+    transition:background .3s,padding-left .3s cubic-bezier(.2,.8,.2,1)}
+  .row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--accent);
+    transform:scaleY(0);transform-origin:50% 0;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .row:hover{background:linear-gradient(to right,var(--accent-ghost),transparent 70%);padding-left:14px}
+  .row:hover::before{transform:scaleY(1)}
+  .row dt{font-family:var(--mono);font-size:10.5px;color:var(--accent);letter-spacing:.06em}
+  .row dd{margin:0;font-size:14.5px;line-height:1.5;font-weight:400;color:#D3D9E2}
+  .row dd em{font-style:normal;display:block;color:var(--muted);font-size:12.5px;margin-top:4px;font-weight:300;line-height:1.55}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#9AA5B3;
+    border:1px solid var(--line);padding:7px 11px;background:rgba(255,255,255,.014);
+    clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));
+    transition:color .25s,border-color .25s,background .25s}
+  .chip:hover{color:var(--ink);border-color:var(--accent-dim);background:var(--accent-ghost)}
+
+  .cta{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:12px;margin-top:4px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.20em;color:#05070B;background:var(--accent);
+    border:0;padding:15px 24px;cursor:pointer;transition:filter .2s,transform .2s,box-shadow .3s;
+    clip-path:polygon(0 0,calc(100% - var(--notch)) 0,100% var(--notch),100% 100%,var(--notch) 100%,0 calc(100% - var(--notch)));
+    box-shadow:0 0 0 var(--accent-glow)}
+  .cta::after{content:'';position:absolute;top:0;bottom:0;width:60px;left:-90px;
+    background:linear-gradient(to right,transparent,rgba(255,255,255,.55),transparent);
+    transform:skewX(-18deg);animation:shine 4.5s ease-in-out infinite}
+  @keyframes shine{0%,68%{left:-90px}100%{left:130%}}
+  .cta:hover{filter:brightness(1.14);transform:translateX(3px);box-shadow:0 0 26px var(--accent-glow)}
+  .cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+  .back{position:fixed;z-index:33;left:38px;bottom:38px;background:rgba(5,7,11,.5);border:1px solid var(--line);
+    color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.20em;padding:13px 20px;
+    cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s,color .2s,border-color .2s,box-shadow .3s;
+    clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px))}
+  .back:hover{color:var(--accent);border-color:var(--accent-dim);box-shadow:0 0 20px var(--accent-ghost)}
+  body.focused .back{opacity:1;pointer-events:auto}
+
+  /* ------------------------------------------------------- target lock */
+  .tag{position:fixed;z-index:35;pointer-events:none;opacity:0;transition:opacity .22s}
+  .tag.on{opacity:1}
+  .tag .lock{position:absolute;width:74px;height:74px;transform:translate(-50%,-50%) scale(1.5);
+    transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .tag.on .lock{transform:translate(-50%,-50%) scale(1)}
+  .tag .lock i{position:absolute;width:13px;height:13px;border:1px solid var(--tagc,#fff);opacity:.85}
+  .tag .lock i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0}
+  .tag .lock i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
+  .tag .lock i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0}
+  .tag .lock i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
+  .tag .ring{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;
+    border:1px dashed var(--tagc,#fff);opacity:.45;animation:spin 9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tag .dot{position:absolute;width:5px;height:5px;background:var(--tagc,#fff);border-radius:50%;
+    transform:translate(-50%,-50%);box-shadow:0 0 10px var(--tagc,#fff)}
+  .tag .ln{position:absolute;height:1px;background:var(--tagc,#fff);opacity:.5;transform-origin:0 50%}
+  .tag .bx{position:absolute;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#EAF0F6;
+    white-space:nowrap;padding:0 0 5px 8px;border-bottom:1px solid var(--tagc,#fff);transform:translateY(-100%);
+    background:linear-gradient(to right,rgba(5,7,11,.62),transparent)}
+  .tag .bx u{display:block;text-decoration:none;color:#8B95A3;font-size:9px;margin-top:4px;letter-spacing:.14em}
+
+  /* Namtar callout — same telemetry language as a craft lock, but persistent
+     and keyed to the accent so it re-tints with the active division */
+  .pin{--tagc:var(--accent);z-index:27}
+  .pin .bx{font-family:var(--display);font-weight:700;font-size:12.5px;letter-spacing:.30em;
+    padding-bottom:7px}
+  .pin .bx u{font-family:var(--mono);font-weight:400;letter-spacing:.2em;color:var(--muted)}
+  .pin .dot{width:4px;height:4px}
+  body.focused .pin{opacity:0}
+
+  /* ---------------------------------------------------------- telemetry */
+  .tel{position:fixed;z-index:30;left:0;right:0;bottom:0;padding:22px 38px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;pointer-events:none;
+    font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:#48515E}
+  .tel span{white-space:nowrap;display:flex;align-items:center;gap:7px}
+  .tel i{font-style:normal;color:#8B95A3}
+  .tel .sig b{width:2px;height:8px;background:var(--accent);opacity:.16;transition:opacity .3s}
+  .tel .sig b.on{opacity:.85}
+  .tel .bar{width:46px;height:3px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+  .tel .bar u{position:absolute;left:0;top:0;bottom:0;background:var(--accent);opacity:.7;
+    transition:width .5s ease}
+
+  /* ---------------------------------------------------------------- boot */
+  .boot{position:fixed;inset:0;z-index:60;background:#05070B;display:grid;place-items:center;
+    transition:opacity .8s ease}
+  .boot.gone{opacity:0;pointer-events:none}
+  .bootw{width:min(84vw,340px)}
+  .bootw>b{display:block;font-family:var(--display);font-weight:900;font-size:17px;letter-spacing:.34em;
+    color:var(--accent);text-align:center;text-shadow:0 0 26px var(--accent-glow)}
+  .bootlog{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:#48515E;
+    margin:26px 0 14px;min-height:88px;line-height:2}
+  .bootlog div{opacity:0;animation:fadein .3s forwards}
+  .bootlog div:last-child{color:var(--accent)}
+  @keyframes fadein{to{opacity:1}}
+  .bootbar{height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+  .bootbar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);
+    transition:width .22s linear;box-shadow:0 0 10px var(--accent)}
+  .bootpct{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:#48515E;margin-top:9px;
+    display:flex;justify-content:space-between}
+
+  @media (max-width:900px){
+    header{padding:20px}
+    .rail{display:none}
+    .brk{width:18px;height:18px}
+    .brk.tl,.brk.tr{top:12px}.brk.bl,.brk.br{bottom:12px}
+    .brk.tl,.brk.bl{left:12px}.brk.tr,.brk.br{right:12px}
+    nav{left:0;right:0;top:auto;bottom:58px;transform:none;flex-direction:row;justify-content:center}
+    nav button{border-left:0;border-top:1px solid var(--line);padding:11px 8px;font-size:9px;letter-spacing:.08em}
+    nav button::before{left:0;right:0;top:-1px;width:auto;height:1px!important;transform:scaleX(0);
+      transform-origin:50% 50%;transition:transform .35s}
+    nav button:hover,nav button.on{padding-left:8px}
+    nav button:hover::before,nav button.on::before{transform:scaleX(1)}
+    nav button::after{display:none}
+    .deck{left:20px;right:20px;width:auto;bottom:124px}
+    .deck p{font-size:13.5px}
+    .panel{width:100%;top:auto;height:78vh;padding:32px 22px 130px;transform:translateY(24px);
+      border-left:0;border-top:1px solid var(--line);
+      background:
+        linear-gradient(to top,rgba(5,7,11,.94) 72%,rgba(5,7,11,.4) 92%,rgba(5,7,11,0)),
+        repeating-linear-gradient(to bottom,var(--accent-ghost) 0 1px,transparent 1px 46px)}
+    .panel .edge{left:0;right:0;top:0;bottom:auto;width:auto;height:1px;
+      background:linear-gradient(to right,transparent,var(--accent),transparent)}
+    .tel{font-size:8.5px;padding:14px 16px}
+    .tel .cf,.tel .tm{display:none}
+    .back{left:16px;bottom:104px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.14s!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="boot" id="boot">
+  <div class="bootw">
+    <b>SATCORP</b>
+    <div class="bootlog" id="bootlog"></div>
+    <div class="bootbar"><i id="bootbar"></i></div>
+    <div class="bootpct"><span>NAMTAR · ESTABLISHING ORBITAL LINK</span><span id="bootpct">00%</span></div>
+  </div>
+</div>
+
+<div class="vig"></div><div class="scan"></div><div class="grain"></div>
+<i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
+<div class="rail"></div>
+
+<header>
+  <button class="mark" id="home" aria-label="Return to orbital view">
+    <b>SATCORP</b><span>SYSTEMS ARCHITECTURE</span>
+  </button>
+  <div class="stat">
+    <div>TRACKING <i id="s-node">STATION</i></div>
+    <div id="s-coord">AZ 000.0 · EL 00.0</div>
+    <div id="s-rng">RNG 000 KM</div>
+    <div class="lnk" id="s-lnk"><span>LINK</span></div>
+  </div>
+</header>
+
+<nav id="nav" aria-label="Divisions"></nav>
+
+<div class="deck">
+  <h1 id="deck-h">Four divisions in a shared orbit.</h1>
+  <p>SATCORP builds brand systems, live community platforms, and the automation that runs them — delivered through one phased method, CFCM.</p>
+  <div class="hint">DRAG TO ORBIT · SELECT A CRAFT</div>
+</div>
+
+<section class="panel" id="panel" aria-live="polite"></section>
+<button class="back" id="back">◄ ORBITAL VIEW</button>
+
+<div class="tag" id="tag">
+  <div class="lock"><i></i><i></i><i></i><i></i></div>
+  <i class="ring"></i><i class="dot"></i><i class="ln"></i><div class="bx"></div>
+</div>
+
+<div class="tag pin" id="pin">
+  <i class="dot"></i><i class="ln"></i>
+  <div class="bx">NAMTAR<u>PRIMARY · ORBITAL NETWORK</u></div>
+</div>
+
+<div class="tel">
+  <span id="t-view">VIEW · ORBITAL</span>
+  <span class="tm">UPLINK <i id="t-up">0.00</i> GB/S<span class="bar"><u id="t-upb"></u></span></span>
+  <span class="tm">PWR <i id="t-pwr">00.0</i>%</span>
+  <span class="tm sig" id="t-sig">SIG</span>
+  <span class="tm">PRIMARY · NAMTAR</span>
+  <span class="cf">CFCM · CLARITY — FOCUS — EXECUTION — POLISH</span>
+  <span>ANU@SATCORP.IO</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ==========================================================================
+   SATCORP ORBITAL
+   PBR spacecraft, procedural textures, custom bloom/CA composite,
+   holographic orbit telemetry. Each division is a craft whose payload
+   describes what the division does.
+   ========================================================================== */
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------------------------------------------------------------- content */
+const DATA = {
+  satcorp:{ call:'STATION', name:'SATCORP', color:'#9FE0F5',
+    title:'Four divisions in a shared orbit.',
+    lede:'A creative and technology operation. Brand systems, live community platforms, automation, and the architecture that ties them together — run as one practice instead of four vendors.',
+    groups:[
+      {h:'Method — CFCM', rows:[
+        ['01','Clarity','What the work is, what it is not, what it costs.'],
+        ['02','Focus','Scope narrowed to the phase that moves the business first.'],
+        ['03','Execution','Build against a signed SOW, reported weekly.'],
+        ['04','Polish','Handoff, documentation, and the thing actually shipping.']]},
+      {h:'Divisions', rows:[
+        ['KR','Ki-Ra Studios','Brand identity and visual systems.'],
+        ['PL','PULSE','Community and live platform infrastructure.'],
+        ['KX','KYRAX','Tactical AI operator and automation.'],
+        ['AN','ANU','Consulting and systems architecture.']]}],
+    chips:['MSA / SOW / DPA','Phase-gated delivery','Weekly reporting'], cta:'START AN ENGAGEMENT'},
+
+  kira:{ call:'KR-01', name:'Ki-Ra Studios', color:'#00E5FF', payload:'optical',
+    title:'Identity that survives contact with production.',
+    lede:'Naming, visual systems, and the documentation that keeps a brand consistent after the launch deck is closed. Built to be used by other people, not just admired.',
+    groups:[{h:'Work', rows:[
+      ['01','Naming and positioning','Name, domain, and the sentence the business leads with.'],
+      ['02','Visual system','Type scale, palette, motion rules, component behavior.'],
+      ['03','Market intelligence','Competitor pricing and positioning, written down.'],
+      ['04','Delivery kit','Guidelines, source files, and templates for the client team.']]}],
+    chips:['Orbitron / Chakra Petch / Share Tech Mono','HUD system','Brand guidelines'],
+    cta:'REQUEST A BRAND REVIEW'},
+
+  pulse:{ call:'PL-02', name:'PULSE', color:'#FFA500', payload:'array',
+    title:'Infrastructure for communities that are actually live.',
+    lede:'Platform and event infrastructure for rooms where people show up at the same time — servers, roles, onboarding, and the systems that keep it running without an admin awake at 3am.',
+    groups:[{h:'Work', rows:[
+      ['01','Server architecture','Channel structure, roles, and permissions that scale.'],
+      ['02','Onboarding','Members land, get oriented, and stay.'],
+      ['03','Live operations','Events, announcements, and moderation tooling.'],
+      ['04','Multi-tenant','One platform, many communities, separate data.']]}],
+    chips:['Discord platform builds','Dual-track servers','Live event ops'],
+    cta:'SCOPE A COMMUNITY BUILD'},
+
+  kyrax:{ call:'KX-03', name:'KYRAX', color:'#FF6A1F', payload:'antenna',
+    title:'The operator layer.',
+    lede:'A bot ecosystem with a shared identity spine: one account, one wallet, one permission model across every service. Multi-tenant from the first table.',
+    groups:[{h:'Ecosystem', rows:[
+      ['ID','Identity','The spine. Accounts, permissions, Zova balance.'],
+      ['CR','Core','Moderation, roles, and server operations.'],
+      ['CS','Casino','Discord-native economy and games.'],
+      ['AO','ARK OS','Game server ops, breeding, and taming systems.'],
+      ['PL','PULSE bot','Community and event automation.']]}],
+    chips:['Identity ships first','Zova — single currency','guild_id multi-tenant'],
+    cta:'REQUEST THE ARCHITECTURE BRIEF'},
+
+  anu:{ call:'AN-04', name:'ANU', color:'#EDE7DA', payload:'lab',
+    title:'A second architect on your side of the table.',
+    lede:'Direct consulting. Systems architecture, technical strategy, and the unglamorous work of turning a vague ambition into a scope, a sequence, and a number.',
+    groups:[{h:'Engagements', rows:[
+      ['01','Systems architecture','How the pieces fit and what gets built first.'],
+      ['02','Technical strategy','Buy, build, or drop — with the reasoning attached.'],
+      ['03','Advisory','Standing access for teams making infrastructure calls.'],
+      ['04','Infrastructure','Homelab and self-hosted stacks, specified and deployed.']]}],
+    chips:['Fixed scope','Phase-gated','anu@satcorp.io'], cta:'BOOK A CLARITY SESSION'}
+};
+const ORDER=['satcorp','kira','pulse','kyrax','anu'];
+
+/* ------------------------------------------------------------- renderer */
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+const cv=renderer.domElement;
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(34,innerWidth/innerHeight,0.5,4000);
+
+/* ------------------------------------------------ procedural texture kit */
+function cnv(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;return c;}
+function hash(x,y){const s=Math.sin(x*127.1+y*311.7)*43758.5453;return s-Math.floor(s);}
+function vnoise(x,y){
+  const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi;
+  const u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
+  const a=hash(xi,yi),b=hash(xi+1,yi),c=hash(xi,yi+1),d=hash(xi+1,yi+1);
+  return a*(1-u)*(1-v)+b*u*(1-v)+c*(1-u)*v+d*u*v;
+}
+function fbm(x,y,oct){let s=0,a=.5,f=1;for(let i=0;i<oct;i++){s+=a*vnoise(x*f,y*f);f*=2;a*=.5}return s;}
+
+/* environment: dim starlit space + sun, used for real reflections */
+function envTexture(){
+  const c=cnv(1024,512),x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,512);
+  g.addColorStop(0,'#05070c');g.addColorStop(.5,'#0a1018');g.addColorStop(1,'#04060a');
+  x.fillStyle=g;x.fillRect(0,0,1024,512);
+  // core-side bounce (large soft amber mass, what the shell reflects back)
+  const p=x.createRadialGradient(300,430,0,300,430,340);
+  p.addColorStop(0,'rgba(190,130,60,.55)');p.addColorStop(1,'rgba(190,130,60,0)');
+  x.fillStyle=p;x.fillRect(0,0,1024,512);
+  // sun
+  const s=x.createRadialGradient(790,150,0,790,150,120);
+  s.addColorStop(0,'#fffdf5');s.addColorStop(.16,'#fff2d0');s.addColorStop(1,'rgba(255,225,170,0)');
+  x.fillStyle=s;x.fillRect(0,0,1024,512);
+  for(let i=0;i<700;i++){x.fillStyle='rgba(255,255,255,'+(Math.random()*.5)+')';
+    x.fillRect(Math.random()*1024,Math.random()*512,1,1);}
+  const t=new THREE.CanvasTexture(c);t.mapping=THREE.EquirectangularReflectionMapping;
+  t.encoding=THREE.sRGBEncoding;return t;
+}
+const pmrem=new THREE.PMREMGenerator(renderer);pmrem.compileEquirectangularShader();
+scene.environment=pmrem.fromEquirectangular(envTexture()).texture;
+
+/* hull: panel lines + micrometeorite speckle (used as bump + roughness) */
+function hullTex(){
+  const S=512,c=cnv(S,S),x=c.getContext('2d');
+  x.fillStyle='#8a8a8a';x.fillRect(0,0,S,S);
+  for(let i=0;i<4200;i++){const v=190+Math.random()*70;
+    x.fillStyle='rgba('+v+','+v+','+v+',.30)';x.fillRect(Math.random()*S,Math.random()*S,1,1);}
+  x.strokeStyle='#3c3c3c';x.lineWidth=2;
+  for(let i=1;i<8;i++){x.beginPath();x.moveTo(0,i*S/8);x.lineTo(S,i*S/8);x.stroke();}
+  for(let i=1;i<6;i++){x.beginPath();x.moveTo(i*S/6,0);x.lineTo(i*S/6,S);x.stroke();}
+  x.strokeStyle='#cfcfcf';x.lineWidth=1;
+  for(let i=1;i<8;i++){x.beginPath();x.moveTo(0,i*S/8+2);x.lineTo(S,i*S/8+2);x.stroke();}
+  // hatches / greeble rectangles
+  for(let i=0;i<26;i++){const w=14+Math.random()*44,h=10+Math.random()*30,
+    px=Math.random()*(S-w),py=Math.random()*(S-h);
+    x.fillStyle='rgba(60,60,60,.5)';x.fillRect(px,py,w,h);
+    x.strokeStyle='rgba(210,210,210,.55)';x.lineWidth=1;x.strokeRect(px+.5,py+.5,w,h);}
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;
+}
+const HULL=hullTex();
+
+/* solar array: cell grid with busbars */
+function solarTex(){
+  const W=256,H=512,c=cnv(W,H),x=c.getContext('2d');
+  x.fillStyle='#0b1430';x.fillRect(0,0,W,H);
+  const cw=W/4,ch=H/10;
+  for(let i=0;i<4;i++)for(let j=0;j<10;j++){
+    const g=x.createLinearGradient(i*cw,j*ch,(i+1)*cw,(j+1)*ch);
+    g.addColorStop(0,'#16244f');g.addColorStop(.5,'#0e1a3c');g.addColorStop(1,'#1b2c60');
+    x.fillStyle=g;x.fillRect(i*cw+1.5,j*ch+1.5,cw-3,ch-3);
+    x.strokeStyle='rgba(150,175,220,.30)';x.lineWidth=1;
+    for(let k=1;k<4;k++){x.beginPath();x.moveTo(i*cw+k*cw/4,j*ch+2);x.lineTo(i*cw+k*cw/4,j*ch+ch-2);x.stroke();}
+  }
+  x.strokeStyle='#8d99ad';x.lineWidth=2;x.strokeRect(1,1,W-2,H-2);
+  const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
+}
+const SOLAR=solarTex();
+
+/* MLI thermal blanket: crinkled gold foil */
+function foilTex(){
+  const S=256,c=cnv(S,S),x=c.getContext('2d'),img=x.createImageData(S,S);
+  for(let j=0;j<S;j++)for(let i=0;i<S;i++){
+    const n=fbm(i/S*7,j/S*7,4), w=fbm(i/S*26+9,j/S*26,2);
+    const v=0.55+n*0.5+w*0.22, k=(j*S+i)*4;
+    img.data[k]=Math.min(255,235*v);img.data[k+1]=Math.min(255,178*v);
+    img.data[k+2]=Math.min(255,84*v);img.data[k+3]=255;
+  }
+  x.putImageData(img,0,0);
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;
+  t.encoding=THREE.sRGBEncoding;return t;
+}
+const FOIL=foilTex();
+
+/* --------------------------------------------------------------- lights */
+/* a distant sun off-frame is the key light — it gives Namtar a terminator and
+   a lit limb, which is what makes the planet read as a sphere rather than a
+   disc. Shadow bounds are retargeted per-frame in tick() so close-ups of a
+   craft get a tight, crisp frustum instead of one sized for the whole system. */
+const SUNDIR=new THREE.Vector3(1,0.30,0.55).normalize();
+const sun=new THREE.DirectionalLight(0xFFF4E2,3.1);
+sun.position.copy(SUNDIR).multiplyScalar(300);
+sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048);
+const sc=sun.shadow.camera;
+sc.near=170;sc.far=470;sc.left=-110;sc.right=110;sc.top=110;sc.bottom=-110;
+scene.add(sun);
+// low ambient on purpose: the unlit hemisphere should read as genuinely dark
+scene.add(new THREE.HemisphereLight(0x4E7C8C,0x0A0E14,0.12));    // Namtar bounce
+/* The cyan rim exists to separate the craft from the void, but pointed at a
+   planet it fills the night side with light that has no business being there —
+   measured, it was lifting Namtar's dark hemisphere by ~27/255 luma. Confining
+   it to layer 2 keeps the rim on the hardware and off the planet. */
+const RIM_LAYER=2;
+const rim=new THREE.DirectionalLight(0x6FD8FF,0.42);
+rim.position.set(-1,-.35,-.7);rim.layers.set(RIM_LAYER);scene.add(rim);
+
+/* ---------------------------------------------------------------- stars */
+(function(){
+  const n=2600,pos=new Float32Array(n*3),col=new Float32Array(n*3),sz=new Float32Array(n);
+  const c=new THREE.Color();
+  for(let i=0;i<n;i++){
+    const r=1200+Math.random()*900,t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1);
+    pos[i*3]=r*Math.sin(p)*Math.cos(t);pos[i*3+1]=r*Math.cos(p);pos[i*3+2]=r*Math.sin(p)*Math.sin(t);
+    const h=.55+Math.random()*.12, l=.5+Math.random()*.45;
+    c.setHSL(Math.random()<.75?h:.09,Math.random()*.35,l);
+    col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;
+    sz[i]=Math.random()<.05?4.2:1.4+Math.random()*1.4;
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color',new THREE.BufferAttribute(col,3));
+  g.setAttribute('asz',new THREE.BufferAttribute(sz,1));
+  const m=new THREE.ShaderMaterial({
+    transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+    vertexShader:`attribute float asz;varying vec3 vC;void main(){vC=color;
+      vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=asz*(700./-mv.z);
+      gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`varying vec3 vC;void main(){float d=length(gl_PointCoord-.5);
+      if(d>.5)discard;float a=smoothstep(.5,.0,d);gl_FragColor=vec4(vC,a*a);}`,
+    vertexColors:true});
+  scene.add(new THREE.Points(g,m));
+})();
+
+/* --------------------------------------------------------------- NAMTAR
+   The primary. Namtar sits at world origin and is the centre of the whole
+   composition — camera, orbits, craft attitude and the range readout are all
+   defined against it. Scale is deliberately non-literal: the craft are drawn
+   large against the planet so they stay readable as tracking targets.      */
+const METAL=(c,r,m)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m,
+  map:HULL,bumpMap:HULL,bumpScale:.035,roughnessMap:HULL});
+
+const PR=30;                                   // Namtar radius
+const CENTER=new THREE.Vector3(0,0,0);
+
+/* surface maps for Namtar.
+   Albedo is kept deliberately low — real terrestrial worlds are dark (open
+   ocean reflects ~6% of the light hitting it) and most of the brightness you
+   see from orbit is specular glint and cloud, not ground. Alongside the colour
+   map we bake a roughness map (glossy water, matte land) so the sun leaves a
+   real highlight on the sea, and a height map used as a bump for terrain
+   relief.                                                                    */
+const SEA=0.50;
+function planetMaps(){
+  const W=1024,H=512;
+  const dc=cnv(W,H),dx=dc.getContext('2d'),di=dx.createImageData(W,H);   // albedo
+  const ec=cnv(W,H),ex=ec.getContext('2d'),ei=ex.createImageData(W,H);   // night lights
+  const rc=cnv(W,H),rx=rc.getContext('2d'),ri=rx.createImageData(W,H);   // roughness
+  const bc=cnv(W,H),bx=bc.getContext('2d'),bi=bx.createImageData(W,H);   // height/bump
+  const mix=(a,b,t)=>a+(b-a)*t;
+  const clamp01=x=>x<0?0:x>1?1:x;
+
+  /* elevation with domain warping: plain fbm gives blobby, obviously-noise
+     coastlines. Warping the sample position by a second noise field bends the
+     shorelines into fjords, peninsulas and island arcs — the single cheapest
+     trick for terrain that reads as geology instead of static. A ridged pass
+     adds mountain chains along the "plate boundaries". */
+  function elev(u,v,aLat){
+    const wx=fbm(u*1.1+7.3,v*1.1+2.6,4)*1.9;
+    const wy=fbm(u*1.1+3.1,v*1.1+8.8,4)*1.9;
+    let e=fbm(u*1.5+wx,v*1.5+wy,6)*1.18 - aLat*0.26;
+    const ridge=1-Math.abs(2*fbm(u*2.6+wy*.7,v*2.6+wx*.7,4)-1);   // ridged noise
+    e+=Math.pow(ridge,3.2)*0.20*clamp01((e-SEA+0.06)*6);          // ranges on land only
+    return e;
+  }
+
+  for(let j=0;j<H;j++){
+    const lat=(j/H-.5)*2, aLat=Math.abs(lat);
+    for(let i=0;i<W;i++){
+      const u=i/W*6, v=j/H*3;
+      const e=elev(u,v,aLat);
+      const k=(j*W+i)*4;
+      let r,g,b,rough,hgt;
+      if(e<SEA){
+        const depth=(SEA-e);                     // 0 at coast → deep
+        // abyss: near-black blue; shelf: a slightly lifted slate blue
+        const s=Math.pow(clamp01(1-depth*3.2),1.9);
+        r=mix(3,12,s); g=mix(8,34,s); b=mix(18,52,s);
+        // continental shelf ribbon: a narrow turquoise fringe hugging the coast
+        const shelf=Math.pow(clamp01(1-depth*13),2.2);
+        r=mix(r,20,shelf*.85); g=mix(g,72,shelf*.85); b=mix(b,80,shelf*.85);
+        rough=0.13+s*0.08;                       // open water stays glossy
+        hgt=0.34;
+      } else {
+        const h=Math.min(1,(e-SEA)*2.4);         // 0 coast → 1 peak
+        const moist=fbm(u*5.5+13,v*5.5+5,4);
+        const dt=fbm(u*19,v*19,3)-0.5;
+        // biomes: latitude bands modulated by moisture, with soft blends
+        const desert=clamp01(1-Math.abs(aLat-0.28)/0.13)*clamp01((0.55-moist)*5);
+        const forest=clamp01((moist-0.52)*6)*clamp01((0.62-aLat)*4);
+        const tundra=clamp01((aLat-0.55)/0.18);
+        r=46;g=48;b=30;                                             // steppe base
+        r=mix(r,96,desert); g=mix(g,80,desert); b=mix(b,52,desert);
+        r=mix(r,20,forest); g=mix(g,36,forest); b=mix(b,19,forest);
+        r=mix(r,72,tundra); g=mix(g,70,tundra); b=mix(b,64,tundra);
+        // wet lowlands darken toward the coast (marsh, delta)
+        const low=clamp01(1-h*6)*clamp01((moist-0.4)*4);
+        r=mix(r,24,low); g=mix(g,34,low); b=mix(b,22,low);
+        // exposed rock with altitude, then snow above it
+        const rock=clamp01((h-0.40)/0.60);
+        r=mix(r,66,rock); g=mix(g,61,rock); b=mix(b,56,rock);
+        const snow=clamp01((h-0.72)/0.28)*clamp01(0.3+aLat);        // lower snowline near poles
+        r=mix(r,182,snow); g=mix(g,188,snow); b=mix(b,194,snow);
+        r+=dt*10; g+=dt*10; b+=dt*8;
+        rough=0.95-moist*0.07-snow*0.25;
+        hgt=0.34+h*0.66;
+      }
+      // polar caps with a ragged noise edge instead of a hard latitude cut
+      const iceEdge=0.76+ (fbm(u*8+51,v*8+17,3)-0.5)*0.10;
+      const ice=clamp01((aLat-iceEdge)*5.5);
+      if(ice>0){ r=mix(r,198,ice); g=mix(g,206,ice); b=mix(b,213,ice);
+        rough=mix(rough,0.45,ice); hgt=Math.max(hgt,0.4); }
+      di.data[k]=r;di.data[k+1]=g;di.data[k+2]=b;di.data[k+3]=255;
+      const rv=Math.round(rough*255);
+      ri.data[k]=ri.data[k+1]=ri.data[k+2]=rv;ri.data[k+3]=255;
+      const hv=Math.round(hgt*255);
+      bi.data[k]=bi.data[k+1]=bi.data[k+2]=hv;bi.data[k+3]=255;
+      // settlement lights: habitable land only, clustered, sparse and dim
+      let li=0;
+      if(e>SEA+0.02&&e<0.74&&ice<0.4&&aLat<0.68){
+        const cl=fbm(u*24+31,v*24+7,2);
+        if(cl>0.70) li=(cl-0.70)*560;
+      }
+      ei.data[k]=Math.min(255,li);ei.data[k+1]=Math.min(255,li*.74);
+      ei.data[k+2]=Math.min(255,li*.38);ei.data[k+3]=255;
+    }
+  }
+  dx.putImageData(di,0,0);ex.putImageData(ei,0,0);
+  rx.putImageData(ri,0,0);bx.putImageData(bi,0,0);
+
+  /* cloud deck: domain-warped so fronts smear into streaks, plus a handful of
+     spiral cyclones — the swirls are what make orbital cloud cover look like
+     weather instead of white noise. */
+  const CYC=[[.18,.30,.052,9],[.55,.62,.060,-8],[.80,.24,.045,10],[.38,.74,.040,-9]];
+  const cc=cnv(W,H),cx=cc.getContext('2d'),ci=cx.createImageData(W,H);
+  for(let j=0;j<H;j++){const lat=(j/H-.5)*2,aLat=Math.abs(lat);
+    for(let i=0;i<W;i++){
+      let u=i/W,v=j/H;
+      // cyclone rotation: twist sample coords around each storm centre
+      for(const [cu,cvv,rad,spin] of CYC){
+        let du=u-cu; du-=Math.round(du);          // wrap in longitude
+        const dv=v-cvv, d=Math.hypot(du,dv);
+        if(d<rad*2.6){
+          const a=spin*Math.exp(-d*d/(rad*rad)), ca=Math.cos(a), sa=Math.sin(a);
+          u=cu+du*ca-dv*sa; v=cvv+du*sa+dv*ca;
+        }
+      }
+      // zonal shear: clouds drawn out along latitude lines
+      const wx=fbm(u*5+40,v*5+13,3)*0.9;
+      const n=fbm(u*9+wx*1.6,v*4.2+wx*.3+13,5)*0.74+fbm(u*24+3,v*13+9,3)*0.26;
+      const band=0.5+0.5*Math.sin(lat*7.5);
+      let a=(n-0.375+band*0.05)*540*(1-aLat*0.28);
+      // cyclone cores read as bright dense cloud
+      for(const [cu,cvv,rad] of CYC){
+        let du=i/W-cu; du-=Math.round(du);
+        const d=Math.hypot(du,j/H-cvv);
+        a+=Math.max(0,1-d/(rad*1.3))*120;
+      }
+      const k=(j*W+i)*4;ci.data[k]=241;ci.data[k+1]=243;ci.data[k+2]=246;
+      ci.data[k+3]=Math.max(0,Math.min(210,a));}}
+  cx.putImageData(ci,0,0);
+  const srgb=t=>{const x=new THREE.CanvasTexture(t);x.encoding=THREE.sRGBEncoding;
+    x.wrapS=THREE.RepeatWrapping;x.anisotropy=8;return x;};
+  const data=t=>{const x=new THREE.CanvasTexture(t);      // linear: these are data
+    x.wrapS=THREE.RepeatWrapping;x.anisotropy=4;return x;};
+  return {day:srgb(dc),night:srgb(ec),cloud:srgb(cc),rough:data(rc),bump:data(bc)};
+}
+
+const planet=new THREE.Group();scene.add(planet);
+{
+  const M=planetMaps();
+  const surfMat=new THREE.MeshStandardMaterial({
+    map:M.day, roughnessMap:M.rough, bumpMap:M.bump, bumpScale:.045,
+    emissiveMap:M.night, emissive:0xffb861, emissiveIntensity:.7,
+    roughness:1, metalness:0, envMapIntensity:.14});
+  /* City lights must only burn on the unlit hemisphere — an emissiveMap alone
+     glows straight through the daylit side, which is the single biggest tell
+     that a planet is fake. Mask the emissive term by the sun angle. */
+  surfMat.onBeforeCompile=sh=>{
+    sh.uniforms.uSunView={value:new THREE.Vector3()};
+    sh.fragmentShader='uniform vec3 uSunView;\n'+sh.fragmentShader.replace(
+      '#include <emissivemap_fragment>',
+      `#include <emissivemap_fragment>
+       totalEmissiveRadiance*=smoothstep(0.14,-0.22,dot(normalize(normal),uSunView));`);
+    surfMat.userData.sh=sh;
+  };
+  const surf=new THREE.Mesh(new THREE.SphereGeometry(PR,96,64),surfMat);
+  surf.receiveShadow=true;planet.add(surf);planet.userData.surfMat=surfMat;
+
+  const cloud=new THREE.Mesh(new THREE.SphereGeometry(PR*1.012,72,48),
+    new THREE.MeshStandardMaterial({map:M.cloud,alphaMap:M.cloud,transparent:true,
+      opacity:.62,roughness:.96,metalness:0,depthWrite:false,envMapIntensity:.18}));
+  planet.add(cloud);planet.userData.cloud=cloud;
+
+  // atmosphere: fresnel shell, brighter where the sun grazes the limb
+  const atmo=new THREE.Mesh(new THREE.SphereGeometry(PR*1.055,72,48),
+    new THREE.ShaderMaterial({transparent:true,side:THREE.BackSide,depthWrite:false,
+      blending:THREE.AdditiveBlending,
+      uniforms:{uSun:{value:SUNDIR.clone()}},
+      vertexShader:`varying vec3 vN;varying vec3 vW;void main(){
+        vN=normalize(normalMatrix*normal);
+        vW=normalize(mat3(modelMatrix)*normal);
+        gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+      fragmentShader:`varying vec3 vN;varying vec3 vW;uniform vec3 uSun;
+        void main(){
+          float f=pow(1.0-abs(dot(vN,vec3(0.,0.,1.))),3.6);
+          float s=max(dot(vW,uSun),0.0);
+          vec3 col=mix(vec3(.10,.32,.50),vec3(.46,.74,.97),s);
+          // grazing light scatters long — warm band along the terminator
+          float term=smoothstep(0.0,0.30,s)*(1.0-smoothstep(0.30,0.72,s));
+          col=mix(col,vec3(.94,.52,.26),term*0.45);
+          gl_FragColor=vec4(col,f*(0.14+s*0.70));}`}));
+  planet.add(atmo);
+
+  /* --- survey mesh: hologram wireframe with a scanning wave ------------ */
+  const R=PR*1.09;
+  const lattice=new THREE.LineSegments(
+    new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(R,3)),
+    new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+      uniforms:{uScan:{value:-1.4},uR:{value:R}},
+      vertexShader:`varying float vF;varying float vY;uniform float uR;
+        void main(){
+          vec4 mv=modelViewMatrix*vec4(position,1.);
+          vec3 n=normalize(mat3(modelViewMatrix)*normalize(position));
+          vF=smoothstep(-.15,.55,dot(n,normalize(-mv.xyz)));
+          vY=position.y/uR;
+          gl_Position=projectionMatrix*mv;}`,
+      fragmentShader:`varying float vF;varying float vY;uniform float uScan;
+        void main(){
+          float band=exp(-pow((vY-uScan)*7.0,2.0));
+          float a=vF*(0.05+band*0.45);
+          gl_FragColor=vec4(mix(vec3(.28,.66,.80),vec3(.80,.95,1.0),band),a);}`}));
+  planet.add(lattice);planet.userData.grid=lattice;
+}
+
+/* ----------------------------------------------------------- spacecraft */
+function haloTex(){
+  const c=cnv(64,64),x=c.getContext('2d');
+  const gr=x.createRadialGradient(32,32,0,32,32,32);
+  gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.3,'rgba(255,255,255,.4)');
+  gr.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=gr;x.fillRect(0,0,64,64);
+  return new THREE.CanvasTexture(c);
+}
+const HALO=haloTex();
+
+function buildCraft(color,payload){
+  const g=new THREE.Group();
+  const foil=new THREE.MeshStandardMaterial({map:FOIL,bumpMap:FOIL,bumpScale:.05,
+    roughness:.36,metalness:.92,color:0xffffff});
+  const white=METAL(0xC6CCD3,.58,.30), dark=METAL(0x3E444C,.5,.8);
+  const col=new THREE.Color(color);
+
+  const bus=new THREE.Mesh(new THREE.BoxGeometry(2.2,2.4,2.2),foil);
+  bus.castShadow=bus.receiveShadow=true;g.add(bus);
+  const collar=new THREE.Mesh(new THREE.CylinderGeometry(1.25,1.25,.34,20),white);
+  collar.position.y=1.32;g.add(collar);
+  const nozzle=new THREE.Mesh(new THREE.CylinderGeometry(.16,.42,.7,16),dark);
+  nozzle.position.y=-1.5;g.add(nozzle);
+  for(let i=0;i<4;i++){const a=i/4*Math.PI*2+.78;                       // RCS clusters
+    const t=new THREE.Mesh(new THREE.CylinderGeometry(.06,.12,.3,8),dark);
+    t.position.set(Math.cos(a)*1.15,-.9,Math.sin(a)*1.15);t.rotation.z=Math.cos(a)*.6;
+    t.rotation.x=-Math.sin(a)*.6;g.add(t);}
+  // hull accent strips — the division colour reads on the craft itself
+  for(const s of [-1,1]){
+    const strip=new THREE.Mesh(new THREE.BoxGeometry(.09,1.7,.09),
+      new THREE.MeshBasicMaterial({color:col}));
+    strip.position.set(s*1.11,0,1.11);g.add(strip);
+  }
+
+  // solar wings
+  const wings=[];
+  for(const s of [-1,1]){
+    const boom=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,1.5,8),white);
+    boom.rotation.z=Math.PI/2;boom.position.x=s*1.85;g.add(boom);
+    const w=new THREE.Group();w.position.x=s*4.9;
+    const panel=new THREE.Mesh(new THREE.BoxGeometry(5.2,.07,2.5),
+      new THREE.MeshStandardMaterial({map:SOLAR,roughness:.22,metalness:.55,
+        emissive:0x0A1430,emissiveIntensity:.35}));
+    panel.castShadow=panel.receiveShadow=true;w.add(panel);
+    const spar=new THREE.Mesh(new THREE.BoxGeometry(5.3,.14,.14),white);
+    spar.position.z=-1.32;w.add(spar);
+    g.add(w);wings.push(w);
+  }
+
+  // payload — different per division, describing the work
+  const pay=new THREE.Group();pay.position.y=1.9;g.add(pay);
+  if(payload==='optical'){                     // Ki-Ra — imaging telescope
+    const tube=new THREE.Mesh(new THREE.CylinderGeometry(.95,.95,3.2,28),white);
+    tube.position.y=1.5;pay.add(tube);
+    const hood=new THREE.Mesh(new THREE.CylinderGeometry(1.12,.95,.9,28,1,true),dark);
+    hood.position.y=3.4;pay.add(hood);
+    const lens=new THREE.Mesh(new THREE.CircleGeometry(.93,28),
+      new THREE.MeshStandardMaterial({color:col,roughness:.06,metalness:1,
+        emissive:col,emissiveIntensity:.9}));
+    lens.position.y=3.05;lens.rotation.x=-Math.PI/2;pay.add(lens);
+  } else if(payload==='array'){                // PULSE — phased array
+    const face=new THREE.Mesh(new THREE.BoxGeometry(3.6,.22,3.6),white);
+    face.position.y=1.1;pay.add(face);
+    for(let i=0;i<5;i++)for(let j=0;j<5;j++){
+      const e=new THREE.Mesh(new THREE.CylinderGeometry(.14,.14,.24,10),
+        new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:.85,
+          roughness:.3,metalness:.7}));
+      e.position.set((i-2)*.66,1.32,(j-2)*.66);pay.add(e);}
+  } else if(payload==='antenna'){              // KYRAX — dish cluster
+    [[0,1.9,0,1.5],[1.3,1.2,.5,.85],[-1.15,1.1,-.6,.75]].forEach(([x,y,z,r])=>{
+      const d=new THREE.Mesh(new THREE.SphereGeometry(r,26,18,0,Math.PI*2,0,Math.PI/2.5),
+        new THREE.MeshStandardMaterial({color:0xE3E7EB,roughness:.2,metalness:.6,side:THREE.DoubleSide}));
+      d.position.set(x,y,z);d.rotation.set(-.9+z*.3,x*.4,0);pay.add(d);
+      const f=new THREE.Mesh(new THREE.SphereGeometry(r*.13,10,8),
+        new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:1.2}));
+      f.position.set(x,y+r*.75,z+r*.3);pay.add(f);});
+    const mast=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,3.4,8),white);
+    mast.position.y=1.4;pay.add(mast);
+  } else {                                     // ANU — instrument lab + boom
+    const lab=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,2.6,24),foil);
+    lab.rotation.z=Math.PI/2;lab.position.y=.9;pay.add(lab);
+    const boom=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,4.4,8),white);
+    boom.position.set(0,1.4,2.2);boom.rotation.x=Math.PI/2;pay.add(boom);
+    const sensor=new THREE.Mesh(new THREE.OctahedronGeometry(.34,0),
+      new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:1.1,
+        roughness:.25,metalness:.8}));
+    sensor.position.set(0,1.4,4.3);pay.add(sensor);
+  }
+
+  // navigation beacon
+  const beacon=new THREE.Mesh(new THREE.SphereGeometry(.17,12,10),
+    new THREE.MeshBasicMaterial({color:col}));
+  beacon.position.set(0,-1.05,1.25);g.add(beacon);
+  const halo=new THREE.Sprite(new THREE.SpriteMaterial({color:col,transparent:true,
+    opacity:.5,blending:THREE.AdditiveBlending,depthWrite:false,map:HALO}));
+  halo.scale.set(3.4,3.4,1);beacon.add(halo);
+
+  g.traverse(o=>{if(o.isMesh&&!o.castShadow){o.castShadow=true;o.receiveShadow=true;}
+    o.layers.enable(RIM_LAYER);});   // craft opt in to the rim light; Namtar does not
+  return {group:g,wings,beacon,halo};
+}
+
+/* orbit path: dashed hologram with a comet trail riding behind the craft */
+function orbitRing(rad,inc,color){
+  const N=240,pos=new Float32Array((N+1)*3),at=new Float32Array(N+1);
+  for(let i=0;i<=N;i++){const a=i/N*Math.PI*2;
+    pos[i*3]=Math.cos(a)*rad;pos[i*3+1]=Math.sin(a)*rad*Math.sin(inc);
+    pos[i*3+2]=Math.sin(a)*rad*Math.cos(inc);at[i]=i/N;}
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('aT',new THREE.BufferAttribute(at,1));
+  const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,
+    blending:THREE.AdditiveBlending,
+    uniforms:{uCol:{value:new THREE.Color(color)},uHead:{value:0},uAct:{value:0}},
+    vertexShader:`attribute float aT;varying float vT;
+      void main(){vT=aT;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`varying float vT;uniform vec3 uCol;uniform float uHead,uAct;
+      void main(){
+        float dash=mix(.45,1.0,step(.42,fract(vT*110.0)));
+        float base=mix(.055,.17,uAct)*dash;
+        float q=fract(uHead-vT);
+        float trail=pow(1.0-smoothstep(0.0,.16,q),2.6);
+        float a=base+trail*mix(.55,1.0,uAct);
+        gl_FragColor=vec4(uCol*(1.0+trail*2.2),a);}`});
+  return new THREE.Line(g,m);
+}
+
+/* power beams: shell ⇄ craft, travelling packets */
+function beam(color){
+  const pos=new Float32Array(6),at=new Float32Array([0,1]);
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('aT',new THREE.BufferAttribute(at,1));
+  const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,
+    blending:THREE.AdditiveBlending,
+    uniforms:{uCol:{value:new THREE.Color(color)},uT:{value:0},uOn:{value:1}},
+    vertexShader:`attribute float aT;varying float vT;
+      void main(){vT=aT;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`varying float vT;uniform vec3 uCol;uniform float uT,uOn;
+      void main(){
+        float p=fract(vT*3.0-uT);
+        float pk=pow(1.0-smoothstep(0.0,.10,p),3.0);
+        gl_FragColor=vec4(uCol,(0.035+pk*0.42)*uOn);}`});
+  return new THREE.Line(g,m);
+}
+
+const CRAFT=[];
+[['kira',46,0.20,0.0,0.052],['pulse',62,-0.30,1.9,0.038],
+ ['kyrax',80,0.36,3.4,0.029],['anu',100,-0.16,5.1,0.022]].forEach(([id,rad,inc,ph,sp])=>{
+  const d=DATA[id],c=buildCraft(d.color,d.payload);
+  scene.add(c.group);
+  const ring=orbitRing(rad,inc,d.color);scene.add(ring);
+  const bm=beam(d.color);scene.add(bm);
+  CRAFT.push({id,...c,rad,inc,ang:ph,sp,ring,beam:bm,act:0,
+    color:new THREE.Color(d.color),pick:c.group.children[0]});
+});
+
+/* ------------------------------------------------------------ post stack */
+const POST=(function(){
+  const quadCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+  const quadScene=new THREE.Scene();
+  const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),null);
+  quad.frustumCulled=false;quadScene.add(quad);
+  const VERT=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`;
+  const base={depthTest:false,depthWrite:false,vertexShader:VERT};
+
+  const mBright=new THREE.ShaderMaterial({...base,
+    uniforms:{tD:{value:null},uTh:{value:.42},uKn:{value:.42}},
+    fragmentShader:`varying vec2 vUv;uniform sampler2D tD;uniform float uTh,uKn;
+      void main(){vec3 c=texture2D(tD,vUv).rgb;
+        float l=dot(c,vec3(.2126,.7152,.0722));
+        gl_FragColor=vec4(c*smoothstep(uTh,uTh+uKn,l),1.);}`});
+
+  const mBlur=new THREE.ShaderMaterial({...base,
+    uniforms:{tD:{value:null},uDir:{value:new THREE.Vector2()}},
+    fragmentShader:`varying vec2 vUv;uniform sampler2D tD;uniform vec2 uDir;
+      void main(){
+        vec4 s=texture2D(tD,vUv)*.2270270270;
+        s+=(texture2D(tD,vUv+uDir*1.3846153846)+texture2D(tD,vUv-uDir*1.3846153846))*.3162162162;
+        s+=(texture2D(tD,vUv+uDir*3.2307692308)+texture2D(tD,vUv-uDir*3.2307692308))*.0702702703;
+        gl_FragColor=s;}`});
+
+  const mComp=new THREE.ShaderMaterial({...base,
+    uniforms:{tD:{value:null},tB:{value:null},uStr:{value:.85},uT:{value:0},uAb:{value:.55}},
+    fragmentShader:`varying vec2 vUv;uniform sampler2D tD,tB;uniform float uStr,uT,uAb;
+      void main(){
+        vec2 d=vUv-.5;float r2=dot(d,d);
+        vec2 off=d*uAb*r2*0.06;                       // lens dispersion toward the edges
+        vec3 c;
+        c.r=texture2D(tD,vUv-off).r;
+        c.g=texture2D(tD,vUv).g;
+        c.b=texture2D(tD,vUv+off).b;
+        c+=texture2D(tB,vUv).rgb*uStr;
+        float roll=pow(fract(vUv.y*.5-uT*.05),26.0);  // slow CRT refresh band
+        c*=1.0+roll*.06;
+        c*=1.0-smoothstep(.16,1.0,r2)*.55;            // vignette
+        gl_FragColor=vec4(pow(max(c,0.),vec3(1./2.2)),1.);}`});
+
+  let rtS,rtA,rtB,ok=true;
+  const opt={minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat};
+  function size(){
+    const pr=renderer.getPixelRatio();
+    return [Math.max(1,Math.floor(innerWidth*pr)),Math.max(1,Math.floor(innerHeight*pr))];
+  }
+  function build(){
+    const [W,H]=size();
+    [rtS,rtA,rtB].forEach(t=>t&&t.dispose());
+    const MS=renderer.capabilities.isWebGL2&&THREE.WebGLMultisampleRenderTarget;
+    rtS=MS?new THREE.WebGLMultisampleRenderTarget(W,H,opt):new THREE.WebGLRenderTarget(W,H,opt);
+    if(MS)rtS.samples=4;
+    const hw=Math.max(1,W>>1),hh=Math.max(1,H>>1);
+    rtA=new THREE.WebGLRenderTarget(hw,hh,opt);
+    rtB=new THREE.WebGLRenderTarget(hw,hh,opt);
+  }
+  function pass(m,target){quad.material=m;renderer.setRenderTarget(target||null);
+    renderer.render(quadScene,quadCam);}
+  function blur(src,dst,rx,ry){
+    mBlur.uniforms.tD.value=src.texture;
+    mBlur.uniforms.uDir.value.set(rx/rtA.width,ry/rtA.height);
+    pass(mBlur,dst);
+  }
+  try{build();}catch(e){ok=false;console.warn('post stack unavailable',e);}
+  return {
+    ok:()=>ok,
+    resize(){if(ok)try{build();}catch(e){ok=false;console.warn('post resize failed',e);}},
+    render(t){
+      if(!ok){renderer.setRenderTarget(null);renderer.render(scene,camera);return;}
+      renderer.setRenderTarget(rtS);renderer.render(scene,camera);
+      mBright.uniforms.tD.value=rtS.texture;pass(mBright,rtA);
+      blur(rtA,rtB,1,0);blur(rtB,rtA,0,1);
+      blur(rtA,rtB,2.6,0);blur(rtB,rtA,0,2.6);
+      mComp.uniforms.tD.value=rtS.texture;
+      mComp.uniforms.tB.value=rtA.texture;
+      mComp.uniforms.uT.value=t;
+      pass(mComp,null);
+    }
+  };
+})();
+if(!POST.ok())renderer.outputEncoding=THREE.sRGBEncoding;   // fallback: encode on the way out
+
+/* --------------------------------------------------------------- camera */
+/* default range frames Namtar as the hero: the planet fills roughly half the
+   viewport height, with the inner orbits reading clearly around it */
+const cam={theta:.7,phi:1.22,rad:225,tTheta:.7,tPhi:1.22,tRad:225};
+const look=new THREE.Vector3(),tLook=new THREE.Vector3();
+let focus=null,orbitScale=1,tOrbitScale=1;
+function applyCam(){
+  const s=Math.sin(cam.phi);
+  camera.position.set(look.x+cam.rad*s*Math.sin(cam.theta),
+    look.y+cam.rad*Math.cos(cam.phi), look.z+cam.rad*s*Math.cos(cam.theta));
+  camera.lookAt(look);
+}
+let drag=false,px=0,py=0,moved=0;
+cv.addEventListener('pointerdown',e=>{drag=true;moved=0;px=e.clientX;py=e.clientY;
+  cv.classList.add('dragging');cv.setPointerCapture(e.pointerId);});
+cv.addEventListener('pointerup',()=>{drag=false;cv.classList.remove('dragging');});
+cv.addEventListener('pointermove',e=>{
+  if(drag){const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);
+    cam.tTheta-=dx*.0045;cam.tPhi=Math.max(.28,Math.min(2.6,cam.tPhi-dy*.0038));
+    px=e.clientX;py=e.clientY;}
+  ptr.x=(e.clientX/innerWidth)*2-1;ptr.y=-(e.clientY/innerHeight)*2+1;
+  mxy.x=e.clientX;mxy.y=e.clientY;});
+addEventListener('wheel',e=>{const lo=focus?9:95,hi=focus?34:430;
+  cam.tRad=Math.max(lo,Math.min(hi,cam.tRad+e.deltaY*(focus?.02:.1)));},{passive:true});
+
+/* --------------------------------------------------------------- picking */
+const ray=new THREE.Raycaster(),ptr=new THREE.Vector2(-9,-9),mxy={x:0,y:0};
+let hover=null;
+const tag=document.getElementById('tag'),tagDot=tag.querySelector('.dot'),
+      tagLn=tag.querySelector('.ln'),tagBx=tag.querySelector('.bx'),
+      tagLock=tag.querySelector('.lock'),tagRing=tag.querySelector('.ring');
+cv.addEventListener('click',()=>{if(hover&&moved<8)go(hover.id);});
+const proj=new THREE.Vector3();
+function pick(){
+  ray.setFromCamera(ptr,camera);
+  const hits=ray.intersectObjects(CRAFT.map(c=>c.group),true);
+  let h=null;
+  if(hits.length){let o=hits[0].object;while(o&&!h){h=CRAFT.find(c=>c.group===o);o=o.parent;}}
+  if(h!==hover){hover=h;cv.classList.toggle('over',!!h);
+    if(h){const d=DATA[h.id];
+      tag.style.setProperty('--tagc',d.color);
+      tagBx.innerHTML=d.name.toUpperCase()+'<u>'+d.call+' · LOCK ACQUIRED</u>';
+      tag.classList.add('on');}
+    else tag.classList.remove('on');}
+  if(hover){
+    proj.copy(hover.group.position).project(camera);
+    const sx=(proj.x*.5+.5)*innerWidth, sy=(-proj.y*.5+.5)*innerHeight;
+    const ex=sx+72, ey=sy-62;
+    tagDot.style.left=sx+'px';tagDot.style.top=sy+'px';
+    tagLock.style.left=sx+'px';tagLock.style.top=sy+'px';
+    tagRing.style.left=sx+'px';tagRing.style.top=sy+'px';
+    const len=Math.hypot(ex-sx,ey-sy),ang=Math.atan2(ey-sy,ex-sx);
+    tagLn.style.left=sx+'px';tagLn.style.top=sy+'px';
+    tagLn.style.width=len+'px';tagLn.style.transform='rotate('+ang+'rad)';
+    tagBx.style.left=ex+'px';tagBx.style.top=ey+'px';
+  }
+}
+
+/* ------------------------------------------------- Namtar limb callout */
+/* anchors the label to the planet's upper-left limb by measuring the sphere's
+   projected radius, so the leader line stays attached at any zoom level */
+const pin=document.getElementById('pin'),pinDot=pin.querySelector('.dot'),
+      pinLn=pin.querySelector('.ln'),pinBx=pin.querySelector('.bx');
+const pinR=new THREE.Vector3(),pinC=new THREE.Vector3();
+function pinUpdate(){
+  if(focus){pin.classList.remove('on');return;}
+  pinC.copy(CENTER).project(camera);
+  if(pinC.z>1){pin.classList.remove('on');return;}          // behind the camera
+  const cx=(pinC.x*.5+.5)*innerWidth, cy=(-pinC.y*.5+.5)*innerHeight;
+  // a point one radius to camera-right, projected, gives the on-screen radius
+  pinR.setFromMatrixColumn(camera.matrixWorld,0).multiplyScalar(PR).add(CENTER).project(camera);
+  const r=Math.hypot((pinR.x*.5+.5)*innerWidth-cx,(-pinR.y*.5+.5)*innerHeight-cy);
+  const ax=cx-r*.72, ay=cy-r*.72;                            // upper-left limb
+  const ex=Math.max(54,ax-58), ey=Math.max(132,ay-46);
+  pinDot.style.left=ax+'px';pinDot.style.top=ay+'px';
+  const len=Math.hypot(ex-ax,ey-ay),ang=Math.atan2(ey-ay,ex-ax);
+  pinLn.style.left=ax+'px';pinLn.style.top=ay+'px';
+  pinLn.style.width=len+'px';pinLn.style.transform='rotate('+ang+'rad)';
+  pinBx.style.left=ex+'px';pinBx.style.top=ey+'px';
+  pin.classList.add('on');
+}
+
+/* ------------------------------------------------------- text decode fx */
+const GLYPH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/\\<>*+=·';
+function scramble(el,text,ms){
+  if(REDUCED){el.textContent=text;return;}
+  const t0=performance.now();
+  if(el._raf)cancelAnimationFrame(el._raf);
+  (function step(){
+    const p=Math.min(1,(performance.now()-t0)/ms);
+    const cut=Math.floor(p*text.length);
+    let out='';
+    for(let i=0;i<text.length;i++){
+      const ch=text[i];
+      if(i<cut||ch===' ')out+=ch;
+      else out+=GLYPH[(Math.random()*GLYPH.length)|0];
+    }
+    el.textContent=out;
+    if(p<1)el._raf=requestAnimationFrame(step);else el.textContent=text;
+  })();
+}
+
+/* --------------------------------------------------------------- routing */
+const panel=document.getElementById('panel'),navEl=document.getElementById('nav');
+ORDER.forEach(id=>{const b=document.createElement('button');
+  b.textContent=DATA[id].call+' · '+DATA[id].name.toUpperCase();
+  b.dataset.id=id;b.onclick=()=>go(id);navEl.appendChild(b);});
+
+function render(id){const d=DATA[id];
+  panel.innerHTML=`<i class="edge"></i><i class="wipe"></i>
+    <div class="eyebrow"><span id="p-eye">${d.call} — ${d.name.toUpperCase()}</span></div>
+    <h2 id="p-title">${d.title}</h2><p class="lede">${d.lede}</p>
+    ${d.groups.map(g=>`<div class="grp"><h3>${g.h}</h3><dl class="rows">
+      ${g.rows.map(r=>`<div class="row"><dt>${r[0]}</dt><dd>${r[1]}<em>${r[2]}</em></dd></div>`).join('')}
+    </dl></div>`).join('')}
+    <div class="grp"><div class="chips">${d.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div>
+    <button class="cta">${d.cta} →</button>`;
+  panel.scrollTop=0;
+  panel.classList.remove('sw');void panel.offsetWidth;panel.classList.add('sw');
+  scramble(document.getElementById('p-eye'),d.call+' — '+d.name.toUpperCase(),420);
+  scramble(document.getElementById('p-title'),d.title,620);
+}
+
+function go(id){const d=DATA[id];
+  document.documentElement.style.setProperty('--accent',d.color);
+  document.getElementById('s-node').textContent=d.call;
+  document.getElementById('t-view').textContent='VIEW · '+(id==='satcorp'?'ORBITAL':d.name.toUpperCase());
+  [...navEl.children].forEach(b=>{const on=b.dataset.id===id;
+    b.classList.toggle('on',on);b.setAttribute('aria-current',on?'true':'false');});
+  location.hash=id==='satcorp'?'':'/'+id;
+  if(id==='satcorp'){focus=null;document.body.classList.remove('focused');
+    tLook.set(0,0,0);cam.tRad=225;cam.tPhi=1.22;tOrbitScale=1;}
+  else{focus=CRAFT.find(c=>c.id===id);render(id);document.body.classList.add('focused');
+    cam.tRad=15;cam.tPhi=1.32;tOrbitScale=REDUCED?0:.10;
+    hover=null;tag.classList.remove('on');cv.classList.remove('over');}}
+document.getElementById('home').onclick=()=>go('satcorp');
+document.getElementById('back').onclick=()=>go('satcorp');
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&focus){go('satcorp');return;}
+  if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;
+  if(/^(INPUT|TEXTAREA)$/.test((document.activeElement||{}).tagName||''))return;
+  e.preventDefault();
+  const cur=focus?ORDER.indexOf(focus.id):0;
+  go(ORDER[(cur+(e.key==='ArrowDown'?1:ORDER.length-1))%ORDER.length]);
+});
+
+/* ------------------------------------------------------------ HUD meters */
+const lnkEl=document.getElementById('s-lnk'),sigEl=document.getElementById('t-sig');
+for(let i=0;i<4;i++)lnkEl.appendChild(document.createElement('b'));
+for(let i=0;i<5;i++)sigEl.appendChild(document.createElement('b'));
+const upEl=document.getElementById('t-up'),upBar=document.getElementById('t-upb'),
+      pwrEl=document.getElementById('t-pwr');
+let meterT=0;
+function meters(t){
+  if(t-meterT<0.28)return;meterT=t;
+  const up=6.2+Math.sin(t*.7)*1.9+Math.random()*.5;
+  upEl.textContent=up.toFixed(2);
+  upBar.style.width=Math.min(100,up*10)+'%';
+  pwrEl.textContent=(96.4+Math.sin(t*.31)*2.4).toFixed(1);
+  const bars=Math.round(3.4+Math.sin(t*1.1)*1.3);
+  [...sigEl.children].forEach((b,i)=>b.classList.toggle('on',i<bars));
+  [...lnkEl.children].forEach((b,i)=>b.classList.toggle('on',
+    ((t*3|0)+i)%5!==0));
+}
+
+/* ------------------------------------------------------------------ loop */
+const clock=new THREE.Clock();const tmp=new THREE.Vector3();
+const sCoord=document.getElementById('s-coord'),sRng=document.getElementById('s-rng');
+const TAU=Math.PI*2;
+function tick(){
+  requestAnimationFrame(tick);
+  const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
+  orbitScale+=(tOrbitScale-orbitScale)*Math.min(1,dt*2.4);
+
+  // sun direction in view space, for the day/night city-light mask
+  const sh=planet.userData.surfMat.userData.sh;
+  if(sh)sh.uniforms.uSunView.value.copy(SUNDIR).transformDirection(camera.matrixWorldInverse);
+
+  if(!REDUCED){
+    planet.rotation.y+=dt*.0075;
+    planet.userData.cloud.rotation.y+=dt*.0032;   // clouds drift against the surface
+    planet.userData.grid.rotation.y+=dt*.009;
+    // survey wave sweeps pole to pole, then resets
+    const g=planet.userData.grid.material.uniforms.uScan;
+    g.value+=dt*.34; if(g.value>1.9)g.value=-1.9;
+  }
+
+  CRAFT.forEach(c=>{
+    c.ang+=c.sp*dt*orbitScale;
+    c.group.position.set(Math.cos(c.ang)*c.rad,
+      Math.sin(c.ang)*c.rad*Math.sin(c.inc), Math.sin(c.ang)*c.rad*Math.cos(c.inc));
+    // nadir-pointing attitude: payload away from Namtar, then track along velocity
+    tmp.copy(CENTER).sub(c.group.position).normalize();
+    c.group.up.copy(tmp).negate();
+    c.group.lookAt(c.group.position.clone().add(
+      new THREE.Vector3(-Math.sin(c.ang),Math.cos(c.ang)*Math.sin(c.inc),Math.cos(c.ang)*Math.cos(c.inc))));
+    // wings track the sun
+    c.wings.forEach(w=>{w.rotation.x=Math.atan2(SUNDIR.y,SUNDIR.z)+t*.02;});
+
+    const on=(focus===c)||(hover===c);
+    c.act+=((on?1:0)-c.act)*Math.min(1,dt*5);
+    c.halo.material.opacity+=(((on?.95:.42)+Math.sin(t*2.4+c.ang*3)*.18)-c.halo.material.opacity)*Math.min(1,dt*6);
+
+    // orbit trail rides with the craft
+    const ru=c.ring.material.uniforms;
+    ru.uHead.value=((c.ang/TAU)%1+1)%1;
+    ru.uAct.value=c.act;
+    // downlink, Namtar surface → craft (hidden while focused, it clutters close-ups)
+    const bp=c.beam.geometry.attributes.position,P=c.group.position;
+    const k=PR*1.02/Math.max(1e-3,P.length());
+    bp.setXYZ(0,P.x*k,P.y*k,P.z*k);
+    bp.setXYZ(1,P.x,P.y,P.z);
+    bp.needsUpdate=true;
+    const bu=c.beam.material.uniforms;
+    bu.uT.value=t*.55;
+    bu.uOn.value+=(((focus?0:1)*(0.35+c.act*0.65))-bu.uOn.value)*Math.min(1,dt*4);
+  });
+
+  // shadow frustum follows the subject: tight on a focused craft, system-wide otherwise
+  const half=focus?18:110;
+  if(sc.right!==half){sc.left=-half;sc.right=half;sc.top=half;sc.bottom=-half;
+    sc.updateProjectionMatrix();}
+  if(focus){tLook.copy(focus.group.position);
+    sun.position.copy(focus.group.position).add(tmp.copy(SUNDIR).multiplyScalar(300));
+    sun.target.position.copy(focus.group.position);sun.target.updateMatrixWorld();}
+  else{sun.position.copy(SUNDIR).multiplyScalar(300);
+    sun.target.position.set(0,0,0);sun.target.updateMatrixWorld();}
+  look.lerp(tLook,Math.min(1,dt*2.2));
+  if(!drag&&!focus&&!REDUCED)cam.tTheta+=dt*.011;
+  cam.theta+=(cam.tTheta-cam.theta)*Math.min(1,dt*4);
+  cam.phi+=(cam.tPhi-cam.phi)*Math.min(1,dt*4);
+  cam.rad+=(cam.tRad-cam.rad)*Math.min(1,dt*2.4);
+  applyCam();
+
+  if(!focus)pick();
+  pinUpdate();
+  sCoord.textContent='AZ '+((cam.theta*57.2958%360+360)%360).toFixed(1).padStart(5,'0')+
+    ' · EL '+(90-cam.phi*57.2958).toFixed(1);
+  sRng.textContent='ALT '+Math.round(Math.max(0,camera.position.length()-PR)*14)
+    .toString().padStart(4,'0')+' KM';
+  meters(t);
+
+  POST.render(t);
+}
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);POST.resize();});
+
+const start=(location.hash||'').replace('#/','');
+go(DATA[start]?start:'satcorp');
+applyCam();tick();
+
+/* ------------------------------------------------------------------ boot */
+(function(){
+  const boot=document.getElementById('boot'),log=document.getElementById('bootlog'),
+        bar=document.getElementById('bootbar'),pct=document.getElementById('bootpct');
+  const LINES=['> HANDSHAKE · NAMTAR GROUND SEGMENT','> PRIMARY ACQUIRED · NAMTAR',
+    '> ORBITAL ELEMENTS LOADED · 4 CRAFT','> RENDER PIPELINE · PBR + BLOOM',
+    '> TELEMETRY SYNC · NOMINAL','> LINK ESTABLISHED'];
+  let i=0;
+  function done(){
+    if(boot.classList.contains('gone'))return;
+    boot.classList.add('gone');document.body.classList.add('up');
+    scramble(document.getElementById('deck-h'),DATA.satcorp.title,700);
+    setTimeout(()=>boot.remove(),900);
+  }
+  boot.addEventListener('click',done);
+  if(REDUCED){bar.style.width='100%';pct.textContent='100%';setTimeout(done,400);return;}
+  (function next(){
+    if(i>=LINES.length){setTimeout(done,320);return;}
+    const d=document.createElement('div');d.textContent=LINES[i];log.appendChild(d);
+    if(log.children.length>4)log.removeChild(log.firstChild);
+    i++;
+    const p=Math.round(i/LINES.length*100);
+    bar.style.width=p+'%';pct.textContent=String(p).padStart(2,'0')+'%';
+    setTimeout(next,230);
+  })();
+})();
+</script>
+</body>
+</html>

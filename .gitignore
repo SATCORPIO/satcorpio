@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.local
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# Texture sources live in the NAMTAR Blender project (283 MB of 8K PNGs) and are
+# not part of this repo. The converted WebP tiers under public/tex ARE committed,
+# so the site builds and deploys without needing the Blender project present.
