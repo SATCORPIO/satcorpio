@@ -1,14 +1,14 @@
 /* Division content. Each division is a craft whose payload describes the work.
-   This is the only place site copy lives — the router, nav and panel all read
+   This is the only place site copy lives   the router, nav and panel all read
    from here. */
 export const DATA = {
   satcorp: {
     /* No `title`: the orbital view has no panel, and its deck leads with the
        lede instead of a headline. Every other division needs one. */
     call: 'STATION', name: 'SATCORP', color: '#9FE0F5',
-    lede: 'A creative and technology operation. Brand systems, live community platforms, automation, and the architecture that ties them together — run as one practice instead of four vendors.',
+    lede: 'A creative and technology operation. Brand systems, live community platforms, automation, and the architecture that ties them together   run as one practice instead of four vendors.',
     groups: [
-      { h: 'Method — CFCM', rows: [
+      { h: 'Method   CFCM', rows: [
         ['01', 'Clarity', 'What the work is, what it is not, what it costs.'],
         ['02', 'Focus', 'Scope narrowed to the phase that moves the business first.'],
         ['03', 'Execution', 'Build against a signed SOW, reported weekly.'],
@@ -38,7 +38,7 @@ export const DATA = {
   pulse: {
     call: 'PL-02', name: 'PULSE', color: '#FFA500', payload: 'array',
     title: 'Infrastructure for communities that are actually live.',
-    lede: 'Platform and event infrastructure for rooms where people show up at the same time — servers, roles, onboarding, and the systems that keep it running without an admin awake at 3am.',
+    lede: 'Platform and event infrastructure for rooms where people show up at the same time   servers, roles, onboarding, and the systems that keep it running without an admin awake at 3am.',
     groups: [{ h: 'Work', rows: [
       ['01', 'Server architecture', 'Channel structure, roles, and permissions that scale.'],
       ['02', 'Onboarding', 'Members land, get oriented, and stay.'],
@@ -58,7 +58,7 @@ export const DATA = {
       ['CS', 'Casino', 'Discord-native economy and games.'],
       ['AO', 'ARK OS', 'Game server ops, breeding, and taming systems.'],
       ['PL', 'PULSE bot', 'Community and event automation.']] }],
-    chips: ['Identity ships first', 'Zova — single currency', 'guild_id multi-tenant'],
+    chips: ['Identity ships first', 'Zova   single currency', 'guild_id multi-tenant'],
     cta: 'REQUEST THE ARCHITECTURE BRIEF',
   },
 
@@ -68,7 +68,7 @@ export const DATA = {
     lede: 'Direct consulting. Systems architecture, technical strategy, and the unglamorous work of turning a vague ambition into a scope, a sequence, and a number.',
     groups: [{ h: 'Engagements', rows: [
       ['01', 'Systems architecture', 'How the pieces fit and what gets built first.'],
-      ['02', 'Technical strategy', 'Buy, build, or drop — with the reasoning attached.'],
+      ['02', 'Technical strategy', 'Buy, build, or drop   with the reasoning attached.'],
       ['03', 'Advisory', 'Standing access for teams making infrastructure calls.'],
       ['04', 'Infrastructure', 'Homelab and self-hosted stacks, specified and deployed.']] }],
     chips: ['Fixed scope', 'Phase-gated', 'anu@satcorp.io'],
@@ -82,19 +82,19 @@ export const CONTACT = 'anu@satcorp.io';
 
 /* Namtar itself is clickable, and this is what opens. The planetary figures are
    from NAMTAR_Planetary_Design_Document sec.2/9; the rest describes the game
-   being built on top of that world. This is the only place that copy lives —
+   being built on top of that world. This is the only place that copy lives  
    edit it here and both the modal and its stat grid follow. */
 export const NAMTAR_GAME = {
   eyebrow: 'SATCORP · INTERACTIVE',
   title: 'THE NAMTAR GAME',
   tagline: 'The world you are orbiting, from the ground.',
   body: [
-    'Namtar is a rocky oceanic super-Earth — 1.3× Earth across, 1.2 G at the '
+    'Namtar is a rocky oceanic super-Earth   1.3× Earth across, 1.2 G at the '
     + 'surface, 58% ocean, and geologically still very much awake. Everything on '
     + 'this screen is built from its survey data: the same maps, the same debris '
     + 'arc, the same two moons.',
     'The game drops you underneath all of it. You make landfall on a world that '
-    + 'has been mapped from orbit and walked by almost no one — the volcanic '
+    + 'has been mapped from orbit and walked by almost no one   the volcanic '
     + 'fracture that glows through the night side, the closed basin holding the '
     + 'densest life signal on the planet, and a desert continent with no surface '
     + 'water at all. Survey it, survive it, and work out what the earlier surveys '
@@ -108,20 +108,20 @@ export const NAMTAR_GAME = {
     ['BUILT BY', 'SATCORP · Ki-Ra Studios'],
     ['STATUS', 'In development'],
   ],
-  cta: { label: 'GET DEVELOPMENT UPDATES', subject: 'The Namtar Game — updates' },
+  cta: { label: 'GET DEVELOPMENT UPDATES', subject: 'The Namtar Game   updates' },
 };
 
 /* Surface features, from NAMTAR_Planetary_Design_Document sec.10. Coordinates
    come from textures/namtar_landmarks.json at load; only `ring` is positioned
    here, since it is not a surface feature and has no entry in that file.
-   The JSON's `belt` key duplicates `black_rift` exactly — the belt is the
-   orogenic system the rift runs through, not a separate site — so it is not
+   The JSON's `belt` key duplicates `black_rift` exactly   the belt is the
+   orogenic system the rift runs through, not a separate site   so it is not
    shown as its own pin. */
 export const LANDMARKS = [
   {
     id: 'black_rift', key: 'black_rift', label: 'THE BLACK RIFT',
     kind: 'VOLCANIC FRACTURE',
-    text: 'A continent-scale fracture running through the northern mountain belt. Active along most of its length, and the only feature that stays visible after the terminator passes — the rift floor glows through the dark.',
+    text: 'A continent-scale fracture running through the northern mountain belt. Active along most of its length, and the only feature that stays visible after the terminator passes   the rift floor glows through the dark.',
     stats: [['CLASS', 'Tectonic scar'], ['STATE', 'Active'], ['SIGNATURE', 'Thermal + haze']],
   },
   {
@@ -139,7 +139,7 @@ export const LANDMARKS = [
   {
     id: 'ring', label: 'DEBRIS ARC',
     kind: 'RING FRAGMENT',
-    text: 'What is left of a moon that came apart. The debris never closed into a full ring — it holds a broken arc of ice and rock, bright on the sunward side and invisible everywhere else.',
+    text: 'What is left of a moon that came apart. The debris never closed into a full ring   it holds a broken arc of ice and rock, bright on the sunward side and invisible everywhere else.',
     stats: [['ORIGIN', 'Moon breakup'], ['SPAN', 'Partial arc'], ['COMPOSITION', 'Ice + rock']],
   },
 ];
