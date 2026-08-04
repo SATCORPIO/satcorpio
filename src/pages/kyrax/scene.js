@@ -1,10 +1,10 @@
 /* ==========================================================================
-   KYRAX — THE CORE
+   KYRAX   THE CORE
 
    One object, and it is the whole page. A single particle system sits fixed
    behind the document and re-forms as you scroll: a dense core, then five
    capability clusters, then a ring of addressed systems, then the architecture
-   tree, then a constellation. Nothing is added or removed between formations —
+   tree, then a constellation. Nothing is added or removed between formations  
    the same points are always all of them, which is the argument the page is
    making in the first place.
 
@@ -16,7 +16,7 @@
 import { clamp, damp, scrollTracker, pointerTracker, disposeTree } from '../shared/stage.js';
 
 /* Formations, in scroll order. Each builds one Float32Array of positions for
-   the same particle budget — a formation is a rearrangement, never a different
+   the same particle budget   a formation is a rearrangement, never a different
    set of points. */
 const FORMATIONS = ['core', 'clusters', 'ring', 'tree', 'constellation'];
 
@@ -44,7 +44,7 @@ function buildFormations(n) {
   const out = {};
   const rand = rng(0x5A7C09);
   /* One fixed jitter table reused by every formation, so a given particle keeps
-     its personality — the same point stays on the outside of the cloud, at the
+     its personality   the same point stays on the outside of the cloud, at the
      edge of its cluster, and in the same arm of the tree. */
   const jit = new Float32Array(n * 3);
   for (let i = 0; i < n * 3; i++) jit[i] = rand() * 2 - 1;
@@ -143,7 +143,7 @@ function buildFormations(n) {
 
 /* Edges among the first N points, each joined to its nearest neighbours in the
    core formation. The pairs are fixed, so as the points move into other
-   formations the same links stretch across the new shape — the network
+   formations the same links stretch across the new shape   the network
    re-wiring rather than being redrawn. */
 function buildEdges(core, linked, perNode) {
   const pairs = [];
@@ -190,7 +190,7 @@ export function create({ THREE, renderer, host, mobile }) {
   geo.setAttribute('aKey', new THREE.BufferAttribute(seedTint, 1));
 
   /* Points are drawn from a shader rather than PointsMaterial so the "key"
-     particles — the ones that become nodes and stars — can be both larger and
+     particles   the ones that become nodes and stars   can be both larger and
      a different colour without a second draw call. */
   const points = new THREE.Points(geo, new THREE.ShaderMaterial({
     uniforms: {
