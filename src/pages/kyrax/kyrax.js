@@ -9,7 +9,7 @@ mountStage({
 });
 
 /* The formation rail. It reads the same section markers the scene does, so the
-   label and the shape behind it can never disagree — and it is driven from an
+   label and the shape behind it can never disagree   and it is driven from an
    observer rather than a scroll handler so it costs nothing while idle. */
 const rail = [...document.querySelectorAll('[data-rail]')];
 const stages = [...document.querySelectorAll('[data-stage]')];
