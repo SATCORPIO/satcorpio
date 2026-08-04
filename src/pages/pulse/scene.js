@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PULSE — THE CONTROL ROOM
+   PULSE   THE CONTROL ROOM
 
    Four screens and one signal, made literal. A 2×2 video wall hangs in a dark
    room over a wireframe waveform floor that ripples away from the cursor; the
@@ -7,7 +7,7 @@
    each channel section tunes its own screen in as you reach it. Clicking a
    screen jumps the page to that channel.
 
-   The screens carry real labels, drawn once into a canvas texture — the
+   The screens carry real labels, drawn once into a canvas texture   the
    alternative is a font atlas and a glyph layout pass for twelve words that
    never change.
 
@@ -27,7 +27,7 @@ const CHANNELS = [
 const SW = 15, SH = 8.4, GAP = 1.3;
 
 /* Screen faces. Static and scanlines while dormant, the label resolving out of
-   the noise as the channel tunes in — the transition is the whole point, so
+   the noise as the channel tunes in   the transition is the whole point, so
    `uTune` drives every term rather than switching between two looks. */
 const SCREEN_FRAG = /* glsl */`
   uniform sampler2D uLabel;
@@ -50,7 +50,7 @@ const SCREEN_FRAG = /* glsl */`
     uv.x += tear * (1.0 - uTune) * 0.05;
 
     /* Dormant screens have to be legible as static without competing with the
-       one that is on air — mid-grey noise across three panels out-shouts a
+       one that is on air   mid-grey noise across three panels out-shouts a
        single tuned picture, and the wall stops having a subject. */
     float noise = hash(uv * 220.0 + uTime * 40.0);
     vec3 col = vec3(noise) * (1.0 - uTune) * 0.24;
@@ -61,7 +61,7 @@ const SCREEN_FRAG = /* glsl */`
     // A tuned screen has its own glow; a dormant one is just a grey panel.
     col += uAccent * uTune * 0.10 * (0.7 + 0.3 * sin(uTime * 1.6));
 
-    // Scanlines, always — this is a CRT wall either way.
+    // Scanlines, always   this is a CRT wall either way.
     col *= 0.72 + 0.28 * sin(vUv.y * 620.0);
 
     // Corner falloff, so the glass reads as curved.
@@ -245,7 +245,7 @@ export function create({ THREE, renderer, host, canvas, mobile }) {
               + Math.sin(pz * 0.14 - t * 0.9) * 0.85;
         if (pointer.inside) {
           const d = Math.hypot(px - ripple.x, pz - ripple.z);
-          /* A ring travelling out from the cursor, damped with distance —
+          /* A ring travelling out from the cursor, damped with distance  
              a touched oscilloscope rather than a spotlight. */
           y += Math.cos(d * 0.42 - t * 5.0) * 4.6 * Math.exp(-d * 0.075);
         }
