@@ -11,7 +11,7 @@
    planet so they stay readable as tracking targets.
    ========================================================================== */
 /* Old #/division links become page loads. Imported first so it runs before
-   three.js is evaluated — no reason to build a scene for a page about to
+   three.js is evaluated   no reason to build a scene for a page about to
    unload. */
 import './hud/legacy.js';
 
@@ -118,7 +118,7 @@ let moved = 0;
 const ptr = new Vector2(-9, -9);
 
 /* Live pointers, keyed by id. One is a drag, two are a pinch. Tracking them in
-   a map rather than with a boolean is what lets a phone zoom at all — the wheel
+   a map rather than with a boolean is what lets a phone zoom at all   the wheel
    event below has no touch equivalent. */
 const pointers = new Map();
 let pinch = 0;
@@ -166,7 +166,7 @@ cv.addEventListener('pointerdown', (e) => {
 
   startDrag(e.clientX, e.clientY);
   /* Touch has no hover, so the pick a mouse would have done on its way in has
-     to happen here — otherwise a tap lands with nothing under the cursor and
+     to happen here   otherwise a tap lands with nothing under the cursor and
      the click below has nothing to select. */
   aim(e);
   if (!focus) pick();
@@ -179,7 +179,7 @@ cv.addEventListener('pointermove', (e) => {
     const d = spread();
     /* Pinching apart pulls the camera in, which is the gesture everyone
        expects. The rates put a full-screen pinch at roughly two-thirds of each
-       range — enough to cross most of it in one gesture, not so much that a
+       range   enough to cross most of it in one gesture, not so much that a
        small adjustment slams into a clamp. */
     if (pinch) zoom((pinch - d) * (focus ? 0.055 : 0.55));
     pinch = d;
@@ -283,7 +283,7 @@ document.getElementById('deck-hint').textContent = COARSE
  * The two halves deliberately overlap. The wash is opaque before the navigation
  * fires, and every section page fades in from the same colour the wash ended on
  * (DATA[id].pageBg, which each page also sets as its --bg), so what the viewer
- * sees is one continuous move into the object — not a transition, then a blank
+ * sees is one continuous move into the object   not a transition, then a blank
  * frame, then a page.
  */
 const warp = document.getElementById('warp');
@@ -320,7 +320,7 @@ function depart(id) {
   }
 
   if (id === 'namtar') {
-    // No craft to follow — fall toward the planet until it fills the frame.
+    // No craft to follow   fall toward the planet until it fills the frame.
     focus = null;
     tLook.set(0, 0, 0);
     cam.tRad = PR * 1.3;
@@ -336,7 +336,7 @@ function depart(id) {
   setTimeout(leave, 890);
 }
 
-/* The limb callout is the discoverable half of the planet click — the hit area
+/* The limb callout is the discoverable half of the planet click   the hit area
    itself is the whole disc, which nothing on screen announces. */
 document.getElementById('pin').querySelector('.bx')
   .addEventListener('click', () => depart('namtar'));
@@ -385,19 +385,19 @@ const TAU = Math.PI * 2;
    second of frame times, and if the device cannot hold the target it gives
    something up. What it gives up, and in what order, is the whole design:
 
-     1. bloom resolution — bloom is already a blur, so running its five-tap
+     1. bloom resolution   bloom is already a blur, so running its five-tap
         pyramid at half linear resolution is the largest saving available for
         the least visible cost. This is the step to spend first, and on mobile
         it has already been spent at startup.
-     2. framebuffer — a quarter step at a time. This softens everything,
+     2. framebuffer   a quarter step at a time. This softens everything,
         including type, so it comes second.
-     3. frame rate — at the resolution floor there is nothing left to sharpen
+     3. frame rate   at the resolution floor there is nothing left to sharpen
         away, and a steady 30 beats a 45 that stutters. It also roughly halves
         what the GPU draws, which on a phone is battery rather than pixels.
 
-   Every step is one-way. A ratio that walks both ways oscillates — dropping
+   Every step is one-way. A ratio that walks both ways oscillates   dropping
    quality raises the frame rate, which is exactly the condition for putting it
-   back — and a scene that visibly resamples itself once a second is worse than
+   back   and a scene that visibly resamples itself once a second is worse than
    one that is simply a little soft. The first three seconds are ignored so
    texture uploads and shader compilation are not mistaken for a slow GPU. */
 const DPR_CEIL = Math.min(devicePixelRatio, MAX_DPR);
@@ -429,15 +429,15 @@ function governor(dt) {
 }
 
 /* Half-rate drawing, engaged only at the very bottom of the governor. The loop
-   still runs its updates every frame — camera easing, orbits and telemetry all
-   advance on the real delta, so nothing runs at half speed — and it is only the
+   still runs its updates every frame   camera easing, orbits and telemetry all
+   advance on the real delta, so nothing runs at half speed   and it is only the
    render that is skipped. */
 let skipDraw = false;
 
 function tick() {
   requestAnimationFrame(tick);
   /* A backgrounded tab already stops getting frames, but an on-screen page
-     under a native share sheet or a locked phone does not always — and this
+     under a native share sheet or a locked phone does not always   and this
      scene is not cheap to keep drawing to nobody. */
   if (document.hidden) { clock.getDelta(); return; }
   const dt = Math.min(clock.getDelta(), 0.05);
@@ -447,7 +447,7 @@ function tick() {
   orbitScale += (tOrbitScale - orbitScale) * Math.min(1, dt * 2.4);
 
   /* The surface shader needs the sun in the planet's own frame, because the
-     planet turns underneath it — a world-space vector would drag the terminator
+     planet turns underneath it   a world-space vector would drag the terminator
      across the map. */
   sunLocal.copy(SUNDIR).applyQuaternion(planet.quaternion.clone().invert());
   surface.userData.uniforms.uSunLocal.value.copy(sunLocal);
@@ -534,7 +534,7 @@ function tick() {
   cam.phi += (cam.tPhi - cam.phi) * Math.min(1, dt * 4);
   /* A departure covers most of the range from 225 units to arm's length in
      under a second, so the approach runs at roughly twice the rate the camera
-     uses for an ordinary move — it should read as falling, not gliding. */
+     uses for an ordinary move   it should read as falling, not gliding. */
   cam.rad += (cam.tRad - cam.rad) * Math.min(1, dt * (departing ? 5 : 2.4));
   applyCam();
 
@@ -549,7 +549,7 @@ function tick() {
 }
 
 /* Mobile browsers fire resize on every pixel of URL-bar travel, and each one
-   here reallocates the composer's half-float target plus five bloom mips —
+   here reallocates the composer's half-float target plus five bloom mips  
    dozens of times during one flick. Settling first turns that into a single
    reallocation; in the interim the canvas is CSS-stretched over the few pixels
    that changed, which nobody can see and the next frame corrects. */
@@ -559,8 +559,8 @@ let settle = 0;
 
 function resize() {
   settle = 0;
-  /* Never divide by a zero height. A viewport can momentarily report 0 — a
-     backgrounded tab, an iOS view transition, a hidden iframe — and the
+  /* Never divide by a zero height. A viewport can momentarily report 0   a
+     backgrounded tab, an iOS view transition, a hidden iframe   and the
      resulting NaN aspect makes projectionMatrixInverse NaN as well. That state
      is permanent: unproject stops working, so picking answers "yes" to every
      ray, and nothing later puts it back. The empty viewport is transient; the
