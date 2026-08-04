@@ -30,7 +30,7 @@ const JOBS = [
   { src: 'phase05_atmosphere_v2.png', dir: 'namtar', name: 'atmosphere', widths: [1280, 640], q: 76 },
   { src: 'phase06_night_v4.png', dir: 'namtar', name: 'night', widths: [1280, 640], q: 76 },
   { src: 'phase07_system_v4.png', dir: 'namtar', name: 'system', widths: [1280, 640], q: 76 },
-  /* This one is a 768px square composition test, not a wide render — asking for
+  /* This one is a 768px square composition test, not a wide render   asking for
      1280 would only upscale it, so it ships at the sizes it actually has. */
   { src: 'phase08_compose_v4.png', dir: 'namtar', name: 'orbit', widths: [768, 512], q: 76 },
 ];
