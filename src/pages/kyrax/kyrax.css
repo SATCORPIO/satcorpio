@@ -1,9 +1,9 @@
 /* ==========================================================================
-   KYRAX — INTELLIGENCE LAYER
+   KYRAX   INTELLIGENCE LAYER
 
    The deep-tech lab. Everything on this page is either the core or a readout
    about the core: no images, no photography, no illustration. Type sits on
-   glass panels that look transmitted rather than printed — thin rules, hairline
+   glass panels that look transmitted rather than printed   thin rules, hairline
    scanlines, a formation rail down the side, and a great deal of black.
 
    Electric orange on the darkest background on the site. --bg matches
@@ -50,7 +50,7 @@ body.kx { overflow-x: hidden; }
 }
 .kx-canvas.is-live { opacity: 1; }
 
-/* Without WebGL the core is a slow breathing bloom rather than nothing at all —
+/* Without WebGL the core is a slow breathing bloom rather than nothing at all  
    the page has no imagery of its own to fall back to. */
 .kx-fallback {
   position: absolute;
@@ -128,7 +128,7 @@ html:not(.sc-3d) .kx-rail { display: none; }
 .kx-sec { padding-block: clamp(100px, 16vh, 180px); }
 
 /* The copy is pushed right of centre so the core has the left of the frame to
-   itself — the rail, then the object, then the argument. */
+   itself   the rail, then the object, then the argument. */
 .kx-flow .sc-wrap { width: min(100% - var(--pad) * 2, 1180px); }
 .kx-hero .sc-wrap, .kx-head { max-width: 760px; margin-left: auto; margin-right: 0; }
 
@@ -217,7 +217,7 @@ html:not(.sc-3d) .kx-cue { display: none; }
 
 /* ---------------------------------------------------------------- targets */
 /* The seven environments, set as an addressed list rather than a grid of
-   boxes — each one is the same core reached from somewhere else. */
+   boxes   each one is the same core reached from somewhere else. */
 .kx-targets {
   list-style: none;
   margin: 44px 0 0;
