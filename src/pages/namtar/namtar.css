@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NAMTAR — GAME SITE
+   NAMTAR   GAME SITE
 
    The one page on the site that is trying to sell you something. It is built
    as a viewport onto the planet rather than a document about it: the globe is
@@ -30,7 +30,7 @@ body.nm { overflow-x: hidden; }
 
 /* ------------------------------------------------------------------ stage */
 /* Fixed, full-viewport, behind everything. The page scrolls; the planet does
-   not move with it — the camera responds to the scroll instead. */
+   not move with it   the camera responds to the scroll instead. */
 .nm-stage {
   position: fixed;
   inset: 0;
@@ -52,7 +52,7 @@ body.nm { overflow-x: hidden; }
 
 /* The still is the whole design when there is no WebGL, reduced motion is set,
    or the scene chunk never arrives. It fades out only once a canvas is actually
-   drawing — html.sc-3d is set by the stage once the scene has mounted. */
+   drawing   html.sc-3d is set by the stage once the scene has mounted. */
 .nm-still {
   position: absolute;
   inset: 0;
@@ -93,7 +93,7 @@ body.nm { overflow-x: hidden; }
   gap: 10px;
   opacity: 0;
   /* translate carries the per-frame position, which leaves transform free for
-     the centring offset — these two run on every pin on every frame and only
+     the centring offset   these two run on every pin on every frame and only
      the composited properties can afford it. */
   transform: translate(-6px, -50%);
   white-space: nowrap;
@@ -146,7 +146,7 @@ body.nm { overflow-x: hidden; }
 .nm-frame .bl { bottom: 18px; left: 18px; border-right: 0; border-top: 0; }
 .nm-frame .br { bottom: 18px; right: 18px; border-left: 0; border-top: 0; }
 
-/* The readout strip along the bottom — the page's one piece of instrumentation
+/* The readout strip along the bottom   the page's one piece of instrumentation
    that never scrolls away. */
 .nm-tick {
   position: absolute;
@@ -176,7 +176,7 @@ body.nm { overflow-x: hidden; }
   padding-top: 110px;
 }
 
-/* One column, offset left. The empty half is not empty — it is the planet, and
+/* One column, offset left. The empty half is not empty   it is the planet, and
    giving it room is the entire layout decision on this page. */
 .nm-col {
   width: min(100% - 40px, 620px);
@@ -417,7 +417,7 @@ h2.big {
 }
 
 @media (max-width: 720px) {
-  /* On a phone the planet cannot also be the layout — the copy needs the whole
+  /* On a phone the planet cannot also be the layout   the copy needs the whole
      width, so the stage becomes a backdrop and the panels go nearly opaque. */
   .nm-col, .nm-col.wide { width: calc(100% - var(--pad) * 2); margin-inline: var(--pad); }
   .nm-vig {
