@@ -22,7 +22,7 @@ export function createClouds(tex) {
     uTime: { value: 0 },
     uOpacity: { value: 1 },
     /* Storm lightning is the one thing on the planet that flashes. It is set
-       once at build rather than per frame — the preference does not change
+       once at build rather than per frame   the preference does not change
        mid-session, and a uniform costs nothing to leave at 1. */
     uStrike: { value: REDUCED ? 0 : 1 },
   };
@@ -64,7 +64,7 @@ export function createClouds(tex) {
            profile decides opacity, so reading it straight as alpha puts cloud
            everywhere the map is merely non-zero. Thresholding well up the range
            is what restores the gaps between systems that the reference render
-           has — the deck should cover roughly a third of the disc, not all of
+           has   the deck should cover roughly a third of the disc, not all of
            it. */
         vec3 c = texture2D(uMap, vUv).rgb;
         /* Feathered wide and then gamma'd rather than thresholded tight. A
@@ -109,7 +109,7 @@ export function createClouds(tex) {
 
            The exponent stays at 220: the sharpness is the whole character of a
            lightning flash, and softening it would give a pulsing glow instead.
-           uStrike is the reduced-motion switch — flashing is exactly what that
+           uStrike is the reduced-motion switch   flashing is exactly what that
            setting is asking about, so it turns the term off entirely. */
         float night = smoothstep(0.06, -0.16, sdot);
         vec2 cell = floor(vUv * vec2(220.0, 110.0));
