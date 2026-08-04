@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>SATCORP — Namtar Orbital</title>
-<meta name="description" content="SATCORP is a technology ecosystem — intelligence, creative technology, digital worlds and the infrastructure underneath them. Explore the divisions from orbit around Namtar." />
+<title>SATCORP   Namtar Orbital</title>
+<meta name="description" content="SATCORP is a technology ecosystem   intelligence, creative technology, digital worlds and the infrastructure underneath them. Explore the divisions from orbit around Namtar." />
 <meta name="theme-color" content="#05070B" />
 <link rel="canonical" href="https://satcorp.io/" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,7 +51,7 @@
   /* Film grain lives in the final shader pass (post/composer.js), not in a DOM
      layer. A full-screen mix-blend-mode element forces the compositor to keep a
      readback copy of everything beneath it every frame, and beneath it here is a
-     live WebGL scene — it was the most expensive non-WebGL thing on the page,
+     live WebGL scene   it was the most expensive non-WebGL thing on the page,
      for an effect the GPU was already producing one pass earlier. */
   .scan{position:fixed;inset:0;z-index:39;pointer-events:none;opacity:.16;
     background:repeating-linear-gradient(to bottom,rgba(255,255,255,.022) 0 1px,transparent 1px 4px)}
@@ -71,7 +71,7 @@
   .brk.br{bottom:calc(20px + var(--sb));right:calc(20px + var(--sr));border-left:0;border-top:0}
   .brk.br::after{bottom:-1px;right:-1px}
 
-  /* measurement rail under the header — console furniture, reads as instrumentation */
+  /* measurement rail under the header   console furniture, reads as instrumentation */
   .rail{position:fixed;z-index:28;top:94px;left:38px;right:38px;height:9px;pointer-events:none;
     opacity:0;transition:opacity 1s ease .5s;overflow:hidden}
   body.up .rail{opacity:.55}
@@ -122,7 +122,7 @@
   nav a:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
 
   /* The dismiss control. Sits with the rail so the two read as one component,
-     and stays put when the rail slides away — it is the way back. */
+     and stays put when the rail slides away   it is the way back. */
   .navtoggle{position:fixed;z-index:32;left:calc(38px + var(--sl));
     top:calc(50% - 132px);transform:translateY(-100%);
     background:rgba(5,7,11,.55);border:1px solid var(--line);color:var(--muted);
@@ -153,7 +153,7 @@
   /* Every callout below is positioned with the `translate` property rather than
      left/top, and its leader line is scaled rather than resized. All three of
      translate/rotate/scale are composited, so a frame of pin movement never
-     touches layout — which matters because this runs on every pin, every frame.
+     touches layout   which matters because this runs on every pin, every frame.
      `transform` is left free for the offsets and hover states that need to
      transition independently of position. */
   .tag{position:fixed;z-index:35;pointer-events:none;opacity:0;transition:opacity .22s}
@@ -177,7 +177,7 @@
     background:linear-gradient(to right,rgba(5,7,11,.62),transparent)}
   .tag .bx u{display:block;text-decoration:none;color:#8B95A3;font-size:9px;margin-top:4px;letter-spacing:.14em}
 
-  /* Namtar callout — same telemetry language as a craft lock, but persistent
+  /* Namtar callout   same telemetry language as a craft lock, but persistent
      and keyed to the accent so it re-tints with the active division */
   .pin{--tagc:var(--accent);z-index:27}
   /* The only interactive callout: it flies into the planet exactly as clicking
@@ -326,13 +326,13 @@
      MOBILE
 
      Two things change below, and they pull in opposite directions. The layout
-     rearranges — the nav goes to the bottom, the furniture gets out of the way
+     rearranges   the nav goes to the bottom, the furniture gets out of the way
      of a viewport a fifth the size. And the compositing gets cheaper: a phone is
      already spending its whole frame budget on the WebGL scene underneath, so
      every blend layer and backdrop filter above it is taken from the same
      account.
 
-     `dvh` matters here. `vh` on iOS Safari is the *largest* viewport height —
+     `dvh` matters here. `vh` on iOS Safari is the *largest* viewport height  
      the one you only get with the URL bar hidden.
      ========================================================================== */
   @media (max-width:900px){
@@ -369,7 +369,7 @@
 
     /* The toggle follows the rail to the bottom edge, where a thumb can reach
        it. It goes to the right rather than the left because the deck sits in
-       the same band and its text is left-aligned — the right end of those lines
+       the same band and its text is left-aligned   the right end of those lines
        is the only space down here that is reliably empty. */
     .navtoggle{top:auto;transform:none;bottom:calc(98px + var(--sb));
       left:auto;right:calc(12px + var(--sr));padding:11px 14px;min-height:38px}
@@ -382,7 +382,7 @@
     .deck .hint{margin-top:16px;font-size:8.5px;letter-spacing:.16em}
 
     /* `backdrop-filter` over a live WebGL canvas is a compositing bill a phone
-       cannot afford — the card goes opaque instead. At 98% over a moving scene
+       cannot afford   the card goes opaque instead. At 98% over a moving scene
        nobody was reading the blur. */
     .card{bottom:calc(118px + var(--sb));width:calc(100vw - 28px);max-height:52dvh;overflow-y:auto;
       -webkit-backdrop-filter:none;backdrop-filter:none;
@@ -453,7 +453,7 @@
 <nav id="nav" aria-label="Sections"></nav>
 
 <div class="deck">
-  <h1>SATCORP is a technology ecosystem — intelligence, creative technology, digital worlds, and the infrastructure underneath them, developed and operated as one practice.</h1>
+  <h1>SATCORP is a technology ecosystem   intelligence, creative technology, digital worlds, and the infrastructure underneath them, developed and operated as one practice.</h1>
   <div class="hint" id="deck-hint">DRAG TO ORBIT · SELECT A CRAFT OR NAMTAR</div>
 </div>
 
@@ -476,7 +476,7 @@
   <span class="tm">PWR <i id="t-pwr">00.0</i>%</span>
   <span class="tm sig" id="t-sig">SIG</span>
   <span class="tm">PRIMARY · NAMTAR</span>
-  <span class="cf">CFCM · CLARITY — FOCUS — EXECUTION — POLISH</span>
+  <span class="cf">CFCM · CLARITY   FOCUS   EXECUTION   POLISH</span>
   <span><a href="mailto:anu@satcorp.io">ANU@SATCORP.IO</a></span>
 </div>
 
