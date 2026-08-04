@@ -1,5 +1,5 @@
 /* ==========================================================================
-   NAMTAR — THE DESCENT
+   NAMTAR   THE DESCENT
 
    The planet itself, live, behind the whole page. Not the orbital view's
    planet: that one carries a ring, two moons, a shadow-casting sun, a post
@@ -25,7 +25,7 @@ const TEX = import.meta.env.BASE_URL + 'tex/';
 /* Longitude/latitude to a direction in the planet's local frame. Must agree
    with three's SphereGeometry, which is what the equirect maps are wrapped
    onto: u=0 sits at longitude -180 and v=0 at the north pole. Same derivation
-   as src/hud/landmarks.js — duplicated rather than imported, because that
+   as src/hud/landmarks.js   duplicated rather than imported, because that
    module pulls the orbital HUD in behind it. */
 function lonLatToDir(THREE, lonDeg, latDeg) {
   const lon = (lonDeg * Math.PI) / 180;
@@ -120,7 +120,7 @@ const CLOUD_FRAG = /* glsl */`
     float ndl = dot(N, uSun);
     float day = smoothstep(-0.14, 0.30, ndl);
 
-    // The cloud map drifts in longitude only — a shell that rotated as geometry
+    // The cloud map drifts in longitude only   a shell that rotated as geometry
     // would carry its own terminator with it.
     vec3 c = texture2D(uClouds, vec2(vUv.x + uDrift, vUv.y)).rgb;
     float cover = smoothstep(0.34, 0.66, c.r);
@@ -148,7 +148,7 @@ const ATMO_FRAG = /* glsl */`
     float fres = pow(1.0 - abs(dot(N, V)), 2.6);
     float sun = smoothstep(-0.55, 0.62, dot(N, uSun));
 
-    // Blue-green away from the star, a tight warm arc toward it — the Rayleigh
+    // Blue-green away from the star, a tight warm arc toward it   the Rayleigh
     // and Mie ends of the same limb, kept distinguishable.
     vec3 tint = mix(vec3(0.16, 0.42, 0.95), vec3(1.0, 0.62, 0.34),
                     smoothstep(0.35, 1.0, dot(N, uSun)));
@@ -187,7 +187,7 @@ export function create({ THREE, renderer, host, mobile }) {
   /* --------------------------------------------------------------- rig */
   /* The planet spins inside a rig that never does, so the sun direction can be
      expressed once in world space and converted into the planet's frame each
-     frame — the alternative drags the terminator across the surface. */
+     frame   the alternative drags the terminator across the surface. */
   const rig = new THREE.Group();
   scene.add(rig);
   const planetGroup = new THREE.Group();
@@ -246,7 +246,7 @@ export function create({ THREE, renderer, host, mobile }) {
   );
   /* Parented to the spinning group, not the rig. It carries no texture so the
      rotation is invisible, and it puts the shell's object space in the same
-     frame as uSun/uCam — which are planet-local, because that is the frame the
+     frame as uSun/uCam   which are planet-local, because that is the frame the
      surface needs them in. A shell in world space would be lit from the wrong
      side by exactly the planet's rotation. */
   planetGroup.add(atmo);
@@ -309,14 +309,14 @@ export function create({ THREE, renderer, host, mobile }) {
         anchors.push(anchor);
       }
     })
-    .catch(() => { /* no coordinates, no pins — the page reads the same */ });
+    .catch(() => { /* no coordinates, no pins   the page reads the same */ });
 
   /* --------------------------------------------------------------- input */
   const pointer = pointerTracker(host);
   const scroll = scrollTracker([...document.querySelectorAll('[data-stage]')]);
 
   /* Camera state. az/el are the orbit angles; r is altitude. Targets are what
-     scroll and clicks set, values are what is drawn — everything eases. */
+     scroll and clicks set, values are what is drawn   everything eases. */
   let az = 0.6, el = 0.22, r = 150;
   let tAz = 0.6, tEl = 0.22, tR = 150;
   let spin = 0;
@@ -339,7 +339,7 @@ export function create({ THREE, renderer, host, mobile }) {
   resize(host.clientWidth || 1, host.clientHeight || 1);
 
   function update(dt, t) {
-    /* Fade in only once every map has decoded — a planet that pops in one
+    /* Fade in only once every map has decoded   a planet that pops in one
        texture at a time looks broken rather than progressive. */
     if (pending <= 0) fade = damp(fade, 1, 2.2, dt);
     shared.uFade.value = fade;
@@ -354,7 +354,7 @@ export function create({ THREE, renderer, host, mobile }) {
 
     if (focus) {
       /* Lock onto a surface feature and orbit with it as the planet turns,
-         rather than freezing the spin — a stopped planet reads as a paused
+         rather than freezing the spin   a stopped planet reads as a paused
          video. */
       focus.getWorldPosition(worldDir).normalize();
       tAz = Math.atan2(worldDir.x, worldDir.z);
@@ -390,7 +390,7 @@ export function create({ THREE, renderer, host, mobile }) {
     clouds.material.uniforms.uDrift.value = t * 0.0016;
 
     /* The sun swings through the descent, so the page starts on a lit disc and
-       ends on the night side with the rift burning — which is what the copy
+       ends on the night side with the rift burning   which is what the copy
        under it is talking about by then. */
     const sunAng = -0.5 + p * 2.5;
     const sunWorld = new THREE.Vector3(Math.sin(sunAng), 0.26, Math.cos(sunAng)).normalize();
