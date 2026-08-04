@@ -1,9 +1,9 @@
 /* ==========================================================================
-   PULSE — CONTROL ROOM
+   PULSE   CONTROL ROOM
 
    A broadcast gallery rather than a website: an ON AIR strip pinned to the top,
    a channel slug on every section, VU chrome, and a four-screen wall behind the
-   whole document that the page pushes the camera into. Type is Space Grotesk —
+   whole document that the page pushes the camera into. Type is Space Grotesk  
    the one page on the site that is not condensed, technical or monospaced in
    its display face, because a media brand should not look like an instrument.
 
@@ -61,7 +61,7 @@ body.pl { overflow-x: hidden; }
 }
 .sc-3d .pl-fallback { opacity: 0; }
 
-/* Broadcast grain. Static, not animated — a moving noise layer over a live
+/* Broadcast grain. Static, not animated   a moving noise layer over a live
    canvas is a full-screen composite every frame for texture nobody registers. */
 .pl-grain {
   position: absolute;
