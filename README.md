@@ -1,7 +1,7 @@
 # SATCORP Namtar Orbital
 
 An interactive orbital view of the NAMTAR planetary system, used as the front
-door to SATCORP's divisions. Drag to orbit; click a craft — or Namtar itself —
+door to SATCORP's divisions. Drag to orbit; click a craft   or Namtar itself  
 and the camera dives at it before handing over to that section's own page. Click
 a surface feature to read about it. The section list on the left does the same
 thing for anyone who would rather not hunt for a spacecraft, and can be dismissed
@@ -20,11 +20,11 @@ that loads none of it.
 | URL | Entry | Identity |
 |---|---|---|
 | `/` | `index.html` → `src/main.js` | The orbital scene |
-| `/namtar/` | `namtar/index.html` | The game — crimson, condensed, image-led |
-| `/kira/` | `kira/index.html` | Ki-Ra Studios — cinematic, cyan |
-| `/kyrax/` | `kyrax/index.html` | KYRAX — obsidian and electric blue, holographic |
-| `/pulse/` | `pulse/index.html` | PULSE — broadcast control room |
-| `/anu/` | `anu/index.html` | ANU — terminal, monospace throughout |
+| `/namtar/` | `namtar/index.html` | The game   crimson, condensed, image-led |
+| `/kira/` | `kira/index.html` | Ki-Ra Studios   cinematic, cyan |
+| `/kyrax/` | `kyrax/index.html` | KYRAX   obsidian and electric blue, holographic |
+| `/pulse/` | `pulse/index.html` | PULSE   broadcast control room |
+| `/anu/` | `anu/index.html` | ANU   terminal, monospace throughout |
 
 Each section page is meant to read as its own site. The only thing they share is
 `src/pages/shared/base.css`, which deliberately contains no colour and no type
@@ -36,20 +36,20 @@ in the same place and the same words.
 
 `vite.config.js` lists every document in `rollupOptions.input`. The HTML lives in
 folders at the repo root rather than under `src/`, because Vite mirrors an entry's
-source position into `dist/` — that is what produces `dist/kyrax/index.html`, and
+source position into `dist/`   that is what produces `dist/kyrax/index.html`, and
 therefore the clean `/kyrax/` URL, on any host with directory-index behaviour.
 
 `base` is `'/'`, not `'./'`. Section pages sit one directory deep, and a relative
-base resolves runtime URLs — `TEX_DIR`, the landmarks fetch, the departure
-navigation — against whichever page is open rather than against the site root.
+base resolves runtime URLs   `TEX_DIR`, the landmarks fetch, the departure
+navigation   against whichever page is open rather than against the site root.
 Deploying anywhere other than a domain root means changing it.
 
 ### The departure transition
 
 Choosing a division is a journey rather than a state change. `depart(id)` in
 `src/main.js` sets the camera's target to arm's length from the object and
-roughly doubles the approach rate, then at +330 ms fades in `#warp` — a wash of
-that object's own colour over its section's exact background — and navigates at
+roughly doubles the approach rate, then at +330 ms fades in `#warp`   a wash of
+that object's own colour over its section's exact background   and navigates at
 +890 ms, while the wash is fully opaque. Every section page then fades in from
 the same colour the wash ended on, so the navigation lands mid-fade and the whole
 thing reads as one continuous move into the object.
@@ -73,7 +73,7 @@ policy; there is **no SPA rewrite**, and adding one would shadow every section
 page.
 
 The Content-Security-Policy is strict on scripts (`script-src 'self'`), which
-holds because every script on the site is an external module — no inline
+holds because every script on the site is an external module   no inline
 `<script>`, no `onclick` attributes. Adding an inline script anywhere breaks it;
 put the code in a file, or add its hash to the header. `style-src` does allow
 `'unsafe-inline'`, for the inline `<style>` block on the orbital page and the
@@ -82,7 +82,7 @@ handful of inline style attributes on the section pages.
 Being static, the site has no endpoint to rate-limit in code, so it is done at
 the edge. Vercel's DDoS mitigation is automatic on every plan; beyond that, in
 the project's **Firewall** settings, enable Attack Challenge Mode as an incident
-control and — on Pro — add an IP rate-limit rule (roughly 100 requests / 10 s →
+control and   on Pro   add an IP rate-limit rule (roughly 100 requests / 10 s →
 challenge). Keep preview deployments behind Vercel authentication and leave
 bypass links off. If DNS ever moves to Cloudflare, its free rate-limiting rule
 and bot-fight mode cover the same ground.
@@ -158,7 +158,7 @@ node scripts/verify-textures.mjs # checks no channel came out empty
 
 It also **repacks the surface masks to remove the alpha channel**, and that is
 load-bearing rather than cosmetic. `namtar_mask.png` stores four independent
-coverage masks as RGBA, with rift heat in alpha — and rift heat is zero across
+coverage masks as RGBA, with rift heat in alpha   and rift heat is zero across
 98% of the globe. Any image pipeline that premultiplies on resize (libvips, and
 therefore sharp) will silently multiply water, ice and vegetation by ~0 and write
 out black maps that still look like valid files. They are split into
@@ -206,7 +206,7 @@ The Blender project works at 1 unit = 1000 km with a radius of 8.25 (16,500 km
 diameter, spec sec.2), so everything imported from it is multiplied by
 `BU = 30 / 8.25` in `src/core/config.js`.
 
-Craft orbits are interface distances, not astronomy — the spacecraft are drawn
+Craft orbits are interface distances, not astronomy   the spacecraft are drawn
 far too large so they stay readable as tracking targets. The debris ring's real
 radii land on top of the kira and pulse orbits, so the ring plane is tilted off
 the orbital plane rather than moving either.
@@ -227,7 +227,7 @@ every image carries explicit dimensions so nothing shifts as it decodes.
 Everything animated is gated behind `prefers-reduced-motion`, including planetary
 rotation, cloud drift, the survey sweep, both craft and moon orbits, storm
 lightning, the HUD's link meters, and every looping decoration on the section
-pages. The departure wash is the deliberate exception — it is the navigation
+pages. The departure wash is the deliberate exception   it is the navigation
 itself, not decoration, so it shortens to 260 ms rather than disappearing.
 
 ### Flicker
@@ -238,7 +238,7 @@ as atmosphere:
 
 - **Storm lightning** (`src/scene/clouds.js`) fires at roughly half the old rate
   and half the amplitude, and a `gate` term retires about 45% of convective cells
-  permanently — the even carpet of flashes across the night side was what made it
+  permanently   the even carpet of flashes across the night side was what made it
   shimmer. The `pow(…, 220.0)` sharpness is kept: that is the whole character of
   a lightning strike, and softening it gives a pulsing glow instead.
 - **The LINK meter** (`src/hud/telemetry.js`) updates about twice a second rather
@@ -265,7 +265,7 @@ everything below keys off it:
 That last one is not about the GPU's shader budget at all: a `backdrop-filter`
 over a live canvas forces the *compositor* to keep and re-read a copy of
 everything beneath it, every frame, for a blur nobody can see over a moving
-scene. Film grain used to be a second instance of the same problem — a
+scene. Film grain used to be a second instance of the same problem   a
 full-screen `mix-blend-mode: overlay` element sitting on top of the canvas. It
 is gone; the final shader pass was already producing grain one pass earlier, so
 `uGrain` simply went up a little.
@@ -276,12 +276,12 @@ Width is only a guess at what a device can do, so `main.js` measures instead: a
 second of frame times, and if the device cannot hold 40 fps it gives something
 up. *What* it gives up, and in what order, is the design:
 
-1. **Bloom resolution** — bloom is already a blur, so halving its five-tap
+1. **Bloom resolution**   bloom is already a blur, so halving its five-tap
    pyramid is the largest saving available for the least visible cost. Spent
    first; on mobile it is already spent at startup.
-2. **Framebuffer** — a quarter step at a time, to a floor of 0.75. This softens
+2. **Framebuffer**   a quarter step at a time, to a floor of 0.75. This softens
    everything including type, so it comes second.
-3. **Frame rate** — at the resolution floor there is nothing left to sharpen
+3. **Frame rate**   at the resolution floor there is nothing left to sharpen
    away, so the draw runs every other frame. The loop still updates every frame
    on the real delta, so nothing animates at half speed; a steady 30 beats a 45
    that stutters, and on a phone it is battery rather than pixels.
@@ -291,8 +291,8 @@ quality creates exactly the conditions for raising it again, and a scene that
 visibly resamples itself once a second is worse than one that is simply a little
 soft.
 
-Separately, every HUD callout that moves — the target lock, the Namtar limb
-label, the surface pins — is placed with the `translate`/`rotate`/`scale`
+Separately, every HUD callout that moves   the target lock, the Namtar limb
+label, the surface pins   is placed with the `translate`/`rotate`/`scale`
 properties rather than `left`/`top`/`width`. Those are composited; the layout
 properties are not, and these run on every pin on every frame. Keeping them off
 `transform` leaves it free for the centring offsets and hover states that need
@@ -305,7 +305,7 @@ five bloom mips.
 ### Touch
 
 There is no hover on a phone, so `pointerdown` runs the pick that a mouse would
-have done on its way in — without it a tap lands with nothing under the cursor
+have done on its way in   without it a tap lands with nothing under the cursor
 and selects nothing. Two pointers are a pinch (the wheel event has no touch
 equivalent); one is a drag. Surface-feature pins carry an invisible 40px pad
 because the visible dot is 7px.
