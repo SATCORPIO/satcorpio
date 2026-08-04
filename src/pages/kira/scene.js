@@ -1,5 +1,5 @@
 /* ==========================================================================
-   KI-RA STUDIOS — THE SHELF OF WORLDS
+   KI-RA STUDIOS   THE SHELF OF WORLDS
 
    A studio's site is a showreel, so the projects are the interactive object
    rather than a grid beneath one. Five slabs on a rail in a dark room, each
@@ -7,7 +7,7 @@
    along the rail; the visitor drags, clicks a slab, or uses the controls in the
    page, and the detail panel below follows whatever is centred.
 
-   Unlike NAMTAR and KYRAX this is a contained module, not a fixed backdrop —
+   Unlike NAMTAR and KYRAX this is a contained module, not a fixed backdrop  
    it is one instrument on the page rather than the page's atmosphere, which is
    what keeps it from reading as the same site with different colours.
 
@@ -151,7 +151,7 @@ export function create({ THREE, renderer, host, canvas, mobile }) {
     slabs.push({ group, face, uniforms, mirrorUniforms, spec });
   });
 
-  /* The floor the slabs stand on — a single gradient plane, which is all the
+  /* The floor the slabs stand on   a single gradient plane, which is all the
      room this scene needs. */
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(GAP * SLABS.length * 2, 120),
@@ -209,7 +209,7 @@ export function create({ THREE, renderer, host, canvas, mobile }) {
   function resize(w, h) {
     camera.aspect = w / h;
     /* Portrait crops the rail horizontally, which is the one axis this scene
-       cannot lose — pull the camera back instead of widening the lens. */
+       cannot lose   pull the camera back instead of widening the lens. */
     camera.fov = h > w ? 46 : 34;
     camera.updateProjectionMatrix();
   }
@@ -223,7 +223,7 @@ export function create({ THREE, renderer, host, canvas, mobile }) {
     if (dx) {
       dragged += Math.abs(dx);
       railPos = clamp(railPos - dx * 0.012, 0, SLABS.length - 1);
-      /* Scrubbing past the halfway point commits — the panel below should not
+      /* Scrubbing past the halfway point commits   the panel below should not
          wait for the visitor to let go. */
       const near = Math.round(railPos);
       if (near !== index) select(near);
