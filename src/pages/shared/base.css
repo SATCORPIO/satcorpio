@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SATCORP — SECTION PAGE BASE
+   SATCORP   SECTION PAGE BASE
 
    Every section page is meant to read as its own site. This file is the only
    thing they have in common, so it deliberately contains no colour, no type
@@ -188,7 +188,7 @@ p { max-width: var(--measure); }
 }
 .sc-list li em { font-style: normal; color: var(--muted); display: block; font-size: 13px; margin-top: 3px; }
 
-/* Definition rows — the "01 / label / detail" pattern carried over from the
+/* Definition rows   the "01 / label / detail" pattern carried over from the
    orbital panel, which is where this content used to live. */
 .sc-rows { margin: 0; border-top: 1px solid var(--line); }
 .sc-row {
