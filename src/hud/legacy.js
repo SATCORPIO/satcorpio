@@ -4,7 +4,7 @@
  * anything still pointing there lands on the page rather than on a scene with a
  * fragment it no longer understands.
  *
- * Imported first from main.js so it runs before three.js is even evaluated —
+ * Imported first from main.js so it runs before three.js is even evaluated  
  * there is no reason to build a WebGL scene for a page that is about to unload.
  * `replace`, not `assign`, so the redirect does not sit in the back stack.
  */
