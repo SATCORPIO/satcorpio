@@ -10,6 +10,11 @@
    Scale is deliberately non-literal — the craft are drawn large against the
    planet so they stay readable as tracking targets.
    ========================================================================== */
+/* Old #/division links become page loads. Imported first so it runs before
+   three.js is evaluated — no reason to build a scene for a page about to
+   unload. */
+import './hud/legacy.js';
+
 import { Clock, Group, Raycaster, Sphere, Vector2, Vector3, Color } from 'three';
 
 import {
@@ -29,12 +34,11 @@ import { buildCraft } from './scene/craft.js';
 import { orbitRing, beam, surveyLattice } from './scene/orbits.js';
 import { createComposer } from './post/composer.js';
 
-import { createRouter } from './hud/router.js';
+import { createMenu } from './hud/menu.js';
 import { createBoot } from './hud/boot.js';
 import { createTelemetry } from './hud/telemetry.js';
 import { createTag, createPin } from './hud/callouts.js';
 import { createLandmarks } from './hud/landmarks.js';
-import { createNamtarCard } from './hud/namtar.js';
 
 const { renderer, scene, camera } = createRenderer();
 const cv = renderer.domElement;
@@ -144,6 +148,8 @@ function startDrag(x, y) {
 }
 
 cv.addEventListener('pointerdown', (e) => {
+  // Once a departure is under way the camera belongs to the transition.
+  if (departing) return;
   pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
   cv.setPointerCapture(e.pointerId);
 
@@ -210,6 +216,7 @@ cv.addEventListener('pointerup', release);
 cv.addEventListener('pointercancel', release);
 
 addEventListener('wheel', (e) => {
+  if (departing) return;
   zoom(e.deltaY * (focus ? 0.02 : 0.1));
 }, { passive: true });
 
@@ -224,13 +231,16 @@ const CRAFT_GROUPS = CRAFT.map((c) => c.group);
 const NAMTAR = new Sphere(new Vector3(0, 0, 0), PR);
 const hitPoint = new Vector3();
 let hover = null;
+/* Set while a menu entry is hovered. The list and the objects are the same set
+   of things, so pointing at one lights the other. */
+let preview = null;
 let onPlanet = false;
 
 cv.addEventListener('click', () => {
   // A drag that ends over something is not a click on it.
-  if (moved >= 8) return;
-  if (hover) router.go(hover.id);
-  else if (onPlanet && !focus) namtar.open();
+  if (moved >= 8 || departing) return;
+  if (hover) depart(hover.id);
+  else if (onPlanet) depart('namtar');
 });
 
 function pick() {
@@ -258,39 +268,99 @@ function pick() {
 
 /* ------------------------------------------------------------------- HUD */
 const telemetry = createTelemetry();
-const namtar = createNamtarCard();
-
-/* The limb callout is the discoverable half of the planet click — the hit area
-   itself is the whole disc, which nothing on screen announces. */
-document.getElementById('pin').querySelector('.bx').addEventListener('click', () => namtar.open());
 
 // A phone has no cursor to put over anything, so the deck says "tap" instead.
 document.getElementById('deck-hint').textContent = COARSE
   ? 'DRAG TO ORBIT · PINCH TO ZOOM · TAP A CRAFT OR NAMTAR'
   : 'DRAG TO ORBIT · SELECT A CRAFT OR NAMTAR';
 
-const router = createRouter({
-  onSelect(id) {
-    if (id === 'satcorp') {
-      focus = null;
-      tLook.set(0, 0, 0);
-      cam.tRad = 225;
-      cam.tPhi = 1.22;
-      // Orbital motion is the largest moving thing on screen; a reduced-motion
-      // request should stop it here too, not only in the focused view.
-      tOrbitScale = REDUCED ? 0 : 1;
-    } else {
-      namtar.close();
-      focus = CRAFT.find((c) => c.id === id);
-      cam.tRad = 15;
-      cam.tPhi = 1.32;
-      tOrbitScale = REDUCED ? 0 : 0.1;
-      hover = null;
-      tag.clear();
-      cv.classList.remove('over');
-    }
+/* ------------------------------------------------------------- departure */
+/*
+ * Choosing a division is a journey rather than a state change. The camera dives
+ * at the object, the object's own colour washes over the frame, and the section
+ * page takes over behind it.
+ *
+ * The two halves deliberately overlap. The wash is opaque before the navigation
+ * fires, and every section page fades in from the same colour the wash ended on
+ * (DATA[id].pageBg, which each page also sets as its --bg), so what the viewer
+ * sees is one continuous move into the object — not a transition, then a blank
+ * frame, then a page.
+ */
+const warp = document.getElementById('warp');
+const nodeEl = document.getElementById('s-node');
+const viewEl = document.getElementById('t-view');
+let departing = false;
+
+function depart(id) {
+  if (departing) return;
+  const d = DATA[id];
+  if (!d) return;
+  departing = true;
+
+  warp.style.setProperty('--warp', d.color);
+  warp.style.setProperty('--warp-bg', d.pageBg);
+  document.documentElement.style.setProperty('--accent', d.color);
+  document.body.classList.add('departing');
+  nodeEl.textContent = d.call;
+  viewEl.textContent = `ENTERING · ${d.name.toUpperCase()}`;
+
+  hover = null;
+  preview = null;
+  tag.clear();
+  cv.classList.remove('over');
+
+  const leave = () => { location.href = `${import.meta.env.BASE_URL}${id}/`; };
+
+  /* A reduced-motion request gets the same navigation without the dive: the
+     wash alone, short enough not to feel like a stall. */
+  if (REDUCED) {
+    warp.classList.add('on');
+    setTimeout(leave, 300);
+    return;
+  }
+
+  if (id === 'namtar') {
+    // No craft to follow — fall toward the planet until it fills the frame.
+    focus = null;
+    tLook.set(0, 0, 0);
+    cam.tRad = PR * 1.3;
+    cam.tPhi = 1.28;
+  } else {
+    focus = CRAFT.find((c) => c.id === id) ?? null;
+    cam.tRad = 11;
+    cam.tPhi = 1.32;
+  }
+  tOrbitScale = 0.06;
+
+  setTimeout(() => warp.classList.add('on'), 330);
+  setTimeout(leave, 890);
+}
+
+/* The limb callout is the discoverable half of the planet click — the hit area
+   itself is the whole disc, which nothing on screen announces. */
+document.getElementById('pin').querySelector('.bx')
+  .addEventListener('click', () => depart('namtar'));
+
+document.getElementById('home').addEventListener('click', () => {
+  if (departing) return;
+  focus = null;
+  tLook.set(0, 0, 0);
+  cam.tRad = 225;
+  cam.tPhi = 1.22;
+});
+
+const menu = createMenu({
+  onEnter: depart,
+  onPreview(id) {
+    if (departing) return;
+    preview = id ? CRAFT.find((c) => c.id === id) ?? null : null;
+    menu.highlight(id);
   },
 });
+
+/* Orbital motion is the largest moving thing on screen, so a reduced-motion
+   request stops it before the first frame rather than after one. */
+if (REDUCED) { orbitScale = 0; tOrbitScale = 0; }
 
 let landmarks = null;
 createLandmarks({
@@ -308,26 +378,37 @@ const tmp = new Vector3();
 const sunLocal = new Vector3();
 const TAU = Math.PI * 2;
 
-/* Resolution governor.
+/* Quality governor.
+
    Every phone is a different GPU and none of them say so, and the tiers in
    config.js are a guess made from viewport width. This measures instead: a
-   second of frame times, and if the device cannot hold the target the
-   framebuffer shrinks a quarter step.
+   second of frame times, and if the device cannot hold the target it gives
+   something up. What it gives up, and in what order, is the whole design:
 
-   It only ever steps down. A ratio that walks both ways oscillates — dropping
-   resolution raises the frame rate, which is exactly the condition for putting
-   it back — and a scene that visibly resamples itself once a second is worse
-   than one that is simply a little soft. Two steps is the floor, and the first
-   three seconds are ignored so texture uploads and shader compilation do not
-   get mistaken for a slow GPU. */
+     1. bloom resolution — bloom is already a blur, so running its five-tap
+        pyramid at half linear resolution is the largest saving available for
+        the least visible cost. This is the step to spend first, and on mobile
+        it has already been spent at startup.
+     2. framebuffer — a quarter step at a time. This softens everything,
+        including type, so it comes second.
+     3. frame rate — at the resolution floor there is nothing left to sharpen
+        away, and a steady 30 beats a 45 that stutters. It also roughly halves
+        what the GPU draws, which on a phone is battery rather than pixels.
+
+   Every step is one-way. A ratio that walks both ways oscillates — dropping
+   quality raises the frame rate, which is exactly the condition for putting it
+   back — and a scene that visibly resamples itself once a second is worse than
+   one that is simply a little soft. The first three seconds are ignored so
+   texture uploads and shader compilation are not mistaken for a slow GPU. */
 const DPR_CEIL = Math.min(devicePixelRatio, MAX_DPR);
 let dpr = DPR_CEIL;
 let perfT = 0;
 let perfN = 0;
 let warmup = 3;
+let capped = false;
 
 function governor(dt) {
-  if (dpr <= MIN_DPR) return;
+  if (capped) return;                       // nothing left to give up
   if (warmup > 0) { warmup -= dt; return; }
   perfT += dt;
   perfN++;
@@ -336,10 +417,22 @@ function governor(dt) {
   perfT = 0;
   perfN = 0;
   if (fps >= 40) return;
-  dpr = Math.max(MIN_DPR, dpr - 0.25);
-  renderer.setPixelRatio(dpr);
-  composer.resize();
+
+  if (composer.setQuality('reduced')) return;
+  if (dpr > MIN_DPR) {
+    dpr = Math.max(MIN_DPR, dpr - 0.25);
+    renderer.setPixelRatio(dpr);
+    composer.resize();
+    return;
+  }
+  capped = true;
 }
+
+/* Half-rate drawing, engaged only at the very bottom of the governor. The loop
+   still runs its updates every frame — camera easing, orbits and telemetry all
+   advance on the real delta, so nothing runs at half speed — and it is only the
+   render that is skipped. */
+let skipDraw = false;
 
 function tick() {
   requestAnimationFrame(tick);
@@ -350,6 +443,7 @@ function tick() {
   const dt = Math.min(clock.getDelta(), 0.05);
   const t = clock.elapsedTime;
   governor(dt);
+  skipDraw = capped && !skipDraw;
   orbitScale += (tOrbitScale - orbitScale) * Math.min(1, dt * 2.4);
 
   /* The surface shader needs the sun in the planet's own frame, because the
@@ -391,7 +485,7 @@ function tick() {
     );
     for (const w of c.wings) w.rotation.x = Math.atan2(SUNDIR.y, SUNDIR.z) + t * 0.02;
 
-    const on = focus === c || hover === c;
+    const on = focus === c || hover === c || preview === c;
     c.act += ((on ? 1 : 0) - c.act) * Math.min(1, dt * 5);
     const halo = c.halo.material;
     halo.opacity += (((on ? 0.95 : 0.42) + Math.sin(t * 2.4 + c.ang * 3) * 0.18) - halo.opacity)
@@ -434,19 +528,24 @@ function tick() {
   }
   sun.target.updateMatrixWorld();
 
-  look.lerp(tLook, Math.min(1, dt * 2.2));
-  if (!drag && !focus && !REDUCED) cam.tTheta += dt * 0.011;
+  look.lerp(tLook, Math.min(1, dt * (departing ? 4.4 : 2.2)));
+  if (!drag && !focus && !REDUCED && !departing) cam.tTheta += dt * 0.011;
   cam.theta += (cam.tTheta - cam.theta) * Math.min(1, dt * 4);
   cam.phi += (cam.tPhi - cam.phi) * Math.min(1, dt * 4);
-  cam.rad += (cam.tRad - cam.rad) * Math.min(1, dt * 2.4);
+  /* A departure covers most of the range from 225 units to arm's length in
+     under a second, so the approach runs at roughly twice the rate the camera
+     uses for an ordinary move — it should read as falling, not gliding. */
+  cam.rad += (cam.tRad - cam.rad) * Math.min(1, dt * (departing ? 5 : 2.4));
   applyCam();
 
-  if (!focus) pick();
-  pin(camera, !!focus);
-  landmarks?.update(!!focus);
+  if (!focus && !departing) pick();
+  // Both are hidden during a departure; stop paying to place them as well.
+  const quiet = !!focus || departing;
+  pin(camera, quiet);
+  landmarks?.update(quiet);
   telemetry(t, cam, camera);
 
-  composer.render(t);
+  if (!skipDraw) composer.render(t);
 }
 
 /* Mobile browsers fire resize on every pixel of URL-bar travel, and each one
@@ -487,7 +586,6 @@ addEventListener('orientationchange', () => {
   settle = setTimeout(resize, 260);
 });
 
-router.start();
 applyCam();
 tick();
 

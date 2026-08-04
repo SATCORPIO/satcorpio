@@ -1,5 +1,5 @@
 import { Mesh, SphereGeometry, ShaderMaterial, Vector3, DoubleSide } from 'three';
-import { PR, CLOUD_TOP, SEG } from '../core/config.js';
+import { PR, CLOUD_TOP, SEG, REDUCED } from '../core/config.js';
 
 /**
  * The cloud deck.
@@ -21,6 +21,10 @@ export function createClouds(tex) {
     uSun: { value: new Vector3(1, 0, 0) },   // world space
     uTime: { value: 0 },
     uOpacity: { value: 1 },
+    /* Storm lightning is the one thing on the planet that flashes. It is set
+       once at build rather than per frame — the preference does not change
+       mid-session, and a uniform costs nothing to leave at 1. */
+    uStrike: { value: REDUCED ? 0 : 1 },
   };
 
   const material = new ShaderMaterial({
@@ -45,6 +49,7 @@ export function createClouds(tex) {
       uniform vec3 uSun;
       uniform float uTime;
       uniform float uOpacity;
+      uniform float uStrike;
       varying vec2 vUv;
       varying vec3 vN;
       varying vec3 vView;
@@ -92,12 +97,26 @@ export function createClouds(tex) {
         float rim = pow(1.0 - ndv, 2.5);
         col += vec3(1.0, 0.985, 0.96) * rim * smoothstep(-0.15, 0.45, sdot) * 0.5;
 
-        // Lightning inside convective cores, night side only (spec sec.7).
+        /* Lightning inside convective cores, night side only (spec sec.7).
+
+           Three things keep this readable as weather rather than as a fault in
+           the display. The cells fire at roughly half the old rate, so a single
+           strike has room to register before the next one. Only about half the
+           cells ever fire at all: the gate term retires the rest permanently,
+           which is what breaks up the even carpet of flashes that made the
+           night side shimmer. And the amplitude is halved, so a strike reads as
+           a storm lighting its own cloud top rather than as a white pinprick.
+
+           The exponent stays at 220: the sharpness is the whole character of a
+           lightning flash, and softening it would give a pulsing glow instead.
+           uStrike is the reduced-motion switch — flashing is exactly what that
+           setting is asking about, so it turns the term off entirely. */
         float night = smoothstep(0.06, -0.16, sdot);
         vec2 cell = floor(vUv * vec2(220.0, 110.0));
         float phase = hash12(cell) * 20.0;
-        float strike = pow(max(sin(uTime * 1.7 + phase), 0.0), 220.0);
-        col += vec3(0.72, 0.82, 1.0) * strike * c.b * night * 2.4;
+        float gate = step(0.55, hash12(cell + 7.31));
+        float strike = pow(max(sin(uTime * 0.9 + phase), 0.0), 220.0) * gate;
+        col += vec3(0.72, 0.82, 1.0) * strike * c.b * night * 1.2 * uStrike;
 
         /* Slant path: a ray crossing the shell near the limb travels further
            through it than one hitting it head-on, so the limb should thicken.

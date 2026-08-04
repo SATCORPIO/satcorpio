@@ -1,0 +1,240 @@
+/* ==========================================================================
+   ANU — MACHINE ROOM
+
+   The engineer's page, and the one that refuses the treatment the other four
+   get. Monospace throughout including the headings, no accent colour worth the
+   name — bone on black — no glow, no gradient, no glass. The 3D on this page is
+   a flat-shaded rack on a drafting grid rather than an effect, which is itself
+   the art direction: the argument is that the hardware is real.
+
+   --bg matches DATA.anu.pageBg so the warp in from orbit lands mid-fade.
+   ========================================================================== */
+
+:root {
+  --bg: #08080A;
+  --surface: #0E0E11;
+  --ink: #EDE7DA;
+  --muted: #8A867E;
+  --accent: #EDE7DA;
+  --accent-2: #8FE388;
+  --line: #1E1E22;
+
+  --display: 'JetBrains Mono', ui-monospace, monospace;
+  --body: 'JetBrains Mono', ui-monospace, monospace;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --measure: 68ch;
+}
+
+/* Monospace at body size is wide and loose; pulling the line-height in and the
+   size down is what keeps a whole page of it readable. */
+body.an { font-size: 14px; line-height: 1.72; }
+body.an h1, body.an h2, body.an h3 { letter-spacing: -.01em; }
+
+/* The accent is the ink here, so the eyebrow's glowing dot would be a white
+   spot with a halo. Flatten it. */
+.an .sc-eyebrow { color: var(--muted); }
+.an .sc-eyebrow::before { box-shadow: none; background: var(--accent-2); }
+
+/* ------------------------------------------------------------------- hero */
+.an-hero {
+  padding: calc(96px + var(--st)) 0 clamp(50px, 8vw, 96px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Console on the left, the machine it addresses on the right. */
+.an-split {
+  width: min(100% - var(--pad) * 2, 1240px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  align-items: stretch;
+}
+
+.an-term {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+.an-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+}
+.an-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.an-bar i:first-child { background: #3B2B2B; }
+.an-bar span { margin-left: 8px; }
+
+.an-body { padding: clamp(22px, 3vw, 40px); flex: 1; }
+.an-prompt { font-size: 12.5px; color: var(--muted); margin: 0 0 26px; }
+.an-prompt b { color: var(--accent-2); font-weight: 400; }
+.an-prompt u {
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  /* A block cursor after the command, because the shell is waiting. */
+  padding-right: 2px;
+}
+.an-prompt u::after {
+  content: '▋';
+  color: var(--accent-2);
+  margin-left: 2px;
+}
+
+.an-hero h1 {
+  font-size: clamp(21px, 2.9vw, 34px);
+  font-weight: 700;
+  line-height: 1.24;
+  margin: 0 0 20px;
+}
+.an-hero h1 em { font-style: normal; color: var(--muted); font-weight: 300; }
+.an-hero .sub { color: var(--muted); max-width: 52ch; margin: 0 0 30px; font-size: 13.5px; }
+
+/* ------------------------------------------------------------------- rack */
+.an-rack {
+  position: relative;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, #0B0B0E, #060608);
+  min-height: 420px;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.an-rack:active { cursor: grabbing; }
+
+.an-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+.an-canvas.is-live { opacity: 1; }
+
+.an-cue {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 12px;
+  text-align: center;
+  margin: 0;
+  font-size: 9.5px;
+  letter-spacing: .2em;
+  color: var(--muted);
+  opacity: .65;
+  pointer-events: none;
+}
+
+/* No rack, no panel to hold it — the console then takes the full width rather
+   than sitting next to an empty box. */
+html:not(.sc-3d) .an-rack { display: none; }
+html:not(.sc-3d) .an-split { grid-template-columns: 1fr; }
+
+/* ---------------------------------------------------------------- pillars */
+.an-pillar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  padding: clamp(24px, 3vw, 38px) 0;
+  border-top: 1px solid var(--line);
+  margin-top: 34px;
+  scroll-margin-top: 90px;
+  /* The left rule is the selection state: it fills when the matching rack unit
+     is pulled out, which is the only visual link between the two. */
+  border-left: 2px solid transparent;
+  padding-left: 0;
+  transition: border-color .4s, padding-left .4s, background .4s;
+}
+.an-pillar.on {
+  border-left-color: var(--accent-2);
+  padding-left: 20px;
+  background: var(--surface);
+}
+
+.an-num {
+  font-size: 10px;
+  letter-spacing: .24em;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 14px;
+}
+.an-pillar.on .an-num { color: var(--accent-2); }
+.an-pillar h3 { font-size: 17px; margin-bottom: 14px; }
+.an-pillar p { color: var(--muted); font-size: 13.5px; margin: 0 0 14px; }
+.an-pillar p:last-child { margin-bottom: 0; }
+
+/* A front-panel readout: label left, value right, hairline between. */
+.an-meta { align-self: start; border-top: 1px solid var(--line); }
+.an-meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+}
+.an-meta span { color: var(--muted); }
+.an-meta b { font-weight: 400; text-align: right; }
+.an-meta b.ok { color: var(--accent-2); }
+
+/* ------------------------------------------------------------------- flow */
+.an-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 30px;
+  counter-reset: anf;
+}
+.an-flow > div {
+  background: var(--bg);
+  padding: 24px 20px 28px;
+  counter-increment: anf;
+  position: relative;
+}
+.an-flow > div::before {
+  content: '0' counter(anf);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--accent-2);
+  display: block;
+  margin-bottom: 14px;
+}
+.an-flow h3 { font-size: 14px; margin-bottom: 8px; }
+.an-flow p { font-size: 12.5px; line-height: 1.62; color: var(--muted); margin: 0; }
+
+/* ------------------------------------------------------------------ quote */
+.an-quote {
+  margin: 0;
+  font-size: clamp(15px, 1.8vw, 21px);
+  line-height: 1.62;
+  max-width: 56ch;
+  color: var(--ink);
+  border-left: 2px solid var(--line);
+  padding-left: 22px;
+}
+
+/* ------------------------------------------------------------- responsive */
+@media (max-width: 980px) {
+  .an-split { grid-template-columns: 1fr; }
+  .an-rack { min-height: 340px; }
+  .an-pillar { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  body.an { font-size: 13.5px; }
+  .an-rack { min-height: 280px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .an-prompt u::after { content: '▋'; }
+}

@@ -1,0 +1,338 @@
+/* ==========================================================================
+   KYRAX — INTELLIGENCE LAYER
+
+   The deep-tech lab. Everything on this page is either the core or a readout
+   about the core: no images, no photography, no illustration. Type sits on
+   glass panels that look transmitted rather than printed — thin rules, hairline
+   scanlines, a formation rail down the side, and a great deal of black.
+
+   Electric orange on the darkest background on the site. --bg matches
+   DATA.kyrax.pageBg so the warp in from orbit lands mid-fade.
+   ========================================================================== */
+
+:root {
+  --bg: #020308;
+  --surface: #070A14;
+  --ink: #E8EEF6;
+  --muted: #7C8899;
+  --accent: #FF6A1F;
+  --accent-2: #7FC8FF;
+  --line: #131A28;
+
+  --display: 'Chakra Petch', system-ui, sans-serif;
+  --body: 'Chakra Petch', system-ui, sans-serif;
+  --mono: 'Share Tech Mono', ui-monospace, monospace;
+
+  --measure: 60ch;
+}
+
+body.kx { overflow-x: hidden; }
+
+/* ------------------------------------------------------------------ stage */
+.kx-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 55% at 50% 46%, #0A1020 0%, transparent 70%),
+    var(--bg);
+}
+
+.kx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.kx-canvas.is-live { opacity: 1; }
+
+/* Without WebGL the core is a slow breathing bloom rather than nothing at all —
+   the page has no imagery of its own to fall back to. */
+.kx-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(26% 34% at 50% 46%, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 70%),
+    radial-gradient(46% 52% at 50% 46%, color-mix(in srgb, var(--accent-2) 8%, transparent) 0%, transparent 72%);
+  transition: opacity 1s ease;
+}
+.sc-3d .kx-fallback { opacity: 0; }
+
+/* Hairline scanlines over the whole stage. Fixed to the viewport rather than
+   the document, so they read as the surface of a display the page is being
+   shown on rather than as texture printed onto it. */
+.kx-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 2px,
+    color-mix(in srgb, var(--accent-2) 4%, transparent) 2px 3px
+  );
+  mix-blend-mode: screen;
+  opacity: .5;
+}
+
+/* -------------------------------------------------------------------- rail */
+/* Which formation the core is currently in. Set by the page script from the
+   same section markers the scene reads. */
+.kx-rail {
+  position: fixed;
+  z-index: 40;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  pointer-events: none;
+}
+.kx-rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+.kx-rail li {
+  display: grid;
+  gap: 2px;
+  padding-left: 20px;
+  position: relative;
+  opacity: .3;
+  transition: opacity .5s;
+}
+.kx-rail li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 6px;
+  width: 8px; height: 1px;
+  background: var(--muted);
+  transition: width .5s, background .5s;
+}
+.kx-rail li b { font-size: 9.5px; letter-spacing: .24em; font-weight: 400; color: var(--ink); }
+.kx-rail li span { font-size: 9px; letter-spacing: .1em; color: var(--muted); }
+.kx-rail li.on { opacity: 1; }
+.kx-rail li.on::before { width: 14px; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.kx-rail li.on b { color: var(--accent); }
+
+/* No core, no formation readout. */
+html:not(.sc-3d) .kx-rail { display: none; }
+
+/* ------------------------------------------------------------------- flow */
+.kx-flow { position: relative; z-index: 2; }
+
+.kx-hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 90px;
+}
+.kx-sec { padding-block: clamp(100px, 16vh, 180px); }
+
+/* The copy is pushed right of centre so the core has the left of the frame to
+   itself — the rail, then the object, then the argument. */
+.kx-flow .sc-wrap { width: min(100% - var(--pad) * 2, 1180px); }
+.kx-hero .sc-wrap, .kx-head { max-width: 760px; margin-left: auto; margin-right: 0; }
+
+.kx-hero h1 {
+  font-size: clamp(34px, 5.4vw, 68px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -.005em;
+  margin: 0 0 26px;
+}
+.kx-hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+  text-shadow: 0 0 44px var(--accent-glow);
+}
+
+.kx-sub {
+  font-size: clamp(15px, 1.4vw, 17px);
+  color: var(--muted);
+  max-width: 58ch;
+  margin: 0 0 34px;
+}
+
+.kx-cue {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .24em;
+  color: var(--accent-2);
+  margin: 40px 0 0;
+  opacity: .7;
+}
+html:not(.sc-3d) .kx-cue { display: none; }
+
+/* ------------------------------------------------------------------ glass */
+/* Transmitted, not printed: low-opacity fill, a hairline border, a corner tick,
+   and enough blur that the core stays visible through the panel. */
+.kx-card {
+  position: relative;
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  border: 1px solid var(--line);
+  padding: 26px 24px 28px;
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  transition: border-color .35s, background .35s, transform .35s;
+}
+.kx-card::after {
+  content: '';
+  position: absolute;
+  top: -1px; right: -1px;
+  width: 12px; height: 12px;
+  border-top: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+  opacity: .55;
+  transition: opacity .35s;
+}
+.kx-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  transform: translateY(-3px);
+}
+.kx-card:hover::after { opacity: 1; }
+.kx-card .n {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 14px;
+}
+.kx-card h3 { font-size: 17px; letter-spacing: .02em; margin-bottom: 10px; }
+.kx-card p { font-size: 13.5px; line-height: 1.62; color: var(--muted); margin: 0; }
+.kx-card .sc-list li { font-size: 13px; padding-block: 8px; }
+
+.kx-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  margin-top: 44px;
+}
+.kx-apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 40px;
+}
+
+/* ---------------------------------------------------------------- targets */
+/* The seven environments, set as an addressed list rather than a grid of
+   boxes — each one is the same core reached from somewhere else. */
+.kx-targets {
+  list-style: none;
+  margin: 44px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.kx-targets li {
+  font-family: var(--mono);
+  font-size: clamp(15px, 2.4vw, 26px);
+  letter-spacing: .12em;
+  color: var(--muted);
+  padding: 18px 0 18px 56px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: color .3s, padding-left .35s;
+  counter-increment: kxt;
+}
+.kx-targets { counter-reset: kxt; }
+.kx-targets li::before {
+  content: '0' counter(kxt);
+  position: absolute;
+  left: 0; top: 50%;
+  translate: 0 -50%;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--accent);
+  opacity: .6;
+}
+.kx-targets li:hover { color: var(--ink); padding-left: 68px; }
+
+/* ----------------------------------------------------------- architecture */
+.kx-arch { margin-top: 44px; text-align: center; }
+.kx-node {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 13px 20px;
+}
+.kx-node.core {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 34px var(--accent-dim);
+}
+.kx-branch {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
+  margin-top: 52px;
+  position: relative;
+}
+/* The stem, drawn rather than marked up: one rule down from the core node and
+   one across the branch heads. */
+.kx-branch::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: -52px;
+  width: 1px; height: 32px;
+  background: linear-gradient(var(--accent), var(--line));
+}
+.kx-branch > div { display: grid; gap: 10px; justify-items: center; position: relative; padding-top: 20px; }
+.kx-branch > div::before {
+  content: '';
+  position: absolute;
+  left: 50%; top: 0;
+  width: 1px; height: 20px;
+  background: var(--line);
+}
+.kx-leaf {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .24em;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------------- rows */
+.kx-rows { margin-top: 40px; }
+.kx-sec .sc-chips, .kx-sec .sc-btns { margin-top: 28px; }
+
+/* ------------------------------------------------------------------- base */
+.kx-base {
+  position: relative;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+/* ------------------------------------------------------------- responsive */
+@media (max-width: 1100px) {
+  .kx-rail { display: none; }
+  .kx-hero .sc-wrap, .kx-head { max-width: none; margin-right: auto; }
+}
+
+@media (max-width: 720px) {
+  /* The core is behind the copy at this width rather than beside it, so the
+     panels have to carry more of their own background. backdrop-filter over a
+     live canvas is also the most expensive thing on a phone. */
+  .kx-card, .kx-node {
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .kx-scan { opacity: .3; }
+  .kx-targets li { padding-left: 40px; font-size: 14px; }
+  .kx-targets li:hover { padding-left: 40px; }
+}
+
+@media (hover: none) {
+  .kx-card:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kx-fallback { opacity: 1; }
+}

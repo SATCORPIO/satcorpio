@@ -1,11 +1,14 @@
 /* Division content. Each division is a craft whose payload describes the work.
-   This is the only place site copy lives — the router, nav and panel all read
-   from here. */
+   The orbital view reads `call`, `name`, `color`, `payload` and `pageBg` — the
+   last of these is the colour the warp transition fades to, so it has to match
+   the --bg the section page sets in its own stylesheet or the cut flashes.
+   The long-form copy below is the source for each division's section page under
+   src/pages/; the orbital view itself no longer renders a panel. */
 export const DATA = {
   satcorp: {
     /* No `title`: the orbital view has no panel, and its deck leads with the
        lede instead of a headline. Every other division needs one. */
-    call: 'STATION', name: 'SATCORP', color: '#9FE0F5',
+    call: 'STATION', name: 'SATCORP', color: '#9FE0F5', pageBg: '#05070B',
     lede: 'A creative and technology operation. Brand systems, live community platforms, automation, and the architecture that ties them together — run as one practice instead of four vendors.',
     groups: [
       { h: 'Method — CFCM', rows: [
@@ -23,7 +26,7 @@ export const DATA = {
   },
 
   kira: {
-    call: 'KR-01', name: 'Ki-Ra Studios', color: '#00E5FF', payload: 'optical',
+    call: 'KR-01', name: 'Ki-Ra Studios', color: '#00E5FF', payload: 'optical', pageBg: '#05080D',
     title: 'Identity that survives contact with production.',
     lede: 'Naming, visual systems, and the documentation that keeps a brand consistent after the launch deck is closed. Built to be used by other people, not just admired.',
     groups: [{ h: 'Work', rows: [
@@ -36,7 +39,7 @@ export const DATA = {
   },
 
   pulse: {
-    call: 'PL-02', name: 'PULSE', color: '#FFA500', payload: 'array',
+    call: 'PL-02', name: 'PULSE', color: '#FFA500', payload: 'array', pageBg: '#08060D',
     title: 'Infrastructure for communities that are actually live.',
     lede: 'Platform and event infrastructure for rooms where people show up at the same time — servers, roles, onboarding, and the systems that keep it running without an admin awake at 3am.',
     groups: [{ h: 'Work', rows: [
@@ -49,7 +52,7 @@ export const DATA = {
   },
 
   kyrax: {
-    call: 'KX-03', name: 'KYRAX', color: '#FF6A1F', payload: 'antenna',
+    call: 'KX-03', name: 'KYRAX', color: '#FF6A1F', payload: 'antenna', pageBg: '#020308',
     title: 'The operator layer.',
     lede: 'A bot ecosystem with a shared identity spine: one account, one wallet, one permission model across every service. Multi-tenant from the first table.',
     groups: [{ h: 'Ecosystem', rows: [
@@ -63,7 +66,7 @@ export const DATA = {
   },
 
   anu: {
-    call: 'AN-04', name: 'ANU', color: '#EDE7DA', payload: 'lab',
+    call: 'AN-04', name: 'ANU', color: '#EDE7DA', payload: 'lab', pageBg: '#08080A',
     title: 'A second architect on your side of the table.',
     lede: 'Direct consulting. Systems architecture, technical strategy, and the unglamorous work of turning a vague ambition into a scope, a sequence, and a number.',
     groups: [{ h: 'Engagements', rows: [
@@ -74,42 +77,24 @@ export const DATA = {
     chips: ['Fixed scope', 'Phase-gated', 'anu@satcorp.io'],
     cta: 'BOOK A CLARITY SESSION',
   },
+
+  /* Namtar is the planet, not a craft, so it has no orbit and no payload — but
+     it is a click target and a destination like the rest, which is what an entry
+     here buys it. Its colour is the ember of the rift on the night side, and it
+     is what the warp tints with when you fly into the planet. */
+  namtar: {
+    call: 'PRIMARY', name: 'NAMTAR', color: '#FF5B2E', pageBg: '#08050A',
+    title: 'Survive. Adapt. Conquer.',
+    lede: 'A next-generation open-world survival experience built on the world this view is orbiting.',
+    cta: 'FOLLOW DEVELOPMENT',
+  },
 };
 
-export const ORDER = ['satcorp', 'kira', 'pulse', 'kyrax', 'anu'];
+/* Menu order, top to bottom. Namtar leads because it is the thing on screen;
+   `satcorp` is not listed — it is the view you are already in. */
+export const MENU = ['namtar', 'kira', 'pulse', 'kyrax', 'anu'];
 
 export const CONTACT = 'anu@satcorp.io';
-
-/* Namtar itself is clickable, and this is what opens. The planetary figures are
-   from NAMTAR_Planetary_Design_Document sec.2/9; the rest describes the game
-   being built on top of that world. This is the only place that copy lives —
-   edit it here and both the modal and its stat grid follow. */
-export const NAMTAR_GAME = {
-  eyebrow: 'SATCORP · INTERACTIVE',
-  title: 'THE NAMTAR GAME',
-  tagline: 'The world you are orbiting, from the ground.',
-  body: [
-    'Namtar is a rocky oceanic super-Earth — 1.3× Earth across, 1.2 G at the '
-    + 'surface, 58% ocean, and geologically still very much awake. Everything on '
-    + 'this screen is built from its survey data: the same maps, the same debris '
-    + 'arc, the same two moons.',
-    'The game drops you underneath all of it. You make landfall on a world that '
-    + 'has been mapped from orbit and walked by almost no one — the volcanic '
-    + 'fracture that glows through the night side, the closed basin holding the '
-    + 'densest life signal on the planet, and a desert continent with no surface '
-    + 'water at all. Survey it, survive it, and work out what the earlier surveys '
-    + 'missed.',
-  ],
-  stats: [
-    ['WORLD', 'Namtar · super-Earth'],
-    ['GRAVITY', '1.2 G'],
-    ['SURFACE', '58% ocean · 5 plates'],
-    ['SATELLITES', 'Talos · Veyra'],
-    ['BUILT BY', 'SATCORP · Ki-Ra Studios'],
-    ['STATUS', 'In development'],
-  ],
-  cta: { label: 'GET DEVELOPMENT UPDATES', subject: 'The Namtar Game — updates' },
-};
 
 /* Surface features, from NAMTAR_Planetary_Design_Document sec.10. Coordinates
    come from textures/namtar_landmarks.json at load; only `ring` is positioned

@@ -1,6 +1,7 @@
 import { Object3D, Vector3 } from 'three';
 import { PR, TEX_DIR, RING_IN, RING_OUT } from '../core/config.js';
 import { LANDMARKS } from '../content/data.js';
+import { place } from './callouts.js';
 import { scramble } from './scramble.js';
 
 /**
@@ -136,15 +137,12 @@ export async function createLandmarks({ planet, ring, camera, onOpen }) {
       const ex = sx + 34;
       const ey = sy - 26;
 
-      it.dot.style.left = `${sx}px`;
-      it.dot.style.top = `${sy}px`;
-      const len = Math.hypot(ex - sx, ey - sy);
-      it.ln.style.left = `${sx}px`;
-      it.ln.style.top = `${sy}px`;
-      it.ln.style.width = `${len}px`;
-      it.ln.style.transform = `rotate(${Math.atan2(ey - sy, ex - sx)}rad)`;
-      it.bx.style.left = `${ex}px`;
-      it.bx.style.top = `${ey}px`;
+      /* Composited placement, as in callouts.js — these run every frame. */
+      place(it.dot, sx, sy);
+      place(it.ln, sx, sy);
+      it.ln.style.rotate = `${Math.atan2(ey - sy, ex - sx)}rad`;
+      it.ln.style.scale = `${Math.hypot(ex - sx, ey - sy)} 1`;
+      place(it.bx, ex, ey);
       // fade out as the pin approaches the limb rather than snapping off
       it.el.style.setProperty('--lmf', it.spec.id === 'ring' ? '1' : smooth(facing).toFixed(3));
       it.el.classList.add('on');

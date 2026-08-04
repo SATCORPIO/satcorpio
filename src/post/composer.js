@@ -20,7 +20,9 @@ const FinalShader = {
     tDiffuse: { value: null },
     uTime: { value: 0 },
     uAberration: { value: 0.55 },
-    uGrain: { value: 0.035 },
+    /* Slightly stronger than it was, because this is now the only grain on the
+       page — the DOM overlay that used to sit on top of the canvas is gone. */
+    uGrain: { value: 0.045 },
   },
   vertexShader: /* glsl */ `
     varying vec2 vUv;
@@ -61,8 +63,12 @@ export function createComposer(renderer, scene, camera) {
   const size = renderer.getDrawingBufferSize(new Vector2());
   /* UnrealBloomPass is five downsample/upsample pairs. Running the chain at half
      linear resolution on mobile quarters every one of those fills, and bloom is
-     a blur — there is nothing in it sharp enough to miss. */
-  const bloomScale = MOBILE ? 0.5 : 1;
+     a blur — there is nothing in it sharp enough to miss.
+
+     Not a constant: the frame-time governor in main.js can drop a desktop that
+     is struggling onto the same reduced chain rather than going straight to a
+     softer framebuffer. See setQuality below. */
+  let bloomScale = MOBILE ? 0.5 : 1;
 
   /* Half float keeps the scene linear and over-range until OutputPass, which is
      what lets bloom pick out genuinely bright things (the star glint, the rift
@@ -98,19 +104,46 @@ export function createComposer(renderer, scene, camera) {
 
   composer.setPixelRatio(renderer.getPixelRatio());
 
+  function resize() {
+    composer.setPixelRatio(renderer.getPixelRatio());
+    composer.setSize(innerWidth, innerHeight);
+    /* composer.setSize has just handed every pass the full drawing-buffer
+       size; put bloom back on its own reduced chain. */
+    renderer.getDrawingBufferSize(size);
+    bloom.setSize(size.x * bloomScale, size.y * bloomScale);
+  }
+
   return {
     render(t) {
       final.uniforms.uTime.value = t;
       composer.render();
     },
-    resize() {
-      composer.setPixelRatio(renderer.getPixelRatio());
-      composer.setSize(innerWidth, innerHeight);
-      /* composer.setSize has just handed every pass the full drawing-buffer
-         size; put bloom back on its own reduced chain. */
-      renderer.getDrawingBufferSize(size);
-      bloom.setSize(size.x * bloomScale, size.y * bloomScale);
+    resize,
+
+    /*
+     * Cheapen the post chain before the governor reaches for resolution.
+     *
+     * Dropping the framebuffer is the blunt instrument: it softens the whole
+     * image, including the type. Bloom is already a blur, so halving its
+     * resolution costs almost nothing anyone can point at — and a full-screen
+     * five-tap pyramid is the most expensive thing in the chain, so it buys
+     * the most. This is the step to spend first.
+     *
+     * Only ever called with a lower tier than the current one, for the same
+     * reason the resolution governor only steps down: quality that oscillates
+     * is more distracting than quality that is merely lower.
+     */
+    setQuality(tier) {
+      if (tier === 'reduced' && bloomScale > 0.5) {
+        bloomScale = 0.5;
+        resize();
+        return true;
+      }
+      return false;
     },
+
+    // Exposed for console tuning; the look here was art-directed by eye.
     bloom,
+    final,
   };
 }

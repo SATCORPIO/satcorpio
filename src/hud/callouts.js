@@ -1,18 +1,29 @@
 import { Vector3 } from 'three';
 import { PR } from '../core/config.js';
 
+/*
+ * Callouts are placed with the individual `translate`, `rotate` and `scale`
+ * properties rather than with left/top/width.
+ *
+ * Every pin on screen is repositioned on every frame. Writing left/top puts
+ * that on the layout path — a full style recalculation and reflow per pin, per
+ * frame, for elements that are only ever moving. translate/rotate/scale are
+ * composited instead, and because they are separate properties from `transform`
+ * the stylesheet keeps `transform` free for the centring offsets and hover
+ * states that need their own transitions. The leader line is a 1px element
+ * scaled to length for the same reason: width is layout, scale is not.
+ */
+export function place(el, x, y) {
+  el.style.translate = `${x}px ${y}px`;
+}
+
 /** Places a leader line from an anchor point to a label box. */
 function lead(dotEl, lnEl, bxEl, ax, ay, ex, ey) {
-  dotEl.style.left = `${ax}px`;
-  dotEl.style.top = `${ay}px`;
-  const len = Math.hypot(ex - ax, ey - ay);
-  const ang = Math.atan2(ey - ay, ex - ax);
-  lnEl.style.left = `${ax}px`;
-  lnEl.style.top = `${ay}px`;
-  lnEl.style.width = `${len}px`;
-  lnEl.style.transform = `rotate(${ang}rad)`;
-  bxEl.style.left = `${ex}px`;
-  bxEl.style.top = `${ey}px`;
+  place(dotEl, ax, ay);
+  place(lnEl, ax, ay);
+  lnEl.style.rotate = `${Math.atan2(ey - ay, ex - ax)}rad`;
+  lnEl.style.scale = `${Math.hypot(ex - ax, ey - ay)} 1`;
+  place(bxEl, ex, ey);
 }
 
 /** Target-lock reticle that follows the hovered craft. */
@@ -36,10 +47,8 @@ export function createTag() {
       proj.copy(worldPos).project(camera);
       const sx = (proj.x * 0.5 + 0.5) * innerWidth;
       const sy = (-proj.y * 0.5 + 0.5) * innerHeight;
-      lock.style.left = `${sx}px`;
-      lock.style.top = `${sy}px`;
-      ring.style.left = `${sx}px`;
-      ring.style.top = `${sy}px`;
+      place(lock, sx, sy);
+      place(ring, sx, sy);
       lead(dot, ln, bx, sx, sy, sx + 72, sy - 62);
     },
   };

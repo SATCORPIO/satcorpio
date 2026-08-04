@@ -1,4 +1,4 @@
-import { PR } from '../core/config.js';
+import { PR, REDUCED } from '../core/config.js';
 
 /* Readouts are derived from the real camera rig rather than faked, so the
    numbers move with what the viewer is actually doing. Only the link-quality
@@ -26,7 +26,10 @@ export function createTelemetry() {
     sRng.textContent = `ALT ${Math.round(Math.max(0, camera.position.length() - PR) * 14)
       .toString().padStart(4, '0')} KM`;
 
-    if (t - meterT < 0.28) return;
+    /* Roughly two updates a second rather than four. The readouts are meant to
+       read as a live link, and a panel that twitches faster than the eye can
+       follow reads as broken instead. */
+    if (t - meterT < 0.55) return;
     meterT = t;
     const up = 6.2 + Math.sin(t * 0.7) * 1.9 + Math.random() * 0.5;
     upEl.textContent = up.toFixed(2);
@@ -34,6 +37,12 @@ export function createTelemetry() {
     pwrEl.textContent = (96.4 + Math.sin(t * 0.31) * 2.4).toFixed(1);
     const bars = Math.round(3.4 + Math.sin(t * 1.1) * 1.3);
     sigBars.forEach((b, i) => b.classList.toggle('on', i < bars));
-    lnkBars.forEach((b, i) => b.classList.toggle('on', (((t * 3) | 0) + i) % 5 !== 0));
+    /* The LINK meter used to drop a bar three times a second, which is fast
+       enough to be a strobe in the corner of the eye rather than an indicator.
+       Slowed to about one dropout a second — and left steady altogether when
+       motion is not wanted. */
+    lnkBars.forEach((b, i) => b.classList.toggle(
+      'on', REDUCED || (((t * 1.2) | 0) + i) % 5 !== 0
+    ));
   };
 }
