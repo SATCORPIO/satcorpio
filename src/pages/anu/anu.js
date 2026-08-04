@@ -38,8 +38,8 @@ mountStage({
 });
 
 /* The prompt types itself. Progressive by construction: the command is already
-   in the markup and this only replays it, so with JS off — or with reduced
-   motion — the terminal simply shows a finished command. */
+   in the markup and this only replays it, so with JS off   or with reduced
+   motion   the terminal simply shows a finished command. */
 const cmd = document.querySelector('[data-type]');
 if (cmd && !REDUCED) {
   const text = cmd.dataset.type;
