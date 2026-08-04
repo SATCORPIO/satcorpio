@@ -5,7 +5,7 @@ import { COARSE } from '../core/config.js';
  * The section menu on the orbital view.
  *
  * Two ways into a division: fly into the object, or pick it off this list. The
- * list exists because the objects are discoverable but not obvious — a visitor
+ * list exists because the objects are discoverable but not obvious   a visitor
  * who does not want to hunt for a 12-pixel spacecraft should not have to. It is
  * also the accessible route, which is why the entries are real anchors: they
  * work with a keyboard, they work from the context menu, and they work with
@@ -14,7 +14,7 @@ import { COARSE } from '../core/config.js';
  *
  * The whole rail can be dismissed. The scene is the point of this page, and
  * someone who wants to look at it should be able to clear the furniture out of
- * the way — the choice is remembered.
+ * the way   the choice is remembered.
  */
 const KEY = 'satcorp.menu';
 
@@ -63,7 +63,7 @@ export function createMenu({ onEnter, onPreview }) {
   }
   document.head.appendChild(prefetch);
 
-  /* Open on a desktop, closed on a phone — where the rail becomes a bottom bar
+  /* Open on a desktop, closed on a phone   where the rail becomes a bottom bar
      that would otherwise cover the planet on the smallest screens. A stored
      preference beats both. */
   const stored = localStorage.getItem(KEY);
