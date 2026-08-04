@@ -1,6 +1,6 @@
 /* Shared runtime for the section pages. Everything here is progressive: with
    this file blocked the pages are still complete, readable documents. Kept
-   dependency-free and deliberately tiny — the whole point of the section pages
+   dependency-free and deliberately tiny   the whole point of the section pages
    is that they are not the WebGL scene. */
 
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
