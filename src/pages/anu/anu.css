@@ -1,9 +1,9 @@
 /* ==========================================================================
-   ANU — MACHINE ROOM
+   ANU   MACHINE ROOM
 
    The engineer's page, and the one that refuses the treatment the other four
    get. Monospace throughout including the headings, no accent colour worth the
-   name — bone on black — no glow, no gradient, no glass. The 3D on this page is
+   name   bone on black   no glow, no gradient, no glass. The 3D on this page is
    a flat-shaded rack on a drafting grid rather than an effect, which is itself
    the art direction: the argument is that the hardware is real.
 
@@ -132,7 +132,7 @@ body.an h1, body.an h2, body.an h3 { letter-spacing: -.01em; }
   pointer-events: none;
 }
 
-/* No rack, no panel to hold it — the console then takes the full width rather
+/* No rack, no panel to hold it   the console then takes the full width rather
    than sitting next to an empty box. */
 html:not(.sc-3d) .an-rack { display: none; }
 html:not(.sc-3d) .an-split { grid-template-columns: 1fr; }
