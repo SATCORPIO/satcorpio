@@ -1,12 +1,12 @@
 /* ==========================================================================
-   SATCORP — SECTION PAGE 3D STAGE
+   SATCORP   SECTION PAGE 3D STAGE
 
    The mount harness every section page's scene runs inside. It is the section
    pages' equivalent of what main.js does for the orbital view, minus everything
    that only a planet needs: capability gate, deferred three.js load, RAF loop,
    pause discipline, debounced resize, a one-way quality governor, teardown.
 
-   Deliberately imports nothing at module scope — not three, not core/config —
+   Deliberately imports nothing at module scope   not three, not core/config  
    so a page that never mounts a stage pays nothing for having asked. three is
    fetched by dynamic import after first paint, which also means Vite emits it
    as one shared chunk every section page and the orbital view can reuse from
@@ -34,7 +34,7 @@ const MIN_DPR = MOBILE ? 0.75 : 1;
 /* ------------------------------------------------------------- capability */
 /* Three independent reasons not to run a scene, all of them meaning "this
    visitor gets the static document", which every page is designed to be.
-   Reduced motion is a stated preference, not a guess, so it wins outright —
+   Reduced motion is a stated preference, not a guess, so it wins outright  
    these scenes are ambient and continuous, and there is no honest way to show
    one "without motion". */
 export function capable() {
@@ -68,7 +68,7 @@ export const damp = (a, b, lambda, dt) => lerp(a, b, 1 - Math.exp(-lambda * dt))
  * than five slightly different listener sets.
  *
  * .x/.y   -1..1 across the host, y up (three's convention, not the DOM's)
- * .sx/.sy the same, smoothed — what scenes actually parallax against
+ * .sx/.sy the same, smoothed   what scenes actually parallax against
  * .inside whether the pointer is over the host
  * .down   whether a drag is in progress
  * .dx/.dy drag delta since the last read, consumed by reading
@@ -140,7 +140,7 @@ export function pointerTracker(host, { drag = true } = {}) {
     p.sx = damp(p.sx, p.inside || COARSE ? p.x : 0, lambda, dt);
     p.sy = damp(p.sy, p.inside || COARSE ? p.y : 0, lambda, dt);
   };
-  /* Reading a drag consumes it — a scene that forgets to read simply does not
+  /* Reading a drag consumes it   a scene that forgets to read simply does not
      move, rather than lurching when it remembers. */
   p.takeDrag = () => {
     const d = [p.dx, p.dy];
@@ -163,7 +163,7 @@ export function pointerTracker(host, { drag = true } = {}) {
  * Document scroll as a 0..1 progress value, plus per-element progress for the
  * scenes that are driven section by section. Read on demand from a value the
  * scroll listener caches, so a scene sampling it every frame never touches
- * layout — getBoundingClientRect on every marker on every frame is exactly the
+ * layout   getBoundingClientRect on every marker on every frame is exactly the
  * thing that makes scroll-driven 3D stutter.
  */
 export function scrollTracker(markers = []) {
@@ -259,8 +259,8 @@ export async function mountStage({ canvas, load, alpha = true, onReady }) {
   renderer.toneMappingExposure = 1;
 
   /* Marked live before anything is measured, and deliberately so. Pages hide
-     their stage until this class is set — a canvas that will never be drawn
-     should not hold a screen's worth of layout — which means measuring first
+     their stage until this class is set   a canvas that will never be drawn
+     should not hold a screen's worth of layout   which means measuring first
      reads a display:none host as 0×0 and the scene mounts one pixel wide. */
   el.classList.add('is-live');
   host.classList.add('stage-live');
@@ -312,7 +312,7 @@ export async function mountStage({ canvas, load, alpha = true, onReady }) {
   /* ------------------------------------------------------------ governor */
   /* One-way, for the reason main.js documents: a ratio that walks both ways
      oscillates, because lowering quality creates exactly the conditions for
-     raising it again. Only the framebuffer is on the table here — these scenes
+     raising it again. Only the framebuffer is on the table here   these scenes
      have no bloom chain to spend first. */
   let samples = 0;
   let acc = 0;
