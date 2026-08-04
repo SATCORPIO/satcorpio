@@ -2,7 +2,7 @@ import { PR, REDUCED } from '../core/config.js';
 
 /* Readouts are derived from the real camera rig rather than faked, so the
    numbers move with what the viewer is actually doing. Only the link-quality
-   meters are invented — there is no downlink to measure. */
+   meters are invented   there is no downlink to measure. */
 export function createTelemetry() {
   const lnkEl = document.getElementById('s-lnk');
   const sigEl = document.getElementById('t-sig');
@@ -39,7 +39,7 @@ export function createTelemetry() {
     sigBars.forEach((b, i) => b.classList.toggle('on', i < bars));
     /* The LINK meter used to drop a bar three times a second, which is fast
        enough to be a strobe in the corner of the eye rather than an indicator.
-       Slowed to about one dropout a second — and left steady altogether when
+       Slowed to about one dropout a second   and left steady altogether when
        motion is not wanted. */
     lnkBars.forEach((b, i) => b.classList.toggle(
       'on', REDUCED || (((t * 1.2) | 0) + i) % 5 !== 0
