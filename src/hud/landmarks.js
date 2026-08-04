@@ -66,7 +66,7 @@ export async function createLandmarks({ planet, ring, camera, onOpen }) {
     el.innerHTML = '<i class="dot" role="button" tabindex="0"></i><i class="ln"></i><div class="bx"></div>';
     el.querySelector('.bx').textContent = spec.label;
     const dot = el.querySelector('.dot');
-    dot.setAttribute('aria-label', `${spec.label} — ${spec.kind}`);
+    dot.setAttribute('aria-label', `${spec.label}   ${spec.kind}`);
     root.appendChild(el);
 
     const item = { spec, anchor, el, dot, ln: el.querySelector('.ln'), bx: el.querySelector('.bx') };
@@ -121,7 +121,7 @@ export async function createLandmarks({ planet, ring, camera, onOpen }) {
 
       /* Surface pins on the far hemisphere have to be culled: the planet is
          opaque, but DOM sits on top of the canvas and would happily draw a pin
-         through it. The ring pin is exempt — it is genuinely visible from both
+         through it. The ring pin is exempt   it is genuinely visible from both
          faces of the arc. */
       let facing = 1;
       if (it.spec.id !== 'ring') {
@@ -137,7 +137,7 @@ export async function createLandmarks({ planet, ring, camera, onOpen }) {
       const ex = sx + 34;
       const ey = sy - 26;
 
-      /* Composited placement, as in callouts.js — these run every frame. */
+      /* Composited placement, as in callouts.js   these run every frame. */
       place(it.dot, sx, sy);
       place(it.ln, sx, sy);
       it.ln.style.rotate = `${Math.atan2(ey - sy, ex - sx)}rad`;
