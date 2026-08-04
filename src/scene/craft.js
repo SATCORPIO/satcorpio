@@ -76,7 +76,7 @@ export function buildCraft(color, payload) {
   pay.position.y = 1.9;
   g.add(pay);
 
-  if (payload === 'optical') {                        // Ki-Ra — imaging telescope
+  if (payload === 'optical') {                        // Ki-Ra   imaging telescope
     const tube = new Mesh(new CylinderGeometry(0.95, 0.95, 3.2, 28), white);
     tube.position.y = 1.5;
     pay.add(tube);
@@ -89,7 +89,7 @@ export function buildCraft(color, payload) {
     lens.position.y = 3.05;
     lens.rotation.x = -Math.PI / 2;
     pay.add(lens);
-  } else if (payload === 'array') {                   // PULSE — phased array
+  } else if (payload === 'array') {                   // PULSE   phased array
     const face = new Mesh(new BoxGeometry(3.6, 0.22, 3.6), white);
     face.position.y = 1.1;
     pay.add(face);
@@ -102,7 +102,7 @@ export function buildCraft(color, payload) {
         pay.add(e);
       }
     }
-  } else if (payload === 'antenna') {                 // KYRAX — dish cluster
+  } else if (payload === 'antenna') {                 // KYRAX   dish cluster
     [[0, 1.9, 0, 1.5], [1.3, 1.2, 0.5, 0.85], [-1.15, 1.1, -0.6, 0.75]].forEach(([x, y, z, r]) => {
       const d = new Mesh(
         new SphereGeometry(r, 26, 18, 0, Math.PI * 2, 0, Math.PI / 2.5),
@@ -120,7 +120,7 @@ export function buildCraft(color, payload) {
     const mast = new Mesh(new CylinderGeometry(0.06, 0.06, 3.4, 8), white);
     mast.position.y = 1.4;
     pay.add(mast);
-  } else {                                            // ANU — instrument lab + boom
+  } else {                                            // ANU   instrument lab + boom
     const lab = new Mesh(new CylinderGeometry(1.05, 1.05, 2.6, 24), foil);
     lab.rotation.z = Math.PI / 2;
     lab.position.y = 0.9;

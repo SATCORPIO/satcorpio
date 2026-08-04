@@ -51,7 +51,7 @@ function mulberry(seed) {
  * The starfield.
  *
  * Blender bakes this to a 100 MB float EXR. That is a backdrop for a still; for
- * a scene the camera orbits, points are both smaller and better — they hold
+ * a scene the camera orbits, points are both smaller and better   they hold
  * parallax, stay sharp at any zoom, and cost nothing to ship. The magnitude
  * distribution, colour spread and Milky Way density boost are the same maths
  * build_starfield uses, evaluated at load instead of bake time.
@@ -128,7 +128,7 @@ export function createStars(tex) {
   points.frustumCulled = false;
   group.add(points);
 
-  /* The diffuse band itself stays an image — it is smooth, so points cannot
+  /* The diffuse band itself stays an image   it is smooth, so points cannot
      express it, and at 1024x512 it costs 10 KB. */
   const band = new Mesh(
     new SphereGeometry(SHELL_OUT + 300, 48, 32),

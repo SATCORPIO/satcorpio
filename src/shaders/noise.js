@@ -1,4 +1,4 @@
-/* Value noise on a 3D position, quintic-smoothed — the same construction
+/* Value noise on a 3D position, quintic-smoothed the same construction
    namtar_lib.value_noise3 uses offline, so procedural detail added in a shader
    sits in the same visual family as the baked maps. */
 export const VALUE_NOISE_3D = /* glsl */ `

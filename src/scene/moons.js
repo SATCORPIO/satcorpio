@@ -3,7 +3,7 @@ import { MOONS, RIM_LAYER, TEX_DIR } from '../core/config.js';
 import { loadHeightField } from './textures.js';
 
 /**
- * TALOS — the larger moon. Gray volcanic surface with large impact scars
+ * TALOS   the larger moon. Gray volcanic surface with large impact scars
  * (spec sec.9). Blender displaces a 384x192 sphere; here the same relief rides
  * on a smooth 48x32 sphere as a baked normal map, which looks identical at the
  * size it occupies on screen and costs a fraction of the geometry.
@@ -25,7 +25,7 @@ function createTalos(tex) {
 }
 
 /**
- * VEYRA — a captured fragment, not a sphere. Its relief is 1.2x its own radius,
+ * VEYRA   a captured fragment, not a sphere. Its relief is 1.2x its own radius,
  * so a normal map cannot fake the silhouette: the vertices are actually moved.
  * The mesh is small enough (32x24) that displacing it on the CPU at load costs
  * nothing measurable.
@@ -69,7 +69,7 @@ async function createVeyra() {
 }
 
 /**
- * Both moons on invented orbits — the Blender scene places them off-axis for a
+ * Both moons on invented orbits   the Blender scene places them off-axis for a
  * single still (place_off_axis) rather than on real paths. Radii sit outside
  * ANU's 100-unit orbit and inside the 430-unit zoom-out clamp.
  */

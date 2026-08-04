@@ -48,7 +48,7 @@ export function createRing() {
         return mix(ya, yb, clamp((x - a) / (b - a), 0.0, 1.0));
       }
 
-      /* RING_ENVELOPE: inner and outer falloff plus two clean divisions —
+      /* RING_ENVELOPE: inner and outer falloff plus two clean divisions  
          the gaps are what stop it reading as a flat washer. */
       float envelope(float t){
         if (t < 0.055) return ramp(t, 0.0,   0.055, 0.0,  1.0);
@@ -107,7 +107,7 @@ export function createRing() {
   const mesh = new Mesh(new RingGeometry(RING_IN, RING_OUT, SEG.ring, 4), material);
   /* Flat in XY as generated; laid into the orbital plane and then tilted off it.
      The ring spans 47–64 units and the kira (46) and pulse (62) craft orbit
-     inside that range — tilting the plane means they cross the arc at a visible
+     inside that range   tilting the plane means they cross the arc at a visible
      angle instead of swimming through it. */
   mesh.rotation.x = -Math.PI / 2 + RING_TILT;
   mesh.rotation.y = RING_SPIN;

@@ -9,7 +9,7 @@ import { VALUE_NOISE_3D } from '../shaders/noise.js';
 function patch(source, find, replace, what) {
   if (!source.includes(find)) {
     throw new Error(`planet surface: could not find "${find}" to patch ${what}. ` +
-      'three\'s shader chunks have changed — check meshphysical_frag.');
+      'three\'s shader chunks have changed   check meshphysical_frag.');
   }
   return source.replace(find, replace);
 }
@@ -20,7 +20,7 @@ function patch(source, find, replace, what) {
  * Cycles drives this from a node graph (blender_rebuild.build_surface): a
  * water/land roughness split, terrain normals that fade out over the sea, and
  * two night-side emission layers. None of that survives an export, so the same
- * three behaviours are injected into MeshStandardMaterial instead — which keeps
+ * three behaviours are injected into MeshStandardMaterial instead   which keeps
  * three's PBR lighting, shadows and env map rather than rebuilding them.
  *
  * Injection order matters: roughnessmap_fragment runs before
@@ -51,7 +51,7 @@ export function createSurface(tex) {
     Object.assign(shader.uniforms, uniforms);
 
     /* The planet is a sphere centred on its own origin, so the normalised
-       object-space position is the local vertical — the same quantity
+       object-space position is the local vertical   the same quantity
        night_mask() uses in Blender, and immune to bump detail chewing up the
        terminator. */
     let vert = shader.vertexShader;
@@ -85,7 +85,7 @@ export function createSurface(tex) {
        /* Blender's 0.038–0.135 assumes a sun with real angular size, which
           spreads the reflection into a glitter path. three's directional light
           is a delta light, so the same roughness collapses to one blown-out
-          pixel — widening the range restores a broad highlight instead. */
+          pixel   widening the range restores a broad highlight instead. */
        float waterRough = mix(0.090, 0.230, smoothstep(0.15, 0.85, wind));
        float landRough = mix(0.90, 0.74, veg);
        float roughnessFactor = mix(landRough, waterRough, water);
@@ -106,7 +106,7 @@ export function createSurface(tex) {
       'normal map chunk');
 
     /* Night side. An emissive map alone glows straight through the daylit
-       hemisphere, which is the biggest tell that a planet is fake — both
+       hemisphere, which is the biggest tell that a planet is fake   both
        layers are gated on the sun angle with a soft terminator. */
     frag = patch(frag, '#include <emissivemap_fragment>',
       `float night = smoothstep(0.10, -0.14, dot(normalize(vUpLocal), uSunLocal));

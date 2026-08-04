@@ -2,7 +2,7 @@
  * Converts the NAMTAR source maps into the two web tiers the site loads.
  *
  * The sources are 283 MB of 8K equirect PNGs authored for Cycles. Nothing here
- * is resampled for looks — the planet is never more than ~900 px across on a
+ * is resampled for looks   the planet is never more than ~900 px across on a
  * desktop viewport, so 4K equirect is already oversampled at the limb, and the
  * mask/cloud maps are data that gets smoothstepped in a shader rather than
  * viewed directly.
@@ -33,7 +33,7 @@ const JOBS = [
   // R=coverage G=top height B=convection.
   { src: 'namtar_clouds.png', name: 'clouds', hi: 2048, lo: 1024, opt: { quality: 84, effort: 6 } },
   // R=settlement glow G=rift heat. Only 0.13% of the surface is lit and rift
-  // heat covers 0.2%, so both are sparse — downsampling past 1K loses them.
+  // heat covers 0.2%, so both are sparse   downsampling past 1K loses them.
   { src: 'namtar_night.png', name: 'night', hi: 1024, lo: 1024, opt: { quality: 88 } },
 
   // Moons.
@@ -45,7 +45,7 @@ const JOBS = [
 ];
 
 /* Veyra's height map is read back through a canvas and used to move vertices,
-   so it ships as PNG — lossy artefacts here become dents in the silhouette. */
+   so it ships as PNG   lossy artefacts here become dents in the silhouette. */
 const VERBATIM = ['veyra_height_lo.png', 'namtar_landmarks.json'];
 
 const mb = (b) => (b / 1e6).toFixed(2) + ' MB';
@@ -55,11 +55,11 @@ async function emit(job, width, dir) {
   const meta = await sharp(path.join(SRC, job.src)).metadata();
   /* Every source here packs independent data masks into colour channels. sharp
      premultiplies RGB by alpha across a resize, so an RGBA source would have
-     its colour channels silently zeroed wherever alpha is ~0 — which is most of
+     its colour channels silently zeroed wherever alpha is ~0   which is most of
      the globe for a rift-heat mask. Fail loudly instead of shipping black maps. */
   if (meta.hasAlpha) {
     throw new Error(
-      `${job.src} has an alpha channel. Packed data masks must be alpha-free — ` +
+      `${job.src} has an alpha channel. Packed data masks must be alpha-free   ` +
       're-run tools/gen_web_maps.py, which splits them into RGB pairs.'
     );
   }

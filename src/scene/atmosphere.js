@@ -4,7 +4,7 @@ import { VALUE_NOISE_3D } from '../shaders/noise.js';
 
 /* Blender's scale heights are fractions of the planet radius: 0.0042 is the
    ~35 km Rayleigh column the spec asks for, and 0.00135 the Mie haze. At this
-   scene's size that is 0.13 and 0.04 scene units — one or two pixels on screen,
+   scene's size that is 0.13 and 0.04 scene units   one or two pixels on screen,
    which renders a limb nobody can see. Cycles got away with it by raymarching a
    real volume at high resolution; here the column is stretched by EXAGGERATION
    so the glow occupies a readable band, keeping the ratio between the two media
@@ -22,15 +22,15 @@ const SHELL = 1 + (4.0 * H_RAYLEIGH) / PR;
  * The atmospheric limb.
  *
  * Cycles models this as two nested volumes with independent scale heights
- * (build_atmosphere) — isotropic Rayleigh for the coloured limb, forward-
+ * (build_atmosphere)   isotropic Rayleigh for the coloured limb, forward-
  * scattering Mie for the bright sunward arc. Rather than raymarch that, this
  * shader solves the view ray against the shell analytically: how far the ray
  * travels through the air, and how low it gets, are the only two quantities the
  * look depends on.
  *
  * Doing it by ray rather than by fresnel is what produces a limb whose colour
- * changes with altitude — emerald at the deck through cyan to deep blue at the
- * top, per spec sec.6 — instead of a flat glow ring.
+ * changes with altitude   emerald at the deck through cyan to deep blue at the
+ * top, per spec sec.6   instead of a flat glow ring.
  */
 export function createAtmosphere() {
   const uniforms = {
@@ -51,7 +51,7 @@ export function createAtmosphere() {
     uniforms,
     transparent: true,
     /* Front side, not back. A back-facing shell only ever draws where the planet
-       does not occlude it, which yields a rim and nothing else — the haze over
+       does not occlude it, which yields a rim and nothing else   the haze over
        the disc, which is what gives near-black oceans their teal cast, is depth
        rejected before it can composite. The near face sits in front of the
        planet and covers both cases; the ray maths below solves the full column
@@ -110,7 +110,7 @@ export function createAtmosphere() {
 
         /* Optical depth, not geometric path length. Density falls off
            exponentially, so a ray crossing the shell does most of its
-           scattering in the lowest scale height — using the chord length would
+           scattering in the lowest scale height   using the chord length would
            make the whole disc as bright as the limb, which is what washes a
            planet out. Two closed forms cover the cases:
 
@@ -140,7 +140,7 @@ export function createAtmosphere() {
         vec3 col = limbTint(t);
 
         /* Grazing light travels a long way through the column before it reaches
-           us, and comes out warm — this is the band that turns the terminator
+           us, and comes out warm   this is the band that turns the terminator
            orange and gives the hero render its crimson limb. */
         float term = smoothstep(0.0, 0.30, sdot) * (1.0 - smoothstep(0.30, 0.72, sdot));
         col = mix(col, vec3(0.94, 0.52, 0.26), term * 0.45);
@@ -156,7 +156,7 @@ export function createAtmosphere() {
 
         /* Mie forward scattering. A photon reaches the camera travelling along
            -D after arriving along -uSun, so the scattering angle is
-           dot(uSun, D) — near 1 when we look toward the star through the limb,
+           dot(uSun, D)   near 1 when we look toward the star through the limb,
            which is exactly where the bright white arc appears. */
         float forward = pow(max(dot(D, uSun), 0.0), 30.0);
         vec3 mie = vec3(0.860, 0.895, 0.920)

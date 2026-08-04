@@ -67,7 +67,7 @@ export function beam(color) {
 
 /**
  * Survey lattice: a hologram wireframe with a wave sweeping pole to pole.
- * This is HUD language rather than planetary science — it belongs to the
+ * This is HUD language rather than planetary science   it belongs to the
  * mission-control frame, not to Namtar, so it keeps its own look.
  */
 export function surveyLattice() {
