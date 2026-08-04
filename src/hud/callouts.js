@@ -6,7 +6,7 @@ import { PR } from '../core/config.js';
  * properties rather than with left/top/width.
  *
  * Every pin on screen is repositioned on every frame. Writing left/top puts
- * that on the layout path — a full style recalculation and reflow per pin, per
+ * that on the layout path   a full style recalculation and reflow per pin, per
  * frame, for elements that are only ever moving. translate/rotate/scale are
  * composited instead, and because they are separate properties from `transform`
  * the stylesheet keeps `transform` free for the centring offsets and hover
