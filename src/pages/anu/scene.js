@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ANU — THE MACHINE ROOM
+   ANU   THE MACHINE ROOM
 
    The least glossy scene on the site, and deliberately. No bloom, no additive
    glow, no atmosphere: a flat-shaded low-poly rack on a drafting grid, lit by
@@ -7,7 +7,7 @@
    Every other division's page is trying to impress; this one is trying to show
    you the hardware, and the visual language has to agree with that.
 
-   Everything is built from primitives — a rack is boxes, and shipping a mesh
+   Everything is built from primitives   a rack is boxes, and shipping a mesh
    for it would be shipping vertices that describe a cuboid. Three of the units
    are hotspots wired to the pillars in the page: clicking one opens its
    section, and reading a section lights its unit.
@@ -17,7 +17,7 @@
 
 import { clamp, damp, pointerTracker, disposeTree } from '../shared/stage.js';
 
-/* Which rack unit belongs to which pillar, top to bottom. `null` is filler —
+/* Which rack unit belongs to which pillar, top to bottom. `null` is filler  
    a rack with only three things in it is not a rack. */
 const UNITS = [
   { u: 2, pillar: null, label: 'switch' },
@@ -42,7 +42,7 @@ export function create({ THREE, renderer, host, canvas, mobile }) {
   const dark = new THREE.Color(0x2f3a2f);
 
   /* The filmic curve every other page on the site wants is wrong here. ACES
-     rolls the midtones down, and a rack is nothing but midtones — under it the
+     rolls the midtones down, and a rack is nothing but midtones   under it the
      whole chassis sank to within a few values of the page background. Flat
      response instead, which is also what the drafting-table look is asking
      for: no highlight bloom to roll off, nothing to protect from clipping. */
@@ -181,7 +181,7 @@ export function create({ THREE, renderer, host, canvas, mobile }) {
       tAz -= dx * 0.006;
       tEl = clamp(tEl + dy * 0.004, -0.45, 0.75);
     }
-    /* The rack is a thing on a table, so it does not spin freely — the drag is
+    /* The rack is a thing on a table, so it does not spin freely   the drag is
        clamped either side of front-on and eases back toward it. */
     tAz = clamp(tAz, -0.95, 0.95);
     az = damp(az, tAz, 4, dt);
