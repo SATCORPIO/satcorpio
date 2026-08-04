@@ -21,7 +21,7 @@ const FinalShader = {
     uTime: { value: 0 },
     uAberration: { value: 0.55 },
     /* Slightly stronger than it was, because this is now the only grain on the
-       page — the DOM overlay that used to sit on top of the canvas is gone. */
+       page   the DOM overlay that used to sit on top of the canvas is gone. */
     uGrain: { value: 0.045 },
   },
   vertexShader: /* glsl */ `
@@ -63,7 +63,7 @@ export function createComposer(renderer, scene, camera) {
   const size = renderer.getDrawingBufferSize(new Vector2());
   /* UnrealBloomPass is five downsample/upsample pairs. Running the chain at half
      linear resolution on mobile quarters every one of those fills, and bloom is
-     a blur — there is nothing in it sharp enough to miss.
+     a blur   there is nothing in it sharp enough to miss.
 
      Not a constant: the frame-time governor in main.js can drop a desktop that
      is struggling onto the same reduced chain rather than going straight to a
@@ -81,7 +81,7 @@ export function createComposer(renderer, scene, camera) {
   const composer = new EffectComposer(renderer, target);
   composer.addPass(new RenderPass(scene, camera));
 
-  /* Namtar is a dark world — the albedo map averages about 10% reflectance,
+  /* Namtar is a dark world   the albedo map averages about 10% reflectance,
      because open ocean is genuinely almost black. Bloom tuned for the old
      procedural planet swamped it, so the threshold sits high enough that only
      genuinely bright things glow: sun glint off water, cloud tops, the rift,
@@ -89,7 +89,7 @@ export function createComposer(renderer, scene, camera) {
   const bloom = new UnrealBloomPass(
     new Vector2(size.x * bloomScale, size.y * bloomScale),
     0.30,    // strength
-    0.35,    // radius — a wide radius smears cloud white across the whole disc
+    0.35,    // radius   a wide radius smears cloud white across the whole disc
     0.72     // threshold
   );
   composer.addPass(bloom);
@@ -125,7 +125,7 @@ export function createComposer(renderer, scene, camera) {
      *
      * Dropping the framebuffer is the blunt instrument: it softens the whole
      * image, including the type. Bloom is already a blur, so halving its
-     * resolution costs almost nothing anyone can point at — and a full-screen
+     * resolution costs almost nothing anyone can point at   and a full-screen
      * five-tap pyramid is the most expensive thing in the chain, so it buys
      * the most. This is the step to spend first.
      *
