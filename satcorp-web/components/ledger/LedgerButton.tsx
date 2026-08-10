@@ -3,7 +3,7 @@
 import { useUI } from "@/lib/store";
 
 /**
- * A second door into the Ledger, for placing in-context — the SATCORP partner
+ * A second door into the Ledger, for placing in-context   the SATCORP partner
  * CTA, ANU's engagement section, PULSE's "broadcast with us". The wax seal is
  * always available; this is for when the invitation should be explicit.
  */
