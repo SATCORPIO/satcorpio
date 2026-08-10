@@ -1,5 +1,5 @@
 /**
- * FINGERPRINT 2.4 — RUBBER STAMPS
+ * FINGERPRINT 2.4   RUBBER STAMPS
  *
  * Status is never a coloured pill on this site. It is a stamp: slightly off
  * axis, ink a little uneven, as if pressed by hand a moment before you arrived.
