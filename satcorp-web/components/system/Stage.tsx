@@ -26,7 +26,7 @@ interface StageProps {
   /**
    * Whether the canvas should receive pointer events. R3F puts
    * `pointer-events: auto` on its own container, which silently overrides a
-   * `pointer-events-none` class on any wrapper — so ambient backdrops must
+   * `pointer-events-none` class on any wrapper   so ambient backdrops must
    * turn it off here rather than outside.
    */
   interactive?: boolean;
