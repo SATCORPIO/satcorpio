@@ -11,7 +11,7 @@ import { ServerRackScene } from "@/components/worlds/satcorp/ServerRack";
 import { ExpansionTimeline } from "@/components/worlds/satcorp/ExpansionTimeline";
 
 /**
- * ESTABLISHMENT 1 — SATCORP
+ * ESTABLISHMENT 1   SATCORP
  * A shadow holding company's front door: sober, architectural, quietly
  * enormous. Pure black, red and bone; no tinted accent of its own.
  */
@@ -54,7 +54,7 @@ export default function SatcorpPage() {
         </div>
 
         <span className="label absolute bottom-8 text-[0.55rem]">
-          Scroll — the network is below
+          Scroll   the network is below
         </span>
       </section>
 
@@ -74,7 +74,7 @@ export default function SatcorpPage() {
 
         <div className="rule mt-8" />
 
-        {/* The board. Decorative — the list below is the accessible record. */}
+        {/* The board. Decorative   the list below is the accessible record. */}
         <NetworkScene />
 
         <ul className="grid gap-px sm:grid-cols-2 lg:grid-cols-3">
@@ -119,7 +119,7 @@ export default function SatcorpPage() {
               Artificial Intelligence &amp; Cognitive Systems
             </h3>
             <p className="mt-3 font-mono text-[0.72rem] text-bone-dim">
-              KYRAX — the intelligence layer behind SATCORP.
+              KYRAX   the intelligence layer behind SATCORP.
             </p>
             <ul className="mt-6 space-y-2.5 font-mono text-[0.7rem] text-bone-dim">
               {[
@@ -130,7 +130,7 @@ export default function SatcorpPage() {
                 "AI integration across all SATCORP divisions",
               ].map((item) => (
                 <li key={item} className="flex gap-3">
-                  <span className="text-blood">—</span>
+                  <span className="text-blood"> </span>
                   {item}
                 </li>
               ))}
@@ -153,7 +153,7 @@ export default function SatcorpPage() {
                 "Future-focused development",
               ].map((item) => (
                 <li key={item} className="flex gap-3">
-                  <span className="text-blood">—</span>
+                  <span className="text-blood"> </span>
                   {item}
                 </li>
               ))}
