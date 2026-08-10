@@ -10,7 +10,7 @@ import { ACTS, surfaceBlend } from "./journey";
  * counting down as the page falls out of orbit.
  *
  * Written straight to the DOM node from a frame loop rather than through
- * state — it changes every frame and nothing else needs to know.
+ * state   it changes every frame and nothing else needs to know.
  */
 
 const ORBIT_ALTITUDE = 412;
