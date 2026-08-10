@@ -1,4 +1,4 @@
-# The Next.js app carries its own .gitignore — this covers the workspace around it.
+# The Next.js app carries its own .gitignore   this covers the workspace around it.
 
 # OS and sync detritus. The repo lives inside OneDrive, which litters.
 .DS_Store
@@ -18,5 +18,5 @@ desktop.ini
 .env.*
 !.env.example
 
-# Filed engagement briefs — client data, never committed.
+# Filed engagement briefs   client data, never committed.
 .intake/
