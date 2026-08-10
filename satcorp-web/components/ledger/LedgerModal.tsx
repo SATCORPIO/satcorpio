@@ -101,7 +101,7 @@ export function LedgerModal() {
     [hydrated, selected],
   );
 
-  // "Frequently arranged together" — the featured entries this visitor has
+  // "Frequently arranged together"   the featured entries this visitor has
   // not marked, drawn from the sections they are actually looking at.
   const suggestions = useMemo(
     () =>
