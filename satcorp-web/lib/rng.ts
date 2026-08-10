@@ -6,7 +6,7 @@
  * composition that looks right stays right; and generating them is pure, so it
  * is safe to do during render.
  *
- * mulberry32 — small, fast, good enough distribution for visual work.
+ * mulberry32   small, fast, good enough distribution for visual work.
  */
 export function mulberry32(seed: number): () => number {
   let a = seed >>> 0;
