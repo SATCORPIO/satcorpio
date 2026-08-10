@@ -6,7 +6,7 @@ import { useReducedMotion } from "@/lib/tier";
 /**
  * RESEARCH & PROGRESSION
  *
- * No levels — discoveries. Each card arrives as an unknown signal and resolves
+ * No levels   discoveries. Each card arrives as an unknown signal and resolves
  * into what it turned out to be as the reader reaches it.
  *
  * The real text is in the DOM from the first paint; the reveal is presentation
