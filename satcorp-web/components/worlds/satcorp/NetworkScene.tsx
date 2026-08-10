@@ -34,10 +34,10 @@ export function NetworkScene() {
           className="font-display text-2xl text-bone transition-opacity duration-300"
           style={{ opacity: division ? 1 : 0 }}
         >
-          {division?.name ?? "—"}
+          {division?.name ?? " "}
         </p>
         <p className="label text-[0.55rem] transition-opacity duration-300">
-          {division ? division.role : "Drag the board — pins are live"}
+          {division ? division.role : "Drag the board   pins are live"}
         </p>
       </div>
     </div>
