@@ -8,7 +8,7 @@ import * as THREE from "three";
  *
  * three, like most engines, treats `fov` as vertical. Framings authored in
  * Blender against a landscape render therefore crop in hard as the viewport
- * gets narrower — on a square or portrait window the subject blows past the
+ * gets narrower   on a square or portrait window the subject blows past the
  * edges of frame. Holding the horizontal angle fixed keeps the composition the
  * scene was art-directed for, and lets tall windows simply see more above and
  * below.
