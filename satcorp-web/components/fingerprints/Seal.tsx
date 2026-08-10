@@ -4,7 +4,7 @@ import { useEngagement, useHydrated, useUI } from "@/lib/store";
 import { Monogram } from "./Monogram";
 
 /**
- * FINGERPRINT 2.5 — THE WAX SEAL
+ * FINGERPRINT 2.5   THE WAX SEAL
  *
  * The only element on the entire site that never changes between
  * establishments. Six pages that look like six different companies, and the
@@ -64,7 +64,7 @@ export function Seal() {
       </span>
 
       <span className="sr-only">
-        Open the Ledger{count > 0 ? ` — ${count} entries engaged` : ""}
+        Open the Ledger{count > 0 ? `   ${count} entries engaged` : ""}
       </span>
     </button>
   );
