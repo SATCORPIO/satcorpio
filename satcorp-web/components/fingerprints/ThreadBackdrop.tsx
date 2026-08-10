@@ -12,7 +12,7 @@ import { useUI } from "@/lib/store";
  * worlds load. Each division routes it differently, so it reads as native to
  * the room while remaining recognisably the same thread.
  *
- * During a case-file transition it retracts, then draws itself back in — the
+ * During a case-file transition it retracts, then draws itself back in   the
  * thread is what pulls you between establishments.
  */
 
