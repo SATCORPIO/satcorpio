@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 /**
  * KYRAX's layout unit is a physical index card: a file number, a ruled header,
- * a hand-filed tilt. The archive on this page is not only in the canvas —
+ * a hand-filed tilt. The archive on this page is not only in the canvas  
  * the writing is filed on the same stock.
  */
 export function IndexCard({
