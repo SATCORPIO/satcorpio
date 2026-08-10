@@ -6,7 +6,7 @@ import { useReducedMotion } from "@/lib/tier";
 
 /**
  * The house arrival motion: content rises a little and resolves as you reach
- * it. Deliberately understated — the Concierge does not make an entrance.
+ * it. Deliberately understated   the Concierge does not make an entrance.
  *
  * Under reduced motion nothing animates and nothing is hidden; the content is
  * simply there.
