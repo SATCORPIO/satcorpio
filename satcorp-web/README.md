@@ -1,4 +1,4 @@
-# SATCORP — Web Ecosystem
+# SATCORP   Web Ecosystem
 
 The "Concierge of Crime" build. Six establishments that each look like a
 different company, tied together by six fingerprints and one red thread.
@@ -8,7 +8,7 @@ This file covers what exists in the repo today and how to work on it.
 
 ---
 
-## Status — through Phase 6
+## Status   through Phase 6
 
 The site is a functioning business site: it presents the ecosystem, it sells,
 and it takes enquiries end to end.
@@ -16,13 +16,13 @@ and it takes enquiries end to end.
 | Phase | Scope | State |
 |---|---|---|
 | 0 | Shell, theme tokens, fingerprints, scroll rig, tiering, ledger data | **Done** |
-| 1 | SATCORP `/` — particle logo reveal, 3D network board, The Iron, timeline | **Done** |
+| 1 | SATCORP `/`   particle logo reveal, 3D network board, The Iron, timeline | **Done** |
 | 2 | The Ledger in leather + the four-step engagement brief and intake pipeline | **Done** |
-| 3 | ANU — the study modelled in Blender, scroll-scrubbed camera dolly | **Done** |
-| 4 | KYRAX — The Registry, an archive of index cards | **Done** |
-| 5 | Ki-Ra — The Screening Room, a projection with dust in the beam | **Done** |
-| 6 | NAMTAR — the planet, orbit-to-surface scroll journey | **Done** |
-| 7 | PULSE — the EKG ribbon | Next |
+| 3 | ANU   the study modelled in Blender, scroll-scrubbed camera dolly | **Done** |
+| 4 | KYRAX   The Registry, an archive of index cards | **Done** |
+| 5 | Ki-Ra   The Screening Room, a projection with dust in the beam | **Done** |
+| 6 | NAMTAR   the planet, orbit-to-surface scroll journey | **Done** |
+| 7 | PULSE   the EKG ribbon | Next |
 | 8 | Hardening, a11y audit, deploy to SATCORP iron | Pending |
 
 Divisions still awaiting their own 3D worlds ship full copy and structure with
@@ -66,7 +66,7 @@ Zustand.
 
 ```
 app/
-  layout.tsx            root shell — fonts, chrome, all six fingerprints
+  layout.tsx            root shell   fonts, chrome, all six fingerprints
   (satcorp)/            /            the organization
   (anu)/anu/            /anu         the architect
   (kyrax)/kyrax/        /kyrax       the brain
@@ -83,7 +83,7 @@ components/
 
 lib/
   divisions.ts          the six establishments + engagement model
-  ledger-catalog.ts     everything SATCORP sells — single source of truth
+  ledger-catalog.ts     everything SATCORP sells   single source of truth
   store.ts              engagement + UI state (persisted)
   tier.ts               capability detection and performance tiering
   gsap.ts               single plugin registration point
@@ -116,12 +116,12 @@ the navigation it triggers.
 
 ### 3D
 
-Every canvas goes through `<Stage>` — the only place a WebGL context is
+Every canvas goes through `<Stage>`   the only place a WebGL context is
 created. It handles client-only mounting, tier gating with a real fallback,
 and an adaptive pixel-ratio ceiling.
 
 Tiers come from `lib/tier.ts`: `full` (WebGPU, discrete GPU), `standard`
-(WebGL2), `lite` (reduced motion, software rendering, or a weak device —
+(WebGL2), `lite` (reduced motion, software rendering, or a weak device  
 gets stills and video instead). Content is identical at all three.
 
 Ambient backdrops must pass `interactive={false}`: R3F puts `pointer-events: auto`
@@ -134,17 +134,17 @@ passes and collapses the canvas to content size. The caller owns layout.
 
 Anything random in a scene goes through `mulberry32` from `lib/rng.ts` rather
 than `Math.random`. Layouts become reproducible, and generating them stays pure
-so it is safe during render — the React Compiler lint enforces this.
+so it is safe during render   the React Compiler lint enforces this.
 
 ### Each world's relationship to the page
 
 Deliberately different on every route, so the establishments don't converge:
 
-- **ANU** — a fixed room the camera moves *around*, scrubbed by scroll.
-- **KYRAX** — a fixed field the camera flies *through*, scrubbed by scroll.
-- **Ki-Ra** — a hero-only canvas you sit in *once*; the lights come up and the
+- **ANU**   a fixed room the camera moves *around*, scrubbed by scroll.
+- **KYRAX**   a fixed field the camera flies *through*, scrubbed by scroll.
+- **Ki-Ra**   a hero-only canvas you sit in *once*; the lights come up and the
   rest of the page is ordinary.
-- **NAMTAR** — a journey the camera *descends*: orbit, dive, surface, orbit
+- **NAMTAR**   a journey the camera *descends*: orbit, dive, surface, orbit
   again. The page is the descent.
 
 Each of those routes owns its own red thread in-scene (lamp cord,
@@ -164,14 +164,14 @@ empty frames become three screens of nothing to scroll past.
 ### The ANU study and its camera rig
 
 Source of truth is `assets/blender/anu-study.blend`. The build script inside it
-is idempotent — it wipes and rebuilds, so it can be re-run while iterating.
+is idempotent   it wipes and rebuilds, so it can be re-run while iterating.
 Export with modifiers applied, extras on, cameras and lights off; at ~8.5k
 triangles the GLB lands around 400KB, so no Draco or Meshopt decoder is needed.
 
 Camera art direction lives in Blender as empties named `cam_01…cam_n`, each
 carrying a `look_at` custom property. `readCameraStops` reads them in name
 order and the dolly runs the camera along them from scroll position. To
-re-frame a chapter, move the empty and re-export — do not edit numbers in code.
+re-frame a chapter, move the empty and re-export   do not edit numbers in code.
 
 **The rotations on those empties are deliberately ignored.** Blender's glTF
 exporter converts node translations to Y-up but the empties' rotations come out
@@ -193,7 +193,7 @@ camera rig, the terrain, the monoliths and the altitude readout all derive
 what they need from those functions, so retuning the pacing is one file.
 
 Those fractions are matched to where the copy actually lands. **Adding or
-resizing a section on `/namtar` moves the descent under it** — re-measure the
+resizing a section on `/namtar` moves the descent under it**   re-measure the
 section mid-points against total scroll and retune `ACTS` and the functions
 below it, or the dive will happen in the wrong place.
 
@@ -212,7 +212,7 @@ Nothing is textured. One value-noise fbm in `noise.ts` feeds the planet
 surface, the cloud deck, the terrain and the monolith stone, so the world you
 leave in orbit and the ground you arrive on are the same place. Terrain normals
 are sampled from the height field in the vertex shader rather than taken from
-screen-space derivatives — derivatives were cheaper and shaded every quad flat,
+screen-space derivatives   derivatives were cheaper and shaded every quad flat,
 which turned the ground into glass shards.
 
 The lite tier gets a two-gradient still. The build plan calls for a
@@ -230,7 +230,7 @@ Anything reading persisted state must gate on `useHydrated()` or the server
 HTML and the restored client state will disagree.
 
 Never gate state on an animation callback. GSAP runs on requestAnimationFrame,
-which stalls in a backgrounded tab — if a `setState` lives in `onComplete`, the
+which stalls in a backgrounded tab   if a `setState` lives in `onComplete`, the
 UI strands. Change state first and animate as a consequence.
 
 ### The intake pipeline
@@ -239,13 +239,13 @@ UI strands. Change state first and animate as a consequence.
 shared Zod schema, screens with a honeypot and a four-second time-trap (both
 fail silently so a bot learns nothing), rate limits per IP, then:
 
-1. **writes** `.intake/<reference>.json` — the record, always, gitignored;
+1. **writes** `.intake/<reference>.json`   the record, always, gitignored;
 2. **notifies** via Resend and/or a Discord webhook if configured.
 
 The file write is the source of truth, not a fallback: transports fail, a
 self-hosted box with a disk does not. Copy `.env.example` to `.env.local` to
 turn the notifications on. The rate limiter is an in-process map, which is
-honest for a single instance — behind replicas it needs Redis.
+honest for a single instance   behind replicas it needs Redis.
 
 ---
 
@@ -254,7 +254,7 @@ honest for a single instance — behind replicas it needs Redis.
 - Copy follows the Reddington voice: courteous, unhurried, no exclamation
   marks. CTAs are invitations (`Request an Audience`), never commands.
 - Status is a `<Stamp>`, never a coloured pill.
-- Slots awaiting art ship as `<Placeholder>` — a designed classified frame
+- Slots awaiting art ship as `<Placeholder>`   a designed classified frame
   with a stamp and file number, so the site reads as intentional before the
   renders exist and dropping real assets in costs no layout work.
 - Redaction is presentation only. The real text is always in the DOM.
