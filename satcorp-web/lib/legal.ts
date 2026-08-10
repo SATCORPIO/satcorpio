@@ -1,12 +1,12 @@
 /**
- * THE PAPERWORK — every fact the legal pages assert, stated once.
+ * THE PAPERWORK   every fact the legal pages assert, stated once.
  *
  * Terms and the Privacy Policy both make claims about who SATCORP is, where it
  * can be reached, and what law governs. Those claims have to agree with each
  * other or the documents undermine themselves, so they live here rather than
  * being typed twice.
  *
- * When any of this changes, bump `revised` — a policy whose date does not move
+ * When any of this changes, bump `revised`   a policy whose date does not move
  * when its substance moves is worse than no date at all.
  */
 
