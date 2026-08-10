@@ -9,7 +9,7 @@ import { mulberry32 } from "@/lib/rng";
  * THE PROJECTION ROOM
  *
  * A private screening. The beam comes over your shoulder, dust turns in the
- * light, and the screen is deliberately still waiting — the reel has not been
+ * light, and the screen is deliberately still waiting   the reel has not been
  * cut yet. That is the honest state of the studio, and it is a far better look
  * than a placeholder apologising for itself.
  *
@@ -329,12 +329,12 @@ function Screen() {
 /**
  * Three-quarter from the side and slightly under the beam. Head-on from the
  * audience, a projector shaft is just haze in front of you; from here it reads
- * as a shaft of light crossing a dark room to a screen — and it leaves the
+ * as a shaft of light crossing a dark room to a screen   and it leaves the
  * left of frame clear for the writing.
  */
 const EYE = new THREE.Vector3(-6.6, 1.15, 5.4);
-// Aimed to the left of the beam axis, which throws the whole assembly —
-// shaft and screen — into the right of frame and leaves the left column dark
+// Aimed to the left of the beam axis, which throws the whole assembly  
+// shaft and screen   into the right of frame and leaves the left column dark
 // for the programme text.
 const EYE_TARGET = new THREE.Vector3(-3.1, 2.1, -1.6);
 
