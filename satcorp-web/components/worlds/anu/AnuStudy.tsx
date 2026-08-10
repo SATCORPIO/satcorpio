@@ -12,7 +12,7 @@ import { DeskScene } from "./DeskScene";
  * over it, so the camera dolly and the chapters are the same movement.
  *
  * On lite tier the canvas is replaced by a still rendered from the same
- * Blender scene at the same camera stop — identical art direction, no GPU.
+ * Blender scene at the same camera stop   identical art direction, no GPU.
  */
 export function AnuStudy() {
   const reducedMotion = useReducedMotion();
