@@ -13,7 +13,7 @@ import { surfaceBlend, terrainAdvance } from "./journey";
  * The half of the journey below the cloud deck: a displaced tile of NAMTAR
  * with an ocean in the low ground and a sky the colour of its atmosphere.
  *
- * The camera does not actually travel — the ground flows past it. That keeps
+ * The camera does not actually travel   the ground flows past it. That keeps
  * the flyover unbounded on a tile small enough to tessellate properly, keeps
  * it exactly reversible when the reader scrolls back up, and means the near
  * geometry is always the middle of the plane rather than whatever edge we
@@ -100,7 +100,7 @@ const groundFragment = /* glsl */ `
     // Anything steep sheds its cover and shows the rock underneath.
     albedo = mix(albedo, basalt, smoothstep(0.35, 0.75, slope));
 
-    // Ground detail — without this the tile reads as a smooth clay model.
+    // Ground detail   without this the tile reads as a smooth clay model.
     float grain = nmFbm(vec3(vWorld.x, vWorld.z - uAdvance, 0.0) * 0.06, 3);
     albedo *= 0.78 + grain * 0.5;
 
@@ -143,7 +143,7 @@ const waterFragment = /* glsl */ `
     float floorH = nmTerrain(q);
     if (floorH > 0.6) discard;
 
-    // Swell, as a normal perturbation only — displacing the mesh would cost a
+    // Swell, as a normal perturbation only   displacing the mesh would cost a
     // tessellation this plane does not need.
     float s1 = nmFbm(vec3(q * 0.05 + vec2(uTime * 0.06, 0.0), 0.0), 3);
     float s2 = nmFbm(vec3(q * 0.13 - vec2(0.0, uTime * 0.09), 1.7), 2);
@@ -200,7 +200,7 @@ const skyFragment = /* glsl */ `
   }
 `;
 
-/** Sun direction on the surface — low, ahead and to the left. */
+/** Sun direction on the surface   low, ahead and to the left. */
 export const SURFACE_SUN = new THREE.Vector3(-0.42, 0.16, -0.89).normalize();
 
 export function Terrain({ segments = 180 }: { segments?: number }) {
