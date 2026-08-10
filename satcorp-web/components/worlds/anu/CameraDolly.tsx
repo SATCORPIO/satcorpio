@@ -15,7 +15,7 @@ import { scrollProgress } from "@/lib/scroll-progress";
  *
  * The exported *rotations* are deliberately ignored. Blender's glTF exporter
  * converts node translations into Y-up but does not leave an empty's rotation
- * aiming where it did in the blend — measured at a consistent 90° off across
+ * aiming where it did in the blend   measured at a consistent 90° off across
  * every stop. Aiming from the look_at point sidesteps that whole convention
  * problem, and interpolating the target keeps the subject centred through a
  * move rather than letting it drift as two quaternions slerp past each other.
@@ -110,7 +110,7 @@ export function CameraDolly({
       aim.current.copy(desired.target);
       started.current = true;
     } else {
-      // Damped follow gives the rig weight — the room is never in a hurry.
+      // Damped follow gives the rig weight   the room is never in a hurry.
       const k = 1 - Math.exp(-damping * delta);
       camera.position.lerp(desired.position, k);
       aim.current.lerp(desired.target, k);
