@@ -5,7 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 /**
- * FINGERPRINT 2.3 — THE RED THREAD
+ * FINGERPRINT 2.3   THE RED THREAD
  *
  * The one object that appears in every establishment. It is drawn as a glowing
  * filament with a pulse travelling along it, and takes a form native to
@@ -13,7 +13,7 @@ import * as THREE from "three";
  * ANU's study, a synapse in KYRAX, an orbit line on NAMTAR, an EKG trace on
  * PULSE, film leader in the Ki-Ra screening room.
  *
- * `progress` doubles as the loading indicator — the thread draws itself.
+ * `progress` doubles as the loading indicator   the thread draws itself.
  */
 
 const vertexShader = /* glsl */ `
