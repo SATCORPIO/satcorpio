@@ -9,10 +9,10 @@ import { Artifacts } from "@/components/worlds/namtar/Artifacts";
 import { Consciousness } from "@/components/worlds/namtar/Consciousness";
 
 /**
- * ESTABLISHMENT 5 — NAMTAR
+ * ESTABLISHMENT 5   NAMTAR
  *
  * A blockbuster game landing page: giant type, minimal chrome, HUD mono for
- * stats. The most 3D-ambitious route on the site — and the only one whose
+ * stats. The most 3D-ambitious route on the site   and the only one whose
  * copy is written to an altitude. The reader starts in orbit, falls through
  * the cloud deck around "what is NAMTAR", is on the deck for the pillars, and
  * is lifted back out for the closing invitation. Moving a section moves where
@@ -151,7 +151,7 @@ export default function NamtarPage() {
       <AltitudeHud />
       <ScrollTriggerRefresh />
 
-      {/* ---------- HERO — ORBIT ---------- */}
+      {/* ---------- HERO   ORBIT ---------- */}
       <section className="relative flex min-h-[92vh] flex-col items-center justify-center px-6 py-24 text-center">
         <Stamp tone="accent">IN DEVELOPMENT</Stamp>
 
@@ -192,11 +192,11 @@ export default function NamtarPage() {
         </div>
 
         <p className="label mt-16 text-[0.55rem] text-bone-dim/60">
-          Scroll — the descent begins
+          Scroll   the descent begins
         </p>
       </section>
 
-      {/* ---------- WHAT IS NAMTAR — THROUGH THE CLOUD DECK ---------- */}
+      {/* ---------- WHAT IS NAMTAR   THROUGH THE CLOUD DECK ---------- */}
       {/* Given a full screen of its own on purpose: this is where the camera
           leaves orbit, and the dive needs somewhere to be seen. */}
       <section
@@ -243,7 +243,7 @@ export default function NamtarPage() {
         </ul>
       </section>
 
-      {/* ---------- THE PILLARS — THE MONOLITHS RISE ---------- */}
+      {/* ---------- THE PILLARS   THE MONOLITHS RISE ---------- */}
       <section className={`relative ${LEFT_WASH}`}>
         <div className="mx-auto max-w-6xl px-6 py-24">
           <div className="max-w-3xl">
@@ -364,7 +364,7 @@ export default function NamtarPage() {
         </ul>
       </section>
 
-      {/* ---------- CALL TO ACTION — BACK TO ORBIT ---------- */}
+      {/* ---------- CALL TO ACTION   BACK TO ORBIT ---------- */}
       <section className="relative mx-auto max-w-4xl px-6 py-28 text-center">
         <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] leading-[1.3] text-balance text-bone">
           The future of survival begins on NAMTAR.
