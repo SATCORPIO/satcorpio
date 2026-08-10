@@ -30,7 +30,7 @@ export function EngagementSummary() {
     return (
       <div className="border border-dashed border-bone/15 p-6">
         <p className="font-mono text-[0.7rem] leading-relaxed text-bone-dim">
-          Nothing marked yet. Open the Ledger and stamp what you need — or
+          Nothing marked yet. Open the Ledger and stamp what you need   or
           describe the problem and let me tell you what it actually is.
         </p>
         <LedgerButton className="mt-5 font-mono text-[0.62rem] tracking-[0.22em] text-brass transition-colors hover:text-bone">
