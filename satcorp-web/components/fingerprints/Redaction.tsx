@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * FINGERPRINT 2.4 — REDACTION REVEALS
+ * FINGERPRINT 2.4   REDACTION REVEALS
  *
  * Text arrives struck out under a black bar and un-redacts as you reach it:
  * the site decides to trust you. The bar is drawn with a pseudo-element, so
  * the real words are always present in the DOM for screen readers and
- * crawlers — this is presentation, never a content gate.
+ * crawlers   this is presentation, never a content gate.
  */
 export function Redact({
   children,
