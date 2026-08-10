@@ -5,12 +5,12 @@ import { useSyncExternalStore } from "react";
 /**
  * PERFORMANCE TIERING
  *
- * Every 3D world ships in three grades. Content is identical at all three —
+ * Every 3D world ships in three grades. Content is identical at all three  
  * only the fidelity of how it is drawn changes.
  *
- *   full     — WebGPU available, discrete-class GPU. Everything on.
- *   standard — WebGL2. Reduced particle counts, no post-processing.
- *   lite     — reduced-motion, software rendering, or a weak device.
+ *   full       WebGPU available, discrete-class GPU. Everything on.
+ *   standard   WebGL2. Reduced particle counts, no post-processing.
+ *   lite       reduced-motion, software rendering, or a weak device.
  *              Pre-rendered stills and video stand in for live 3D.
  *
  * These are all browser facts, not React state, so they are read through
@@ -142,7 +142,7 @@ export function useReducedMotion(): boolean {
   );
 }
 
-/** True on devices with a real pointer — the only ones that get a cursor. */
+/** True on devices with a real pointer   the only ones that get a cursor. */
 export function useFinePointer(): boolean {
   return useSyncExternalStore(
     subscribeFinePointer,
