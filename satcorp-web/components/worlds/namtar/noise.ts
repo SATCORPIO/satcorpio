@@ -6,7 +6,7 @@
  * seen from three distances, and a second noise function would have made the
  * surface look like somewhere else.
  *
- * Value noise rather than simplex — cheaper, and at these frequencies the
+ * Value noise rather than simplex   cheaper, and at these frequencies the
  * difference is invisible under a biome ramp.
  */
 export const NOISE_GLSL = /* glsl */ `
@@ -44,7 +44,7 @@ export const NOISE_GLSL = /* glsl */ `
 
   /**
    * Aerial perspective. Everything standing on the ground has to use the same
-   * curve or the monoliths detach from the landscape they are standing in —
+   * curve or the monoliths detach from the landscape they are standing in  
    * and it is the haze, more than anything else, that sells the scale.
    */
   vec3 nmHaze(vec3 color, vec3 haze, float dist) {
@@ -52,7 +52,7 @@ export const NOISE_GLSL = /* glsl */ `
     return mix(color, haze, clamp(f, 0.0, 1.0));
   }
 
-  /** Ridged variant — what turns rolling hills into mountain chains. */
+  /** Ridged variant   what turns rolling hills into mountain chains. */
   float nmRidge(vec3 p, int octaves) {
     float sum = 0.0;
     float amp = 0.5;
