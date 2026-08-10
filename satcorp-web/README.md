@@ -251,7 +251,6 @@ honest for a single instance   behind replicas it needs Redis.
 
 ## Conventions
 
-- Copy follows the Reddington voice: courteous, unhurried, no exclamation
   marks. CTAs are invitations (`Request an Audience`), never commands.
 - Status is a `<Stamp>`, never a coloured pill.
 - Slots awaiting art ship as `<Placeholder>`   a designed classified frame
