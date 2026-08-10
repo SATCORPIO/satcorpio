@@ -256,9 +256,9 @@ const SECTIONS: LegalSection[] = [
           you requested. We store nothing that falls outside that exemption.
         </p>
         <p>
-          Two entries are written to your browser local storage. They stay on
-          your device, they are never sent to our server, and they contain no
-          identifier of any kind.
+          One entry is written to your browser local storage. It stays on your
+          device, it is never sent to our server, and it contains no identifier
+          of any kind.
         </p>
         <dl>
           <dt>satcorp.engagement</dt>
@@ -268,15 +268,9 @@ const SECTIONS: LegalSection[] = [
             pre-filled on the Engagement Brief. Strictly necessary for a feature
             you asked for by using it.
           </dd>
-
-          <dt>satcorp.ui</dt>
-          <dd>
-            Whether you enabled sound. A preference, remembered so you are not
-            asked twice.
-          </dd>
         </dl>
         <p>
-          You can clear both at any time through your browser settings for site
+          You can clear it at any time through your browser settings for site
           data, and doing so costs you nothing but the marks in your Ledger. The
           site works normally with local storage disabled.
         </p>

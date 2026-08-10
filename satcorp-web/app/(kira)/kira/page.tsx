@@ -35,19 +35,19 @@ const SAFE_HOUSES = [
     name: "NAMTAR",
     rules: "PvP · Fibercraft · No-Wipe",
     character: "For those who intend to take something and keep it.",
-    status: "ONLINE",
+    status: "OFFLINE",
   },
   {
     name: "HYPERION",
     rules: "PvP · 15× · No-Wipe",
     character: "Faster. Considerably less forgiving.",
-    status: "ONLINE",
+    status: "OFFLINE",
   },
   {
     name: "FROSTHEIM",
     rules: "PvE · 15× · No-Wipe",
     character: "No one will trouble you here. The cold will.",
-    status: "ONLINE",
+    status: "OFFLINE",
   },
 ];
 
@@ -222,8 +222,8 @@ export default function KiraPage() {
                 ARK: Survival Ascended clusters.
               </h2>
               <p className="mt-3 max-w-xl font-mono text-[0.7rem] leading-relaxed text-bone-dim">
-                Three addresses, standing. Each has its own house rules, and
-                they are not negotiable.
+                Three addresses. None of them are receiving at present. The
+                house rules stand regardless, and they are not negotiable.
               </p>
             </div>
             <p className="font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim/60">
@@ -243,7 +243,9 @@ export default function KiraPage() {
                   <h3 className="font-display text-2xl text-bone">
                     {house.name}
                   </h3>
-                  <Stamp tone="live" rotate={-1}>
+                  {/* Dim bone, not the pulsing live tone: an offline cluster
+                      must not read as a heartbeat. */}
+                  <Stamp tone="bone" rotate={-1}>
                     {house.status}
                   </Stamp>
                 </div>

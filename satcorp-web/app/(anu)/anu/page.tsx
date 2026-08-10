@@ -1,6 +1,4 @@
 import { ENGAGEMENT_MODEL } from "@/lib/divisions";
-import { Redact } from "@/components/fingerprints/Redaction";
-import { Stamp } from "@/components/fingerprints/Stamp";
 import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { LedgerButton } from "@/components/ledger/LedgerButton";
 import { AnuStudy } from "@/components/worlds/anu/AnuStudy";
@@ -53,13 +51,11 @@ export default function AnuPage() {
       {/* ---------- I. HERO   framed on the empty chair ---------- */}
       <section className="relative grid min-h-[92vh] items-end gap-16 pb-24 pt-28 lg:min-h-[96vh]">
         <div className="max-w-2xl">
-          <Stamp tone="brass">EYES ONLY</Stamp>
-
-          <h1 className="mt-8 font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.95] text-bone">
+          <h1 className="font-display text-[clamp(2.6rem,7vw,5rem)] leading-[0.95] text-bone">
             ANU
           </h1>
           <p className="mt-4 font-display text-xl italic text-brass sm:text-2xl">
-            Lead Systems Architect &amp; Technical Concierge
+            Lead Systems Architect &amp; Tactical Concierge
           </p>
 
           <div className="rule mt-10 max-w-xs" />
@@ -67,17 +63,6 @@ export default function AnuPage() {
           <p className="mt-8 max-w-xl font-sans text-base leading-relaxed text-bone-dim">
             Engineering the SATCORP ecosystem. Full-stack development,
             enterprise-grade infrastructure, and bespoke digital solutions.
-          </p>
-
-          <p className="mt-10 max-w-lg font-mono text-[0.74rem] leading-loose text-bone-dim/80">
-            <Redact delay={900}>
-              You didn&rsquo;t find this page by accident. Nothing here is by
-              accident.
-            </Redact>
-          </p>
-
-          <p className="label mt-14 text-[0.55rem]">
-            Scroll   the lamp is already on
           </p>
         </div>
       </section>
@@ -125,23 +110,7 @@ export default function AnuPage() {
         </ul>
       </section>
 
-      {/* ---------- IV. THE VISION   the globe ---------- */}
-      <section className="relative max-w-2xl py-24 sm:py-32">
-        <p className="label label-accent">The Vision</p>
-        <p className="mt-7 font-sans leading-relaxed text-bone-dim">
-          SATCORP is designed as an ecosystem rather than a collection of
-          independent businesses. Every division, platform and technology
-          contributes to a connected network where ideas, data and innovation
-          reinforce one another.
-        </p>
-        <p className="mt-5 font-sans leading-relaxed text-bone-dim">
-          ANU exists to keep that ecosystem cohesive, adaptable and
-          forward-looking   providing the architectural direction that lets
-          every part of SATCORP grow without losing sight of the larger mission.
-        </p>
-      </section>
-
-      {/* ---------- V. THE ENGAGEMENT MODEL   the rotary phone ---------- */}
+      {/* ---------- IV. THE ENGAGEMENT MODEL   the rotary phone ---------- */}
       <section className="relative border-t border-bone/10 py-24">
         <p className="label label-accent">The Concierge Engagement Model</p>
         <p className="mt-4 max-w-xl font-mono text-[0.72rem] leading-relaxed text-bone-dim">
@@ -174,12 +143,7 @@ export default function AnuPage() {
 
       {/* ---------- CTA   the receiver lifts ---------- */}
       <section className="relative border-t border-bone/10 py-24 text-center">
-        <p className="mx-auto max-w-lg font-display text-2xl leading-relaxed text-bone">
-          If you know what you need, say so. If you don&rsquo;t, that&rsquo;s
-          rather more interesting.
-        </p>
-
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-3">
           <ThreadLink
             href="/engage"
             className="border border-brass/40 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:bg-brass hover:text-ink"

@@ -12,12 +12,9 @@ import { scrollProgress, useDocumentScrollProgress } from "@/lib/scroll-progress
 import { mulberry32 } from "@/lib/rng";
 import { Planet } from "./Planet";
 import { Terrain } from "./Terrain";
-import { Monoliths } from "./Monoliths";
 import {
-  MONOLITH_X,
   SURFACE_Y,
   band,
-  pillarFocus,
   smoothstep,
   surfaceBlend,
   veilAlpha,
@@ -41,8 +38,6 @@ function Journey() {
   const surfacePos = useRef(new THREE.Vector3());
   const spaceAim = useRef(new THREE.Vector3());
   const surfaceAim = useRef(new THREE.Vector3());
-  const lateral = useRef(0);
-  const held = useRef(0);
   const elapsed = useRef(0);
 
   useFrame((state, delta) => {
@@ -81,39 +76,17 @@ function Journey() {
 
     /* --- on the surface --- */
 
-    // Chosen pillar pulls the camera off centre. Damped, because a cut would
-    // read as a page jump rather than a camera move.
-    const focused = pillarFocus.value;
-    lateral.current = THREE.MathUtils.damp(
-      lateral.current,
-      focused >= 0 ? MONOLITH_X[focused] : 0,
-      2.6,
-      delta,
-    );
-    // While one is held, the aim sits left of it, so the monolith lands in the
-    // right of frame   the half of the screen the pillar list is not using.
-    held.current = THREE.MathUtils.damp(
-      held.current,
-      focused >= 0 ? 1 : 0,
-      2.6,
-      delta,
-    );
-
+    // With the monoliths gone there is nothing on the ground to swing onto, so
+    // the surface pass is a straight run down the centre of the landscape.
     const descend = band(t, [0.18, 0.34]);
     const settle = band(t, [0.34, 0.58]);
-    // Low enough that the monoliths stand over the camera rather than under
-    // it   a hundred-metre slab seen from above is just a rectangle.
     const height =
       THREE.MathUtils.lerp(170, 72, 1 - Math.pow(1 - descend, 3)) - settle * 10;
     const back = THREE.MathUtils.lerp(130, 26, descend) - settle * 8;
 
-    surfacePos.current.set(
-      lateral.current * 0.45 - held.current * 8,
-      SURFACE_Y + height,
-      back,
-    );
+    surfacePos.current.set(0, SURFACE_Y + height, back);
     surfaceAim.current.set(
-      lateral.current * 0.9 - held.current * 22,
+      0,
       SURFACE_Y + THREE.MathUtils.lerp(60, 22, descend) + settle * 6,
       -190,
     );
@@ -345,7 +318,6 @@ export function PlanetScene() {
 
         <group position={[0, SURFACE_Y, 0]}>
           <Terrain segments={full ? 160 : 110} />
-          <Monoliths />
         </group>
 
         {/* Fingerprint 2.3   on NAMTAR the red thread is an orbit line. */}

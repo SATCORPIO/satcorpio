@@ -5,8 +5,8 @@
  *
  * One continuous scroll from high orbit down to the horizon and back out
  * again. The page's five acts are declared here as scroll bands so the camera
- * rig, the terrain, the monoliths and the copy all agree on where in the
- * descent the reader currently is.
+ * rig, the terrain and the copy all agree on where in the descent the reader
+ * currently is.
  *
  * Bands are document-scroll fractions, matched by eye to the section flow in
  * build plan §8: hero in orbit, "what is NAMTAR" through the cloud deck, the
@@ -60,22 +60,6 @@ export function veilAlpha(t: number) {
 }
 
 /**
- * Which pillar the reader has asked to look at, or -1.
- *
- * Deliberately not React state, for the same reason as `scrollProgress`: the
- * camera reads it every frame and React does not own the camera. The DOM list
- * keeps its own state for what to underline and writes the number here.
- */
-export const pillarFocus = { value: -1 };
-
-export function setPillarFocus(index: number) {
-  pillarFocus.value = index;
-}
-
-/** Where the five monoliths stand on the terrain tile, in world units. */
-export const MONOLITH_X = [-26, -13, 0, 13, 26];
-
-/**
  * The terrain tile sits well below the planet rather than on it. The camera
  * never travels between the two   it cuts, behind the veil   so the only thing
  * that matters is that the two worlds cannot be in frame at once.
@@ -93,8 +77,8 @@ export function terrainAdvance(t: number) {
   return (
     // The dive and the run in.
     smoothstep(0.14, 0.3, t) * 1200 +
-    // Held, while the monoliths come up. A landscape sliding out from under
-    // five things that are standing still would give the trick away.
+    // All but held through the flyover, so the ground settles under the camera
+    // rather than continuing to tear past at descent speed.
     smoothstep(0.3, 0.46, t) * 60 +
     // A drift, for the long settled middle of the page.
     band(t, [0.46, 1.0]) * 260

@@ -1,10 +1,7 @@
-import { Stamp } from "@/components/fingerprints/Stamp";
-import { Redact } from "@/components/fingerprints/Redaction";
 import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { Reveal } from "@/components/system/Reveal";
 import { RegistryScene } from "@/components/worlds/kyrax/RegistryScene";
 import { IndexCard } from "@/components/worlds/kyrax/IndexCard";
-import { AskTheRegistry } from "@/components/worlds/kyrax/AskTheRegistry";
 
 /**
  * ESTABLISHMENT 3   KYRAX, THE REGISTRY
@@ -14,40 +11,6 @@ import { AskTheRegistry } from "@/components/worlds/kyrax/AskTheRegistry";
  * best-informed operation in the room: cold, orderly, and unhurried, filed on
  * index cards by something that never sleeps.
  */
-
-/* What it knows   the cognitive core, in archive language. */
-const KNOWS = [
-  {
-    file: "KX-011",
-    title: "Inference",
-    body: "Reasoning across mixed signals. The value is rarely in one fact   it is in noticing that two of them are about the same person.",
-    tilt: -0.6,
-  },
-  {
-    file: "KX-012",
-    title: "Intake",
-    body: "Every signal the ecosystem produces, normalised, enriched and filed the moment it arrives. Nothing is thrown away.",
-    tilt: 0.7,
-  },
-  {
-    file: "KX-013",
-    title: "Recognition",
-    body: "Behaviour, anomaly and trend. The same shape appearing in three unrelated files is not a coincidence, and it is not treated as one.",
-    tilt: -0.4,
-  },
-  {
-    file: "KX-014",
-    title: "Counsel",
-    body: "Ranked options with the reasoning attached. A recommendation you cannot interrogate is not advice, it is a guess in good clothes.",
-    tilt: 0.5,
-  },
-  {
-    file: "KX-015",
-    title: "Memory",
-    body: "Learning frameworks that improve from the system's own operation. The archive is better this month than it was last month.",
-    tilt: -0.8,
-  },
-];
 
 /* Who it talks to   the integration layer, as a network of sources. */
 const SOURCES = [
@@ -91,24 +54,12 @@ export default function KyraxPage() {
 
       {/* ---------- HERO ---------- */}
       <section className="relative flex min-h-[88vh] flex-col justify-center py-24">
-        <div className="flex items-center gap-4">
-          <Stamp tone="accent">EYES ONLY</Stamp>
-          <span className="label text-[0.55rem]">SATCORP / THE REGISTRY</span>
-        </div>
-
-        <h1 className="mt-9 font-display text-[clamp(3rem,11vw,8rem)] leading-[0.9] text-bone">
+        <h1 className="font-display text-[clamp(3rem,11vw,8rem)] leading-[0.9] text-bone">
           KYRAX
         </h1>
 
         <p className="mt-6 max-w-3xl font-display text-xl italic leading-relaxed text-accent sm:text-2xl">
           Tactical intelligence. Connected systems.
-        </p>
-
-        <p className="mt-10 max-w-2xl font-display text-[clamp(1.2rem,2.4vw,1.7rem)] leading-[1.45] text-bone">
-          <Redact delay={500}>
-            Everyone assumes I&rsquo;m well informed. I&rsquo;m not. I&rsquo;m
-            well indexed.
-          </Redact>
         </p>
 
         <p className="mt-9 max-w-2xl font-sans leading-relaxed text-bone-dim">
@@ -117,40 +68,6 @@ export default function KyraxPage() {
           runs. From creative development and gaming worlds to enterprise
           operations, it is the cognitive foundation the rest of it stands on.
         </p>
-
-        <p className="label mt-16 text-[0.55rem]">
-          Scroll   the index goes back further than this
-        </p>
-      </section>
-
-      {/* ---------- WHAT IT KNOWS ---------- */}
-      <section className="relative py-24">
-        <Reveal>
-          <p className="label label-accent">What it knows</p>
-          <h2 className="mt-4 max-w-3xl font-display text-3xl leading-tight text-bone sm:text-4xl">
-            The cognitive core, filed in five drawers.
-          </h2>
-        </Reveal>
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {KNOWS.map((card) => (
-            <IndexCard
-              key={card.file}
-              file={card.file}
-              title={card.title}
-              classification="CORE"
-              tilt={card.tilt}
-            >
-              {card.body}
-            </IndexCard>
-          ))}
-
-          <div className="flex items-end border border-dashed border-bone/12 p-6">
-            <p className="font-mono text-[0.68rem] leading-relaxed text-bone-dim/70">
-              Drawers six through forty-one are not indexed for visitors.
-            </p>
-          </div>
-        </div>
       </section>
 
       {/* ---------- WHO IT TALKS TO ---------- */}
@@ -220,7 +137,7 @@ export default function KyraxPage() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2">
+        <div className="mt-12 grid gap-4 pb-20 sm:grid-cols-2">
           {APPLICATIONS.map((card, i) => (
             <IndexCard
               key={card.file}
@@ -233,11 +150,6 @@ export default function KyraxPage() {
             </IndexCard>
           ))}
         </div>
-      </section>
-
-      {/* ---------- ASK THE REGISTRY ---------- */}
-      <section className="relative pb-28 pt-8">
-        <AskTheRegistry />
       </section>
     </div>
   );

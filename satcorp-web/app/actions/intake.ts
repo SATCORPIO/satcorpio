@@ -13,6 +13,7 @@ import {
 } from "@/lib/intake-schema";
 import { LEDGER, LEDGER_ITEM_BY_ID } from "@/lib/ledger-catalog";
 import { LEGAL } from "@/lib/legal";
+import { createRateLimit } from "@/lib/rate-limit";
 
 /**
  * THE SEAL   the intake pipeline.
@@ -35,8 +36,7 @@ import { LEGAL } from "@/lib/legal";
  * seal over a message that went nowhere.
  */
 
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 3;
+const rateLimited = createRateLimit({ windowMs: 60_000, max: 3 });
 
 /**
  * Serverless platforms mount the deployment read-only and recycle instances
@@ -50,30 +50,6 @@ const RECORD_DIR =
   (EPHEMERAL_FS
     ? path.join(os.tmpdir(), "satcorp-intake")
     : path.join(process.cwd(), ".intake"));
-
-// Single-instance, self-hosted deployment, so an in-process map is honest.
-// Behind more than one replica this needs to move to Redis.
-const attempts = new Map<string, number[]>();
-
-function rateLimited(key: string): boolean {
-  const now = Date.now();
-  const recent = (attempts.get(key) ?? []).filter(
-    (t) => now - t < RATE_LIMIT_WINDOW_MS,
-  );
-  recent.push(now);
-  attempts.set(key, recent);
-
-  // Keep the map from growing without bound on a long-lived process.
-  if (attempts.size > 5000) {
-    for (const [k, times] of attempts) {
-      if (times.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) {
-        attempts.delete(k);
-      }
-    }
-  }
-
-  return recent.length > RATE_LIMIT_MAX;
-}
 
 function reference(): string {
   const now = new Date();

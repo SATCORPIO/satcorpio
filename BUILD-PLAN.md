@@ -25,6 +25,8 @@ Each division page is art-directed as if it were its own standalone website (its
 | `/namtar` | **NAMTAR** | A blockbuster game marketing site (No Man's Sky class) | The Planet   orbit-to-surface scroll journey |
 | `/pulse` | **PULSE** | A live broadcast network / creator platform | The Signal   an audio-reactive EKG/waveform world |
 
+Two intake routes sit outside the doctrine and share the `engage` theme: `/engage`, the Engagement Brief for clients (§9.4), and `/partner`, the Approach for collaborators (§9.5). Plus `/privacy`, `/terms` and the 404.
+
 **Doctrine:** each route ships its own theme tokens (accent color, type scale, layout grid, cursor behavior, transition style) via CSS custom properties scoped to the route group. Nothing about the *layout* repeats between pages. Only the fingerprints do.
 
 ---
@@ -86,7 +88,7 @@ All copy follows Reddington rules:
 | Animation | **GSAP 3 (ScrollTrigger, Flip, SplitText   all free since the Webflow acquisition)** | Scroll-scrubbed camera rigs, redaction wipes, case-file transitions |
 | Smooth scroll | **Lenis** | Syncs with ScrollTrigger; per-page scroll feel (NAMTAR heavy/cinematic, PULSE snappy) |
 | Styling | **Tailwind CSS v4** + CSS custom properties per route group | Theme tokens swap per establishment |
-| State | **Zustand** (ledger selections, audio toggle, transition state)   persisted to `localStorage` | |
+| State | **Zustand** (ledger selections persisted to `localStorage`; transition and chrome state in memory only) | |
 | Forms | **React Hook Form + Zod** → Next server actions → **Resend** (or in-house SMTP) | Secure intake, no third-party form SaaS |
 | Scheduling | **Cal.com (self-hosted)** embedded in the Ledger flow | Matches the in-house-infrastructure story |
 | Post-processing | pmndrs `postprocessing`   bloom (subtle), film grain, vignette, chromatic aberration on PULSE only | The "35mm noir" finish |
@@ -124,20 +126,24 @@ satcorp-web/
 ### The 3D World: The Network
 A dark void with a floating **evidence-board constellation**: five nodes (KYRAX, Ki-Ra, NAMTAR, PULSE, ANU) connected by red threads to a central SATCORP monogram. Nodes are glass-and-brass 3D objects (instanced, one GLB). The board slowly parallaxes with pointer; grabbing and dragging rotates it. Clicking a node pulls its thread taut and offers passage (`Proceed →` triggers the case-file transition to that route).
 
+> **Revision note (August 2026).** The front page was cut back hard. The
+> wordmark, the epigraph, the `Request an Audience` button, both scroll cues,
+> The Iron and the Expansion Timeline are all gone, along with the 3D network
+> board. What remains is the ember mark, the ecosystem, and the two ways in.
+> The reasoning: the page was making six claims before the visitor had asked a
+> single question. A front door does not need to be a brochure.
+
 ### Section flow (scroll-driven)
-1. **Logo Reveal (Hero/Hook).** Black screen. The monogram assembles from drifting ember particles (GPU particle sim, ~30k points, curl noise), then the wordmark stamps in. Headline, serif, redaction-reveals:
-   > **SATCORP.**
-   > *Some build products. We operate an ecosystem.*
-   Sub: "Intelligent systems. Creative platforms. Digital worlds. Engineered, connected, and run on our own iron."
-2. **The Network** (the 3D board above) with one-line dossier cards per division on hover: KYRAX   *the brain* · Ki-Ra   *the creator* · NAMTAR   *the world* · PULSE   *the heartbeat* · ANU   *the architect*.
+1. **Logo Reveal (Hero/Hook).** Black screen. The monogram assembles from drifting ember particles (GPU particle sim, curl noise). No wordmark and no epigraph beneath it   the mark carries the hero alone. Sub, in Dossier-mono: "Intelligent systems. Creative platforms. Digital worlds. Engineered, connected, and run on our own iron." One CTA: `Open the Ledger`.
+2. **The Network**   *Five divisions. One operation.* The division cards, as a plain grid. The 3D evidence-board constellation was removed from this page; the component survives in `components/worlds/satcorp/NetworkScene.tsx` if it is ever wanted back.
 3. **What SATCORP Does**   two dossier folders that open on scroll:
    - *AI & Cognitive Systems* (KYRAX): adaptive AI, autonomous decision-making, R&D, human-AI interaction, cross-division integration.
    - *Infrastructure & Solutions*: technology services, digital infrastructure, business solutions, future-focused development.
-4. **The Iron** (infrastructure trust section). A low-poly 3D server rack breathing with red status LEDs, camera slowly orbiting. Copy verbatim from the brief: *"SATCORP operates on dedicated, in-house server infrastructure, engineered for high availability and rapid deployment across local and remote access pipelines."* Live-style readouts (uptime, clusters online) as terminal ticker.
-5. **The Vision.** Full-bleed serif quote: *"To create a connected ecosystem where intelligence, creativity, and technology evolve together."*
-6. **Timeline**   horizontal-scroll expansion roadmap; future items rendered as `[REDACTED]` stamps that partially un-redact on hover.
-7. **CTA row**   four file tabs: `Explore KYRAX AI` · `Enter NAMTAR` · `Visit Ki-Ra Studios` · `Partner With SATCORP` (last one opens the Intake Brief, §9.4).
-8. **Footer / Contact.** *"Whether you need a custom web platform or dedicated server architecture, SATCORP provides the framework."* Secure contact form (name, channel, matter   three fields only), Git links, clean legal line. Footer signature: *"Arranged by SATCORP."*
+4. **The Vision.** Full-bleed serif quote: *"To create a connected ecosystem where intelligence, creativity, and technology evolve together."*
+5. **CTA row**   four file tabs: `Explore KYRAX AI` · `Enter NAMTAR` · `Visit Ki-Ra Studios` · `Partner With SATCORP` (last one opens the partnership intake, §9.5).
+6. **Footer / Contact.** *"Whether you need a custom web platform or Technical/Tactical Concierge Service, SATCORP provides the framework."* Monogram and wordmark. No signature line.
+
+**Cut from this page, and why it matters if it comes back:** *The Iron* (the server-rack scene and the uptime/clusters/hosting readout) and the *Expansion Timeline* (the seven pinned, horizontally-scrubbed phases). Their components   `ServerRack.tsx` and `ExpansionTimeline.tsx`   are still in the tree and still work; they are simply not mounted. Deleting them is a separate decision.
 
 ---
 
@@ -149,10 +155,9 @@ A dark void with a floating **evidence-board constellation**: five nodes (KYRAX,
 One meticulously crafted scene (the highest-fidelity GLB on the site, ~4–6MB budget): a leather-topped desk, banker's lamp (the lamp cord is this page's red thread), rotary phone, fountain pen, a stack of dossiers, a globe, two fingers of scotch. Camera is on a scroll-scrubbed dolly rig (GSAP timeline lerping between named camera positions exported from Blender). Each scroll chapter frames a different object; the object *is* the section.
 
 ### Section flow
-1. **Hero   framed on the empty chair.** The lamp flickers on.
-   > **ANU**   *Lead Systems Architect & Technical Concierge*
+1. **Hero   framed on the empty chair.** The lamp flickers on. No `EYES ONLY` stamp, no Reddington line, no scroll cue   the room does that work.
+   > **ANU**   *Lead Systems Architect & Tactical Concierge*
    > Engineering the SATCORP ecosystem. Full-stack development, enterprise-grade infrastructure, and bespoke digital solutions.
-   Then one Reddington line, typed in Dossier-mono: *"You didn't find this page by accident. Nothing here is by accident."*
 2. **The Philosophy** (camera: the fountain pen). ANU as the strategic core   *design systems that are intelligent, scalable, and interconnected.* Ecosystem-not-applications copy from the brief.
 3. **What ANU Oversees** (camera: the dossier stack). Six dossiers; scrolling lifts each folder, opens it, reveals its brief:
    - Systems Architecture   how platforms communicate, share data, and grow together
@@ -161,13 +166,12 @@ One meticulously crafted scene (the highest-fidelity GLB on the site, ~4–6MB b
    - Digital Infrastructure   secure, scalable foundations for millions of users
    - Innovation Strategy   future opportunities, ecosystem evolution
    - User Experience Philosophy   intuitive, consistent, purposeful interaction
-4. **The Vision** (camera: the globe, slowly spinning, cities pin-lit in red). Ecosystem cohesion copy: ANU keeps the network *cohesive, adaptable, forward-looking.*
-5. **The Engagement Model** (camera: the rotary phone). Three brass plaques:
+4. **The Engagement Model** (camera: the rotary phone). Three brass plaques:
    - **Clarity**   Discovery & Truth Extraction
    - **Scope**   Architecture & Solution Design
    - **Execution**   Development & Deployment
    Each expands into 2–3 lines on hover. This is the sales spine of the entire site   it reappears inside the intake form (§9.4).
-6. **CTA.** The phone receiver lifts. `Request an Audience` → intake form with "ANU / architecture" pre-selected.
+5. **CTA.** The phone receiver lifts. `Request an Audience` → intake form with "ANU / architecture" pre-selected. The Vision section and the closing *"If you know what you need, say so"* line were both cut; the philosophy section already carries that argument, and the CTA is stronger without a preamble.
 
 ---
 
@@ -189,12 +193,14 @@ Near/far depth fade is mandatory, not decorative: cards drifting against the len
 
 ### Section flow
 1. **Hero.** > **KYRAX**   *Tactical intelligence. Connected systems.*
-   The hook, redaction-revealed: *"Everyone assumes I'm well informed. I'm not. I'm well indexed."*
-   Then the intelligence-architecture description from the brief.
-2. **What it knows** *(the cognitive core, in archive language)*   five index cards, each with a file number and a hand-filed tilt: **Inference** · **Intake** · **Recognition** · **Counsel** · **Memory**. Closed with a dashed card: *"Drawers six through forty-one are not indexed for visitors."*
-3. **Who it talks to** *(the integration layer, as a network of sources)*   *One intelligence. Six sources. Nothing filed twice.* SATCORP · NAMTAR · Ki-Ra · PULSE marked `REPORTING →` and linked; business platforms and tactical clusters marked `INTERNAL`.
-4. **What it does with it**   *Gaming intelligence.* Four cards: NPC intelligence · procedural world systems · player behaviour analysis · AI-driven ecosystems. Cross-link: `See it running in NAMTAR →`.
-5. **Ask the Registry.** A single input that answers a handful of questions in character and declines the rest, pleasantly   *"I don't discuss terms. I file them."* The refusal is the point: the archive knows a great deal and volunteers almost none of it. Ends by handing you to the Concierge → opens the Ledger.
+   The intelligence-architecture description from the brief. No `EYES ONLY` stamp, no `SATCORP / THE REGISTRY` slug, no hook line, no scroll cue   the archive running behind the page is the atmosphere, and it does not need announcing.
+2. **Who it talks to** *(the integration layer, as a network of sources)*   *One intelligence. Six sources. Nothing filed twice.* SATCORP · NAMTAR · Ki-Ra · PULSE marked `REPORTING →` and linked; business platforms and tactical clusters marked `INTERNAL`.
+3. **What it does with it**   *Gaming intelligence.* Four cards: NPC intelligence · procedural world systems · player behaviour analysis · AI-driven ecosystems. Cross-link: `See it running in NAMTAR →`.
+
+**Cut, and one of them is coming back:**
+
+- **What it knows** (the five-drawer cognitive core   Inference · Intake · Recognition · Counsel · Memory, plus the *"drawers six through forty-one"* card). Removed. Its `KNOWS` data went with it; the `IndexCard` component it used is still in service on section 3.
+- **Ask the Registry.** Removed for now and **scheduled to be rebuilt** (§13, phase 9). The component still exists at `components/worlds/kyrax/AskTheRegistry.tsx` and is no longer imported. The version that comes back should not be the canned keyword lookup this one was   see the rebuild note in §13.
 
 ### The thread here
 A **cross-reference**: one length of red thread running the full depth of the index, tying together files nobody else thought to connect. The ambient backdrop pass is suppressed on this route (as on ANU) so there is one thread and one WebGL context.
@@ -221,7 +227,7 @@ Three things learned building it, all the hard way:
 1. **The screening**   *Building Worlds Worth Living In.* Hook: *"Everybody needs somewhere to go. We build the somewhere."*
 2. **This evening's programme**   the seven things the studio creates, as a running order (I–VII) with a category in the margin.
 3. **Feature presentation: NAMTAR**   a **world dossier**: designation, standing, terrain, threat. Placeholder frames for hero art, planet render and trailer (`REEL NOT CUT`). CTA: `Arrange passage to NAMTAR →`.
-4. **The safe houses**   the ARK clusters as what they actually are: three addresses with non-negotiable house rules. NAMTAR (PvP · Fibercraft · No-Wipe), HYPERION (PvP · 15× · No-Wipe), FROSTHEIM (PvE · 15× · No-Wipe), each with a line of character. `Self-hosted on SATCORP iron.` CTA: `Request the address →`.
+4. **The safe houses**   the ARK clusters as what they actually are: three addresses with non-negotiable house rules. NAMTAR (PvP · Fibercraft · No-Wipe), HYPERION (PvP · 15× · No-Wipe), FROSTHEIM (PvE · 15× · No-Wipe), each with a line of character. **All three currently stamped `OFFLINE`** in dim bone rather than the pulsing `live` tone   an offline cluster must not read as a heartbeat. Turning one back on is its `status` string plus the stamp tone in `SAFE_HOUSES`. `Self-hosted on SATCORP iron.` CTA: `Request the address →`.
 5. **Not yet issued**   Project [REDACTED] · Coming Soon · R&D, sealed. *"The studio is busier than this page suggests. That is deliberate."*
 6. **Philosophy**   full-bleed quote.
 7. **The apparatus**   the technology list, as the equipment in the projection booth.
@@ -271,7 +277,7 @@ One continuous scroll journey around and down to a full 3D planet:
    CTAs: `Wishlist` · `Join Discord` · `Learn More` (scroll cue).
 2. **What is NAMTAR?** (descending)   *"A seamless open-world survival game built around one idea: every decision changes your future."* Explore an enormous planet, build thriving settlements, uncover lost civilizations, research advanced technologies, transfer your consciousness, command robotic companions   survive the planet and the universe.
 3. **Show the World**   full-bleed cinematic rail (placeholder frames): orbit view · forests · oceans · mountains · deserts · cave systems · ruined megastructures · dynamic weather · night sky with moons.
-4. **The Pillars**   five interactive monoliths that rise from the terrain as you scroll; clicking one focuses the camera:
+4. **The Pillars**   a plain list of five. *(The five monoliths that rose from the terrain, and the camera swing onto a chosen one, were removed from the 3D background; `Monoliths.tsx`, `MONOLITH_X` and `pillarFocus` are deleted, not parked. The section keeps its copy, which never depended on the canvas.)*
    - **Explore**   a seamless planet of ecosystems, hidden technologies, ancient ruins
    - **Build**   shelters to sprawling industrial cities
    - **Evolve**   research, schematics, consciousness transfer into new human or robotic bodies
@@ -279,8 +285,10 @@ One continuous scroll journey around and down to a full 3D planet:
    - **Command**   drones, automated factories, robots, submarines, aircraft, military vehicles
 5. **Living Planet**   systems grid over a slowly cycling day/night on the 3D terrain: dynamic weather · day/night · ocean ecosystems · wildlife behavior · seasons · environmental hazards · realistic terrain · deep oceans · massive atmosphere · air combat · naval warfare.
 6. **Research & Progression**   *No levels. Discoveries.* Artifact cards (ancient technology · blueprints · schematics · alien artifacts · research projects) that flip from `UNKNOWN SIGNAL` to revealed on scroll. *"Every discovery expands what is possible."*
-7. **Consciousness System**   the signature section. A wireframe human silhouette dissolves into particles and reassembles as a robotic frame (morph between two point-cloud targets   high impact, cheap to run):
+7. **Consciousness System**   the signature section. A human figure dissolves into particles and reassembles as a robotic frame (morph between two point-cloud targets   high impact, cheap to run):
    > *Death is not always the end.* Transfer your consciousness into new cloned bodies or synchronized robotic frames   your journey continues, and entirely new gameplay opens.
+
+   **Rebuilt, August 2026.** The first version was a stick figure sampled flat, and it read as a sprite: seven thin strokes, no anatomy, and a cloud with no depth, so any camera movement folded it into a line. It is now drawn properly   tapering masses (skull, ribcage, pelvis, feet) as *filled* paths and limbs as round-capped capsules, with the frame built on the same skeleton at the same scale so the transfer visibly lands where the body stood. `sampleStrokeVolume` in `lib/sample-shape.ts` wraps each silhouette onto an elliptical cross-section inferred per *run* of opaque pixels on each scanline   which is the whole trick, because a row crossing both legs is two runs and each leg gets the depth of a leg rather than both smearing into one slab the width of the stance. The rig turns gently (±0.4 rad, never far enough to go edge-on) and the shader dims the far shell, so the volume is visible instead of thrown away.
 8. **Multiplayer**   co-op survival · PvE expeditions · PvP conflict · massive player settlements · trading · exploration · naval fleets · air combat · alliances.
 9. **Massive Scale**   HUD-mono stat wall over the orbit view: fully seamless world · vast landmass and oceans · massive vertical airspace · submarine-deep oceans · hundreds of kilometers · dynamic ecosystems.
 10. **Gallery**   scrolling rail: creatures · vehicles · bases · oceans · mountains · ruins · technology · combat · exploration (placeholders).
@@ -351,13 +359,31 @@ Route: `/engage` (also reachable as the final Ledger step and from every divisio
 
 Anti-spam: honeypot + time-trap + server-side rate limit (no CAPTCHAs   they break the fiction).
 
+### 9.5 THE APPROACH   partner with SATCORP
+
+Route: `/partner`. Reached from the `Partner With SATCORP` tab in the front-page CTA row, which used to point at `/engage`.
+
+**Why it is not the Engagement Brief with a dropdown.** The Brief is for someone commissioning work; this is for someone proposing to stand *alongside* a division   a studio, a vendor, a creator, a cluster operator. Different questions, read by different people on a different timescale. So it is a separate pipeline end to end: its own server action, its own webhook, its own inbox, its own record directory, and its own `SP-…` reference series.
+
+**Three movements:**
+
+1. **THE DIVISION.** Six cards   SATCORP, ANU, KYRAX, Ki-Ra, NAMTAR, PULSE   each with one line on who that branch is for. Choosing one is what generates the rest of the form.
+2. **THE PROPOSAL.** The shared half (name, organisation, channel, contact) plus **that division's own question set**. Roughly five questions each, written to what the division actually needs to know before anyone's time is spent   e.g. Ki-Ra asks for craft, reel, shipped titles and team size; KYRAX asks what you would connect, your stack, and your handling constraints; PULSE asks platforms, audience and cadence.
+3. **THE SEAL.** Review as a completed dossier, the same wax-seal press as the Brief, and a confirmation in voice: *"Your approach has been filed. It goes to the partnerships desk, not the general queue."*
+
+**Shape.** Division question sets live as typed data in `lib/partner-schema.ts`   one array, and the form, the review screen, the Discord embed and the plain-text email all read from it. Answers are collected as a map keyed by field id rather than a thirty-field object with twenty-five blanks on every submission. The server re-derives the field list from the division that was actually chosen and validates against that, so a payload carrying another branch's fields gains nothing.
+
+Same anti-spam as the Brief, and its own rate limiter so a burst of partner enquiries cannot lock a client out of `/engage`.
+
+**Deployment requirement.** `PARTNER_WEBHOOK_URL` and `PARTNER_TO_EMAIL` fall back to the Brief's values when unset, so approaches are never silently dropped   but on a platform with an ephemeral filesystem at least one must be configured, and in production both should point at the partnerships desk rather than the client channel.
+
 ---
 
 ## 10. Motion, Audio & Interaction Standards
 
 - **Cursor:** custom per establishment (SATCORP: crosshair-dot · ANU: none/native   the study is analog · KYRAX: terminal block · Ki-Ra/NAMTAR: reticle · PULSE: pulse-dot). Falls back to native on touch.
 - **Scroll feel:** Lenis lerp tuned per route (ANU 0.06 slow-luxury → PULSE 0.12 snappy).
-- **Ambient audio (opt-in, off by default):** one toggle in the file-tab bar, state persisted. Per-page beds: low cello + vinyl crackle (SATCORP/ANU), sub-bass hum (KYRAX), orchestral pad (Ki-Ra/NAMTAR), heartbeat + room tone (PULSE). All ≤ 200KB looped OGG/Opus.
+- **Ambient audio:** ~~one toggle in the file-tab bar~~ **Cut, August 2026.** The `SOUND ON / SOUND OFF` control and its mobile `ROOM TONE` row are removed from the chrome on every page, the `audioEnabled` state is gone from the UI store, and that store is no longer persisted   `satcorp.engagement` is now the only key the site writes, and `store.ts` clears the orphaned `satcorp.ui` key on load so the privacy policy's "one entry" stays true for returning visitors. The per-page audio beds were never produced, so nothing was actually silenced: the toggle had been controlling nothing. **If audio is ever revived it needs the toggle, the beds, the persisted preference and the privacy-policy entry back together** as one change   a control that governs nothing is worse than no control.
 - **`prefers-reduced-motion`:** case-file transition → 200ms crossfade; scroll-scrub cameras → static keyframed sections; particle worlds → pre-rendered stills. Full content parity, zero exceptions.
 - **Accessibility:** redaction reveals are presentation-only (real text always in DOM for SR/SEO) · full keyboard paths through Ledger and Brief · focus-visible styled as a red-thread underline · WCAG AA contrast (bone-on-ink passes; test brass and blood-hot).
 
@@ -384,19 +410,50 @@ Anti-spam: honeypot + time-trap + server-side rate limit (no CAPTCHAs   they bre
 
 ## 13. Build Roadmap
 
-| Phase | Scope | Est. |
+| Phase | Scope | State |
 |---|---|---|
-| **0   Foundation** | Next.js shell, route groups + theme tokens, fingerprints (FileTabs, Seal, Stamp, Redaction, RedThread, CaseFileTransition), Lenis+GSAP rig, tiering/perf harness | 1.5 wks |
-| **1   SATCORP `/`** | Logo particle reveal, Network board, all sections, footer/contact | 1.5 wks |
-| **2   The Ledger + Brief** | Catalog data, ledger modal, engagement tray, 4-step intake, server action + email/webhook, Cal.com | 1.5 wks |
-| **3   ANU** | Desk GLB + baked lighting, camera dolly, dossier sections | 2 wks |
-| **4   KYRAX** | Particle core (TSL), unfold-to-map, terminal moments | 1.5 wks |
-| **5   Ki-Ra** | Screening room, canisters, ARK status cards, timeline, gallery system | 1.5 wks |
-| **6   NAMTAR** | Planet + atmosphere, orbit-to-surface scrub + video fallback, pillars, consciousness morph, stat wall | 2.5 wks |
-| **7   PULSE** | EKG ribbon, broadcast grid, dashboard animation | 1 wk |
-| **8   Hardening** | Perf passes on real devices, a11y audit, SEO/OG (per-division OG cards styled as dossier covers), analytics, Docker deploy on SATCORP iron | 1 wk |
+| **0   Foundation** | Next.js shell, route groups + theme tokens, fingerprints, Lenis+GSAP rig, tiering/perf harness | **Done** |
+| **1   SATCORP `/`** | Logo particle reveal, ecosystem sections, footer | **Done** |
+| **2   The Ledger + Brief** | Catalog data, ledger modal, engagement tray, 4-step intake, server action + email/webhook | **Done** |
+| **2b   The Approach** | `/partner`   branching partnership intake, six division question sets, separate webhook and record series (§9.5) | **Done** |
+| **3   ANU** | Desk GLB + baked lighting, camera dolly, dossier sections | **Done** |
+| **4   KYRAX** | The Registry   instanced index cards, sorting wave, attention | **Done** |
+| **5   Ki-Ra** | Screening room, ARK cluster cards, provenance, contact sheet | **Done** |
+| **6   NAMTAR** | Planet + atmosphere, orbit-to-surface scrub, consciousness morph, stat wall | **Done** |
+| **7   PULSE** | EKG ribbon, broadcast grid, dashboard animation | **Next** |
+| **8   Hardening** | Perf passes on real devices, a11y audit, SEO/OG (per-division OG cards styled as dossier covers), analytics, Docker deploy on SATCORP iron | Pending |
+| **9   Ask the Registry, rebuilt** | See below | Pending |
 
-**~14 weeks solo** at senior pace. Phases 1+2 ship first as a functioning business site (hub + commerce); each later phase is an independent release   the site earns while it grows, which is very much in character.
+---
+
+## 13a. What is left to build
+
+*Current as of the August 2026 pass. Everything above is shipped and verified;
+this is the outstanding work, most-load-bearing first.*
+
+### Committed
+
+1. **PULSE `/pulse`** (§9.1–9.2). The last division still on a placeholder page. Needs the audio-reactive EKG ribbon   this page's native form of the red thread   plus the broadcast grid, live/scheduled event cards and the scroll-drawn analytics dashboard. Note that "audio-reactive" now has no ambient audio to react to (§10); idle-beat plus section-entry spikes is the honest spec until a bed exists.
+
+2. **Ask the Registry, rebuilt** (§6). Removed from `/kyrax` in this pass and scheduled to return. The old one was a canned keyword lookup over nine hard-coded entries   it could only answer what it was told to answer, and the "declines the rest, pleasantly" fallback fired on nearly everything, which read as a broken toy rather than as discretion. `components/worlds/kyrax/AskTheRegistry.tsx` is still in the tree, unimported, as the reference for tone and layout. **Decide first** whether the rebuild is (a) a genuinely retrieval-backed answer over the ecosystem's own content, or (b) an honest, small, clearly-bounded index that says what it covers up front. Do not ship (c): the same canned lookup with more entries.
+
+3. **NAMTAR lite-tier video** (§8). The pre-rendered scroll-scrub of the orbit-to-surface journey, rendered from the same scene. `OrbitStill` in `PlanetScene.tsx` is a two-gradient stand-in and is where it drops in.
+
+4. **Hardening** (phase 8). Perf passes on real devices, a11y audit, per-division OG dossier-cover images, sitemap and structured data, Umami, Docker deploy.
+
+### Decisions waiting on you
+
+5. **Three components are unmounted but still in the tree**   `worlds/satcorp/NetworkScene.tsx` (+ `NetworkBoard`), `worlds/satcorp/ServerRack.tsx`, `worlds/satcorp/ExpansionTimeline.tsx`. They were removed from the front page, not deleted, because bringing back a 3D scene is expensive and deleting one is cheap. Either give them a home or delete them   leaving them indefinitely is how a codebase acquires a haunted wing.
+
+6. **`PARTNER_WEBHOOK_URL` in production.** Currently unset, so `/partner` falls back to the client brief's channel. Point it at the partnerships desk before the route sees real traffic (§9.5).
+
+7. **The ARK clusters are all `OFFLINE`** (§7). Whether that is the permanent posture or a temporary state, the page currently tells visitors three addresses exist and none of them are receiving. If they stay dark, the section eventually wants different copy   or the `Request the address →` CTA wants a waiting list behind it.
+
+### Carried forward from the original brief, never built
+
+8. **Cal.com** self-hosted scheduling, specified in §3 and §9.3 as the second exit from the Ledger. Both intakes currently end at the seal.
+9. **Licensed fonts** (Saol/Canela, Neue Haas Grotesk) in place of the free stand-ins   three lines in `app/layout.tsx`.
+10. **Performance budgets enforced in CI** (§11). The budgets are written down; nothing checks them.
 
 ---
 
@@ -404,7 +461,7 @@ Anti-spam: honeypot + time-trap + server-side rate limit (no CAPTCHAs   they bre
 
 - [ ] Domain + Cloudflare Tunnel → in-house Docker stack (nginx, Next standalone, Umami, Cal.com)
 - [ ] Per-route metadata, OG dossier-cover images, sitemap, structured data (Organization + per-division)
-- [ ] Intake pipeline test: form → email + Discord webhook → Cal.com booking round-trip
+- [ ] Intake pipeline test, **both doors**: `/engage` → `DISCORD_WEBHOOK_URL` + `INTAKE_TO_EMAIL`, and `/partner` → `PARTNER_WEBHOOK_URL` + `PARTNER_TO_EMAIL`. Confirm they land in different channels.
 - [ ] Lighthouse ≥ 90 perf on Lite tier, AA contrast audit, keyboard-only walkthrough
 - [ ] 404 page: a burned dossier   *"That file never existed."* (best page on the site; people will screenshot it)
 

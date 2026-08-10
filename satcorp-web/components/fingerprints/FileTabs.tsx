@@ -20,8 +20,6 @@ export function FileTabs() {
   const active = divisionFromPath(pathname);
   const indexOpen = useUI((s) => s.indexOpen);
   const setIndexOpen = useUI((s) => s.setIndexOpen);
-  const audioEnabled = useUI((s) => s.audioEnabled);
-  const toggleAudio = useUI((s) => s.toggleAudio);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[var(--chrome-h)]">
@@ -92,21 +90,6 @@ export function FileTabs() {
           <span aria-hidden className="text-bone-dim/50">/</span>
           THE INDEX
         </button>
-
-        <button
-          type="button"
-          onClick={toggleAudio}
-          aria-pressed={audioEnabled}
-          title={audioEnabled ? "Silence the room" : "Room tone"}
-          className="ml-auto hidden items-center gap-2 px-3 font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim transition-colors hover:text-bone lg:flex"
-        >
-          <span
-            aria-hidden
-            className="inline-block h-3 w-px bg-current"
-            style={{ opacity: audioEnabled ? 1 : 0.3 }}
-          />
-          {audioEnabled ? "SOUND ON" : "SOUND OFF"}
-        </button>
       </nav>
 
       {indexOpen && (
@@ -126,18 +109,6 @@ export function FileTabs() {
                 </ThreadLink>
               </li>
             ))}
-            <li>
-              <button
-                type="button"
-                onClick={toggleAudio}
-                className="flex w-full items-center justify-between px-5 py-4 font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim"
-              >
-                ROOM TONE
-                <span className="text-bone">
-                  {audioEnabled ? "ON" : "OFF"}
-                </span>
-              </button>
-            </li>
           </ul>
         </div>
       )}

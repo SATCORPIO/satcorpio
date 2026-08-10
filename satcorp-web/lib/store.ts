@@ -50,39 +50,42 @@ export const useEngagement = create<EngagementState>()(
 
 export type TransitionPhase = "idle" | "out" | "in";
 
+/**
+ * Nothing here survives a reload. The ambient-audio preference was the only
+ * value worth remembering between visits, and the toggle it belonged to is
+ * gone   so this store is deliberately not persisted, and `satcorp.engagement`
+ * is now the only key the site writes.
+ */
 interface UIState {
   ledgerOpen: boolean;
   indexOpen: boolean;
-  audioEnabled: boolean;
   phase: TransitionPhase;
   openLedger: () => void;
   closeLedger: () => void;
   setIndexOpen: (v: boolean) => void;
-  toggleAudio: () => void;
   setPhase: (p: TransitionPhase) => void;
 }
 
-export const useUI = create<UIState>()(
-  persist(
-    (set) => ({
-      ledgerOpen: false,
-      indexOpen: false,
-      audioEnabled: false,
-      phase: "idle",
-      openLedger: () => set({ ledgerOpen: true }),
-      closeLedger: () => set({ ledgerOpen: false }),
-      setIndexOpen: (v) => set({ indexOpen: v }),
-      toggleAudio: () => set((s) => ({ audioEnabled: !s.audioEnabled })),
-      setPhase: (p) => set({ phase: p }),
-    }),
-    {
-      name: "satcorp.ui",
-      storage: createJSONStorage(() => localStorage),
-      // Only the audio preference is worth remembering between visits.
-      partialize: (s) => ({ audioEnabled: s.audioEnabled }),
-    },
-  ),
-);
+export const useUI = create<UIState>((set) => ({
+  ledgerOpen: false,
+  indexOpen: false,
+  phase: "idle",
+  openLedger: () => set({ ledgerOpen: true }),
+  closeLedger: () => set({ ledgerOpen: false }),
+  setIndexOpen: (v) => set({ indexOpen: v }),
+  setPhase: (p) => set({ phase: p }),
+}));
+
+// Anyone who visited while the audio toggle existed still has `satcorp.ui` on
+// their device. The privacy policy now declares one key, so leaving an orphan
+// behind would make that statement untrue for returning visitors.
+if (typeof window !== "undefined") {
+  try {
+    localStorage.removeItem("satcorp.ui");
+  } catch {
+    // Storage disabled or full. Nothing here is worth failing a page load over.
+  }
+}
 
 /**
  * Persisted stores read localStorage after the first client render, so any

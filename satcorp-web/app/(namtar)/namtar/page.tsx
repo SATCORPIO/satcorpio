@@ -135,14 +135,6 @@ const DISCORD = "https://discord.gg/Fh5qy6tCTc";
 const SLAB =
   "bg-[linear-gradient(to_bottom,transparent,rgba(8,8,11,0.74)_9%,rgba(8,8,11,0.74)_91%,transparent)]";
 
-/**
- * The pillars are written down the left so the monoliths standing on the right
- * of frame stay visible. A full-width darkening would have hidden the one
- * thing the section is pointing at.
- */
-const LEFT_WASH =
-  "bg-[linear-gradient(to_right,rgba(8,8,11,0.88),rgba(8,8,11,0.70)_40%,transparent_68%)]";
-
 export default function NamtarPage() {
   return (
     <div className="relative">
@@ -243,14 +235,13 @@ export default function NamtarPage() {
         </ul>
       </section>
 
-      {/* ---------- THE PILLARS   THE MONOLITHS RISE ---------- */}
-      <section className={`relative ${LEFT_WASH}`}>
+      {/* ---------- THE PILLARS   THE LOW PASS ---------- */}
+      <section className={`relative ${SLAB}`}>
         <div className="mx-auto max-w-6xl px-6 py-24">
           <div className="max-w-3xl">
             <p className="label label-accent">The Pillars</p>
             <p className="mt-4 max-w-xl font-mono text-[0.7rem] leading-relaxed text-bone-dim">
-              Five of them are standing on the ground to your right. Choose one
-              and the camera will hold on it.
+              Five of them. Everything the planet asks of you falls under one.
             </p>
             <Pillars pillars={PILLARS} />
           </div>

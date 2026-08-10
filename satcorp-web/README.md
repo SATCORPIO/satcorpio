@@ -16,8 +16,8 @@ and it takes enquiries end to end.
 | Phase | Scope | State |
 |---|---|---|
 | 0 | Shell, theme tokens, fingerprints, scroll rig, tiering, ledger data | **Done** |
-| 1 | SATCORP `/`   particle logo reveal, 3D network board, The Iron, timeline | **Done** |
-| 2 | The Ledger in leather + the four-step engagement brief and intake pipeline | **Done** |
+| 1 | SATCORP `/`   particle logo reveal, network, ecosystem sections | **Done** |
+| 2 | The Ledger in leather + the engagement brief and the partner intake | **Done** |
 | 3 | ANU   the study modelled in Blender, scroll-scrubbed camera dolly | **Done** |
 | 4 | KYRAX   The Registry, an archive of index cards | **Done** |
 | 5 | Ki-Ra   The Screening Room, a projection with dust in the beam | **Done** |
@@ -73,18 +73,23 @@ app/
   (kira)/kira/          /kira        the creator
   (namtar)/namtar/      /namtar      the world
   (pulse)/pulse/        /pulse       the heartbeat
-  (engage)/engage/      /engage      the engagement brief
+  (engage)/engage/      /engage      the engagement brief   clients
+  (partner)/partner/    /partner     the approach   collaborators
   not-found.tsx         the burned dossier
 
 components/
   fingerprints/         the six things allowed to repeat
   ledger/               the skill-deck commerce layer
+  partner/              the branching partnership intake
   system/               Stage, DivisionShell, SmoothScroll, Placeholder
 
 lib/
   divisions.ts          the six establishments + engagement model
   ledger-catalog.ts     everything SATCORP sells   single source of truth
-  store.ts              engagement + UI state (persisted)
+  intake-schema.ts      the engagement brief's shape and rules
+  partner-schema.ts     the partner branches   one question set per division
+  rate-limit.ts         per-pipeline sliding window
+  store.ts              engagement (persisted) + UI state (not)
   tier.ts               capability detection and performance tiering
   gsap.ts               single plugin registration point
 ```
@@ -189,8 +194,8 @@ Every band of the journey is declared once, in
 `components/worlds/namtar/journey.ts`, as fractions of document scroll: which
 act the reader is in, how much of the frame belongs to the surface rather than
 to orbit, how far the ground has flowed past, and where the veil sits. The
-camera rig, the terrain, the monoliths and the altitude readout all derive
-what they need from those functions, so retuning the pacing is one file.
+camera rig, the terrain and the altitude readout all derive what they need from
+those functions, so retuning the pacing is one file.
 
 Those fractions are matched to where the copy actually lands. **Adding or
 resizing a section on `/namtar` moves the descent under it**   re-measure the
@@ -204,13 +209,17 @@ crossfade runs backwards for the closing ascent. Both worlds exist at once,
 
 On the ground the camera holds still and the *landscape flows past it*, which
 makes the flyover unbounded on a tile small enough to tessellate and exactly
-reversible when the reader scrolls back up. The flow all but stops while the
-five monoliths rise, because a landscape sliding out from under five things
-standing still gives the trick away.
+reversible when the reader scrolls back up. The flow all but stops through the
+flyover so the ground settles under the camera rather than tearing past at
+descent speed.
+
+The five monoliths that used to stand on the terrain are gone, and with them the
+camera's lateral swing onto a chosen pillar. The Pillars section is now a plain
+list   which is what its copy always was on its own.
 
 Nothing is textured. One value-noise fbm in `noise.ts` feeds the planet
-surface, the cloud deck, the terrain and the monolith stone, so the world you
-leave in orbit and the ground you arrive on are the same place. Terrain normals
+surface, the cloud deck and the terrain, so the world you leave in orbit and the
+ground you arrive on are the same place. Terrain normals
 are sampled from the height field in the vertex shader rather than taken from
 screen-space derivatives   derivatives were cheaper and shaded every quad flat,
 which turned the ground into glass shards.
@@ -226,6 +235,11 @@ feeds the ledger modal, the Scope step of the brief, and later the package
 pages. Selections live in a persisted Zustand store, so they survive
 navigation and return visits, and arrive pre-checked on the brief.
 
+`satcorp.engagement` is now the only key the site writes. The UI store used to
+be persisted for the ambient-audio preference; that toggle is gone, so the store
+is plain and `store.ts` clears the orphaned `satcorp.ui` key on load   the
+privacy policy declares one key and has to stay true for returning visitors.
+
 Anything reading persisted state must gate on `useHydrated()` or the server
 HTML and the restored client state will disagree.
 
@@ -233,19 +247,44 @@ Never gate state on an animation callback. GSAP runs on requestAnimationFrame,
 which stalls in a backgrounded tab   if a `setState` lives in `onComplete`, the
 UI strands. Change state first and animate as a consequence.
 
-### The intake pipeline
+### The two intake pipelines
 
-`/engage` posts to the `submitBrief` server action, which validates against the
-shared Zod schema, screens with a honeypot and a four-second time-trap (both
-fail silently so a bot learns nothing), rate limits per IP, then:
+There are two doors, deliberately separate rather than one form with a flag on
+it. They are read by different people on different timescales, so they deliver
+to different channels and file under different reference series.
 
-1. **writes** `.intake/<reference>.json`   the record, always, gitignored;
-2. **notifies** via Resend and/or a Discord webhook if configured.
+| | `/engage` | `/partner` |
+|---|---|---|
+| For | a client commissioning work | an organisation, studio, creator or operator proposing to work alongside a division |
+| Action | `submitBrief` | `submitApproach` |
+| Shape | fixed, `lib/intake-schema.ts` | branching, `lib/partner-schema.ts` |
+| Reference | `SC-…` | `SP-…` |
+| Record | `.intake/<ref>.json` | `.partner/<ref>.json` |
+| Webhook | `DISCORD_WEBHOOK_URL` | `PARTNER_WEBHOOK_URL` |
+| Email | `INTAKE_TO_EMAIL` | `PARTNER_TO_EMAIL` |
 
-The file write is the source of truth, not a fallback: transports fail, a
-self-hosted box with a disk does not. Copy `.env.example` to `.env.local` to
-turn the notifications on. The rate limiter is an in-process map, which is
-honest for a single instance   behind replicas it needs Redis.
+Both validate server-side against the same schema module the client uses, screen
+with a honeypot and a four-second time-trap (both fail silently, so a bot learns
+nothing from the response), and rate limit per IP. Each takes its own limiter
+from `lib/rate-limit.ts`, so a burst of partner enquiries cannot lock a client
+out of the brief. The limiters are in-process maps, honest for a single
+instance   behind replicas they need Redis.
+
+The file write is the source of truth on a box with a real disk: transports
+fail, a disk does not. On a platform with an ephemeral filesystem a write proves
+nothing, so at least one transport must succeed or the form refuses the
+submission rather than sealing over a message that went nowhere.
+
+The partner webhook and inbox each fall back to the brief's if unset, so a fresh
+deployment never silently drops approaches   but in production both should be
+set, or partnership traffic lands in the client channel.
+
+**The partner form branches.** Pick a division and that division's question set
+is what renders. Answers are collected as a map keyed by field id, and the
+server re-derives the field list from the division that was actually chosen, so
+a payload carrying another branch's fields gains nothing. Adding a question is a
+line in `PARTNER_DIVISIONS`   the form, the review screen, the Discord embed and
+the email all read from it.
 
 ---
 
