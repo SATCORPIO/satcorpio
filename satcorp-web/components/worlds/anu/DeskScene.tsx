@@ -32,7 +32,7 @@ const DESK_TOP = 0.75;
 export function DeskScene({ reducedMotion }: { reducedMotion: boolean }) {
   const { scene } = useGLTF(MODEL);
 
-  // One instance is fine — this scene is mounted exactly once per page.
+  // One instance is fine   this scene is mounted exactly once per page.
   const stops = useMemo(() => readCameraStops(scene), [scene]);
 
   // A rig with no stops fails silently as a camera that never moves, which is
@@ -97,7 +97,7 @@ export function DeskScene({ reducedMotion }: { reducedMotion: boolean }) {
       />
       <ambientLight intensity={0.06} color="#b8a68c" />
 
-      {/* Fingerprint 2.3 — on this page the red thread is the lamp's cord,
+      {/* Fingerprint 2.3   on this page the red thread is the lamp's cord,
           running off the back of the desk and down into the dark. */}
       <RedThread
         points={[
