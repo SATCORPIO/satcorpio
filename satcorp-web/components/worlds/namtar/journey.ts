@@ -43,7 +43,7 @@ export function smoothstep(edge0: number, edge1: number, x: number) {
 /**
  * How much of the frame belongs to the surface rather than to orbit.
  *
- * The camera does not actually fly a sphere down to a landing — the planet
+ * The camera does not actually fly a sphere down to a landing   the planet
  * fades out and a terrain tile fades in while the screen is full of cloud.
  * This is the crossfade, and the haze veil peaks exactly where it moves so the
  * cut is never visible.
@@ -77,7 +77,7 @@ export const MONOLITH_X = [-26, -13, 0, 13, 26];
 
 /**
  * The terrain tile sits well below the planet rather than on it. The camera
- * never travels between the two — it cuts, behind the veil — so the only thing
+ * never travels between the two   it cuts, behind the veil   so the only thing
  * that matters is that the two worlds cannot be in frame at once.
  */
 export const SURFACE_Y = -160;
@@ -86,7 +86,7 @@ export const SURFACE_Y = -160;
  * How far the ground has flowed past by a given point in the journey.
  *
  * It accelerates into the flyover and all but stops once the camera settles at
- * the horizon — otherwise the monoliths would be standing still on a landscape
+ * the horizon   otherwise the monoliths would be standing still on a landscape
  * that was visibly sliding out from under them.
  */
 export function terrainAdvance(t: number) {
