@@ -14,7 +14,7 @@ import { ScrollTrigger } from "@/lib/gsap";
  * THE CONSCIOUSNESS SYSTEM
  *
  * The signature section: a wireframe body comes apart into particles and
- * reassembles as a robotic frame, scrubbed by the reader's own scroll — the
+ * reassembles as a robotic frame, scrubbed by the reader's own scroll   the
  * transfer happens at the speed they choose to read about it.
  *
  * Two point clouds sampled from the same stroke artwork, one shader
@@ -78,7 +78,7 @@ const vertexShader = /* glsl */ `
 
     vec3 pos = mix(position, aFrame, e);
 
-    // Everything blows outward at the halfway point and is drawn back in —
+    // Everything blows outward at the halfway point and is drawn back in  
     // for a moment there is no body at all, which is the idea.
     float loose = sin(e * PI);
     pos += aDrift * loose * 0.62;
