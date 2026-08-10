@@ -11,7 +11,7 @@ import { surfaceBlend } from "./journey";
  * NAMTAR FROM ORBIT
  *
  * Four shells and nothing else: the ground, a cloud deck, an atmosphere, and
- * two moons on tilted orbits. Everything is procedural — no 4k textures to
+ * two moons on tilted orbits. Everything is procedural   no 4k textures to
  * ship, and the same noise field feeds the terrain you later fly over, so the
  * planet you leave and the ground you arrive on are the same world.
  *
@@ -24,7 +24,7 @@ const PLANET_RADIUS = 6;
 /* --- the ground --- */
 
 const surfaceVertex = /* glsl */ `
-  varying vec3 vDir;      // object-space direction — where on the globe we are
+  varying vec3 vDir;      // object-space direction   where on the globe we are
   varying vec3 vNormalW;
   varying vec3 vViewW;
 
@@ -99,7 +99,7 @@ const surfaceFragment = /* glsl */ `
     lights *= (1.0 - day) * (0.75 + 0.25 * sin(uTime * 0.7 + cluster * 30.0));
     color += vec3(1.0, 0.62, 0.26) * lights * 1.6;
 
-    // Atmosphere seen against the ground — thickest at the limb.
+    // Atmosphere seen against the ground   thickest at the limb.
     float rim = 1.0 - max(dot(normalize(vNormalW), vViewW), 0.0);
     color += vec3(0.36, 0.24, 0.16) * pow(rim, 3.0) * day * 1.5;
 
@@ -121,13 +121,13 @@ const cloudFragment = /* glsl */ `
   ${NOISE_GLSL}
 
   void main() {
-    // Two layers drifting at different rates — one weather system passing
+    // Two layers drifting at different rates   one weather system passing
     // over another, which is what stops clouds looking painted on.
     vec3 p = vDir * 3.4;
     float a = nmFbm(p + vec3(uTime * 0.012, 0.0, 0.0), 5);
     float b = nmFbm(p * 1.7 - vec3(uTime * 0.019, 0.0, uTime * 0.006), 4);
     // Deliberately broken cloud. Full cover is meteorologically plausible and
-    // visually useless — the continents are the reason to look at the planet.
+    // visually useless   the continents are the reason to look at the planet.
     float cover = smoothstep(0.56, 0.84, a * 0.65 + b * 0.45);
 
     float lambert = dot(normalize(vNormalW), uSun);
@@ -176,7 +176,7 @@ export function Planet({ detail = 64 }: { detail?: number }) {
   const clouds = useRef<THREE.ShaderMaterial>(null);
   const air = useRef<THREE.ShaderMaterial>(null);
 
-  // One sun direction, shared by all three shells — they must agree on where
+  // One sun direction, shared by all three shells   they must agree on where
   // the terminator falls or the planet comes apart at the edges.
   const sun = useMemo(() => new THREE.Vector3(0.62, 0.34, 0.71).normalize(), []);
 
@@ -204,7 +204,7 @@ export function Planet({ detail = 64 }: { detail?: number }) {
     const t = state.clock.elapsedTime;
 
     // The planet is only on screen while the reader is in orbit. Nothing has
-    // to tell it that — the journey is a pure function of scroll.
+    // to tell it that   the journey is a pure function of scroll.
     const o = 1 - surfaceBlend(scrollProgress.value);
 
     if (group.current) {
@@ -216,7 +216,7 @@ export function Planet({ detail = 64 }: { detail?: number }) {
     if (moons.current) {
       moons.current.rotation.y += delta * 0.06;
       moons.current.visible = o > 0.01;
-      // Two meshes with plain materials — cheaper to fade by hand than to
+      // Two meshes with plain materials   cheaper to fade by hand than to
       // thread a uniform through them.
       moons.current.traverse((child) => {
         const mesh = child as THREE.Mesh;
