@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * THE ENGAGEMENT BRIEF — shape and rules.
+ * THE ENGAGEMENT BRIEF   shape and rules.
  *
  * Shared by the client form and the server action, so validation cannot drift
  * between them. Error messages are written in the Concierge voice: a form that
