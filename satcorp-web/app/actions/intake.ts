@@ -15,7 +15,7 @@ import { LEDGER, LEDGER_ITEM_BY_ID } from "@/lib/ledger-catalog";
 import { LEGAL } from "@/lib/legal";
 
 /**
- * THE SEAL — the intake pipeline.
+ * THE SEAL   the intake pipeline.
  *
  * Validates, screens, then delivers by whatever transports are configured:
  *
@@ -26,7 +26,7 @@ import { LEGAL } from "@/lib/legal";
  * A brief is only reported as received once at least one *durable* delivery has
  * succeeded. That distinction matters more than it looks:
  *
- * On a box we own, the file write is the record — transports fail, a disk does
+ * On a box we own, the file write is the record   transports fail, a disk does
  * not. On a serverless platform the filesystem is read-only apart from a
  * temporary directory that is discarded when the instance is recycled, so a
  * write there proves nothing and cannot be allowed to count. On that platform
@@ -90,14 +90,14 @@ function serviceNames(ids: string[]): string[] {
 function asPlainText(data: IntakeData, ref: string): string {
   const services = serviceNames(data.services);
   return [
-    `SATCORP — ENGAGEMENT BRIEF ${ref}`,
+    `SATCORP   ENGAGEMENT BRIEF ${ref}`,
     "",
     "I. CLARITY",
     `  Name:        ${data.name}`,
-    `  Organisation:${data.organisation || " —"}`,
+    `  Organisation:${data.organisation || "  "}`,
     `  Channel:     ${data.channel}`,
     `  Contact:     ${data.contact}`,
-    `  Referral:    ${data.referral || "—"}`,
+    `  Referral:    ${data.referral || " "}`,
     "",
     "  The matter:",
     `  ${data.matter.replace(/\n/g, "\n  ")}`,
@@ -109,15 +109,15 @@ function asPlainText(data: IntakeData, ref: string): string {
     ...(services.length
       ? services.map((s) => `    - ${s}`)
       : ["    - nothing marked"]),
-    `  Existing assets: ${data.existingAssets || "—"}`,
+    `  Existing assets: ${data.existingAssets || " "}`,
     "",
     "III. EXECUTION",
     `  Cadence:     ${data.cadence ?? "unstated"}`,
-    `  Notes:       ${data.notes || "—"}`,
+    `  Notes:       ${data.notes || " "}`,
   ].join("\n");
 }
 
-/** Writes the record. Never throws — the caller decides what a failure means. */
+/** Writes the record. Never throws   the caller decides what a failure means. */
 async function fileRecord(
   data: IntakeData,
   ref: string,
@@ -158,7 +158,7 @@ async function sendEmail(data: IntakeData, ref: string): Promise<boolean> {
         from,
         to: [to],
         reply_to: data.channel === "Email" ? data.contact : undefined,
-        subject: `Engagement brief ${ref} — ${data.name}`,
+        subject: `Engagement brief ${ref}   ${data.name}`,
         text: asPlainText(data, ref),
       }),
     });
@@ -223,7 +223,7 @@ function prose(name: string, text: string): EmbedField[] {
       value:
         rest.length <= FIELD_MAX
           ? rest
-          : `${clamp(rest, FIELD_MAX - 40)}\n*— truncated. Full text in the record.*`,
+          : `${clamp(rest, FIELD_MAX - 40)}\n*  truncated. Full text in the record.*`,
     },
   ];
 }
@@ -244,7 +244,7 @@ function markedServices(ids: string[]): string {
     }
   }
 
-  // Anything not in the catalogue — a stale id from an old visit — still shows.
+  // Anything not in the catalogue   a stale id from an old visit   still shows.
   const known = new Set(LEDGER.flatMap((s) => s.items.map((i) => i.id)));
   const orphans = ids.filter((id) => !known.has(id));
   if (orphans.length) blocks.push(`**Unrecognised**\n${orphans.join(", ")}`);
@@ -255,10 +255,10 @@ function markedServices(ids: string[]): string {
 function buildEmbed(data: IntakeData, ref: string) {
   const count = data.services.length;
 
-  // The headline: who, from where, and how to reach them — above the fold.
+  // The headline: who, from where, and how to reach them   above the fold.
   const intro = [
     data.organisation ? `**${clamp(data.organisation, 200)}**` : null,
-    `▸ Reach via **${data.channel}** — ${clamp(data.contact, 200)}`,
+    `▸ Reach via **${data.channel}**   ${clamp(data.contact, 200)}`,
     data.referral ? `▸ Found us via ${clamp(data.referral, 200)}` : null,
   ]
     .filter(Boolean)
@@ -285,7 +285,7 @@ function buildEmbed(data: IntakeData, ref: string) {
   ];
 
   return {
-    author: { name: "SATCORP — ENGAGEMENT BRIEF" },
+    author: { name: "SATCORP   ENGAGEMENT BRIEF" },
     title: `${ref} · ${clamp(data.name, 200)}`,
     description: clamp(`${intro}\n${RULE}`, 4096),
     color: EMBED_COLOR,
@@ -376,7 +376,7 @@ export async function submitBrief(
 
   if (!durable) {
     console.error(
-      `[intake] ${ref} could not be delivered — no transport succeeded` +
+      `[intake] ${ref} could not be delivered   no transport succeeded` +
         (EPHEMERAL_FS
           ? ". Running on an ephemeral filesystem: set DISCORD_WEBHOOK_URL or RESEND_API_KEY + INTAKE_TO_EMAIL."
           : "."),
