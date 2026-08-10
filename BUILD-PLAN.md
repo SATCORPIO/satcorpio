@@ -197,10 +197,26 @@ Near/far depth fade is mandatory, not decorative: cards drifting against the len
 2. **Who it talks to** *(the integration layer, as a network of sources)*   *One intelligence. Six sources. Nothing filed twice.* SATCORP · NAMTAR · Ki-Ra · PULSE marked `REPORTING →` and linked; business platforms and tactical clusters marked `INTERNAL`.
 3. **What it does with it**   *Gaming intelligence.* Four cards: NPC intelligence · procedural world systems · player behaviour analysis · AI-driven ecosystems. Cross-link: `See it running in NAMTAR →`.
 
-**Cut, and one of them is coming back:**
+4. **Ask the Registry** *(rebuilt, August 2026)*. A single input that consults what SATCORP actually runs on and returns real filed entries.
 
-- **What it knows** (the five-drawer cognitive core   Inference · Intake · Recognition · Counsel · Memory, plus the *"drawers six through forty-one"* card). Removed. Its `KNOWS` data went with it; the `IndexCard` component it used is still in service on section 3.
-- **Ask the Registry.** Removed for now and **scheduled to be rebuilt** (§13, phase 9). The component still exists at `components/worlds/kyrax/AskTheRegistry.tsx` and is no longer imported. The version that comes back should not be the canned keyword lookup this one was   see the rebuild note in §13.
+**Cut:** *What it knows* (the five-drawer cognitive core   Inference · Intake · Recognition · Counsel · Memory, plus the *"drawers six through forty-one"* card). Its `KNOWS` data went with it; the `IndexCard` component it used is still in service on section 3.
+
+### Ask the Registry, as rebuilt
+
+> **Why the first one failed.** It promised general knowledge and had nine hand-written answers behind a keyword match. It could only answer what it had been told to answer, so the "declines the rest, pleasantly" fallback fired on almost everything   which reads as a broken toy, not as discretion. The rebuild closes that gap from the other end: it knows rather more, and it says exactly how much before you ask.
+
+**It is not a chatbot, and that is the point.** No model, no API key, no per-query cost, nothing it can be talked into saying, and nothing it can invent. The build plan's own doctrine cut the KYRAX terminal for being "the default costume every AI product site wears"; a text box wired to an LLM in 2026 is the same costume with a newer cut. This is an archive that can be *searched*, dressed as one that can be *asked*.
+
+**The index is derived, never authored twice.** `lib/registry-index.ts` builds its holdings from the data the site already runs on: every service in `LEDGER`, the six divisions, the retainer classes, the engagement model and the paperwork. Add a service to the catalogue and the archive can answer questions about it the same afternoon.
+
+**The holdings are published before the question.** The section states its own drawer count   *"Indexed: 38 services across 7 sections, 6 operations, the retainer classes, the engagement model and the paperwork. Not indexed: clients, figures, anything not already on these pages."* Those numbers are counted from the index rather than written down, so the claim cannot drift from the contents. A miss then reads as a boundary rather than a failure, which is the whole fix.
+
+**Every arrangeable result carries a mark.** Services return with a `MARK FOR SCOPE` control that writes straight to the Ledger store, so a question becomes a marked line item and arrives pre-checked on the Engagement Brief. Operations and paperwork return with a door instead. The archive never offers to arrange something that is not actually for sale.
+
+**Three defects worth remembering,** all found by running it rather than by reading it:
+- Substring matching had *"do you build websites"* returning **Worldbuilding & Canon Documentation** above the two real web services, and *"how is my data handled"* pulling in **Long-Form Guides & Databases**. Matching is now on whole stemmed tokens.
+- The stemmer's blind `-es` rule turned "websites" into "websit" while the alias "website" stayed whole, so they never met and the query found nothing at all. `-es` now only strips after a sibilant, and `-ss` words are left alone.
+- Five slots filled by score alone meant *"what does a brand system cost"* returned five Brand & Identity services and **no pricing** — every slot won by the two words matching a section title while the word the question was about sat just under the cut. Results are now capped at two per catalogue section before the list is filled out by score.
 
 ### The thread here
 A **cross-reference**: one length of red thread running the full depth of the index, tying together files nobody else thought to connect. The ambient backdrop pass is suppressed on this route (as on ANU) so there is one thread and one WebGL context.
@@ -434,7 +450,7 @@ Same anti-spam as the Brief, and its own rate limiter so a burst of partner enqu
 | **6   NAMTAR** | Planet + atmosphere, orbit-to-surface scrub, consciousness morph, stat wall | **Done** |
 | **7   PULSE** | EKG ribbon, creator network, schedule, dashboard animation | **Done** |
 | **8   Hardening** | Perf passes on real devices, a11y audit, SEO/OG (per-division OG cards styled as dossier covers), analytics, Docker deploy on SATCORP iron | **Next** |
-| **9   Ask the Registry, rebuilt** | See below | Pending |
+| **9   Ask the Registry, rebuilt** | A derived, deterministic index over the Ledger, divisions, retainers, engagement model and paperwork (§6) | **Done** |
 
 All six establishments are now built. Every division owns its own 3D world and its own relationship to the page, and the ambient thread pass survives only for SATCORP and the routes that resolve to it.
 
@@ -447,13 +463,13 @@ built; this is the outstanding work, most-load-bearing first.*
 
 ### Committed
 
-1. **Ask the Registry, rebuilt** (§6). Removed from `/kyrax` in this pass and scheduled to return. The old one was a canned keyword lookup over nine hard-coded entries   it could only answer what it was told to answer, and the "declines the rest, pleasantly" fallback fired on nearly everything, which read as a broken toy rather than as discretion. `components/worlds/kyrax/AskTheRegistry.tsx` is still in the tree, unimported, as the reference for tone and layout. **Decide first** whether the rebuild is (a) a genuinely retrieval-backed answer over the ecosystem's own content, or (b) an honest, small, clearly-bounded index that says what it covers up front. Do not ship (c): the same canned lookup with more entries.
+1. **NAMTAR lite-tier video** (§8). The pre-rendered scroll-scrub of the orbit-to-surface journey, rendered from the same scene. `OrbitStill` in `PlanetScene.tsx` is a two-gradient stand-in and is where it drops in.
 
-2. **NAMTAR lite-tier video** (§8). The pre-rendered scroll-scrub of the orbit-to-surface journey, rendered from the same scene. `OrbitStill` in `PlanetScene.tsx` is a two-gradient stand-in and is where it drops in.
+2. **Hardening** (phase 8). Perf passes on real devices, a11y audit, per-division OG dossier-cover images, sitemap and structured data, Umami, Docker deploy. This is the next phase.
 
-3. **Hardening** (phase 8). Perf passes on real devices, a11y audit, per-division OG dossier-cover images, sitemap and structured data, Umami, Docker deploy. This is the next phase.
+3. **PULSE's own art.** The one division whose page ships with no placeholder frames at all, because its world is procedural. Creator profiles, event cards and the Growth Intelligence dashboard are all structured to take real data   the dashboard's numbers are hand-authored constants in `Dashboard.tsx` and are explicitly a mock.
 
-4. **PULSE's own art.** The one division whose page ships with no placeholder frames at all, because its world is procedural. Creator profiles, event cards and the Growth Intelligence dashboard are all structured to take real data   the dashboard's numbers are hand-authored constants in `Dashboard.tsx` and are explicitly a mock.
+4. **Registry aliases are a living list.** `SERVICE_ALIASES` in `registry-index.ts` is the vocabulary bridge between what a visitor types and what the catalogue calls things. It will always be incomplete   the cheapest source of new entries is a log of questions that returned `FILE NIL`, which is worth wiring up during hardening.
 
 ### Decisions waiting on you
 

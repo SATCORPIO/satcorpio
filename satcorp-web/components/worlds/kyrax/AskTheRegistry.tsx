@@ -1,106 +1,57 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useUI } from "@/lib/store";
+import { useEngagement, useHydrated, useUI } from "@/lib/store";
 import { Stamp } from "@/components/fingerprints/Stamp";
+import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
+import {
+  HOLDINGS,
+  consultRegistry,
+  type RegistryEntry,
+  type RegistryHit,
+} from "@/lib/registry-index";
 
 /**
- * ASK THE REGISTRY
+ * ASK THE REGISTRY   rebuilt
  *
- * A single line of input that answers a handful of things in character and
- * then, courteously, stops being useful and hands you to the Concierge. That
- * refusal is the point: the archive knows a great deal and volunteers almost
- * none of it.
+ * The previous version promised general knowledge and had nine hard-coded
+ * answers behind it, so the polite refusal fired on nearly everything and read
+ * as a broken toy rather than as discretion.
  *
- * Entirely client-side and canned. Nothing is sent anywhere.
+ * This one states its holdings before it is asked anything. It indexes what
+ * SATCORP actually runs on   every service in the Ledger, the six operations,
+ * the retainer classes, the engagement model and the paperwork   and it returns
+ * real filed entries rather than prose about them. Anything it finds that can
+ * be arranged carries a mark, which drops straight into the Ledger and arrives
+ * pre-checked on the brief.
+ *
+ * No model, no API key, no per-query cost, and nothing it can be talked into
+ * saying. When it finds nothing it says what it does cover, which is a boundary
+ * rather than a failure   and is the whole reason the scope is published.
  */
 
-interface Entry {
-  /** Any of these appearing in the question triggers the answer. */
-  keys: string[];
-  answer: string;
-  /** Rendered as the file reference on the answer card. */
-  file: string;
-}
-
-const REGISTRY: Entry[] = [
-  {
-    keys: ["who", "what are you", "kyrax"],
-    answer:
-      "KYRAX. I keep what everyone else forgets to write down, and I notice when two of those things are the same thing.",
-    file: "KX-000",
-  },
-  {
-    keys: ["satcorp", "company", "ecosystem"],
-    answer:
-      "A technology ecosystem   intelligence, creative platforms and digital worlds, run on its own iron. Six operations. One index.",
-    file: "SC-001",
-  },
-  {
-    keys: ["anu", "architect", "concierge", "who runs"],
-    answer:
-      "ANU. Lead systems architect. Everything in this archive was filed on their instruction, including the entry about you.",
-    file: "AN-004",
-  },
-  {
-    keys: ["namtar", "game", "survival"],
-    answer:
-      "NAMTAR. A seamless planet where every decision changes your future. I run the wildlife, the weather and the things that notice you first.",
-    file: "NM-012",
-  },
-  {
-    keys: ["pulse", "community", "creator"],
-    answer:
-      "PULSE. Creators, audiences and live events. I read the room so nobody has to guess what the room wants.",
-    file: "PL-007",
-  },
-  {
-    keys: ["kira", "ki-ra", "studio"],
-    answer:
-      "Ki-Ra Studios. Worlds built to keep growing after launch. I am the part that keeps them interesting once you know your way around.",
-    file: "KR-002",
-  },
-  {
-    keys: ["price", "cost", "how much", "quote", "budget"],
-    answer:
-      "I don't discuss terms. I file them. For what a thing costs, you'll want the Concierge   and a rather more specific question.",
-    file: " ",
-  },
-  {
-    keys: ["secret", "blacklist", "classified", "redacted", "hidden"],
-    answer:
-      "There is a list. You are welcome to ask about it. I am not obliged to be forthcoming, and on this occasion I won't be.",
-    file: "[REDACTED]",
-  },
-  {
-    keys: ["hire", "work", "build", "help", "project", "engage"],
-    answer:
-      "Then you want an arrangement, not an answer. Open the Ledger   mark what you need and the Concierge will take it from there.",
-    file: "EN-001",
-  },
+const SUGGESTIONS = [
+  "What does a brand system cost?",
+  "Can you build a game prototype?",
+  "How is my data handled?",
+  "Who runs SATCORP?",
 ];
 
-const FALLBACK: Entry = {
-  keys: [],
-  answer:
-    "I have nothing filed under that. Which is not the same as there being nothing   only that you have not yet asked the right way.",
-  file: "NIL",
+const KIND_LABEL: Record<RegistryEntry["kind"], string> = {
+  service: "ARRANGEABLE",
+  division: "OPERATION",
+  retainer: "RETAINER",
+  engagement: "PROCEDURE",
+  paperwork: "PAPERWORK",
 };
-
-function consult(question: string): Entry {
-  const q = question.toLowerCase();
-  return REGISTRY.find((e) => e.keys.some((k) => q.includes(k))) ?? FALLBACK;
-}
-
-const SUGGESTIONS = ["What is SATCORP?", "Who runs it?", "What does it cost?"];
 
 export function AskTheRegistry() {
   const [question, setQuestion] = useState("");
-  const [answered, setAnswered] = useState<{ q: string; entry: Entry } | null>(
-    null,
-  );
+  const [answered, setAnswered] = useState<{
+    q: string;
+    hits: RegistryHit[];
+  } | null>(null);
   const [consulting, setConsulting] = useState(false);
-  const openLedger = useUI((s) => s.openLedger);
   const timer = useRef(0);
 
   const ask = (raw: string) => {
@@ -109,11 +60,13 @@ export function AskTheRegistry() {
     setQuestion(q);
     setConsulting(true);
     setAnswered(null);
+
     // A beat of looking it up. The archive is thorough, not instant.
+    window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
-      setAnswered({ q, entry: consult(q) });
+      setAnswered({ q, hits: consultRegistry(q) });
       setConsulting(false);
-    }, 620);
+    }, 420);
   };
 
   return (
@@ -126,7 +79,17 @@ export function AskTheRegistry() {
       </div>
 
       <p className="mt-5 max-w-2xl font-display text-xl leading-relaxed text-bone">
-        It will answer a few things. It will decline the rest, pleasantly.
+        It will tell you what it holds before you ask, which is more than most
+        archives will do.
+      </p>
+
+      {/* The holdings, stated up front. Counted from the index rather than
+          written down, so the claim cannot drift from the contents. */}
+      <p className="mt-4 max-w-2xl font-mono text-[0.7rem] leading-relaxed text-bone-dim">
+        Indexed: {HOLDINGS.services} services across {HOLDINGS.sections}{" "}
+        sections, {HOLDINGS.divisions} operations, the retainer classes, the
+        engagement model and the paperwork. Not indexed: clients, figures,
+        anything not already on these pages.
       </p>
 
       <form
@@ -142,7 +105,7 @@ export function AskTheRegistry() {
         <input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="Ask it something."
+          placeholder="Ask it something from the drawers above."
           aria-label="Ask the Registry a question"
           maxLength={140}
           className="min-w-0 flex-1 bg-transparent font-mono text-[0.82rem] text-bone outline-none placeholder:text-bone-dim/40"
@@ -176,30 +139,137 @@ export function AskTheRegistry() {
           </p>
         )}
 
-        {answered && (
-          <article className="border-l-2 border-accent/60 bg-ink/50 py-4 pl-5 pr-4">
+        {answered && answered.hits.length > 0 && (
+          <>
             <p className="font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim/60">
-              FILE {answered.entry.file}
+              {answered.hits.length}{" "}
+              {answered.hits.length === 1 ? "ENTRY" : "ENTRIES"} FILED UNDER
+              &ldquo;{answered.q.toUpperCase()}&rdquo;
             </p>
-            <p className="mt-3 font-display text-lg leading-relaxed text-bone">
-              {answered.entry.answer}
-            </p>
-          </article>
+            <ul className="mt-4 space-y-2">
+              {answered.hits.map((hit) => (
+                <li key={hit.entry.file}>
+                  <Result entry={hit.entry} />
+                </li>
+              ))}
+            </ul>
+          </>
         )}
+
+        {answered && answered.hits.length === 0 && <NothingFiled />}
       </div>
 
       <div className="mt-9 border-t border-bone/10 pt-7">
         <p className="max-w-2xl font-mono text-[0.72rem] leading-loose text-bone-dim">
-          For anything further, you&rsquo;ll want to speak with the Concierge.
+          The index is a catalogue, not a counsel. For anything that needs
+          judgement rather than a file number, you&rsquo;ll want the Concierge.
         </p>
-        <button
-          type="button"
-          onClick={openLedger}
-          className="mt-5 border border-accent/40 px-7 py-3 font-mono text-[0.64rem] tracking-[0.22em] text-bone transition-colors hover:bg-accent hover:text-ink"
+        <ThreadLink
+          href="/engage"
+          className="mt-5 inline-block border border-accent/40 px-7 py-3 font-mono text-[0.64rem] tracking-[0.22em] text-bone transition-colors hover:bg-accent hover:text-ink"
         >
-          OPEN THE LEDGER
-        </button>
+          OPEN A FILE →
+        </ThreadLink>
       </div>
     </div>
+  );
+}
+
+/** One filed entry. Services carry a mark; everything else carries a door. */
+function Result({ entry }: { entry: RegistryEntry }) {
+  const selected = useEngagement((s) => s.selected);
+  const toggle = useEngagement((s) => s.toggle);
+  const openLedger = useUI((s) => s.openLedger);
+  const hydrated = useHydrated();
+
+  // The mark is persisted state, so it cannot be read until the client has
+  // rehydrated or the server HTML and the restored state will disagree.
+  const marked = hydrated && entry.itemId ? selected.includes(entry.itemId) : false;
+
+  return (
+    <article className="border border-bone/12 bg-ink/45">
+      <header className="flex items-baseline justify-between gap-4 border-b border-accent/20 px-5 py-2.5">
+        <span className="font-mono text-[0.56rem] tracking-[0.22em] text-accent/80">
+          {entry.file}
+        </span>
+        <span className="font-mono text-[0.54rem] tracking-[0.22em] text-bone-dim/55">
+          {KIND_LABEL[entry.kind]} · {entry.group}
+        </span>
+      </header>
+
+      <div className="px-5 py-5">
+        <h3 className="font-display text-xl leading-tight text-bone">
+          {entry.title}
+        </h3>
+        <p className="mt-2 font-sans text-sm leading-relaxed text-bone-dim">
+          {entry.summary}
+        </p>
+        {entry.detail && (
+          <p className="mt-2 font-mono text-[0.66rem] leading-relaxed text-bone-dim/70">
+            {entry.detail}
+          </p>
+        )}
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          {entry.itemId && (
+            <button
+              type="button"
+              aria-pressed={marked}
+              onClick={() => toggle(entry.itemId!)}
+              className={[
+                "border px-4 py-2 font-mono text-[0.6rem] tracking-[0.2em] transition-colors",
+                marked
+                  ? "border-blood bg-blood/15 text-bone"
+                  : "border-bone/20 text-bone-dim hover:border-accent hover:text-bone",
+              ].join(" ")}
+            >
+              {marked ? "✓ MARKED" : "MARK FOR SCOPE"}
+            </button>
+          )}
+
+          {entry.itemId && marked && (
+            <button
+              type="button"
+              onClick={openLedger}
+              className="font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim transition-colors hover:text-bone"
+            >
+              OPEN THE LEDGER →
+            </button>
+          )}
+
+          {entry.href && !entry.itemId && (
+            <ThreadLink
+              href={entry.href}
+              className="font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim transition-colors hover:text-bone"
+            >
+              SEE THE FILE →
+            </ThreadLink>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/**
+ * The honest miss. Because the holdings were published before the question was
+ * asked, this is a statement of scope rather than an apology.
+ */
+function NothingFiled() {
+  return (
+    <article className="border-l-2 border-accent/60 bg-ink/50 py-4 pl-5 pr-4">
+      <p className="font-mono text-[0.6rem] tracking-[0.2em] text-bone-dim/60">
+        FILE NIL
+      </p>
+      <p className="mt-3 font-display text-lg leading-relaxed text-bone">
+        Nothing filed under that.
+      </p>
+      <p className="mt-3 font-mono text-[0.68rem] leading-relaxed text-bone-dim">
+        The drawers hold what SATCORP builds, what it costs, how the work runs
+        and what happens to your data. They do not hold client names, live
+        figures, or anything that is not already on these pages   and the
+        archive would rather say so than improvise.
+      </p>
+    </article>
   );
 }

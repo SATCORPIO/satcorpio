@@ -2,6 +2,7 @@ import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { Reveal } from "@/components/system/Reveal";
 import { RegistryScene } from "@/components/worlds/kyrax/RegistryScene";
 import { IndexCard } from "@/components/worlds/kyrax/IndexCard";
+import { AskTheRegistry } from "@/components/worlds/kyrax/AskTheRegistry";
 
 /**
  * ESTABLISHMENT 3   KYRAX, THE REGISTRY
@@ -137,7 +138,7 @@ export default function KyraxPage() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 pb-20 sm:grid-cols-2">
+        <div className="mt-12 grid gap-4 sm:grid-cols-2">
           {APPLICATIONS.map((card, i) => (
             <IndexCard
               key={card.file}
@@ -150,6 +151,11 @@ export default function KyraxPage() {
             </IndexCard>
           ))}
         </div>
+      </section>
+
+      {/* ---------- ASK THE REGISTRY ---------- */}
+      <section className="relative pb-28 pt-8">
+        <AskTheRegistry />
       </section>
     </div>
   );

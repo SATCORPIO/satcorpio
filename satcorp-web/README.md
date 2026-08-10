@@ -89,6 +89,7 @@ lib/
   ledger-catalog.ts     everything SATCORP sells   single source of truth
   intake-schema.ts      the engagement brief's shape and rules
   partner-schema.ts     the partner branches   one question set per division
+  registry-index.ts     what KYRAX holds, and the scorer that answers from it
   rate-limit.ts         per-pipeline sliding window
   store.ts              engagement (persisted) + UI state (not)
   tier.ts               capability detection and performance tiering
@@ -232,6 +233,46 @@ which turned the ground into glass shards.
 The lite tier gets a two-gradient still. The build plan calls for a
 pre-rendered scroll-scrub video of the same journey; that asset does not exist
 yet, and `OrbitStill` in `PlanetScene` is where it drops in.
+
+### Ask the Registry
+
+Deterministic and client-side. **No model, no API key, no per-query cost, and
+nothing it can be talked into saying.** It is an archive that can be searched,
+dressed as one that can be asked.
+
+`lib/registry-index.ts` derives its holdings from the data the site already
+runs on   `LEDGER`, `DIVISIONS`, `RETAINER_CLASSES`, `ENGAGEMENT_MODEL` and
+`LEGAL`. **Nothing in it is a second copy of anything**, so adding a service to
+the catalogue is all it takes for the archive to answer questions about it.
+
+The section publishes its own drawer count before the reader asks, and those
+numbers are counted from the index rather than written down, so the claim
+cannot drift from the contents. That is deliberate: the previous version
+implied general knowledge over nine hard-coded answers, so its polite refusal
+fired on nearly everything and read as broken rather than discreet. Stating the
+scope turns a miss into a boundary.
+
+Services return with a `MARK FOR SCOPE` control wired to the engagement store,
+so a question becomes a marked line item and arrives pre-checked on the brief.
+Only services get it   the archive never offers to arrange something that is
+not in the catalogue.
+
+Three things that only surfaced by running it, all worth not reintroducing:
+
+- **Match whole stemmed tokens, never substrings.** `includes()` had "do you
+  build websites" returning *Worldbuilding & Canon Documentation* above the two
+  actual web services.
+- **`-es` is only a plural marker after a sibilant.** Stripping it blindly made
+  "websites" into "websit" while the alias "website" stayed whole, so a very
+  ordinary question found nothing at all. `-ss` words are left alone too.
+- **Cap results per catalogue section.** Filling five slots by score alone let
+  "what does a brand system cost" return five Brand & Identity services and no
+  pricing   the section-title words won every slot while the word the question
+  was actually about sat just under the threshold.
+
+`SERVICE_ALIASES` is the bridge between what a visitor types and what the
+catalogue calls things. It is permanently incomplete by nature; questions that
+return `FILE NIL` are the cheapest source of additions.
 
 ### PULSE's trace
 
