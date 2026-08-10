@@ -68,7 +68,7 @@ const SECTIONS: LegalSection[] = [
 
           <dt>Your rights</dt>
           <dd>
-            Access, correction, deletion, portability, objection and complaint —
+            Access, correction, deletion, portability, objection and complaint  
             available to you wherever you live, not only where the law compels
             it. Write to <Mail />.
           </dd>
@@ -84,8 +84,8 @@ const SECTIONS: LegalSection[] = [
       <>
         <p>
           This policy applies to <a href={LEGAL.siteUrl}>{LEGAL.domain}</a> and
-          every establishment presented on it — SATCORP, ANU, KYRAX, Ki-Ra
-          Studios, NAMTAR and PULSE — and to the enquiries we receive through it.
+          every establishment presented on it   SATCORP, ANU, KYRAX, Ki-Ra
+          Studios, NAMTAR and PULSE   and to the enquiries we receive through it.
         </p>
         <p>
           The controller, in the language of the European and United Kingdom
@@ -120,17 +120,17 @@ const SECTIONS: LegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>Clarity</strong> — your name; your organisation, if you give
+            <strong>Clarity</strong>   your name; your organisation, if you give
             one; your preferred contact channel; the address, handle or number to
             use; a description of the matter; and how you found us.
           </li>
           <li>
-            <strong>Scope</strong> — the service entries you marked, the retainer
+            <strong>Scope</strong>   the service entries you marked, the retainer
             class you indicated, your timeline, and a description of assets you
             already have.
           </li>
           <li>
-            <strong>Execution</strong> — the reporting cadence you prefer, and
+            <strong>Execution</strong>   the reporting cadence you prefer, and
             any further notes you choose to add.
           </li>
         </ul>
@@ -247,7 +247,7 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          This site sets no cookies — not necessary ones, not analytics ones, not
+          This site sets no cookies   not necessary ones, not analytics ones, not
           advertising ones. That is why you have not been shown a consent banner:
           there is nothing to consent to. Under the European ePrivacy rules and
           the United Kingdom Privacy and Electronic Communications Regulations,
@@ -303,14 +303,14 @@ const SECTIONS: LegalSection[] = [
           our instructions under contracts that require them to protect it.
         </p>
         <dl>
-          <dt>Vercel Inc. — hosting and delivery</dt>
+          <dt>Vercel Inc.   hosting and delivery</dt>
           <dd>
             Hosts and serves the site and runs the code that receives a brief.
             Sees request data including IP address and user-agent as part of
             delivering the site. United States, with a global edge network.
           </dd>
 
-          <dt>Discord Inc. — enquiry notification</dt>
+          <dt>Discord Inc.   enquiry notification</dt>
           <dd>
             A submitted brief is delivered as a formatted message into a private,
             access-controlled operations channel so that it is seen promptly.
@@ -319,7 +319,7 @@ const SECTIONS: LegalSection[] = [
             United States.
           </dd>
 
-          <dt>Resend — email delivery</dt>
+          <dt>Resend   email delivery</dt>
           <dd>
             Where email notification is enabled, carries a copy of the brief to
             our inbox. United States.
@@ -340,8 +340,8 @@ const SECTIONS: LegalSection[] = [
           apply to them until you are told otherwise.
         </p>
         <p>
-          Where an engagement requires a specific additional service — a code
-          repository, a design platform, a hosting account in your name — we will
+          Where an engagement requires a specific additional service   a code
+          repository, a design platform, a hosting account in your name   we will
           tell you what it is before your material goes into it.
         </p>
       </>
@@ -394,7 +394,7 @@ const SECTIONS: LegalSection[] = [
           <dt>An enquiry that becomes an engagement</dt>
           <dd>
             Kept for the life of the engagement, and afterwards for as long as
-            needed for accounting, tax and limitation purposes — ordinarily seven
+            needed for accounting, tax and limitation purposes   ordinarily seven
             years from the end of the relationship.
           </dd>
 
@@ -459,32 +459,32 @@ const SECTIONS: LegalSection[] = [
         </p>
         <ul>
           <li>
-            <strong>Access</strong> — a copy of the personal data we hold about
+            <strong>Access</strong>   a copy of the personal data we hold about
             you, and an explanation of what we do with it.
           </li>
           <li>
-            <strong>Rectification</strong> — correction of anything inaccurate,
+            <strong>Rectification</strong>   correction of anything inaccurate,
             and completion of anything incomplete.
           </li>
           <li>
-            <strong>Erasure</strong> — deletion, where we no longer need the data
+            <strong>Erasure</strong>   deletion, where we no longer need the data
             or where you withdraw the consent it rested on.
           </li>
           <li>
-            <strong>Restriction</strong> — a pause on processing while a dispute
+            <strong>Restriction</strong>   a pause on processing while a dispute
             about accuracy or legitimate interests is worked out.
           </li>
           <li>
-            <strong>Portability</strong> — the data you gave us, in a structured,
+            <strong>Portability</strong>   the data you gave us, in a structured,
             commonly used, machine-readable format.
           </li>
           <li>
-            <strong>Objection</strong> — to processing based on legitimate
+            <strong>Objection</strong>   to processing based on legitimate
             interests, on grounds relating to your situation, and absolutely to
             direct marketing at any time.
           </li>
           <li>
-            <strong>Withdrawal of consent</strong> — at any time, where consent
+            <strong>Withdrawal of consent</strong>   at any time, where consent
             was the basis, without affecting what was lawful before.
           </li>
         </ul>
@@ -554,7 +554,7 @@ const SECTIONS: LegalSection[] = [
             allow;
           </li>
           <li>
-            opt out of sale, sharing and targeted advertising — there is nothing
+            opt out of sale, sharing and targeted advertising   there is nothing
             to opt out of here, and an opt-out signal is honoured regardless;
           </li>
           <li>
@@ -592,7 +592,7 @@ const SECTIONS: LegalSection[] = [
     id: "other-regions",
     title: "If you are elsewhere",
     short:
-      "Canada, Brazil, Australia, Switzerland and beyond — the same rights, exercised the same way.",
+      "Canada, Brazil, Australia, Switzerland and beyond   the same rights, exercised the same way.",
     body: (
       <>
         <p>
@@ -700,12 +700,12 @@ const SECTIONS: LegalSection[] = [
 export default function PrivacyPage() {
   return (
     <LegalDocument
-      fileNumber="FILE 02 — PRIVACY"
+      fileNumber="FILE 02   PRIVACY"
       title="Privacy Policy"
       lede={
         <>
           What is collected, why, who else sees it, how long it is kept, and what
-          you can require of us. No cookies, no analytics, no trackers — and this
+          you can require of us. No cookies, no analytics, no trackers   and this
           document says so in the specific rather than the general.
         </>
       }
