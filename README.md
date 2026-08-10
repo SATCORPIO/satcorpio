@@ -21,8 +21,15 @@ that is not the default:
 
 - **Settings → General → Root Directory:** `satcorp-web`
 
-Framework preset, build command and output directory are all detected from
-there.
+`satcorp-web/vercel.json` then pins the framework, build command, install
+command and output directory. It is committed deliberately: this repository
+replaced a Vite site, and a Vercel project carries the previous build settings
+across a repository change. Values in `vercel.json` take precedence over the
+dashboard, so a stale `vite build` override cannot break the deployment.
+
+Any override still set under **Settings → Build and Deployment** should be
+cleared regardless, so the two places do not disagree about what this project
+is.
 
 ### Environment variables
 
