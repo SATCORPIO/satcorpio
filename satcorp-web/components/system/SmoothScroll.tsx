@@ -12,8 +12,8 @@ import { useReducedMotion } from "@/lib/tier";
  * ScrollTrigger, so scrubbed camera rigs stay locked to the actual scroll
  * position rather than the browser's.
  *
- * The lerp is retuned per establishment — ANU is the slowest room in the
- * building, PULSE the quickest — by rebuilding the instance on arrival.
+ * The lerp is retuned per establishment   ANU is the slowest room in the
+ * building, PULSE the quickest   by rebuilding the instance on arrival.
  */
 export function SmoothScroll() {
   const pathname = usePathname();
