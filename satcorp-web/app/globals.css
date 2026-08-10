@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 /* ============================================================
-   SATCORP — GLOBAL DESIGN SYSTEM
+   SATCORP   GLOBAL DESIGN SYSTEM
    "The Concierge of Crime"
-   Fingerprint 2.1 — The Palette Doctrine (BLK / RED / BONE)
-   Fingerprint 2.2 — Typography, The Three Voices
+   Fingerprint 2.1   The Palette Doctrine (BLK / RED / BONE)
+   Fingerprint 2.2   Typography, The Three Voices
    ============================================================ */
 
 @theme {
@@ -400,7 +400,7 @@ html.lenis body {
     text-wrap: balance;
   }
 
-  /* 35mm noir finish — grain sits above content, below chrome. */
+  /* 35mm noir finish   grain sits above content, below chrome. */
   .grain::after {
     content: "";
     position: fixed;
@@ -467,7 +467,7 @@ html.lenis body {
 }
 
 /* ============================================================
-   REDUCED MOTION — content parity, zero exceptions.
+   REDUCED MOTION   content parity, zero exceptions.
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
