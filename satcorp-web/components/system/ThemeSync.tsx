@@ -5,7 +5,7 @@ import type { ThemeId } from "@/lib/divisions";
 
 /**
  * The page content is scoped by its own [data-division] wrapper, but the fixed
- * chrome — tab bar, seal, cursor — sits outside it in the root layout. This
+ * chrome   tab bar, seal, cursor   sits outside it in the root layout. This
  * mirrors the current establishment onto <html> so those elements can read the
  * same accent.
  */
