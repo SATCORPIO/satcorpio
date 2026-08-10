@@ -16,7 +16,7 @@ import { divisionFromPath } from "@/lib/divisions";
 import { Monogram } from "./Monogram";
 
 /**
- * FINGERPRINT 2.4 — THE CASE-FILE TRANSITION
+ * FINGERPRINT 2.4   THE CASE-FILE TRANSITION
  *
  * Leaving an establishment folds the viewport shut like a manila folder, a
  * stamp comes down on the cover, and the next file opens. Roughly 900ms end to
@@ -38,7 +38,7 @@ export function useConciergeNav(): NavigateFn {
 const OUT_MS = 520;
 /**
  * requestAnimationFrame stalls in a backgrounded tab, which would leave the
- * closing animation — and therefore the navigation it triggers — suspended.
+ * closing animation   and therefore the navigation it triggers   suspended.
  * This guarantees the trip completes whatever the browser decides to do.
  */
 const SAFETY_MS = 1600;
@@ -189,7 +189,7 @@ export function CaseFileTransition({ children }: { children: ReactNode }) {
           <Monogram className="size-10 text-blood" />
           <div className="stamp text-blood text-[0.7rem]">TRANSFERRED</div>
           <div className="label text-[0.6rem]">
-            {division.name} — FILE OPEN
+            {division.name}   FILE OPEN
           </div>
         </div>
       </div>
