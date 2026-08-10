@@ -3,7 +3,7 @@ import { Stamp } from "@/components/fingerprints/Stamp";
 import { LEGAL } from "@/lib/legal";
 
 /**
- * THE RECORD — the frame both legal documents are set in.
+ * THE RECORD   the frame both legal documents are set in.
  *
  * Sections are passed as data rather than written inline so the contents list
  * and the document itself cannot drift apart: one array produces both. A table
@@ -103,7 +103,7 @@ export function LegalDocument({
 
             {section.short && (
               <p className="mt-5 border-l-2 border-brass/60 bg-brass/[0.06] px-5 py-3.5 font-mono text-[0.72rem] leading-relaxed text-bone">
-                <span className="text-brass">In short — </span>
+                <span className="text-brass">In short   </span>
                 {section.short}
               </p>
             )}
