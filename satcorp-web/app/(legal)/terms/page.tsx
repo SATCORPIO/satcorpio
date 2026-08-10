@@ -28,8 +28,8 @@ const SECTIONS: LegalSection[] = [
         <p>
           This website at{" "}
           <a href={LEGAL.siteUrl}>{LEGAL.domain}</a> and each of its
-          establishments — SATCORP, ANU, KYRAX, Ki-Ra Studios, NAMTAR and PULSE
-          — are operated by {LEGAL.entity}, {LEGAL.form} (
+          establishments   SATCORP, ANU, KYRAX, Ki-Ra Studios, NAMTAR and PULSE
+            are operated by {LEGAL.entity}, {LEGAL.form} (
           <strong>&ldquo;SATCORP&rdquo;</strong>,{" "}
           <strong>&ldquo;we&rdquo;</strong>, <strong>&ldquo;us&rdquo;</strong>).
           {LEGAL.registration ? ` Registered as ${LEGAL.registration}.` : ""}
@@ -105,8 +105,8 @@ const SECTIONS: LegalSection[] = [
           </li>
           <li>
             <strong>Forward-looking statements are not commitments.</strong>{" "}
-            Projects marked <em>in development</em> or <em>in production</em> —
-            including NAMTAR and the Ki-Ra Studios slate — describe present
+            Projects marked <em>in development</em> or <em>in production</em>  
+            including NAMTAR and the Ki-Ra Studios slate   describe present
             intent. Features, release dates, platforms and content may change or
             be abandoned entirely. Nothing about them constitutes a promise, a
             pre-order, or a solicitation of investment.
@@ -300,8 +300,8 @@ const SECTIONS: LegalSection[] = [
             Concepts, drafts and directions not selected remain ours.
           </li>
           <li>
-            Third-party assets — fonts, stock, plugins, engines, models and
-            libraries — are licensed to you on their own terms, not assigned, and
+            Third-party assets   fonts, stock, plugins, engines, models and
+            libraries   are licensed to you on their own terms, not assigned, and
             it is your responsibility to maintain those licences.
           </li>
           <li>
@@ -560,7 +560,7 @@ const SECTIONS: LegalSection[] = [
   {
     id: "law",
     title: "Governing law and disputes",
-    short: `${governingLaw().replace(/^the /, "The ")} governs. Talk to us first — most things end there.`,
+    short: `${governingLaw().replace(/^the /, "The ")} governs. Talk to us first   most things end there.`,
     body: (
       <>
         <p>
@@ -735,7 +735,7 @@ const SECTIONS: LegalSection[] = [
 export default function TermsPage() {
   return (
     <LegalDocument
-      fileNumber="FILE 01 — TERMS"
+      fileNumber="FILE 01   TERMS"
       title="Terms of Service"
       lede={
         <>
