@@ -5,7 +5,7 @@
  *
  * The monogram is drawn once into an offscreen 2D canvas, then every opaque
  * pixel becomes a candidate position. This keeps the particle mark and the SVG
- * mark the same artwork — change the path in one place and both follow.
+ * mark the same artwork   change the path in one place and both follow.
  */
 
 export interface StrokeSpec {
