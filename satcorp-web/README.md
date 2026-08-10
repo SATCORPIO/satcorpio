@@ -22,11 +22,11 @@ and it takes enquiries end to end.
 | 4 | KYRAX   The Registry, an archive of index cards | **Done** |
 | 5 | Ki-Ra   The Screening Room, a projection with dust in the beam | **Done** |
 | 6 | NAMTAR   the planet, orbit-to-surface scroll journey | **Done** |
-| 7 | PULSE   the EKG ribbon | Next |
-| 8 | Hardening, a11y audit, deploy to SATCORP iron | Pending |
+| 7 | PULSE   The Signal, an EKG trace that reacts to the reader | **Done** |
+| 8 | Hardening, a11y audit, deploy to SATCORP iron | Next |
 
-Divisions still awaiting their own 3D worlds ship full copy and structure with
-designed placeholder frames, so dropping real assets in costs no layout work.
+All six establishments are built. Slots still awaiting real artwork ship as
+designed placeholder frames, so dropping assets in costs no layout work.
 
 ---
 
@@ -82,6 +82,7 @@ components/
   ledger/               the skill-deck commerce layer
   partner/              the branching partnership intake
   system/               Stage, DivisionShell, SmoothScroll, Placeholder
+  worlds/               one folder per division's 3D scene
 
 lib/
   divisions.ts          the six establishments + engagement model
@@ -151,11 +152,15 @@ Deliberately different on every route, so the establishments don't converge:
   rest of the page is ordinary.
 - **NAMTAR**   a journey the camera *descends*: orbit, dive, surface, orbit
   again. The page is the descent.
+- **PULSE**   a monitor you are *wired to*. The only world that does not move
+  with the scroll but *reacts* to it: the trace is level and unhurried until a
+  section arrives, and then the heart quickens.
 
 Each of those routes owns its own red thread in-scene (lamp cord,
-cross-reference, film leader, orbit line) and is listed in `OWNS_ITS_THREAD` in
-`ThreadBackdrop`, which suppresses the ambient pass so there is never a second
-WebGL context on the page.
+cross-reference, film leader, orbit line, EKG trace) and is listed in
+`OWNS_ITS_THREAD` in `ThreadBackdrop`, which suppresses the ambient pass so
+there is never a second WebGL context on the page. Only SATCORP   and the
+intake and legal routes that resolve to it   still gets the ambient pass.
 
 Volumetric light lessons, learned building the projection room: never shoot
 down the beam axis (it renders as fog, not a shaft); keep the cone geometry
@@ -228,6 +233,35 @@ The lite tier gets a two-gradient still. The build plan calls for a
 pre-rendered scroll-scrub video of the same journey; that asset does not exist
 yet, and `OrbitStill` in `PlanetScene` is where it drops in.
 
+### PULSE's trace
+
+`components/worlds/pulse/Signal.tsx` deliberately does **not** reuse
+`<RedThread>`. That component sweeps a TubeGeometry along a curve, and a tube
+displaced vertically keeps its cross-section perpendicular to X   so its
+apparent thickness falls off as the slope steepens, and the R spike is very
+nearly vertical. The trace would have thinned to nothing at exactly the point
+the shape exists for.
+
+So it is a ribbon: two vertices per sample, offset along the *normal* of the
+curve, which the vertex shader derives from the waveform's own slope by
+sampling one step along and taking the perpendicular. Constant thickness at any
+gradient, and a third of the vertices of a tube.
+
+The PQRST waveform is written twice   once in GLSL in `Signal.tsx`, once in
+TypeScript in `heartbeat.ts`. The shader cannot call the TypeScript and the
+lite-tier SVG still cannot call the shader, so the alternative to duplicating
+five gaussians is a fallback that draws a *different* waveform to the one
+everyone else sees. **If either copy changes, change both.**
+
+That file is `heartbeat.ts` rather than the obvious `signal.ts` because
+`Signal.tsx` sits beside it, and two modules differing only in case break
+outright on a case-insensitive filesystem.
+
+Sections quicken the trace by carrying `data-signal="<weight>"`.
+`SignalTriggers` wires every marked section from one place, so the page stays a
+server component and marking a section costs an attribute rather than an
+import.
+
 ### The Ledger and the brief
 
 `lib/ledger-catalog.ts` is the single source of truth for everything sold. It
@@ -285,6 +319,16 @@ server re-derives the field list from the division that was actually chosen, so
 a payload carrying another branch's fields gains nothing. Adding a question is a
 line in `PARTNER_DIVISIONS`   the form, the review screen, the Discord embed and
 the email all read from it.
+
+`/partner?division=<id>` opens straight on that branch, which is how PULSE's
+`Broadcast With Us` arrives. That query is read with `useSyncExternalStore`, not
+`useSearchParams`: the hook turns the form's subtree into a client-side-
+rendering bailout, so the server would ship a Suspense fallback instead of the
+form and *every* visitor would wait on hydration to see a single field. An
+effect would work but has to `setState` to do it   a cascading render for
+something knowable on the first client pass. Reading it as an external store
+keeps the form server-rendered and costs one re-render when the server and
+client snapshots disagree.
 
 ---
 

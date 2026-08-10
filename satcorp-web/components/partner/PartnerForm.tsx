@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { gsap } from "@/lib/gsap";
 import {
   PARTNER_CHANNELS,
@@ -57,9 +57,46 @@ const EMPTY_SHARED: Shared = {
   notes: "",
 };
 
+/** The query string never changes under us, so there is nothing to subscribe to. */
+const noSubscription = () => () => {};
+
+/**
+ * The division named in the URL: `/partner?division=pulse` opens on that branch.
+ *
+ * Read through `useSyncExternalStore` rather than `useSearchParams`, and rather
+ * than in an effect. `useSearchParams` turns this subtree into a
+ * client-side-rendering bailout, so the server would ship a fallback instead of
+ * the form and *every* visitor would wait on hydration to see a single field.
+ * An effect would work but has to `setState` to do it, which is a cascading
+ * render for something that was knowable on the first client pass.
+ *
+ * This reads null on the server and the real value on the client; React
+ * re-renders once when the two snapshots disagree, which is exactly the shape
+ * of the problem. Anything unrecognised is ignored rather than trusted   the
+ * result only ever comes from the table.
+ */
+function useRequestedDivision(): string | null {
+  return useSyncExternalStore(
+    noSubscription,
+    () => {
+      const id = new URLSearchParams(window.location.search).get("division");
+      return id && PARTNER_DIVISIONS.some((d) => d.id === id) ? id : null;
+    },
+    () => null,
+  );
+}
+
 export function PartnerForm() {
-  const [step, setStep] = useState<Step>("division");
-  const [divisionId, setDivisionId] = useState<string | null>(null);
+  // Null until the reader picks one. The URL supplies the opening branch, and
+  // deriving rather than seeding state means the value is still correct on the
+  // render after hydration, when the query first becomes readable.
+  const requested = useRequestedDivision();
+  const [chosenStep, setStep] = useState<Step | null>(null);
+  const [chosenId, setDivisionId] = useState<string | null>(null);
+
+  const divisionId = chosenId ?? requested;
+  const step: Step = chosenStep ?? (requested ? "proposal" : "division");
+
   const [shared, setShared] = useState<Shared>(EMPTY_SHARED);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string[]>>({});

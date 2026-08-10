@@ -304,7 +304,17 @@ One continuous scroll journey around and down to a full 3D planet:
 **Establishment identity:** a live media network. The one page allowed energy   motion, hot red, glow. Accent: `--blood-hot #FF2B3A`. Ratio: bold grotesk, broadcast lower-thirds, `● LIVE` chips.
 
 ### 9.1 The 3D World: The EKG
-A continuous **audio-reactive red waveform ribbon** running the full height of the page   it *is* this page's red thread, rendered as this establishment's native object: a heartbeat. Idle it beats at 60bpm; it spikes as sections enter; if ambient audio is enabled it reacts to the score. Built on the shared RedThread shader with a displacement uniform   one codebase, two personalities.
+A continuous **red waveform ribbon** behind the whole page   it *is* this page's red thread, rendered as this establishment's native object: a heartbeat. Idle it beats at 60bpm and it quickens as sections arrive.
+
+**Two deviations from the original spec, both deliberate.**
+
+*Not built on the shared RedThread shader.* The plan called for "one codebase, two personalities"   the same tube with a displacement uniform. That does not survive contact with the waveform. `RedThread` sweeps a TubeGeometry along a curve, and a tube displaced vertically keeps its cross-section perpendicular to X, so its apparent thickness falls off as the slope steepens. The R spike is very nearly vertical, so the trace would have thinned to nothing at exactly the point the shape exists for. `components/worlds/pulse/Signal.tsx` draws a **ribbon** instead: two vertices per sample offset along the curve's *normal*, which the vertex shader derives from the waveform's own slope. Constant thickness at any gradient, and a third of the vertices.
+
+*Not audio-reactive.* There is no ambient audio to react to   the toggle and the never-produced beds were cut in the August 2026 pass (§10). Idle beat plus section-entry quickening is the honest spec, and it is what shipped. If a score ever arrives, the amplitude and rate uniforms are already the seam to drive from it.
+
+The waveform is a five-gaussian PQRST complex written **twice**: once in GLSL for the trace, once in TypeScript in `heartbeat.ts` for the lite-tier still. The shader cannot call the TypeScript and the lite tier cannot call the shader, so the alternative to duplicating it is a fallback that draws a different waveform to the one everyone else sees. If either copy changes, change both.
+
+Sections quicken the trace by carrying a `data-signal` attribute whose value is how hard that section hits; one client component wires every marked section at once, so the page stays a server component and marking a section costs an attribute rather than an import.
 
 ### 9.2 Section flow
 1. **Hero.** > **PULSE**   *The Digital Frontline of SATCORP.*
@@ -315,7 +325,9 @@ A continuous **audio-reactive red waveform ribbon** running the full height of t
 5. **Growth Intelligence**   animated dashboard mock (engagement, campaign performance, community analytics, revenue tracking, sponsorship metrics)   charts draw on scroll. Note KYRAX powers the analytics (thread link).
 6. **Community Fabric**   groups, discussions, events, shared experiences, creator-to-community connections.
 7. **Core Statement.** Full-bleed, waveform swelling behind: *"Pulse is where people connect with ideas, creators, and experiences. It is the heartbeat of SATCORP's digital communities."*
-8. **CTA.** `Join the Signal` (Discord) · `Broadcast With Us` (intake, PULSE services pre-selected).
+8. **CTA.** `Join the Signal` (Discord) · `Broadcast With Us` → `/partner?division=pulse`, which opens the partnership intake on the PULSE branch (§9.5) · `Begin the Brief` for anyone who is actually commissioning work.
+
+The deep link is read with `useSyncExternalStore` rather than `useSearchParams`. That hook turns the form's subtree into a client-side-rendering bailout, so the server ships a fallback instead of the form and *every* visitor waits on hydration to see a single field   which is a poor trade for a nicety that only deep-linked arrivals use. Reading the query as an external store keeps the form server-rendered and costs one re-render when the server and client snapshots disagree.
 
 ---
 
@@ -420,32 +432,34 @@ Same anti-spam as the Brief, and its own rate limiter so a burst of partner enqu
 | **4   KYRAX** | The Registry   instanced index cards, sorting wave, attention | **Done** |
 | **5   Ki-Ra** | Screening room, ARK cluster cards, provenance, contact sheet | **Done** |
 | **6   NAMTAR** | Planet + atmosphere, orbit-to-surface scrub, consciousness morph, stat wall | **Done** |
-| **7   PULSE** | EKG ribbon, broadcast grid, dashboard animation | **Next** |
-| **8   Hardening** | Perf passes on real devices, a11y audit, SEO/OG (per-division OG cards styled as dossier covers), analytics, Docker deploy on SATCORP iron | Pending |
+| **7   PULSE** | EKG ribbon, creator network, schedule, dashboard animation | **Done** |
+| **8   Hardening** | Perf passes on real devices, a11y audit, SEO/OG (per-division OG cards styled as dossier covers), analytics, Docker deploy on SATCORP iron | **Next** |
 | **9   Ask the Registry, rebuilt** | See below | Pending |
+
+All six establishments are now built. Every division owns its own 3D world and its own relationship to the page, and the ambient thread pass survives only for SATCORP and the routes that resolve to it.
 
 ---
 
 ## 13a. What is left to build
 
-*Current as of the August 2026 pass. Everything above is shipped and verified;
-this is the outstanding work, most-load-bearing first.*
+*Current as of the PULSE pass, 10 August 2026. All six establishments are
+built; this is the outstanding work, most-load-bearing first.*
 
 ### Committed
 
-1. **PULSE `/pulse`** (§9.1–9.2). The last division still on a placeholder page. Needs the audio-reactive EKG ribbon   this page's native form of the red thread   plus the broadcast grid, live/scheduled event cards and the scroll-drawn analytics dashboard. Note that "audio-reactive" now has no ambient audio to react to (§10); idle-beat plus section-entry spikes is the honest spec until a bed exists.
+1. **Ask the Registry, rebuilt** (§6). Removed from `/kyrax` in this pass and scheduled to return. The old one was a canned keyword lookup over nine hard-coded entries   it could only answer what it was told to answer, and the "declines the rest, pleasantly" fallback fired on nearly everything, which read as a broken toy rather than as discretion. `components/worlds/kyrax/AskTheRegistry.tsx` is still in the tree, unimported, as the reference for tone and layout. **Decide first** whether the rebuild is (a) a genuinely retrieval-backed answer over the ecosystem's own content, or (b) an honest, small, clearly-bounded index that says what it covers up front. Do not ship (c): the same canned lookup with more entries.
 
-2. **Ask the Registry, rebuilt** (§6). Removed from `/kyrax` in this pass and scheduled to return. The old one was a canned keyword lookup over nine hard-coded entries   it could only answer what it was told to answer, and the "declines the rest, pleasantly" fallback fired on nearly everything, which read as a broken toy rather than as discretion. `components/worlds/kyrax/AskTheRegistry.tsx` is still in the tree, unimported, as the reference for tone and layout. **Decide first** whether the rebuild is (a) a genuinely retrieval-backed answer over the ecosystem's own content, or (b) an honest, small, clearly-bounded index that says what it covers up front. Do not ship (c): the same canned lookup with more entries.
+2. **NAMTAR lite-tier video** (§8). The pre-rendered scroll-scrub of the orbit-to-surface journey, rendered from the same scene. `OrbitStill` in `PlanetScene.tsx` is a two-gradient stand-in and is where it drops in.
 
-3. **NAMTAR lite-tier video** (§8). The pre-rendered scroll-scrub of the orbit-to-surface journey, rendered from the same scene. `OrbitStill` in `PlanetScene.tsx` is a two-gradient stand-in and is where it drops in.
+3. **Hardening** (phase 8). Perf passes on real devices, a11y audit, per-division OG dossier-cover images, sitemap and structured data, Umami, Docker deploy. This is the next phase.
 
-4. **Hardening** (phase 8). Perf passes on real devices, a11y audit, per-division OG dossier-cover images, sitemap and structured data, Umami, Docker deploy.
+4. **PULSE's own art.** The one division whose page ships with no placeholder frames at all, because its world is procedural. Creator profiles, event cards and the Growth Intelligence dashboard are all structured to take real data   the dashboard's numbers are hand-authored constants in `Dashboard.tsx` and are explicitly a mock.
 
 ### Decisions waiting on you
 
 5. **Three components are unmounted but still in the tree**   `worlds/satcorp/NetworkScene.tsx` (+ `NetworkBoard`), `worlds/satcorp/ServerRack.tsx`, `worlds/satcorp/ExpansionTimeline.tsx`. They were removed from the front page, not deleted, because bringing back a 3D scene is expensive and deleting one is cheap. Either give them a home or delete them   leaving them indefinitely is how a codebase acquires a haunted wing.
 
-6. **`PARTNER_WEBHOOK_URL` in production.** Currently unset, so `/partner` falls back to the client brief's channel. Point it at the partnerships desk before the route sees real traffic (§9.5).
+6. ~~**`PARTNER_WEBHOOK_URL` in production.**~~ Set in Vercel on 10 August 2026. Note that environment changes only reach a *new* deployment, so it takes effect from the next build onward.
 
 7. **The ARK clusters are all `OFFLINE`** (§7). Whether that is the permanent posture or a temporary state, the page currently tells visitors three addresses exist and none of them are receiving. If they stay dark, the section eventually wants different copy   or the `Request the address →` CTA wants a waiting list behind it.
 
