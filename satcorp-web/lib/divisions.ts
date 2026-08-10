@@ -2,8 +2,8 @@
  * The six establishments.
  *
  * Every page is art-directed as its own standalone site. This table holds the
- * handful of values that are allowed to differ — accent, scroll feel, cursor,
- * voice — so the rest of the system can stay identical across all of them.
+ * handful of values that are allowed to differ   accent, scroll feel, cursor,
+ * voice   so the rest of the system can stay identical across all of them.
  */
 
 export type DivisionId =
@@ -25,7 +25,7 @@ export interface Division {
   /** Short label for the file-tab nav. */
   tab: string;
   href: string;
-  /** One line, dossier voice — what this division is inside the ecosystem. */
+  /** One line, dossier voice   what this division is inside the ecosystem. */
   role: string;
   /** Hero sub-headline. */
   tagline: string;
@@ -33,7 +33,7 @@ export interface Division {
   establishment: string;
   /** Hex accent. Mirrors the [data-division] block in globals.css. */
   accent: string;
-  /** Lenis lerp. Lower is heavier — ANU is the slowest room in the building. */
+  /** Lenis lerp. Lower is heavier   ANU is the slowest room in the building. */
   scrollLerp: number;
   cursor: CursorKind;
   /** Status chip rendered in the tab bar. */
@@ -78,7 +78,7 @@ export const DIVISIONS: Division[] = [
     tagline:
       "Tactical intelligence. Connected systems. The cognitive foundation behind everything SATCORP operates.",
     establishment:
-      "A private intelligence registry. Not a terminal — an archive that already knows.",
+      "A private intelligence registry. Not a terminal   an archive that already knows.",
     accent: "#d6e4e5",
     scrollLerp: 0.1,
     cursor: "block",
@@ -142,14 +142,14 @@ export function divisionFromPath(pathname: string): Division {
   return match ?? DIVISION_BY_ID.satcorp;
 }
 
-/** The Concierge Engagement Model — the sales spine, reused by the intake form. */
+/** The Concierge Engagement Model   the sales spine, reused by the intake form. */
 export const ENGAGEMENT_MODEL = [
   {
     id: "clarity",
     step: "I",
     title: "Clarity",
     subtitle: "Discovery & Truth Extraction",
-    body: "Before anything is built, we establish what is actually true — the goal beneath the request, the constraint nobody mentioned, the outcome that would count as a win.",
+    body: "Before anything is built, we establish what is actually true   the goal beneath the request, the constraint nobody mentioned, the outcome that would count as a win.",
   },
   {
     id: "scope",
@@ -163,6 +163,6 @@ export const ENGAGEMENT_MODEL = [
     step: "III",
     title: "Execution",
     subtitle: "Development & Deployment",
-    body: "Built, reviewed at checkpoints, polished, packaged, and handed off — deployable, scalable, and documented well enough to outlive the engagement.",
+    body: "Built, reviewed at checkpoints, polished, packaged, and handed off   deployable, scalable, and documented well enough to outlive the engagement.",
   },
 ] as const;
