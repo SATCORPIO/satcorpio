@@ -11,7 +11,7 @@ import { SURFACE_SUN } from "./Terrain";
 /**
  * THE FIVE PILLARS
  *
- * Explore, Build, Evolve, Survive, Command — standing on the terrain as
+ * Explore, Build, Evolve, Survive, Command   standing on the terrain as
  * monoliths that rise out of it while the reader passes the section that names
  * them, and light up when one is chosen from the list.
  *
@@ -69,7 +69,7 @@ const fragmentShader = /* glsl */ `
     // Worked edges, so the silhouette reads even against a dark hillside.
     color += uAccent * 0.10 * smoothstep(0.44, 0.5, abs(vUv.x - 0.5));
 
-    // A single seam of light running the height of the slab — the thing that
+    // A single seam of light running the height of the slab   the thing that
     // says this was made, not eroded.
     float seam = exp(-pow((vUv.x - 0.5) * 30.0, 2.0));
     float travel = fract(vUv.y * 0.6 - uTime * 0.06);
@@ -128,7 +128,7 @@ function Monolith({ index, x }: { index: number; x: number }) {
     const m = mesh.current;
     if (m) {
       m.visible = blend > 0.01 && up > 0.001;
-      // Ease out — the last few metres are slow, as something that heavy
+      // Ease out   the last few metres are slow, as something that heavy
       // coming out of the ground would be.
       const eased = 1 - Math.pow(1 - up, 3);
       m.position.y = -ROOT_DEPTH + eased * RISE;
