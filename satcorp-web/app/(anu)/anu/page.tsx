@@ -6,7 +6,7 @@ import { LedgerButton } from "@/components/ledger/LedgerButton";
 import { AnuStudy } from "@/components/worlds/anu/AnuStudy";
 
 /**
- * ESTABLISHMENT 2 — ANU
+ * ESTABLISHMENT 2   ANU
  * A private study, received at midnight. Brass, generous whitespace, a narrow
  * measure, and the slowest scroll on the site. Nothing here is in a hurry.
  */
@@ -50,7 +50,7 @@ export default function AnuPage() {
       {/* The study, fixed behind the writing. The camera moves as you read. */}
       <AnuStudy />
 
-      {/* ---------- I. HERO — framed on the empty chair ---------- */}
+      {/* ---------- I. HERO   framed on the empty chair ---------- */}
       <section className="relative grid min-h-[92vh] items-end gap-16 pb-24 pt-28 lg:min-h-[96vh]">
         <div className="max-w-2xl">
           <Stamp tone="brass">EYES ONLY</Stamp>
@@ -77,12 +77,12 @@ export default function AnuPage() {
           </p>
 
           <p className="label mt-14 text-[0.55rem]">
-            Scroll — the lamp is already on
+            Scroll   the lamp is already on
           </p>
         </div>
       </section>
 
-      {/* ---------- II. THE PHILOSOPHY — the fountain pen ---------- */}
+      {/* ---------- II. THE PHILOSOPHY   the fountain pen ---------- */}
       <section className="relative max-w-2xl py-24 sm:py-32">
         <p className="label label-accent">The Philosophy</p>
         <p className="mt-7 font-display text-[clamp(1.35rem,3vw,2rem)] leading-[1.4] text-bone">
@@ -99,7 +99,7 @@ export default function AnuPage() {
         </p>
       </section>
 
-      {/* ---------- III. WHAT ANU OVERSEES — the dossier stack ---------- */}
+      {/* ---------- III. WHAT ANU OVERSEES   the dossier stack ---------- */}
       <section className="relative py-16">
         <p className="label label-accent">What ANU Oversees</p>
 
@@ -125,7 +125,7 @@ export default function AnuPage() {
         </ul>
       </section>
 
-      {/* ---------- IV. THE VISION — the globe ---------- */}
+      {/* ---------- IV. THE VISION   the globe ---------- */}
       <section className="relative max-w-2xl py-24 sm:py-32">
         <p className="label label-accent">The Vision</p>
         <p className="mt-7 font-sans leading-relaxed text-bone-dim">
@@ -136,12 +136,12 @@ export default function AnuPage() {
         </p>
         <p className="mt-5 font-sans leading-relaxed text-bone-dim">
           ANU exists to keep that ecosystem cohesive, adaptable and
-          forward-looking — providing the architectural direction that lets
+          forward-looking   providing the architectural direction that lets
           every part of SATCORP grow without losing sight of the larger mission.
         </p>
       </section>
 
-      {/* ---------- V. THE ENGAGEMENT MODEL — the rotary phone ---------- */}
+      {/* ---------- V. THE ENGAGEMENT MODEL   the rotary phone ---------- */}
       <section className="relative border-t border-bone/10 py-24">
         <p className="label label-accent">The Concierge Engagement Model</p>
         <p className="mt-4 max-w-xl font-mono text-[0.72rem] leading-relaxed text-bone-dim">
@@ -172,7 +172,7 @@ export default function AnuPage() {
         </ol>
       </section>
 
-      {/* ---------- CTA — the receiver lifts ---------- */}
+      {/* ---------- CTA   the receiver lifts ---------- */}
       <section className="relative border-t border-bone/10 py-24 text-center">
         <p className="mx-auto max-w-lg font-display text-2xl leading-relaxed text-bone">
           If you know what you need, say so. If you don&rsquo;t, that&rsquo;s
