@@ -10,7 +10,7 @@ import { Registry } from "./Registry";
 /**
  * The archive sits behind the whole KYRAX page. Where ANU's camera moves
  * around a room you are visiting, this one travels forward through something
- * with no floor and no far wall — you are inside the index, and it goes on.
+ * with no floor and no far wall   you are inside the index, and it goes on.
  */
 export function RegistryScene() {
   const caps = useCapabilities();
@@ -35,7 +35,7 @@ export function RegistryScene() {
 
         <Registry count={count} />
 
-        {/* Fingerprint 2.3 — in an archive the red thread is a cross-reference:
+        {/* Fingerprint 2.3   in an archive the red thread is a cross-reference:
             one length of it running the depth of the index, tying files
             together that nobody else thought to connect. */}
         <RedThread
@@ -53,7 +53,7 @@ export function RegistryScene() {
         />
       </Stage>
 
-      {/* The writing runs down the left, so the scrim is weighted left —
+      {/* The writing runs down the left, so the scrim is weighted left  
           a radial vignette would have been darkest exactly where the text
           isn't. The archive stays legible on the right. */}
       <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/78 to-ink/25" />
