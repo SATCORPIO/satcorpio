@@ -1,0 +1,22 @@
+# The Next.js app carries its own .gitignore — this covers the workspace around it.
+
+# OS and sync detritus. The repo lives inside OneDrive, which litters.
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.tmp
+
+# Blender working files. The .blend itself is source of truth and IS committed;
+# its autosaves and backups are not.
+*.blend1
+*.blend2
+*.blend@
+
+# Secrets, wherever they land.
+.env
+.env.*
+!.env.example
+
+# Filed engagement briefs — client data, never committed.
+.intake/
