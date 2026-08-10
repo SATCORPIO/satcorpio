@@ -1,9 +1,9 @@
 /**
- * THE LEDGER — the single source of truth for everything SATCORP sells.
+ * THE LEDGER   the single source of truth for everything SATCORP sells.
  *
  * Feeds three surfaces: the ledger modal, the Scope step of the engagement
  * brief, and (later) the package/tier pages. Only market-facing, deliverable
- * work lives here — identity, ideal clients and differentiators from the skill
+ * work lives here   identity, ideal clients and differentiators from the skill
  * deck are copy, not products.
  */
 
@@ -52,7 +52,7 @@ export const LEDGER: LedgerSection[] = [
       {
         id: "wordmark",
         name: "Wordmark & Logotype",
-        scope: "Minimalist, luxury or modern — one direction, taken seriously",
+        scope: "Minimalist, luxury or modern   one direction, taken seriously",
         deliverable: "PNG / SVG / AI source, lockups, favicon set",
         tiers: ["basic", "standard", "premium"],
         featured: true,
@@ -88,7 +88,7 @@ export const LEDGER: LedgerSection[] = [
       {
         id: "templates",
         name: "Editable Template Systems",
-        scope: "Canva and equivalent — so your team can hold the line",
+        scope: "Canva and equivalent   so your team can hold the line",
         deliverable: "Template library with usage notes",
         tiers: ["basic", "standard"],
       },
