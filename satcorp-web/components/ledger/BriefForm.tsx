@@ -89,7 +89,7 @@ export function BriefForm() {
   // useWatch subscribes without handing back an unmemoizable function.
   const services = useWatch({ control, name: "services" }) ?? [];
 
-  // Ledger selections are the client's own marks — they arrive already made.
+  // Ledger selections are the client's own marks   they arrive already made.
   useEffect(() => {
     if (hydrated) setValue("services", selected);
   }, [hydrated, selected, setValue]);
@@ -210,7 +210,7 @@ export function BriefForm() {
             <Movement
               title="Clarity"
               subtitle="Discovery & Truth Extraction"
-              body="Tell me what's actually going on. Not the version you'd put in a brief — the version you'd say out loud."
+              body="Tell me what's actually going on. Not the version you'd put in a brief   the version you'd say out loud."
             />
 
             <div className="grid gap-8 sm:grid-cols-2">
@@ -252,7 +252,7 @@ export function BriefForm() {
               label="And at what"
               required
               error={errors.contact?.message}
-              hint="Address, handle, or number — whichever matches the above."
+              hint="Address, handle, or number   whichever matches the above."
             >
               <input
                 {...register("contact")}
@@ -317,7 +317,7 @@ export function BriefForm() {
                   <ChoiceRow
                     name="Retainer"
                     options={RETAINER_CLASSES.map(
-                      (c) => `${c.label} — ${c.range}`,
+                      (c) => `${c.label}   ${c.range}`,
                     )}
                     value={field.value || undefined}
                     onChange={field.onChange}
@@ -406,7 +406,7 @@ export function BriefForm() {
             <p className="border-l-2 border-brass/60 bg-brass/[0.06] px-5 py-4 font-mono text-[0.68rem] leading-relaxed text-bone-dim">
               Pressing the seal sends this brief to SATCORP and files it under
               your reference. It is used to answer you and, if we proceed, to
-              run the engagement — never sold, never shared with advertisers.
+              run the engagement   never sold, never shared with advertisers.
               You may ask for a copy or ask us to delete it at any time. The{" "}
               <ThreadLink
                 href="/privacy"
@@ -488,7 +488,7 @@ function NoticeAtCollection() {
     <p className="font-mono text-[0.64rem] leading-relaxed text-bone-dim/70">
       What you enter here is used to answer you and nothing else. It is never
       sold or shared with advertisers, and you can ask for a copy or ask us to
-      delete it whenever you like —{" "}
+      delete it whenever you like  {" "}
       <ThreadLink
         href="/privacy"
         className="text-brass underline-offset-4 hover:underline"
@@ -587,9 +587,9 @@ function Review({
   serviceCount: number;
 }) {
   const rows: [string, string][] = [
-    ["Name", values.name || "—"],
-    ["Organisation", values.organisation || "—"],
-    ["Reach via", `${values.channel} — ${values.contact || "—"}`],
+    ["Name", values.name || " "],
+    ["Organisation", values.organisation || " "],
+    ["Reach via", `${values.channel}   ${values.contact || " "}`],
     ["Marked", serviceCount ? `${serviceCount} entries` : "nothing marked"],
     ["Retainer", values.retainer || "unstated"],
     ["Timeline", values.timeline ?? "unstated"],
@@ -613,7 +613,7 @@ function Review({
       <div className="mt-6 border-t border-bone/10 pt-5">
         <p className="label text-[0.55rem]">The matter</p>
         <p className="mt-2 whitespace-pre-wrap font-mono text-[0.72rem] leading-relaxed text-bone-dim">
-          {values.matter || "—"}
+          {values.matter || " "}
         </p>
       </div>
     </div>
@@ -653,7 +653,7 @@ function Sealed({
       <p className="mt-6 font-mono text-[0.72rem] leading-loose text-bone-dim">
         Expect contact within twenty-four hours.
         <br />
-        In the meantime — don&rsquo;t do anything I wouldn&rsquo;t do.
+        In the meantime   don&rsquo;t do anything I wouldn&rsquo;t do.
       </p>
 
       <p className="label mt-10 text-[0.55rem]">
