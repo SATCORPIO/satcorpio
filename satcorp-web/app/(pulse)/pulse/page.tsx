@@ -3,7 +3,7 @@ import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { LedgerButton } from "@/components/ledger/LedgerButton";
 
 /**
- * ESTABLISHMENT 6 — PULSE
+ * ESTABLISHMENT 6   PULSE
  * A live broadcast network. The one page allowed energy: hot red, lower-third
  * chips, LIVE states, the quickest scroll in the building.
  */
@@ -106,7 +106,7 @@ export default function PulsePage() {
         </div>
       </section>
 
-      {/* ---------- WHAT PULSE IS — lower-third chips ---------- */}
+      {/* ---------- WHAT PULSE IS   lower-third chips ---------- */}
       <section className="border-t border-bone/10 py-16">
         <p className="label label-accent">What Pulse Is</p>
         <p className="mt-4 max-w-2xl leading-relaxed text-bone-dim">
