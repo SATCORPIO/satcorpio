@@ -7,7 +7,7 @@ import { Monogram } from "./Monogram";
 import { ThreadLink } from "./CaseFileTransition";
 
 /**
- * FINGERPRINT 2.4 — THE FILE TABS
+ * FINGERPRINT 2.4   THE FILE TABS
  *
  * Navigation is a row of tabs along the top edge of a drawer. The open file is
  * pulled forward. On small screens the drawer closes to a single tab: THE INDEX.
@@ -34,7 +34,7 @@ export function FileTabs() {
         <ThreadLink
           href="/"
           className="flex shrink-0 items-center gap-2 pr-4 text-bone transition-colors hover:text-blood"
-          aria-label="SATCORP — the index"
+          aria-label="SATCORP   the index"
         >
           <Monogram className="size-5" />
           <span className="hidden font-mono text-[0.7rem] tracking-[0.3em] sm:inline">
