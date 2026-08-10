@@ -1,5 +1,5 @@
 /**
- * FINGERPRINT 2.5 — THE MONOGRAM
+ * FINGERPRINT 2.5   THE MONOGRAM
  * Drawn once, used everywhere: the tab bar, the wax seal, the loading state,
  * the open-graph cards. Never redrawn per division.
  */
