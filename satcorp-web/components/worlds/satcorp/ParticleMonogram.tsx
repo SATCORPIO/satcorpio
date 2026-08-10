@@ -30,7 +30,7 @@ const vertexShader = /* glsl */ `
     // Each particle arrives on its own schedule; the last land ~35% late.
     float stagger = aSeed * 0.35;
     float t = clamp((uProgress - stagger) / (1.0 - stagger), 0.0, 1.0);
-    // Ease out quint — fast approach, long settle.
+    // Ease out quint   fast approach, long settle.
     float e = 1.0 - pow(1.0 - t, 5.0);
 
     // Embers drift while they are still loose, and go still once placed.
