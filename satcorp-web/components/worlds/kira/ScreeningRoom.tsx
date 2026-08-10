@@ -28,7 +28,7 @@ export function ScreeningRoom() {
         <HorizontalFov degrees={68} />
         <ProjectionRoom dustCount={dustCount} />
 
-        {/* Fingerprint 2.3 — here the thread is film leader, running out of
+        {/* Fingerprint 2.3   here the thread is film leader, running out of
             the gate and away along the bottom of frame. */}
         <RedThread
           points={[
