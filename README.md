@@ -1,6 +1,6 @@
 # SATCORP
 
-The SATCORP web ecosystem — six establishments that each look like a different
+The SATCORP web ecosystem   six establishments that each look like a different
 company, tied together by six fingerprints and one red thread.
 
 | Path | What it is |
