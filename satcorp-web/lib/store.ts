@@ -5,7 +5,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 /* ============================================================
-   THE ENGAGEMENT — line items marked in the Ledger.
+   THE ENGAGEMENT   line items marked in the Ledger.
    Persisted, because a visitor who stamps six entries and then
    wanders off to NAMTAR should find them still stamped on return.
    ============================================================ */
@@ -45,7 +45,7 @@ export const useEngagement = create<EngagementState>()(
 );
 
 /* ============================================================
-   UI — chrome that spans establishments.
+   UI   chrome that spans establishments.
    ============================================================ */
 
 export type TransitionPhase = "idle" | "out" | "in";
