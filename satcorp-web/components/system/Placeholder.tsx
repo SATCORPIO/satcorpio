@@ -5,7 +5,7 @@ import { Stamp, type StampTone } from "@/components/fingerprints/Stamp";
  *
  * Every slot waiting on final art ships as a designed classified frame with a
  * stamp and a file number. The site reads as intentional long before the
- * renders, screenshots and trailers exist — and dropping the real asset in
+ * renders, screenshots and trailers exist   and dropping the real asset in
  * later costs no layout work.
  */
 export function Placeholder({
