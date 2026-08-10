@@ -3,7 +3,7 @@ import { Monogram } from "@/components/fingerprints/Monogram";
 import { LEGAL, LEGAL_ROUTES } from "@/lib/legal";
 
 /**
- * THE COLOPHON — the legal strip beneath every establishment.
+ * THE COLOPHON   the legal strip beneath every establishment.
  *
  * Lives in the root layout rather than in any one page, because a link to the
  * terms and the privacy policy that appears on only some pages is, for
@@ -14,7 +14,7 @@ import { LEGAL, LEGAL_ROUTES } from "@/lib/legal";
  * inherits the accent from the mirrored attribute on <html>, so it takes on the
  * colour of whichever establishment you are standing in.
  *
- * Kept short on purpose — /namtar derives its descent from fractions of total
+ * Kept short on purpose   /namtar derives its descent from fractions of total
  * document scroll, so anything tall added at the foot of every page shifts that
  * journey underneath it.
  */
