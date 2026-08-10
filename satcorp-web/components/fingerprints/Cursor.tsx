@@ -8,7 +8,7 @@ import { useFinePointer, useReducedMotion } from "@/lib/tier";
 /**
  * Each establishment hands you a different instrument at the door: a crosshair
  * at SATCORP, a terminal block in KYRAX, a reticle in the game worlds, a pulse
- * on PULSE. ANU gives you nothing — the study is analogue.
+ * on PULSE. ANU gives you nothing   the study is analogue.
  *
  * Falls back to the system cursor on touch and under reduced motion.
  */
@@ -44,7 +44,7 @@ export function Cursor() {
       }
     };
 
-    // The ring trails the dot — the instrument catching up with the hand.
+    // The ring trails the dot   the instrument catching up with the hand.
     const tick = () => {
       ringX += (targetX - ringX) * 0.18;
       ringY += (targetY - ringY) * 0.18;
