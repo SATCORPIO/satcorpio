@@ -14,14 +14,14 @@ import { LEGAL } from "@/lib/legal";
 
 /* --- Fingerprint 2.2: The Three Voices --- */
 
-/** The Concierge — headlines, quotes, the things said slowly. */
+/** The Concierge   headlines, quotes, the things said slowly. */
 const concierge = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-concierge",
   display: "swap",
 });
 
-/** The Dossier — labels, stamps, classified copy, form fields. */
+/** The Dossier   labels, stamps, classified copy, form fields. */
 const dossier = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -29,7 +29,7 @@ const dossier = IBM_Plex_Mono({
   display: "swap",
 });
 
-/** The Operator — UI chrome and long body copy. */
+/** The Operator   UI chrome and long body copy. */
 const operator = Inter({
   subsets: ["latin"],
   variable: "--font-operator",
@@ -39,8 +39,8 @@ const operator = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(LEGAL.siteUrl),
   title: {
-    default: "SATCORP — Intelligent systems, creative platforms, digital worlds",
-    template: "%s — SATCORP",
+    default: "SATCORP   Intelligent systems, creative platforms, digital worlds",
+    template: "%s   SATCORP",
   },
   description:
     "SATCORP is a technology ecosystem built to develop, connect and operate the next generation of intelligent systems, creative platforms and digital worlds.",
@@ -65,7 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-dvh">
         <CaseFileTransition>
-          {/* Fingerprint 2.3 — the thread runs behind every establishment. */}
+          {/* Fingerprint 2.3   the thread runs behind every establishment. */}
           <ThreadBackdrop />
 
           <FileTabs />
@@ -75,7 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* The paperwork, reachable from every page. */}
           <Colophon />
 
-          {/* Fingerprint 2.5 — the one element that never changes. */}
+          {/* Fingerprint 2.5   the one element that never changes. */}
           <Seal />
           <LedgerModal />
 
