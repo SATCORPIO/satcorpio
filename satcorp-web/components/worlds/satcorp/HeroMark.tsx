@@ -6,7 +6,7 @@ import { useCapabilities } from "@/lib/tier";
 import { ParticleMonogram } from "./ParticleMonogram";
 
 /**
- * The hero mark. On lite tier this is simply the monogram — same artwork, no
+ * The hero mark. On lite tier this is simply the monogram   same artwork, no
  * canvas, no cost. Everywhere else it assembles from embers.
  *
  * The caller owns positioning and size. Nothing is hardcoded here: Tailwind
