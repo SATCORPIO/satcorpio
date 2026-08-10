@@ -33,7 +33,7 @@ const REGISTRY: Entry[] = [
   {
     keys: ["satcorp", "company", "ecosystem"],
     answer:
-      "A technology ecosystem — intelligence, creative platforms and digital worlds, run on its own iron. Six operations. One index.",
+      "A technology ecosystem   intelligence, creative platforms and digital worlds, run on its own iron. Six operations. One index.",
     file: "SC-001",
   },
   {
@@ -63,8 +63,8 @@ const REGISTRY: Entry[] = [
   {
     keys: ["price", "cost", "how much", "quote", "budget"],
     answer:
-      "I don't discuss terms. I file them. For what a thing costs, you'll want the Concierge — and a rather more specific question.",
-    file: "—",
+      "I don't discuss terms. I file them. For what a thing costs, you'll want the Concierge   and a rather more specific question.",
+    file: " ",
   },
   {
     keys: ["secret", "blacklist", "classified", "redacted", "hidden"],
@@ -75,7 +75,7 @@ const REGISTRY: Entry[] = [
   {
     keys: ["hire", "work", "build", "help", "project", "engage"],
     answer:
-      "Then you want an arrangement, not an answer. Open the Ledger — mark what you need and the Concierge will take it from there.",
+      "Then you want an arrangement, not an answer. Open the Ledger   mark what you need and the Concierge will take it from there.",
     file: "EN-001",
   },
 ];
@@ -83,7 +83,7 @@ const REGISTRY: Entry[] = [
 const FALLBACK: Entry = {
   keys: [],
   answer:
-    "I have nothing filed under that. Which is not the same as there being nothing — only that you have not yet asked the right way.",
+    "I have nothing filed under that. Which is not the same as there being nothing   only that you have not yet asked the right way.",
   file: "NIL",
 };
 
