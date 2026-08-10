@@ -24,14 +24,14 @@ import {
 } from "./journey";
 
 /**
- * NAMTAR'S WORLD — ORBIT TO SURFACE
+ * NAMTAR'S WORLD   ORBIT TO SURFACE
  *
  * One canvas behind the whole page, scrubbed by document scroll: high orbit,
  * a dive through the cloud deck, a low pass over the ground, a long settle at
  * the horizon, and back out to orbit for the closing invitation.
  *
  * Where ANU's camera circles a room and KYRAX's flies through an archive, this
- * one *descends*. The page is the descent — which is why every section of copy
+ * one *descends*. The page is the descent   which is why every section of copy
  * is written to land at a particular altitude.
  */
 
@@ -71,7 +71,7 @@ function Journey() {
       Math.cos(el) * Math.sin(az) * radius,
     );
     // In the hero the camera aims high and left of the planet, which puts the
-    // planet low and right — out from under the wordmark. The aim straightens
+    // planet low and right   out from under the wordmark. The aim straightens
     // onto the planet as the descent starts.
     spaceAim.current.set(
       THREE.MathUtils.lerp(-2.4, 0, inbound),
@@ -91,7 +91,7 @@ function Journey() {
       delta,
     );
     // While one is held, the aim sits left of it, so the monolith lands in the
-    // right of frame — the half of the screen the pillar list is not using.
+    // right of frame   the half of the screen the pillar list is not using.
     held.current = THREE.MathUtils.damp(
       held.current,
       focused >= 0 ? 1 : 0,
@@ -102,7 +102,7 @@ function Journey() {
     const descend = band(t, [0.18, 0.34]);
     const settle = band(t, [0.34, 0.58]);
     // Low enough that the monoliths stand over the camera rather than under
-    // it — a hundred-metre slab seen from above is just a rectangle.
+    // it   a hundred-metre slab seen from above is just a rectangle.
     const height =
       THREE.MathUtils.lerp(170, 72, 1 - Math.pow(1 - descend, 3)) - settle * 10;
     const back = THREE.MathUtils.lerp(130, 26, descend) - settle * 8;
@@ -226,7 +226,7 @@ function Stars({ count = 1400, dpr = 1.5 }: { count?: number; dpr?: number }) {
     const sizes = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
-      // Even over the sphere — clustering here would read as a texture seam.
+      // Even over the sphere   clustering here would read as a texture seam.
       const theta = rng() * Math.PI * 2;
       const z = rng() * 2 - 1;
       const r = Math.sqrt(1 - z * z);
@@ -348,7 +348,7 @@ export function PlanetScene() {
           <Monoliths />
         </group>
 
-        {/* Fingerprint 2.3 — on NAMTAR the red thread is an orbit line. */}
+        {/* Fingerprint 2.3   on NAMTAR the red thread is an orbit line. */}
         <OrbitThread />
 
         <Veil />
@@ -363,7 +363,7 @@ export function PlanetScene() {
 
 /**
  * Lite tier. The build plan calls for a pre-rendered scroll-scrub of the same
- * journey; until that video exists this is the honest stand-in — the same
+ * journey; until that video exists this is the honest stand-in   the same
  * composition, drawn in two gradients and costing nothing.
  */
 function OrbitStill() {
