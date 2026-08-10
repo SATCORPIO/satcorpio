@@ -7,20 +7,20 @@ import { IndexCard } from "@/components/worlds/kyrax/IndexCard";
 import { AskTheRegistry } from "@/components/worlds/kyrax/AskTheRegistry";
 
 /**
- * ESTABLISHMENT 3 — KYRAX, THE REGISTRY
+ * ESTABLISHMENT 3   KYRAX, THE REGISTRY
  *
- * Not a terminal. Reddington's advantage was never technology — it was that he
+ * Not a terminal. Reddington's advantage was never technology   it was that he
  * had already been told. KYRAX is the archive that makes SATCORP the
  * best-informed operation in the room: cold, orderly, and unhurried, filed on
  * index cards by something that never sleeps.
  */
 
-/* What it knows — the cognitive core, in archive language. */
+/* What it knows   the cognitive core, in archive language. */
 const KNOWS = [
   {
     file: "KX-011",
     title: "Inference",
-    body: "Reasoning across mixed signals. The value is rarely in one fact — it is in noticing that two of them are about the same person.",
+    body: "Reasoning across mixed signals. The value is rarely in one fact   it is in noticing that two of them are about the same person.",
     tilt: -0.6,
   },
   {
@@ -49,7 +49,7 @@ const KNOWS = [
   },
 ];
 
-/* Who it talks to — the integration layer, as a network of sources. */
+/* Who it talks to   the integration layer, as a network of sources. */
 const SOURCES = [
   { name: "SATCORP", role: "Ecosystem operations", href: "/" },
   { name: "NAMTAR", role: "World, wildlife and NPC systems", href: "/namtar" },
@@ -59,7 +59,7 @@ const SOURCES = [
   { name: "Tactical clusters", role: "Server orchestration", href: null },
 ];
 
-/* What it does with it — applications. */
+/* What it does with it   applications. */
 const APPLICATIONS = [
   {
     file: "KX-101",
@@ -79,7 +79,7 @@ const APPLICATIONS = [
   {
     file: "KX-104",
     title: "AI-Driven Ecosystems",
-    body: "Populations that respond to pressure — hunted, fed, displaced — without anyone scripting the consequence.",
+    body: "Populations that respond to pressure   hunted, fed, displaced   without anyone scripting the consequence.",
   },
 ];
 
@@ -112,14 +112,14 @@ export default function KyraxPage() {
         </p>
 
         <p className="mt-9 max-w-2xl font-sans leading-relaxed text-bone-dim">
-          KYRAX is SATCORP&rsquo;s intelligence architecture — the layer that
+          KYRAX is SATCORP&rsquo;s intelligence architecture   the layer that
           connects, analyses, automates and evolves everything the ecosystem
           runs. From creative development and gaming worlds to enterprise
           operations, it is the cognitive foundation the rest of it stands on.
         </p>
 
         <p className="label mt-16 text-[0.55rem]">
-          Scroll — the index goes back further than this
+          Scroll   the index goes back further than this
         </p>
       </section>
 
