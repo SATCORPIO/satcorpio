@@ -11,7 +11,7 @@ import { mulberry32 } from "@/lib/rng";
  *
  * The in-house infrastructure section, rendered literally: a rack of blades
  * turning slowly in the dark, status LEDs breathing out of phase. Two instanced
- * meshes and nothing else — this sits behind text, so it must cost almost
+ * meshes and nothing else   this sits behind text, so it must cost almost
  * nothing.
  */
 
@@ -124,7 +124,7 @@ function Rack() {
   );
 }
 
-/** The caller owns positioning and size — see the note in HeroMark. */
+/** The caller owns positioning and size   see the note in HeroMark. */
 export function ServerRackScene({ className = "" }: { className?: string }) {
   return (
     <div className={className} aria-hidden>
