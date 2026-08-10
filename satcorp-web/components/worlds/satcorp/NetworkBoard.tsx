@@ -14,13 +14,13 @@ import { RedThread } from "@/components/fingerprints/RedThread";
  * Pointer drift parallaxes the board; dragging rotates it; a node lights its
  * thread and offers passage.
  *
- * Decorative by design — the accessible list of divisions lives in the page
+ * Decorative by design   the accessible list of divisions lives in the page
  * markup below, so nothing here is load-bearing for keyboard or screen readers.
  */
 
 const NODES = DIVISIONS.filter((d) => d.id !== "satcorp");
 
-/** Pinned positions, deliberately irregular — a board, not a diagram. */
+/** Pinned positions, deliberately irregular   a board, not a diagram. */
 const LAYOUT: Record<string, [number, number, number]> = {
   anu: [-2.9, 1.35, 0.35],
   kyrax: [2.75, 1.6, -0.3],
@@ -232,7 +232,7 @@ function Pin({
         onClick();
       }}
     >
-      {/* Generous invisible hit area — the visible pin is small. */}
+      {/* Generous invisible hit area   the visible pin is small. */}
       <mesh visible={false}>
         <circleGeometry args={[0.42, 8]} />
       </mesh>
