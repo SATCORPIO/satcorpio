@@ -9,14 +9,14 @@ import { scrollProgress } from "@/lib/scroll-progress";
 /**
  * THE REGISTRY
  *
- * KYRAX is not a computer with a glowing brain in it. It is the archive — the
+ * KYRAX is not a computer with a glowing brain in it. It is the archive   the
  * room where everything anyone ever told the Concierge is kept, indexed, and
  * cross-referenced. Thousands of cards suspended in the cold, drifting.
  *
  * Three things make it read as intelligent rather than decorative:
  *   1. a sorting wave that travels through the field, as if something is
  *      being looked up;
- *   2. a handful of cards flagged in red — the ones that matter;
+ *   2. a handful of cards flagged in red   the ones that matter;
  *   3. a patch of cards that turns to face the pointer. The archive notices
  *      you, which is considerably more unsettling than a particle brain.
  *
@@ -74,7 +74,7 @@ const vertexShader = /* glsl */ `
     finalView.z += wave * 0.55;
 
     // Cards drifting up against the lens become huge white slabs that shout
-    // over the writing. Fade them out near and far — it reads as depth of
+    // over the writing. Fade them out near and far   it reads as depth of
     // field and keeps the page legible.
     float depth = -finalView.z;
     vDepthFade = smoothstep(3.0, 9.0, depth) * (1.0 - smoothstep(34.0, 50.0, depth));
