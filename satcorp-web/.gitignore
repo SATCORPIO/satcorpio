@@ -34,7 +34,7 @@ yarn-error.log*
 .env*
 !.env.example
 
-# filed engagement briefs — client data, never committed
+# filed engagement briefs   client data, never committed
 /.intake/
 
 # vercel
