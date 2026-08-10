@@ -57,6 +57,17 @@ export function Dashboard() {
     const el = root.current;
     if (!el) return;
 
+    // The dash pattern has to be the path's real length. The markup ships a
+    // deliberate over-estimate so the line is hidden before this runs, but
+    // animating that value to zero would finish drawing at roughly half way
+    // and then hold on a finished chart for the rest of the tween.
+    const line = el.querySelector<SVGPathElement>("[data-line]");
+    if (line) {
+      const length = line.getTotalLength();
+      line.style.strokeDasharray = String(length);
+      line.style.strokeDashoffset = String(length);
+    }
+
     // Under reduced motion the chart is simply finished: full stroke, full
     // bars, final numbers. Content parity, no exceptions.
     if (reducedMotion) {
@@ -167,8 +178,9 @@ export function Dashboard() {
           strokeWidth={2.5}
           strokeLinecap="round"
           strokeLinejoin="round"
-          // 1400 comfortably exceeds the path length, so the stroke starts
-          // fully retracted without measuring it at runtime.
+          // A deliberate over-estimate, so the line is hidden from the first
+          // paint. The effect replaces both with the measured path length
+          // before anything animates.
           strokeDasharray={1400}
           strokeDashoffset={1400}
         />
