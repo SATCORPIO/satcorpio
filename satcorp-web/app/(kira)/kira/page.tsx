@@ -7,10 +7,10 @@ import { ScreeningRoom } from "@/components/worlds/kira/ScreeningRoom";
 import { ProgrammeLine, WorldDossier } from "@/components/worlds/kira/Programme";
 
 /**
- * ESTABLISHMENT 4 — KI-RA STUDIOS, THE SCREENING ROOM
+ * ESTABLISHMENT 4   KI-RA STUDIOS, THE SCREENING ROOM
  *
  * The hardest synthesis on the site: a AAA games studio that still feels like
- * the same man was just here. The bridge is in the studio's own line —
+ * the same man was just here. The bridge is in the studio's own line  
  * "Building Worlds Worth Living In" is witness-protection copy. Ki-Ra builds
  * worlds; the Concierge builds places to disappear into. So the games are
  * presented as a fixer presents destinations: designation, standing, house
@@ -35,7 +35,7 @@ const PROGRAMME = [
  * The ARK CLUSTER eyebrow is load-bearing, not decoration. Without it the
  * first entry collides with the flagship game one section above, and the
  * second reads as the retired HYPΞRION empire name rather than the live
- * product it actually is. Labelling closes both without renaming anything —
+ * product it actually is. Labelling closes both without renaming anything  
  * and it sits above the name rather than inside it, so a long suffix never
  * wraps the display type against the status stamp.
  */
@@ -169,13 +169,13 @@ export default function KiraPage() {
 
           <div className="mt-8">
             <WorldDossier
-              designation="WORLD DOSSIER — NM-001"
+              designation="WORLD DOSSIER   NM-001"
               title="NAMTAR"
               standing="IN DEVELOPMENT"
               facts={[
                 ["Designation", "Post-apocalyptic tactical sci-fi"],
                 ["Standing", "In development · Unreal Engine 5"],
-                ["Mode", "PvP · PvPvE · PvE — multiplayer & single player"],
+                ["Mode", "PvP · PvPvE · PvE   multiplayer & single player"],
                 ["Terrain", "Ruined cities · ocean · wasteland · cave"],
                 ["Threat", "Environmental · human · AI Empires"],
               ]}
@@ -348,7 +348,7 @@ export default function KiraPage() {
         </ul>
         <p className="mt-8 font-mono text-[0.66rem] leading-relaxed text-bone-dim/70">
           Every Ki-Ra experience is built on technologies developed across the
-          SATCORP ecosystem — the intelligence layer comes from{" "}
+          SATCORP ecosystem   the intelligence layer comes from{" "}
           <ThreadLink
             href="/kyrax"
             className="text-bone underline-offset-4 hover:underline"
@@ -362,7 +362,7 @@ export default function KiraPage() {
       {/* ---------- PROVENANCE ---------- */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <Reveal>
-          <p className="label label-accent">Provenance — NAMTAR</p>
+          <p className="label label-accent">Provenance   NAMTAR</p>
         </Reveal>
         <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PROVENANCE.map(([stage, status]) => (
@@ -457,7 +457,7 @@ export default function KiraPage() {
           </p>
 
           <p className="label mt-10 text-[0.55rem]">
-            Powered by SATCORP — the lights, the iron, and the intelligence.
+            Powered by SATCORP   the lights, the iron, and the intelligence.
           </p>
         </div>
       </section>
