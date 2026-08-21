@@ -9,14 +9,14 @@ import { Artifacts } from "@/components/worlds/namtar/Artifacts";
 import { Consciousness } from "@/components/worlds/namtar/Consciousness";
 
 /**
- * ESTABLISHMENT 5 — NAMTAR
+ * ESTABLISHMENT 5   NAMTAR
  *
  * A blockbuster game landing page: giant type, minimal chrome, HUD mono for
- * stats. The most 3D-ambitious route on the site — and the only one whose
+ * stats. The most 3D-ambitious route on the site   and the only one whose
  * copy is written to an altitude. The reader starts in orbit, falls through
  * the cloud deck around "what is NAMTAR", is on the deck for the pillars and
  * KYRAX, and is lifted back out for the closing invitation. Moving a section
- * moves where in the descent it happens, so keep the order — and if the page
+ * moves where in the descent it happens, so keep the order   and if the page
  * grows again, re-measure the bands in `journey.ts` rather than guessing them.
  */
 
@@ -31,7 +31,7 @@ const PILLARS = [
   },
   {
     name: "Fight",
-    body: "Real-time tactical combat with firearms, melee and advanced tech — on foot, in a mech, or from the air.",
+    body: "Real-time tactical combat with firearms, melee and advanced tech   on foot, in a mech, or from the air.",
   },
   {
     name: "Survive",
@@ -43,7 +43,7 @@ const PILLARS = [
   },
   {
     name: "Destroy",
-    body: "A fully destructible environment. Cover fails, walls come down, and no position is permanent — including yours.",
+    body: "A fully destructible environment. Cover fails, walls come down, and no position is permanent   including yours.",
   },
 ];
 
@@ -67,7 +67,7 @@ const KYRAX_CAPABILITIES = [
   ],
   [
     "Base automation",
-    "Offline defence — turrets, patrol drones, lockdown while you are gone.",
+    "Offline defence   turrets, patrol drones, lockdown while you are gone.",
   ],
   [
     "Assisted construction",
@@ -79,7 +79,7 @@ const KYRAX_CAPABILITIES = [
   ],
   [
     "Voice command",
-    "Mark a target, request a route, call in support — mid-firefight.",
+    "Mark a target, request a route, call in support   mid-firefight.",
   ],
 ] as const;
 
@@ -141,7 +141,7 @@ const EMPIRES = [
   {
     tag: "EMPIRES",
     title: "Build one, or break one.",
-    body: "Found an Empire, recruit into it, form alliances and end them. AI-run Empires play the game alongside you — they build, expand and go to war exactly as players do.",
+    body: "Found an Empire, recruit into it, form alliances and end them. AI-run Empires play the game alongside you   they build, expand and go to war exactly as players do.",
   },
   {
     tag: "CONFLICT",
@@ -179,12 +179,12 @@ const SCALE = [
 ];
 
 const PLATFORMS = [
-  ["PC — Windows and Linux", "Lead platform. Everything is built here first."],
+  ["PC   Windows and Linux", "Lead platform. Everything is built here first."],
   ["Xbox Series X|S", "Console release."],
   ["PlayStation 5", "Console release."],
   [
     "iOS and Android",
-    "Companion app — base status, KYRAX alerts and logistics from outside the game.",
+    "Companion app   base status, KYRAX alerts and logistics from outside the game.",
   ],
 ] as const;
 
@@ -205,7 +205,7 @@ export default function NamtarPage() {
       <AltitudeHud />
       <ScrollTriggerRefresh />
 
-      {/* ---------- HERO — ORBIT ---------- */}
+      {/* ---------- HERO   ORBIT ---------- */}
       <section className="relative flex min-h-[92vh] flex-col items-center justify-center px-6 py-24 text-center">
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Stamp tone="accent">IN DEVELOPMENT</Stamp>
@@ -225,14 +225,14 @@ export default function NamtarPage() {
         {/* The genre line. Deliberately plain: it is the one place on the page
             that answers "what kind of game is this" without any voice on it. */}
         <p className="mt-7 max-w-3xl font-mono text-[0.66rem] leading-relaxed tracking-[0.2em] text-bone-dim">
-          PvP · PvPvE · PvE — MULTIPLAYER &amp; SINGLE PLAYER —
-          POST-APOCALYPTIC — TACTICAL SCI-FI — OPEN WORLD
+          PvP · PvPvE · PvE   MULTIPLAYER &amp; SINGLE PLAYER  
+          POST-APOCALYPTIC   TACTICAL SCI-FI   OPEN WORLD
         </p>
 
         <p className="mt-10 max-w-2xl text-balance text-lg leading-relaxed text-bone-dim">
           Civilisation fell. The machines did not. NAMTAR is an open-world
           survival game where AI is woven through your combat, your vehicles and
-          your base — and where a ruined world rewards strategy, endurance and
+          your base   and where a ruined world rewards strategy, endurance and
           the choices you are willing to live with.
         </p>
 
@@ -260,11 +260,11 @@ export default function NamtarPage() {
         </div>
 
         <p className="label mt-16 text-[0.55rem] text-bone-dim/60">
-          Scroll — the descent begins
+          Scroll   the descent begins
         </p>
       </section>
 
-      {/* ---------- WHAT IS NAMTAR — THROUGH THE CLOUD DECK ---------- */}
+      {/* ---------- WHAT IS NAMTAR   THROUGH THE CLOUD DECK ---------- */}
       {/* Given a full screen of its own on purpose: this is where the camera
           leaves orbit, and the dive needs somewhere to be seen. */}
       <section
@@ -278,13 +278,13 @@ export default function NamtarPage() {
           </p>
           <p className="mt-8 max-w-3xl leading-relaxed text-bone-dim">
             Scavenge a ruined world, build something worth defending, command AI
-            through every system you own, and fight — other players, AI-run
+            through every system you own, and fight   other players, AI-run
             Empires, mutated wildlife and whatever the old civilisations left
             running. Survival is the floor. Strategy is what gets you off it.
           </p>
           <p className="mt-6 max-w-3xl leading-relaxed text-bone-dim">
             You wake on a world that was colonised, industrialised and then
-            abandoned to itself — towering ruins and overgrown cities, salvage
+            abandoned to itself   towering ruins and overgrown cities, salvage
             worth killing for, and a landscape that has had a long time to
             become hostile.
           </p>
@@ -316,7 +316,7 @@ export default function NamtarPage() {
         </ul>
       </section>
 
-      {/* ---------- THE PILLARS — THE LOW PASS ---------- */}
+      {/* ---------- THE PILLARS   THE LOW PASS ---------- */}
       <section className={`relative ${SLAB}`}>
         <div className="mx-auto max-w-6xl px-6 py-24">
           <div className="max-w-3xl">
@@ -329,11 +329,11 @@ export default function NamtarPage() {
         </div>
       </section>
 
-      {/* ---------- KYRAX — ON THE DECK ---------- */}
+      {/* ---------- KYRAX   ON THE DECK ---------- */}
       {/* Placed straight after the pillars on purpose: the reader is on the
           ground by now, so this is where the machine that runs everything gets
           introduced. The right-hand panel is the strongest hook in the design
-          material — you start the game unable to see. */}
+          material   you start the game unable to see. */}
       <section className={`relative ${SLAB}`}>
         <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 lg:grid-cols-2">
           <Reveal>
@@ -375,7 +375,7 @@ export default function NamtarPage() {
                 standing in. No weapons, no armour, no HUD.
               </p>
               <p className="mt-5 leading-relaxed text-bone-dim">
-                Without a visor helmet KYRAX can barely see past five metres —
+                Without a visor helmet KYRAX can barely see past five metres  
                 no enemy pings, no threat tags, no overlays, only the squad marks
                 you place by hand.
               </p>
@@ -523,7 +523,7 @@ export default function NamtarPage() {
           </dl>
           {/* The qualifier ships with the number, in the same section, always. */}
           <p className="mt-12 max-w-3xl font-mono text-[0.66rem] leading-relaxed text-bone-dim/80">
-            The 65 × 65 km region is the Alpha and Beta testing ground — roughly
+            The 65 × 65 km region is the Alpha and Beta testing ground   roughly
             the size of Rhode Island, and not NAMTAR&rsquo;s final size. The
             seamless planetary surface arrives with the world-wrap architecture
             that every system is being built to accept.
@@ -575,7 +575,7 @@ export default function NamtarPage() {
         </ul>
       </section>
 
-      {/* ---------- CALL TO ACTION — BACK TO ORBIT ---------- */}
+      {/* ---------- CALL TO ACTION   BACK TO ORBIT ---------- */}
       <section className="relative mx-auto max-w-4xl px-6 py-28 text-center">
         <p className="font-display text-[clamp(1.5rem,4vw,2.5rem)] leading-[1.3] text-balance text-bone">
           Wake up with nothing. Build an empire.
