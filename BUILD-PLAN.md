@@ -216,7 +216,7 @@ Near/far depth fade is mandatory, not decorative: cards drifting against the len
 **Three defects worth remembering,** all found by running it rather than by reading it:
 - Substring matching had *"do you build websites"* returning **Worldbuilding & Canon Documentation** above the two real web services, and *"how is my data handled"* pulling in **Long-Form Guides & Databases**. Matching is now on whole stemmed tokens.
 - The stemmer's blind `-es` rule turned "websites" into "websit" while the alias "website" stayed whole, so they never met and the query found nothing at all. `-es` now only strips after a sibilant, and `-ss` words are left alone.
-- Five slots filled by score alone meant *"what does a brand system cost"* returned five Brand & Identity services and **no pricing** — every slot won by the two words matching a section title while the word the question was about sat just under the cut. Results are now capped at two per catalogue section before the list is filled out by score.
+- Five slots filled by score alone meant *"what does a brand system cost"* returned five Brand & Identity services and **no pricing**   every slot won by the two words matching a section title while the word the question was about sat just under the cut. Results are now capped at two per catalogue section before the list is filled out by score.
 
 ### The thread here
 A **cross-reference**: one length of red thread running the full depth of the index, tying together files nobody else thought to connect. The ambient backdrop pass is suppressed on this route (as on ANU) so there is one thread and one WebGL context.
