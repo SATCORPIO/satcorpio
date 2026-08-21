@@ -106,7 +106,7 @@ export const DIVISIONS: Division[] = [
     href: "/namtar",
     role: "The world",
     tagline:
-      "A next-generation open-world survival experience where exploration, technology, AI, and player freedom redefine what survival means.",
+      "An open-world post-apocalyptic survival game. KYRAX AI woven through combat, vehicles and bases, player- and AI-run Empires, and a fully destructible world.",
     establishment: "A blockbuster game launch.",
     accent: "#d97e2f",
     scrollLerp: 0.07,

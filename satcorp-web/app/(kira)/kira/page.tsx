@@ -7,10 +7,10 @@ import { ScreeningRoom } from "@/components/worlds/kira/ScreeningRoom";
 import { ProgrammeLine, WorldDossier } from "@/components/worlds/kira/Programme";
 
 /**
- * ESTABLISHMENT 4   KI-RA STUDIOS, THE SCREENING ROOM
+ * ESTABLISHMENT 4 — KI-RA STUDIOS, THE SCREENING ROOM
  *
  * The hardest synthesis on the site: a AAA games studio that still feels like
- * the same man was just here. The bridge is in the studio's own line  
+ * the same man was just here. The bridge is in the studio's own line —
  * "Building Worlds Worth Living In" is witness-protection copy. Ki-Ra builds
  * worlds; the Concierge builds places to disappear into. So the games are
  * presented as a fixer presents destinations: designation, standing, house
@@ -23,27 +23,39 @@ const PROGRAMME = [
   ["I", "Open-world survival games", "Scarcity, weather, and other people.", "FEATURE"],
   ["II", "Multiplayer online experiences", "Worlds that keep running when you log off.", "FEATURE"],
   ["III", "Original science fiction universes", "Canon written before the first asset is made.", "ORIGINAL"],
-  ["IV", "AI-driven gameplay systems", "Behaviour, not scripting. Supplied by KYRAX.", "SYSTEMS"],
+  ["IV", "AI-driven gameplay systems", "KYRAX pilots vehicles, runs bases and fights alongside players. Not a system that waits to be triggered.", "SYSTEMS"],
   ["V", "Dynamic ecosystems", "Populations that respond to pressure.", "SYSTEMS"],
   ["VI", "Cross-platform experiences", "PC, mobile and web, from one pipeline.", "DELIVERY"],
   ["VII", "Community-driven live services", "The audience is a collaborator, not a metric.", "ONGOING"],
 ] as const;
 
-/** Server clusters, presented as what they actually are: safe houses. */
+/**
+ * Server clusters, presented as what they actually are: safe houses.
+ *
+ * The ARK CLUSTER eyebrow is load-bearing, not decoration. Without it the
+ * first entry collides with the flagship game one section above, and the
+ * second reads as the retired HYPΞRION empire name rather than the live
+ * product it actually is. Labelling closes both without renaming anything —
+ * and it sits above the name rather than inside it, so a long suffix never
+ * wraps the display type against the status stamp.
+ */
 const SAFE_HOUSES = [
   {
+    kind: "ARK CLUSTER",
     name: "NAMTAR",
     rules: "PvP · Fibercraft · No-Wipe",
     character: "For those who intend to take something and keep it.",
     status: "OFFLINE",
   },
   {
+    kind: "ARK CLUSTER",
     name: "HYPERION",
     rules: "PvP · 15× · No-Wipe",
     character: "Faster. Considerably less forgiving.",
     status: "OFFLINE",
   },
   {
+    kind: "ARK CLUSTER",
     name: "FROSTHEIM",
     rules: "PvE · 15× · No-Wipe",
     character: "No one will trouble you here. The cold will.",
@@ -157,22 +169,22 @@ export default function KiraPage() {
 
           <div className="mt-8">
             <WorldDossier
-              designation="WORLD DOSSIER   NM-001"
+              designation="WORLD DOSSIER — NM-001"
               title="NAMTAR"
               standing="IN DEVELOPMENT"
               facts={[
-                ["Designation", "Seamless planet"],
-                ["Standing", "Pre-reveal"],
-                ["Terrain", "Forest · ocean · desert · cave"],
-                ["Threat", "Environmental & human"],
+                ["Designation", "Post-apocalyptic tactical sci-fi"],
+                ["Standing", "In development · Unreal Engine 5"],
+                ["Mode", "PvP · PvPvE · PvE — multiplayer & single player"],
+                ["Terrain", "Ruined cities · ocean · wasteland · cave"],
+                ["Threat", "Environmental · human · AI Empires"],
               ]}
             >
               <p>
-                The flagship survival universe, built around one idea: every
-                decision changes your future. Explore an enormous planet,
-                construct settlements, uncover lost civilizations, research
-                advanced technologies   and, when the body fails, continue in
-                another one.
+                An open-world post-apocalyptic survival game on a rocky oceanic
+                super-Earth. KYRAX AI woven through combat, vehicles and bases;
+                player- and AI-run Empires; a fully destructible environment;
+                and land, sea and air as one continuous theatre.
               </p>
             </WorldDossier>
           </div>
@@ -240,9 +252,12 @@ export default function KiraPage() {
             >
               <div>
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-display text-2xl text-bone">
-                    {house.name}
-                  </h3>
+                  <div>
+                    <p className="label text-[0.55rem]">{house.kind}</p>
+                    <h3 className="mt-2 font-display text-2xl text-bone">
+                      {house.name}
+                    </h3>
+                  </div>
                   {/* Dim bone, not the pulsing live tone: an offline cluster
                       must not read as a heartbeat. */}
                   <Stamp tone="bone" rotate={-1}>
@@ -333,7 +348,7 @@ export default function KiraPage() {
         </ul>
         <p className="mt-8 font-mono text-[0.66rem] leading-relaxed text-bone-dim/70">
           Every Ki-Ra experience is built on technologies developed across the
-          SATCORP ecosystem   the intelligence layer comes from{" "}
+          SATCORP ecosystem — the intelligence layer comes from{" "}
           <ThreadLink
             href="/kyrax"
             className="text-bone underline-offset-4 hover:underline"
@@ -347,7 +362,7 @@ export default function KiraPage() {
       {/* ---------- PROVENANCE ---------- */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <Reveal>
-          <p className="label label-accent">Provenance   NAMTAR</p>
+          <p className="label label-accent">Provenance — NAMTAR</p>
         </Reveal>
         <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PROVENANCE.map(([stage, status]) => (
@@ -442,7 +457,7 @@ export default function KiraPage() {
           </p>
 
           <p className="label mt-10 text-[0.55rem]">
-            Powered by SATCORP   the lights, the iron, and the intelligence.
+            Powered by SATCORP — the lights, the iron, and the intelligence.
           </p>
         </div>
       </section>
