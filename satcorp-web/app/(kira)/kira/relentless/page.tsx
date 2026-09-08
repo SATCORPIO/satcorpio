@@ -37,7 +37,7 @@ import {
  *
  * `/kira` announces the title. This is where an interested reader is taken
  * seriously: the mechanic in full, the commitments, who is on the planet, what
- * comes out of it, and the one thing the studio actually wants — an address.
+ * comes out of it, and the one thing the studio actually wants   an address.
  *
  * A sub-route rather than a seventh establishment. The six-establishment
  * doctrine is the site's spine and a game is a title, not a division; putting
@@ -46,7 +46,7 @@ import {
  * belong with no new wiring.
  *
  * No 3D. The Screening Room belongs to `/kira` and one room per establishment
- * is the rule — a second projector on a sub-page would be a different room in
+ * is the rule   a second projector on a sub-page would be a different room in
  * the same building. What this page has instead is the clock, and the clock is
  * the only thing on it that needed to move.
  */
