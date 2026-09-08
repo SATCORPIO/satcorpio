@@ -611,6 +611,15 @@ the form exercised end to end.
    live ops channel. Present-but-empty stops the `??` fallback — the same trick
    `PARTNER_WEBHOOK_URL` already documents in that file.
 
+7. **The comparison rows were rewritten on rebase.** This work was built on a
+   base six commits behind `origin/main`, and the incoming commits re-pitched
+   the flagship — post-apocalyptic, Unreal Engine 5, and an **iOS/Android
+   companion app**. That last one matters: without a row drawing the line, a
+   reader meets two Ki-Ra things on a phone and merges them, which is the exact
+   misreading §1.2 exists to prevent. Every row now quotes the flagship the way
+   its own dossier one section above quotes it. **If that dossier is edited,
+   edit `COMPARISON` with it.**
+
 ## Still the studio's to do
 
 | # | Item | Owner |
@@ -620,6 +629,7 @@ the form exercised end to end.
 | 3 | Set `NOTIFY_WEBHOOK_URL` in production **before** the announcement. This is the one form on the site whose failure a reader cannot notice | Web |
 | 4 | Commit to the monthly field-notes cadence, or take the form down and keep Discord (§2.4 beat 3) | Studio |
 | 5 | Decide on an OG image for both routes — the site still has no OG discipline | Web |
+| 6 | **Confirm the two games share a canon.** The flagship now reads *post-apocalyptic, ruined cities, AI Empires*; the mobile title's world bible reads *a failed colony among ancient relic machinery*. Both say Namtar, and the page asserts "the planet is shared" — worth a narrative-lead sentence confirming that is still true rather than leaving it inferred | Narrative + Design lead |
 
 ## One pre-existing defect, noted not fixed
 

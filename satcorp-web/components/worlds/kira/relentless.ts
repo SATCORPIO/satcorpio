@@ -148,10 +148,23 @@ export const COMPARISON = {
   heading: "Two objects, one world.",
   blurb:
     "NAMTAR is the world. This is a second picture shot on location. The planet is shared. The games are not.",
+  /**
+   * Every row here quotes the flagship the way its own dossier one section
+   * above quotes it. Two adjacent sections describing NAMTAR differently is
+   * worse than no comparison at all, so if that dossier is edited, edit this.
+   *
+   * The phone row is the one that earns its place. NAMTAR already ships an
+   * iOS and Android *companion app* — base status, alerts, logistics — and
+   * without this line a reader meets two Ki-Ra things on a phone and merges
+   * them. That is the precise misreading this whole block exists to prevent,
+   * so the distinction is drawn rather than left to be inferred.
+   */
   rows: [
-    ["Form", "Open-world survival", "4X survival strategy"],
-    ["Where", "PC & console", "Phone"],
-    ["You are", "One survivor on a planet", "One outpost in a sector"],
+    ["Form", "Open-world post-apocalyptic survival", "4X survival strategy"],
+    ["Built in", "Unreal Engine 5", "Unity 6"],
+    ["Played on", "PC · Xbox · PlayStation", "iOS · Android"],
+    ["On your phone", "A companion app, beside the game", "The whole game"],
+    ["You are", "A person, on the ground", "An outpost, in a sector"],
     ["A session", "An evening", "Three minutes, or an evening"],
     ["Standing", "In development", "Phase A prototype"],
   ] as [string, string, string][],
