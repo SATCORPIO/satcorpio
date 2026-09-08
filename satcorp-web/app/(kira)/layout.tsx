@@ -8,7 +8,7 @@ import { TITLE as RELENTLESS } from "@/components/worlds/kira/relentless";
  * mobile audience to the wrong page.
  *
  * This is external use of an uncleared mark, exactly as the page body is. If
- * the title is held back, hold this line with it — which is why it interpolates
+ * the title is held back, hold this line with it   which is why it interpolates
  * the same constant rather than spelling the name out again.
  */
 export const metadata: Metadata = {
