@@ -91,7 +91,7 @@ export function WorldDossier({
  * Two entries in the programme, set against each other.
  *
  * A real <table> at sm and above, because the row-and-column relationship is
- * the meaning here rather than the styling — and it is the only element that
+ * the meaning here rather than the styling   and it is the only element that
  * lets a screen reader say "Form: open-world survival" instead of reading two
  * disconnected lists. Below sm the same rows become a stack of pairs; see the
  * note in the body for why that is worth two renderings.
@@ -108,7 +108,7 @@ export function Comparison({
   return (
     <>
       {/* Below sm the table would have to scroll sideways, which puts the
-          second column — the entire point of the comparison — off the edge of a
+          second column   the entire point of the comparison   off the edge of a
           phone behind a scrollbar most readers will not use. This is the one
           block on the page that cannot afford to be half-read, so on small
           screens it stops being a table and becomes a stack of pairs.
@@ -183,7 +183,7 @@ export function Comparison({
  * A chain of custody: stages, and how far each one has got.
  *
  * Used for the studio's provenance and for each title's standing. The status
- * string is the only vocabulary — `COMPLETE` reads as done, `IN PROGRESS` as
+ * string is the only vocabulary   `COMPLETE` reads as done, `IN PROGRESS` as
  * current, and anything else (`SCHEDULED`, `[REDACTED]`) recedes, which is what
  * an honest roadmap looks like when most of it has not happened yet.
  */
