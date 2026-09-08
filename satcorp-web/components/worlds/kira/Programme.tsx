@@ -86,3 +86,134 @@ export function WorldDossier({
     </article>
   );
 }
+
+/**
+ * Two entries in the programme, set against each other.
+ *
+ * A real <table> at sm and above, because the row-and-column relationship is
+ * the meaning here rather than the styling — and it is the only element that
+ * lets a screen reader say "Form: open-world survival" instead of reading two
+ * disconnected lists. Below sm the same rows become a stack of pairs; see the
+ * note in the body for why that is worth two renderings.
+ *
+ * The second column is the one being introduced, and it carries the accent.
+ */
+export function Comparison({
+  columns,
+  rows,
+}: {
+  columns: [string, string];
+  rows: readonly (readonly [string, string, string])[];
+}) {
+  return (
+    <>
+      {/* Below sm the table would have to scroll sideways, which puts the
+          second column — the entire point of the comparison — off the edge of a
+          phone behind a scrollbar most readers will not use. This is the one
+          block on the page that cannot afford to be half-read, so on small
+          screens it stops being a table and becomes a stack of pairs.
+
+          Only one of the two is ever in the accessibility tree: `hidden` is
+          `display: none`, so nothing is announced twice. */}
+      <dl className="sm:hidden">
+        {rows.map(([aspect, left, right]) => (
+          <div
+            key={aspect}
+            className="grid grid-cols-2 gap-x-4 border-b border-bone/10 py-5"
+          >
+            <dt className="label col-span-2 mb-3 text-[0.52rem]">{aspect}</dt>
+            <dd>
+              <span className="label block text-[0.48rem]">{columns[0]}</span>
+              <span className="mt-1.5 block font-mono text-[0.72rem] leading-relaxed text-bone-dim">
+                {left}
+              </span>
+            </dd>
+            <dd>
+              <span className="label block text-[0.48rem] text-accent">
+                {columns[1]}
+              </span>
+              <span className="mt-1.5 block font-mono text-[0.72rem] leading-relaxed text-bone">
+                {right}
+              </span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <div className="hidden overflow-x-auto sm:block">
+        <table className="w-full min-w-[32rem] border-collapse text-left">
+          <thead>
+            <tr className="border-b border-accent/25">
+              <th className="label py-3 pr-6 text-[0.52rem] font-normal">
+                <span className="sr-only">Aspect</span>
+              </th>
+              <th className="label py-3 pr-6 text-[0.52rem] font-normal">
+                {columns[0]}
+              </th>
+              <th className="label py-3 text-[0.52rem] font-normal text-accent">
+                {columns[1]}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(([aspect, left, right]) => (
+              <tr key={aspect} className="border-b border-bone/10">
+                <th
+                  scope="row"
+                  className="label py-4 pr-6 align-top text-[0.52rem] font-normal"
+                >
+                  {aspect}
+                </th>
+                <td className="py-4 pr-6 font-mono text-[0.74rem] leading-relaxed text-bone-dim">
+                  {left}
+                </td>
+                <td className="py-4 font-mono text-[0.74rem] leading-relaxed text-bone">
+                  {right}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+/**
+ * A chain of custody: stages, and how far each one has got.
+ *
+ * Used for the studio's provenance and for each title's standing. The status
+ * string is the only vocabulary — `COMPLETE` reads as done, `IN PROGRESS` as
+ * current, and anything else (`SCHEDULED`, `[REDACTED]`) recedes, which is what
+ * an honest roadmap looks like when most of it has not happened yet.
+ */
+export function Standing({
+  items,
+  className = "",
+}: {
+  items: readonly (readonly [string, string])[];
+  className?: string;
+}) {
+  return (
+    <ol
+      className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 ${className}`}
+    >
+      {items.map(([stage, status]) => (
+        <li key={stage} className="border border-bone/10 bg-ink-raised/60 p-6">
+          <p className="font-display text-lg text-bone">{stage}</p>
+          <p
+            className={`mt-3 font-mono text-[0.58rem] tracking-[0.2em] ${
+              status === "COMPLETE"
+                ? "text-accent"
+                : status === "IN PROGRESS"
+                  ? "text-bone-dim"
+                  : "text-bone-dim/40"
+            }`}
+          >
+            {status}
+          </p>
+        </li>
+      ))}
+    </ol>
+  );
+}

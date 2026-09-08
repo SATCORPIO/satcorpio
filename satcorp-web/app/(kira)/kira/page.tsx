@@ -4,7 +4,13 @@ import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { Placeholder } from "@/components/system/Placeholder";
 import { Reveal } from "@/components/system/Reveal";
 import { ScreeningRoom } from "@/components/worlds/kira/ScreeningRoom";
-import { ProgrammeLine, WorldDossier } from "@/components/worlds/kira/Programme";
+import {
+  ProgrammeLine,
+  Standing,
+  WorldDossier,
+} from "@/components/worlds/kira/Programme";
+import { SecondFeature } from "@/components/worlds/kira/SecondFeature";
+import { DISCORD } from "@/components/worlds/kira/relentless";
 
 /**
  * ESTABLISHMENT 4   KI-RA STUDIOS, THE SCREENING ROOM
@@ -71,6 +77,10 @@ const APPARATUS = [
   "Multiplayer",
   "Dedicated Servers",
   "Persistent Worlds",
+  // Added with the second feature: the mobile title is server-authoritative
+  // and lives forever, and neither is true of anything above it.
+  "Server-Authoritative",
+  "Live Service",
 ];
 
 /** The studio timeline, as an object's chain of custody. */
@@ -94,8 +104,6 @@ const CONTACT_SHEET = [
   ["Space scenes", "KR-107"],
   ["Planetary renders", "KR-108"],
 ] as const;
-
-const DISCORD = "https://discord.gg/Fh5qy6tCTc";
 
 export default function KiraPage() {
   return (
@@ -223,6 +231,12 @@ export default function KiraPage() {
           </ThreadLink>
         </div>
       </section>
+
+      {/* ---------- THE SECOND FEATURE ----------
+          The mobile title, announced where the room's own metaphor puts it:
+          straight after the main picture. It runs plain rather than in a tinted
+          band, so the weight on the page still reads flagship-first. */}
+      <SecondFeature />
 
       {/* ---------- THE SAFE HOUSES ---------- */}
       <section className="mx-auto max-w-6xl px-6 py-24">
@@ -364,27 +378,9 @@ export default function KiraPage() {
         <Reveal>
           <p className="label label-accent">Provenance   NAMTAR</p>
         </Reveal>
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PROVENANCE.map(([stage, status]) => (
-            <li
-              key={stage}
-              className="border border-bone/10 bg-ink-raised/60 p-6"
-            >
-              <p className="font-display text-lg text-bone">{stage}</p>
-              <p
-                className={`mt-3 font-mono text-[0.58rem] tracking-[0.2em] ${
-                  status === "COMPLETE"
-                    ? "text-accent"
-                    : status === "IN PROGRESS"
-                      ? "text-bone-dim"
-                      : "text-bone-dim/40"
-                }`}
-              >
-                {status}
-              </p>
-            </li>
-          ))}
-        </ol>
+        {/* Same unit as the second feature's standing strip. There are two
+            slates on this page now, and they must not be told two ways. */}
+        <Standing items={PROVENANCE} className="mt-10" />
       </section>
 
       {/* ---------- CONTACT SHEET ---------- */}
