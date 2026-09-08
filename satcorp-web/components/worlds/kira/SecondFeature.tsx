@@ -26,20 +26,20 @@ import {
 } from "./relentless";
 
 /**
- * THE SECOND FEATURE — the mobile title's announcement on `/kira`.
+ * THE SECOND FEATURE   the mobile title's announcement on `/kira`.
  *
  * Placed directly after the NAMTAR feature presentation, which is where the
  * room's own metaphor puts it: the main picture, then the second feature. The
  * flagship keeps the tinted band and the heavier frame; this section runs
  * plain, on the page's alternating rhythm, and the difference in weight is the
- * hierarchy. Nothing here needs to shout — a second feature announced quietly
+ * hierarchy. Nothing here needs to shout   a second feature announced quietly
  * in a screening room is a studio with a slate, not a studio changing course.
  *
  * The section is an announcement, not a brief. It carries the hook, the
  * disambiguation, and the standing; everything deeper lives at
  * `/kira/relentless` behind one link. Two reasons for the split: a reader
  * scrolling `/kira` is here for the studio, not for one title's design
- * philosophy — and the full brief is where an interested reader can be asked
+ * philosophy   and the full brief is where an interested reader can be asked
  * for something, which a section on somebody else's page cannot honestly do.
  *
  * Server component. The only client boundary is the clock, which needs one.
