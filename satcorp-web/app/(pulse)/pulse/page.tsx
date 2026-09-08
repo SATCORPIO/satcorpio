@@ -4,8 +4,11 @@ import { Reveal, ScrollTriggerRefresh } from "@/components/system/Reveal";
 import { SignalScene, SignalTriggers } from "@/components/worlds/pulse/SignalScene";
 import { Dashboard } from "@/components/worlds/pulse/Dashboard";
 import { ReservationForm } from "@/components/worlds/pulse/ReservationForm";
+import { Position } from "@/components/worlds/pulse/Position";
+import { SpaceBoard } from "@/components/worlds/pulse/SpaceBoard";
 import {
   CREATOR_SURFACES,
+  DOCTRINE,
   IDENTITY_LEVELS,
   PILLARS,
   ROADMAP,
@@ -32,21 +35,30 @@ import {
  *
  *   I    Hero                              shipped
  *   II   What PULSE Is   the pillars       shipped
- *   III  The Position   ecosystem diagram  Track A phase 2
- *   IV   PULSE ID + the handle claim       shipped   see note below
- *   V    Spaces                            Track A phase 2
+ *   III  The Position   ecosystem diagram  shipped
+ *   IV   PULSE ID + the handle claim       shipped
+ *   V    Spaces                            shipped
  *   VI   The Creator Hub                   shipped
  *   VII  Transmission Schedule             shipped
  *   VIII Growth Intelligence               shipped, specimen-stamped
- *   IX   The Doctrine                      Track A phase 2, gated on plan §7.4
+ *   IX   The Doctrine                      shipped   gate cleared, see below
  *   X    Core Statement                    shipped
  *   XI   CTA                               shipped
  *
- * §IV shipped ahead of §III and §V: the phase guide's own sequencing note
- * (§6) says build the reservation before the presentation, because it is the
- * one part of this page that compounds. It carries only the identity-levels
- * and verification copy plus the claim form   the ecosystem diagram (§III)
- * and the Spaces tab board (§V) are still Track A phase 2.
+ * All eleven sections are built. Two sequencing notes worth keeping, because
+ * they explain why the page did not fill in strict paragraph order:
+ *
+ * §IV shipped before §III and §V (Track A phase 3 landed ahead of phase 2):
+ * the phase guide's own sequencing note (§6) says build the reservation
+ * before the presentation, because it is the one part of this page that
+ * compounds.
+ *
+ * §IX was gated on plan §7.4   a form collecting an email address on the
+ * strength of an undisclosed processing purpose is the one mistake this
+ * site's positioning cannot absorb. The gate cleared when the privacy policy
+ * was amended for the PULSE handle claim in the same change that added the
+ * form (see `app/(legal)/privacy/page.tsx`), so this section's claim and the
+ * policy's claim are the same document read twice.
  *
  * Two build-plan decisions (§13.1 domain, §13.2 open-vs-invited queue) are
  * proceeding under the plan's own recommendations   `pulse.satcorp.io`, an
@@ -57,7 +69,9 @@ import {
  * Every state on this page has to be real   plan §7. `ROADMAP` is typed data
  * in `lib/pulse-platform.ts`, not copy: nothing here carries `tone="live"`
  * except the establishment's own on-air stamp in the hero, because nothing on
- * the roadmap is live yet.
+ * the roadmap is live yet. §III's KYRAX edge is drawn deliberately differently
+ * from the other four for the same reason   named and deferred, not
+ * demonstrated (plan §7.3).
  */
 
 /** Roadmap state -> stamp tone. `"live"` is deliberately never a target here. */
@@ -162,6 +176,37 @@ export default function PulsePage() {
           </ul>
         </section>
 
+        {/* ---------- III. THE POSITION   the ecosystem diagram
+
+             The claim the page has never drawn: PULSE sits between people
+             and every experience SATCORP operates. `Position` is inline SVG,
+             not WebGL   `SignalScene` already owns this page's one WebGL
+             context, and a second one is how the page loses the first on
+             mobile. Plan §4.III. ---------- */}
+        <section data-signal="1" className="border-t border-bone/10 py-20">
+          <Reveal>
+            <p className="label label-accent">The Position</p>
+            <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
+              Not a sixth product. The layer between them.
+            </h2>
+            <p className="mt-6 max-w-2xl leading-relaxed text-bone-dim">
+              PULSE sits between people and every experience SATCORP
+              operates   the connective layer, not another division standing
+              beside the others.
+            </p>
+          </Reveal>
+
+          <div className="mt-12">
+            <Position />
+          </div>
+
+          <p className="mx-auto mt-8 max-w-md text-center font-mono text-[0.64rem] leading-relaxed text-bone-dim/70">
+            The KYRAX connection is drawn, not yet active   the intelligence
+            layer is a later phase (plan §7.3), and this diagram says so
+            rather than pretending otherwise.
+          </p>
+        </section>
+
         {/* ---------- IV. PULSE ID   the handle claim
 
              Shipped ahead of §III and §V   see the header comment. Left half
@@ -212,6 +257,31 @@ export default function PulsePage() {
               <p className="label label-accent mb-6">Reserve Your Handle</p>
               <ReservationForm />
             </div>
+          </div>
+        </section>
+
+        {/* ---------- V. SPACES   one structure, four shapes
+
+             A creator, a community, a business and a game all get the same
+             fourteen modules, with a different subset switched on. The five
+             lines from the original page's Community Fabric section survive
+             here as module descriptions   plan §4, "Community Fabric folds
+             into V and VI." ---------- */}
+        <section data-signal="0.9" className="border-t border-bone/10 py-20">
+          <Reveal>
+            <p className="label label-accent">Spaces</p>
+            <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
+              One structure. Four shapes.
+            </h2>
+            <p className="mt-6 max-w-2xl leading-relaxed text-bone-dim">
+              A Space is a complete digital home   the same fourteen modules
+              every time, switched on differently depending on what is
+              actually being built.
+            </p>
+          </Reveal>
+
+          <div className="mt-10">
+            <SpaceBoard />
           </div>
         </section>
 
@@ -336,6 +406,43 @@ export default function PulsePage() {
 
             <Dashboard />
           </div>
+        </section>
+
+        {/* ---------- IX. THE DOCTRINE   the privacy position
+
+             Gated on plan §7.4 until the privacy policy actually said what
+             this section claims   it does now (see the header comment). The
+             wording here is the wording of the policy, not a paraphrase of
+             it: conduct, never topology (plan §7.6). This section may not
+             describe SATCORP's data infrastructure or vendor relationships
+             at all   `tests/unit/doctrine-copy.test.ts` holds that line in
+             CI, and holds it against this very comment: an earlier draft of
+             this note used the exact phrase the test exists to catch,
+             describing the rule rather than breaking it, and failed anyway.
+             Reworded rather than the test narrowed, since scanning comments
+             too is the point   a phrase resting in a comment is a phrase one
+             copy-paste away from the rendered page. ---------- */}
+        <section data-signal="1.1" className="border-t border-bone/10 py-20">
+          <Reveal>
+            <div className="mx-auto max-w-2xl border border-bone/10 bg-ink-raised/70 p-8 text-center backdrop-blur-sm sm:p-10">
+              <p className="label label-accent">The Doctrine</p>
+              <p className="mt-5 font-display text-2xl leading-snug text-bone sm:text-3xl">
+                {DOCTRINE.claim}
+              </p>
+              <p className="mt-5 font-mono text-[0.72rem] leading-relaxed text-bone-dim">
+                {DOCTRINE.body}
+              </p>
+              <p className="mt-5 leading-relaxed text-bone-dim">
+                {DOCTRINE.footer}
+              </p>
+              <ThreadLink
+                href="/privacy"
+                className="mt-6 inline-block font-mono text-[0.64rem] tracking-[0.2em] text-bone underline-offset-4 hover:underline"
+              >
+                READ THE PRIVACY POLICY →
+              </ThreadLink>
+            </div>
+          </Reveal>
         </section>
       </div>
 

@@ -3,11 +3,11 @@
  *
  * Single source of truth for the platform specification. `/pulse` renders its
  * pillars, creator surfaces and roadmap from here; `/pulse/specification`
- * (Track A phase 2) renders the full spec from the same module; the KYRAX
- * registry seam (`registry-index.ts`, Track A phase 4) derives a `platform`
- * entry kind from it. Nothing here is a second copy of anything   if a
- * section needs a field this module does not carry, the field is added here,
- * never written straight into a page.
+ * renders the full spec from the same module; the KYRAX registry seam
+ * (`registry-index.ts`, Track A phase 4) derives a `platform` entry kind from
+ * it. Nothing here is a second copy of anything   if a section needs a field
+ * this module does not carry, the field is added here, never written straight
+ * into a page.
  *
  * The doctrine this data exists to serve is
  * `../../Next Builds/PULSE/PULSE-BUILD-PLAN.md`, in particular §7: every
@@ -337,3 +337,35 @@ export const DOCTRINE = {
   footer:
     "That is not a feature we added. It is the only way we were willing to build it.",
 };
+
+/* ============================================================
+   THE API   §21 of the source note   sketch only, specification page
+
+   Track B phase 7 ("Platform," build plan §10) is the last phase, not the
+   first. Nothing here is callable. It is published because a developer
+   deciding whether to build against PULSE later needs to see the shape of
+   the commitment now, and because a sketch that is clearly labelled a sketch
+   is a recruiting document; a sketch presented as a working API is a support
+   incident. Every entry is a plan, not a promise   plan §7.3's discipline
+   (name the capability, stamp it deferred, describe it in future tense)
+   applies here exactly as it does to KYRAX intelligence.
+   ============================================================ */
+
+export interface ApiEndpoint {
+  method: "GET" | "POST";
+  path: string;
+  note: string;
+}
+
+export const API_SKETCH: ApiEndpoint[] = [
+  { method: "GET", path: "/users", note: "A PULSE identity, by handle." },
+  { method: "GET", path: "/communities", note: "A community Space and its public modules." },
+  { method: "GET", path: "/events", note: "An event, its schedule and its state." },
+  { method: "GET", path: "/creators", note: "A creator's public surfaces." },
+  { method: "GET", path: "/memberships", note: "Membership tiers a creator has published." },
+  { method: "POST", path: "/notifications", note: "Deliver a notification into a user's inbox." },
+  { method: "POST", path: "/events", note: "Create an event inside a Space you administer." },
+];
+
+export const OAUTH_SKETCH =
+  '"Continue with PULSE"   one identity, scoped consent, carried into Ki-Ra and NAMTAR (build plan §11).';
