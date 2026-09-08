@@ -1,12 +1,12 @@
 /**
- * NAMTAR RELENTLESS — every string the announcement uses, in one module.
+ * NAMTAR RELENTLESS   every string the announcement uses, in one module.
  *
  * Two reasons this is data rather than prose typed into JSX.
  *
  * **The title is not cleared.** The game's own legal register holds external
  * use of the mark until counsel returns a clearance search, and a page on this
  * domain is external use. `TITLE` is the only place the name is written down,
- * so a rename is this one line and nothing else — the same discipline the game
+ * so a rename is this one line and nothing else   the same discipline the game
  * applies to its own config, where ids never carry display names.
  *
  * **The copy is load-bearing.** What may be said about an unreleased title is a
@@ -40,13 +40,13 @@ export const DISCORD = "https://discord.gg/Fh5qy6tCTc";
 
 /** The external positioning line, verbatim from the vision document. */
 export const POSITIONING =
-  "A 4X survival war game where the planet fights back — and the map remembers who held it.";
+  "A 4X survival war game where the planet fights back   and the map remembers who held it.";
 
 export const HEADLINE =
   "A planet that repairs itself, and considers you the damage.";
 
 export const PREMISE =
-  "The same planet, at ground level. A failed colony builds outposts from salvage among machinery it does not understand — and the machinery is still running. It reads construction as damage. On a clock everyone can see, it comes to repair the fault.";
+  "The same planet, at ground level. A failed colony builds outposts from salvage among machinery it does not understand   and the machinery is still running. It reads construction as damage. On a clock everyone can see, it comes to repair the fault.";
 
 /** The dossier header row. Four facts, none of which can expire. */
 export const FACTS: [string, string][] = [
@@ -57,7 +57,7 @@ export const FACTS: [string, string][] = [
 ];
 
 /**
- * THE CYCLE — the differentiator, and the only reason to publish anything.
+ * THE CYCLE   the differentiator, and the only reason to publish anything.
  *
  * Note what is absent: a cadence. Whether the Surge arms weekly or against
  * sector age is an open design question, so the copy says "on a clock everyone
@@ -77,7 +77,7 @@ export const CYCLE = {
   /** Long form. The route has the room for it; the section does not. */
   deep: [
     "Every sector carries a threat reading that climbs with everything built on it. Strength is not a defence against this. Strength is the input.",
-    "When the reading crosses, the world answers across the whole sector at once — driven fauna, woken machines, and matter that should not move the way it moves. It is telegraphed. Nobody is ambushed. What varies is whether the people around you are ready.",
+    "When the reading crosses, the world answers across the whole sector at once   driven fauna, woken machines, and matter that should not move the way it moves. It is telegraphed. Nobody is ambushed. What varies is whether the people around you are ready.",
     "Ground the sector holds stays productive. Ground it loses turns, and stays turned until somebody goes and takes it back. The map is the scoreboard, it is persistent, and it does not care who was at war with whom last week.",
   ],
 } as const;
@@ -133,7 +133,7 @@ export const COVENANT: readonly string[] = [
   "No power for sale that cannot be reached by playing.",
   "No advertisement showing a game that does not exist.",
   "No home screen with forty things blinking on it.",
-  "No wiki required — the tables ship in the client.",
+  "No wiki required   the tables ship in the client.",
   "Forty frames a second on an ordinary phone outranks any visual feature we might want more.",
 ] as const;
 
@@ -154,7 +154,7 @@ export const COMPARISON = {
    * worse than no comparison at all, so if that dossier is edited, edit this.
    *
    * The phone row is the one that earns its place. NAMTAR already ships an
-   * iOS and Android *companion app* — base status, alerts, logistics — and
+   * iOS and Android *companion app*   base status, alerts, logistics   and
    * without this line a reader meets two Ki-Ra things on a phone and merges
    * them. That is the precise misreading this whole block exists to prevent,
    * so the distinction is drawn rather than left to be inferred.
@@ -179,8 +179,8 @@ export const FRAMES = [
 
 /** The deeper contact sheet, for the full brief. */
 export const CONTACT_SHEET = [
-  ["Concept — the ruins", "NR-020"],
-  ["Concept — an outpost", "NR-021"],
+  ["Concept   the ruins", "NR-020"],
+  ["Concept   an outpost", "NR-021"],
   ["The three hostile families", "NR-022"],
   ["Faction silhouettes", "NR-023"],
   ["Interface studies", "NR-024"],
@@ -188,7 +188,7 @@ export const CONTACT_SHEET = [
 ] as const;
 
 /**
- * The status ladder. `[REDACTED]` is not decoration here — it is the accurate
+ * The status ladder. `[REDACTED]` is not decoration here   it is the accurate
  * word. Nothing below the vertical slice is scheduled, and a fabricated date
  * would be the one sentence on this page that is not true.
  */
@@ -207,8 +207,8 @@ export const LADDER_CODA = "No date. When there is one, it will be a real one.";
  * The four survivor factions, by role.
  *
  * The names are withheld. Faction names carry the highest trademark exposure
- * of any naming batch in the game — because they are the ones that end up on
- * store pages and in advertising — and they clear as a batch, later. What is
+ * of any naming batch in the game   because they are the ones that end up on
+ * store pages and in advertising   and they clear as a batch, later. What is
  * published is the part that is safe and, as it happens, the part that is
  * interesting: what each of them is for, and what they look like.
  */
@@ -219,13 +219,13 @@ export const FACTIONS = [
       "Salvage industrialists. Held the wreck sites, learned to strip and rebuild, and now supply half the continent. Pragmatic to the point of coldness.",
     silhouette: "Layered, asymmetric, visibly welded from parts that did not begin together",
     materials: "Scorched steel, cable, hazard striping",
-    mark: "An interrupted line — a mark that means this was cut and rejoined",
+    mark: "An interrupted line   a mark that means this was cut and rejoined",
   },
   {
     role: "Bastion",
     character:
       "Preservationists. They believe the colony failed for want of discipline, and that survival means holding, recording, and never overreaching. The best defensive engineers on the planet, and the least willing to leave their walls.",
-    silhouette: "Heavy, symmetrical, closed — the outline of something sealed",
+    silhouette: "Heavy, symmetrical, closed   the outline of something sealed",
     materials: "Poured composite, dull ceramic, deep blue-grey",
     mark: "A closed ring, unbroken",
   },
@@ -240,10 +240,10 @@ export const FACTIONS = [
   {
     role: "Technology",
     character:
-      "Researchers who went underground — literally — to study what is down there. The only ones who have been inside the deeper strata and come back. Secretive, undermanned, and the source of nearly everything anyone else knows.",
+      "Researchers who went underground   literally   to study what is down there. The only ones who have been inside the deeper strata and come back. Secretive, undermanned, and the source of nearly everything anyone else knows.",
     silhouette: "Slender, instrumented, deliberately non-military, sensor-heavy",
     materials: "Pale composite, glass, the relic hue used sparingly",
-    mark: "An open bracket — unfinished, on purpose",
+    mark: "An open bracket   unfinished, on purpose",
   },
 ] as const;
 
