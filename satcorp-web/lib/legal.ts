@@ -39,8 +39,8 @@ export const LEGAL = {
 
   /** Date these documents took effect, and the date of the current revision. */
   effective: "9 August 2026",
-  revised: "9 August 2026",
-  version: "1.0",
+  revised: "7 September 2026",
+  version: "1.1",
 
   /** How long a sealed brief is kept once a matter closes. */
   retentionMonths: 24,

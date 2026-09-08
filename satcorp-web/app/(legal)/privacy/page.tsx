@@ -35,9 +35,10 @@ const SECTIONS: LegalSection[] = [
         <dl>
           <dt>What we collect</dt>
           <dd>
-            What you type into the Engagement Brief, and the technical
-            information any web server necessarily sees when it answers a
-            request.
+            What you type into one of the four forms on this site   the
+            Engagement Brief, the partnership intake, the Field Notes signup or
+            a PULSE handle claim   and the technical information any web
+            server necessarily sees when it answers a request.
           </dd>
 
           <dt>What we do not collect</dt>
@@ -49,8 +50,8 @@ const SECTIONS: LegalSection[] = [
 
           <dt>Cookies</dt>
           <dd>
-            This site sets no cookies at all. Two items of browser local storage
-            hold your own choices on your own device, and are never transmitted
+            This site sets no cookies at all. One item of browser local storage
+            holds your own choices on your own device, and is never transmitted
             to us.
           </dd>
 
@@ -62,8 +63,8 @@ const SECTIONS: LegalSection[] = [
 
           <dt>Who else sees it</dt>
           <dd>
-            The infrastructure that hosts the site, and the services that carry a
-            submitted brief to us. Each one is named in this policy.
+            The infrastructure that hosts the site, and the services that carry
+            a form submission to us. Each one is named in this policy.
           </dd>
 
           <dt>Your rights</dt>
@@ -109,14 +110,20 @@ const SECTIONS: LegalSection[] = [
     id: "what-we-collect",
     title: "What we collect",
     short:
-      "The fields of the Engagement Brief, and the request data a web server cannot avoid seeing.",
+      "The fields of the four forms on this site, and the request data a web server cannot avoid seeing.",
     body: (
       <>
-        <h3>What you send us in the Engagement Brief</h3>
         <p>
-          The <ThreadLink href="/engage">brief</ThreadLink> is the only place on
-          this site where you are asked for personal information. It collects
-          exactly these fields, and nothing else:
+          This site asks for personal information in exactly four places, and
+          nowhere else. Each is described below; nothing outside these four
+          collects anything beyond what any web server necessarily sees when it
+          answers a request.
+        </p>
+
+        <h3>The Engagement Brief</h3>
+        <p>
+          The <ThreadLink href="/engage">brief</ThreadLink> collects exactly
+          these fields, and nothing else:
         </p>
         <ul>
           <li>
@@ -137,24 +144,59 @@ const SECTIONS: LegalSection[] = [
         <p>
           Only your name, a contact channel, a contact address and a description
           of the matter are required. Every other field is optional, and leaving
-          one blank has no consequence beyond a slower first conversation. What
-          you write into a free-text box is a matter for you, and we ask you not
-          to include sensitive categories of personal data, third-party personal
-          data, credentials or payment details there.
+          one blank has no consequence beyond a slower first conversation.
+        </p>
+
+        <h3>The Approach</h3>
+        <p>
+          The <ThreadLink href="/partner">partnership intake</ThreadLink>{" "}
+          collects your name, your organisation, a contact channel and address,
+          and a division-specific set of questions determined by which of
+          SATCORP&rsquo;s six divisions you choose to approach   for example,
+          platforms and audience figures for PULSE, or shipped titles and team
+          size for Ki-Ra Studios. Only the questions for the division you
+          actually choose are collected or stored.
+        </p>
+
+        <h3>Field Notes</h3>
+        <p>
+          The forwarding list on{" "}
+          <ThreadLink href="/kira/relentless">/kira/relentless</ThreadLink>{" "}
+          collects your preferred contact channel, the address or handle to use,
+          an optional one-line note about why you are signing up, and your
+          affirmative consent to be contacted about that title.
+        </p>
+
+        <h3>The PULSE handle claim</h3>
+        <p>
+          Filing a handle on <ThreadLink href="/pulse">/pulse</ThreadLink>{" "}
+          collects the handle itself, an email address to reach you at, and
+          which of five categories best describes you (member, creator,
+          community, business or developer). Nothing else is asked. A claim is
+          a position in a queue, not an account   it does not create a login,
+          a password, or any way to sign in anywhere, and PULSE itself does not
+          exist as a product yet. What this collects today is the seed of an
+          allocation list for when it does.
+        </p>
+        <p>
+          What you write into any free-text field on this site is a matter for
+          you, and we ask you not to include sensitive categories of personal
+          data, third-party personal data, credentials or payment details
+          there.
         </p>
 
         <h3>What the server sees</h3>
         <ul>
           <li>
-            <strong>Your IP address.</strong> Used to enforce a limit of three
-            submissions per minute so that the form cannot be flooded. It is held
-            in memory for sixty seconds for that purpose and is not written to
-            the enquiry record.
+            <strong>Your IP address.</strong> Used to enforce a per-form limit
+            on how many submissions one address can make in a minute, so that
+            no form on this site can be flooded. It is held in memory for that
+            purpose only and is not written to any record.
           </li>
           <li>
-            <strong>Your browser user-agent string.</strong> Stored alongside a
-            submitted brief, so that a malformed or fraudulent submission can be
-            understood after the fact.
+            <strong>Your browser user-agent string.</strong> Stored alongside
+            whatever you submitted, so that a malformed or fraudulent
+            submission can be understood after the fact.
           </li>
           <li>
             <strong>Ordinary server logs.</strong> Our hosting provider records
@@ -166,12 +208,12 @@ const SECTIONS: LegalSection[] = [
 
         <h3>Automated screening</h3>
         <p>
-          The brief carries two silent checks: a form field hidden from people
-          and visible to automated scripts, and a measurement of how long the
-          form was open before it was submitted. Both exist solely to identify
-          automated submissions. Neither is used to evaluate you, neither
-          produces any legal or similarly significant effect, and no profile is
-          built from either.
+          Every form on this site carries the same two silent checks: a form
+          field hidden from people and visible to automated scripts, and a
+          measurement of how long the form was open before it was submitted.
+          Both exist solely to identify automated submissions. Neither is used
+          to evaluate you, neither produces any legal or similarly significant
+          effect, and no profile is built from either.
         </p>
 
         <h3>What we do not collect</h3>
@@ -243,7 +285,7 @@ const SECTIONS: LegalSection[] = [
     id: "cookies",
     title: "Cookies and local storage",
     short:
-      "There are no cookies on this site. Two local-storage entries hold your own choices on your own device.",
+      "There are no cookies on this site. One local-storage entry holds your own choices on your own device.",
     body: (
       <>
         <p>
@@ -287,7 +329,7 @@ const SECTIONS: LegalSection[] = [
     id: "sharing",
     title: "Who else sees your data",
     short:
-      "Our host, and the services that carry a submitted brief to us. Named, with what each one receives.",
+      "Our host, and the services that carry a form submission to us. Named, with what each one receives.",
     body: (
       <>
         <p>
@@ -299,24 +341,27 @@ const SECTIONS: LegalSection[] = [
         <dl>
           <dt>Vercel Inc.   hosting and delivery</dt>
           <dd>
-            Hosts and serves the site and runs the code that receives a brief.
-            Sees request data including IP address and user-agent as part of
-            delivering the site. United States, with a global edge network.
+            Hosts and serves the site and runs the code that receives a
+            submission. Sees request data including IP address and user-agent
+            as part of delivering the site. United States, with a global edge
+            network.
           </dd>
 
-          <dt>Discord Inc.   enquiry notification</dt>
+          <dt>Discord Inc.   submission notification</dt>
           <dd>
-            A submitted brief is delivered as a formatted message into a private,
-            access-controlled operations channel so that it is seen promptly.
-            This means the content of your brief, including your name and contact
+            Every form on this site   the brief, the partnership intake, the
+            Field Notes signup, and the PULSE handle claim   delivers as a
+            formatted message into a private, access-controlled channel so
+            that it is seen promptly. Each delivers to its own channel; the
+            content of what you submitted, including your name and contact
             details, passes through and is stored on Discord infrastructure.
             United States.
           </dd>
 
           <dt>Resend   email delivery</dt>
           <dd>
-            Where email notification is enabled, carries a copy of the brief to
-            our inbox. United States.
+            Where email notification is enabled for a given form, carries a
+            copy of the submission to our inbox. United States.
           </dd>
 
           <dt>Our email provider</dt>
@@ -392,6 +437,29 @@ const SECTIONS: LegalSection[] = [
             years from the end of the relationship.
           </dd>
 
+          <dt>An approach that does not lead to a partnership</dt>
+          <dd>
+            Kept for up to {LEGAL.retentionMonths} months from our last
+            correspondence, on the same basis as an enquiry above, then
+            deleted.
+          </dd>
+
+          <dt>Field Notes signups</dt>
+          <dd>
+            Kept until the title ships and the list has served its purpose, or
+            until you withdraw consent   whichever comes first.
+          </dd>
+
+          <dt>PULSE handle claims</dt>
+          <dd>
+            Kept while the claim is queued. If the platform has not opened
+            within {LEGAL.retentionMonths} months of filing, the claim is
+            deleted unless you ask us to keep it. Once the platform opens,
+            retention is governed by its own privacy policy   accounts are a
+            different kind of data than a queued claim, and that document will
+            say so before it applies to you.
+          </dd>
+
           <dt>IP addresses used for rate limiting</dt>
           <dd>Held in memory for sixty seconds, then discarded.</dd>
 
@@ -420,12 +488,12 @@ const SECTIONS: LegalSection[] = [
     body: (
       <>
         <p>
-          The site is served only over HTTPS. Enquiry records are held in
-          access-controlled storage and are excluded from the public source
-          repository by configuration, so a brief cannot be published by
-          accident. Access is limited to the people who need it to answer you.
-          Credentials for third-party services are held as environment secrets
-          and never committed to source control.
+          The site is served only over HTTPS. Records from every form on this
+          site are held in access-controlled storage and are excluded from the
+          public source repository by configuration, so a submission cannot be
+          published by accident. Access is limited to the people who need it
+          to answer you. Credentials for third-party services are held as
+          environment secrets and never committed to source control.
         </p>
         <p>
           No system is perfectly secure, and we will not pretend otherwise. If a
@@ -636,15 +704,16 @@ const SECTIONS: LegalSection[] = [
   {
     id: "automated",
     title: "Automated decisions and profiling",
-    short: "There are none. A person reads every brief.",
+    short: "There are none. A person reads every submission.",
     body: (
       <p>
         We do not carry out automated decision-making that produces legal or
         similarly significant effects, and we do not profile you. The two
-        anti-automation checks on the Engagement Brief filter scripted
-        submissions only; they do not evaluate you, and a legitimate enquiry
+        anti-automation checks on every form on this site filter scripted
+        submissions only; they do not evaluate you, and a legitimate submission
         caught by one can simply be resent, or sent to <Mail /> instead. Every
-        brief that reaches us is read by a person.
+        submission that reaches us is read by a person   including a PULSE
+        handle claim, which is filed rather than allocated automatically.
       </p>
     ),
   },
