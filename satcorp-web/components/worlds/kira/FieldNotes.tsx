@@ -13,7 +13,7 @@ import {
 } from "@/components/ledger/BriefField";
 
 /**
- * FIELD NOTES — leave a forwarding address.
+ * FIELD NOTES   leave a forwarding address.
  *
  * The whole of the announcement's ask. There is nothing to install, nothing to
  * pre-order, and no date to count down to, so the only thing worth collecting
@@ -147,7 +147,7 @@ export function FieldNotes() {
       <div className="mt-7">
         <Field
           label="Anything you want the studio to know"
-          hint="Optional. If you build these for a living, say so — that is read by a person."
+          hint="Optional. If you build these for a living, say so   that is read by a person."
           error={errors.note?.[0]}
         >
           <textarea
