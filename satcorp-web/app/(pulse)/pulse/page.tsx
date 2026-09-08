@@ -3,11 +3,14 @@ import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { Reveal, ScrollTriggerRefresh } from "@/components/system/Reveal";
 import { SignalScene, SignalTriggers } from "@/components/worlds/pulse/SignalScene";
 import { Dashboard } from "@/components/worlds/pulse/Dashboard";
+import { ReservationForm } from "@/components/worlds/pulse/ReservationForm";
 import {
   CREATOR_SURFACES,
+  IDENTITY_LEVELS,
   PILLARS,
   ROADMAP,
   ROADMAP_STAMP,
+  VERIFICATION,
   type RoadmapState,
 } from "@/lib/pulse-platform";
 
@@ -30,7 +33,7 @@ import {
  *   I    Hero                              shipped
  *   II   What PULSE Is   the pillars       shipped
  *   III  The Position   ecosystem diagram  Track A phase 2
- *   IV   PULSE ID + the handle queue       Track A phase 3
+ *   IV   PULSE ID + the handle claim       shipped   see note below
  *   V    Spaces                            Track A phase 2
  *   VI   The Creator Hub                   shipped
  *   VII  Transmission Schedule             shipped
@@ -38,6 +41,18 @@ import {
  *   IX   The Doctrine                      Track A phase 2, gated on plan §7.4
  *   X    Core Statement                    shipped
  *   XI   CTA                               shipped
+ *
+ * §IV shipped ahead of §III and §V: the phase guide's own sequencing note
+ * (§6) says build the reservation before the presentation, because it is the
+ * one part of this page that compounds. It carries only the identity-levels
+ * and verification copy plus the claim form   the ecosystem diagram (§III)
+ * and the Spaces tab board (§V) are still Track A phase 2.
+ *
+ * Two build-plan decisions (§13.1 domain, §13.2 open-vs-invited queue) are
+ * proceeding under the plan's own recommendations   `pulse.satcorp.io`, an
+ * open queue with gated allocation   as stated assumptions rather than
+ * blocking questions; both are one constant to change if decided otherwise
+ * (`PULSE_DOMAIN` in `ReservationForm.tsx`).
  *
  * Every state on this page has to be real   plan §7. `ROADMAP` is typed data
  * in `lib/pulse-platform.ts`, not copy: nothing here carries `tone="live"`
@@ -90,22 +105,24 @@ export default function PulsePage() {
             experiences they build.
           </p>
 
-          {/* RESERVE YOUR HANDLE lands here as the primary CTA in Track A
-              phase 3, anchored to §IV. Ordering two doors until that section
-              exists is the honest state   a CTA to a form that is not on the
-              page yet is a promise the page cannot keep. */}
           <div className="mt-12 flex flex-wrap gap-3">
+            <a
+              href="#pulse-id"
+              className="bg-blood-hot px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-ink transition-opacity hover:opacity-85"
+            >
+              RESERVE YOUR HANDLE
+            </a>
             <a
               href={DISCORD}
               target="_blank"
               rel="noreferrer noopener"
-              className="bg-blood-hot px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-ink transition-opacity hover:opacity-85"
+              className="border border-bone/20 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:border-blood-hot"
             >
               JOIN THE SIGNAL
             </a>
             <ThreadLink
               href="/partner?division=pulse"
-              className="border border-bone/20 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:border-blood-hot"
+              className="px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone-dim transition-colors hover:text-bone"
             >
               BROADCAST WITH US
             </ThreadLink>
@@ -143,6 +160,59 @@ export default function PulsePage() {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* ---------- IV. PULSE ID   the handle claim
+
+             Shipped ahead of §III and §V   see the header comment. Left half
+             is the identity claim (identity levels, verification classes);
+             right half is the reservation form itself, plan §4.IV. ---------- */}
+        <section
+          id="pulse-id"
+          data-signal="1.4"
+          className="border-t border-bone/10 py-20"
+        >
+          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+            <Reveal>
+              <p className="label label-accent">PULSE ID</p>
+              <h2 className="mt-4 font-display text-3xl leading-tight text-bone sm:text-4xl">
+                One account. One identity. Multiple experiences.
+              </h2>
+              <p className="mt-6 leading-relaxed text-bone-dim">
+                Your PULSE identity travels with you   into Ki-Ra&rsquo;s
+                communities, into NAMTAR&rsquo;s world, into anything SATCORP
+                opens next.
+              </p>
+
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {IDENTITY_LEVELS.map((level) => (
+                  <li key={level.id}>
+                    <Stamp tone="bone" rotate={1} className="text-[0.55rem]">
+                      {level.name.toUpperCase()}
+                    </Stamp>
+                  </li>
+                ))}
+              </ul>
+
+              <dl className="mt-10 grid gap-5 sm:grid-cols-2">
+                {VERIFICATION.map((v) => (
+                  <div key={v.id}>
+                    <dt className="font-mono text-[0.62rem] tracking-[0.18em] text-blood-hot">
+                      {v.name.toUpperCase()}
+                    </dt>
+                    <dd className="mt-1.5 font-mono text-[0.68rem] leading-relaxed text-bone-dim">
+                      {v.line}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+
+            <div>
+              <p className="label label-accent mb-6">Reserve Your Handle</p>
+              <ReservationForm />
+            </div>
+          </div>
         </section>
 
         {/* ---------- VI. THE CREATOR HUB   rewrite of Creator Network ---------- */}
@@ -284,8 +354,7 @@ export default function PulsePage() {
       {/* ---------- XI. CTA ----------
            BEGIN THE BRIEF is removed: someone commissioning agency work is
            not this page's audience, and the Colophon and the Ledger seal both
-           already reach /engage from every page. RESERVE YOUR HANDLE joins
-           this row in Track A phase 3. ---------- */}
+           already reach /engage from every page. ---------- */}
       <div className="relative mx-auto max-w-6xl px-6">
         <section data-signal="0.9" className="py-24 text-center">
           <p className="label label-accent">Get on the frequency</p>
@@ -295,16 +364,22 @@ export default function PulsePage() {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <a
+              href="#pulse-id"
+              className="bg-blood-hot px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-ink transition-opacity hover:opacity-85"
+            >
+              RESERVE YOUR HANDLE
+            </a>
+            <a
               href={DISCORD}
               target="_blank"
               rel="noreferrer noopener"
-              className="bg-blood-hot px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-ink transition-opacity hover:opacity-85"
+              className="border border-bone/20 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:border-blood-hot"
             >
               JOIN THE SIGNAL
             </a>
             <ThreadLink
               href="/partner?division=pulse"
-              className="border border-bone/20 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:border-blood-hot"
+              className="px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone-dim transition-colors hover:text-bone"
             >
               BROADCAST WITH US →
             </ThreadLink>

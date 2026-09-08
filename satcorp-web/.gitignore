@@ -34,11 +34,12 @@ yarn-error.log*
 .env*
 !.env.example
 
-# filed engagement briefs, partnership approaches and forwarding addresses
-# never committed
+# filed engagement briefs, partnership approaches, forwarding addresses and
+# PULSE handle claims   never committed
 /.intake/
 /.partner/
 /.notify/
+/.reservations/
 
 # vercel
 .vercel

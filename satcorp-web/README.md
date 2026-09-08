@@ -89,6 +89,11 @@ lib/
   ledger-catalog.ts     everything SATCORP sells   single source of truth
   intake-schema.ts      the engagement brief's shape and rules
   partner-schema.ts     the partner branches   one question set per division
+  notify-schema.ts      the Field Notes forwarding list's shape and rules
+  pulse-platform.ts     the PULSE platform spec   pillars, roadmap, spaces
+  pulse-schema.ts       the handle claim's shape, rules and normalisation
+  delivery.ts           shared intake machinery   record dir, reference,
+                         durability decision, used by all four pipelines
   registry-index.ts     what KYRAX holds, and the scorer that answers from it
   rate-limit.ts         per-pipeline sliding window
   store.ts              engagement (persisted) + UI state (not)
@@ -322,37 +327,58 @@ Never gate state on an animation callback. GSAP runs on requestAnimationFrame,
 which stalls in a backgrounded tab   if a `setState` lives in `onComplete`, the
 UI strands. Change state first and animate as a consequence.
 
-### The two intake pipelines
+### The intake pipelines
 
-There are two doors, deliberately separate rather than one form with a flag on
-it. They are read by different people on different timescales, so they deliver
-to different channels and file under different reference series.
+Four doors, deliberately separate rather than one form with a flag on it. Each
+is read by different people on a different timescale, so each delivers to its
+own channel and files under its own reference series.
 
-| | `/engage` | `/partner` |
-|---|---|---|
-| For | a client commissioning work | an organisation, studio, creator or operator proposing to work alongside a division |
-| Action | `submitBrief` | `submitApproach` |
-| Shape | fixed, `lib/intake-schema.ts` | branching, `lib/partner-schema.ts` |
-| Reference | `SC-…` | `SP-…` |
-| Record | `.intake/<ref>.json` | `.partner/<ref>.json` |
-| Webhook | `DISCORD_WEBHOOK_URL` | `PARTNER_WEBHOOK_URL` |
-| Email | `INTAKE_TO_EMAIL` | `PARTNER_TO_EMAIL` |
+| | `/engage` | `/partner` | `/kira/relentless` | `/pulse` |
+|---|---|---|---|---|
+| For | a client commissioning work | an organisation, studio, creator or operator proposing to work alongside a division | anyone joining the mobile title's forwarding list | anyone filing a PULSE handle claim |
+| Action | `submitBrief` | `submitApproach` | `submitNotify` | `reserveHandle` |
+| Shape | fixed, `lib/intake-schema.ts` | branching, `lib/partner-schema.ts` | fixed, `lib/notify-schema.ts` | fixed, `lib/pulse-schema.ts` |
+| Reference | `SC-…` | `SP-…` | `FN-…` | `PR-…` |
+| Record | `.intake/<ref>.json` | `.partner/<ref>.json` | `.notify/<ref>.json` | `.reservations/<ref>.json` |
+| Webhook | `DISCORD_WEBHOOK_URL` | `PARTNER_WEBHOOK_URL` | `NOTIFY_WEBHOOK_URL` | `PULSE_WEBHOOK_URL` |
+| Email | `INTAKE_TO_EMAIL` | `PARTNER_TO_EMAIL` | `NOTIFY_TO_EMAIL` | `PULSE_TO_EMAIL` |
+| Rate limit | 3 / min | 3 / min | 6 / min   a mailing-list signup is not an enquiry | 2 / min   a claim has one legitimate reason to resubmit quickly: a typo |
 
-Both validate server-side against the same schema module the client uses, screen
-with a honeypot and a four-second time-trap (both fail silently, so a bot learns
-nothing from the response), and rate limit per IP. Each takes its own limiter
-from `lib/rate-limit.ts`, so a burst of partner enquiries cannot lock a client
-out of the brief. The limiters are in-process maps, honest for a single
-instance   behind replicas they need Redis.
+All four validate server-side against the same schema module the client uses,
+screen with a honeypot and a time-trap (both fail silently, so a bot learns
+nothing from the response   PULSE and the Brief hold the trap to four seconds,
+Field Notes to 2.5, since a mailing-list signup is a lighter action than an
+enquiry), and rate limit per IP. Each takes its own limiter from
+`lib/rate-limit.ts`, so a burst on one pipeline cannot lock visitors out of
+another. The limiters are in-process maps, honest for a single instance  
+behind replicas they need Redis.
 
-The file write is the source of truth on a box with a real disk: transports
-fail, a disk does not. On a platform with an ephemeral filesystem a write proves
-nothing, so at least one transport must succeed or the form refuses the
-submission rather than sealing over a message that went nowhere.
+Ephemeral-filesystem detection, record-directory resolution, the reference
+format and the durability decision are shared machinery
+(`lib/delivery.ts`)   the file write is the source of truth on a box with a
+real disk (transports fail, a disk does not), and on a platform with an
+ephemeral filesystem a write proves nothing, so at least one transport must
+succeed or the pipeline refuses the submission rather than sealing over a
+message that went nowhere. Two pipelines carried their own copy of this before
+a third made it worth extracting; a fourth copy is exactly the signal that was
+waiting to be acted on (phase guide §A3). Each pipeline still owns its own
+record directory, webhook, inbox and reference prefix   only the shape of the
+decision is shared.
 
-The partner webhook and inbox each fall back to the brief's if unset, so a fresh
-deployment never silently drops approaches   but in production both should be
-set, or partnership traffic lands in the client channel.
+The partner, notify and PULSE webhooks and inboxes each fall back to the
+brief's if unset, so a fresh deployment never silently drops a submission  
+but in production all three pairs should be set, or that traffic lands in the
+client channel.
+
+**The PULSE handle claim is a queue position, not an allocation.** There is no
+uniqueness check anywhere in this pipeline   that arrives with the platform's
+own database in Track B phase 1 (see `Next Builds/PULSE/PULSE-BUILD-PLAN.md`
+§6.4 and §9.1). Two people can file the same handle today and both will be
+told it is filed; the confirmation copy says exactly that rather than implying
+the name is reserved. `normaliseHandle` in `lib/pulse-schema.ts` is a security
+boundary, not a formatting nicety   it folds confusable characters (`0`→`o`,
+`1`→`l`, `_`→nothing) on the comparison key only, never the stored handle, and
+rejects every division id plus a short list of platform-reserved words.
 
 **The partner form branches.** Pick a division and that division's question set
 is what renders. Answers are collected as a map keyed by field id, and the
