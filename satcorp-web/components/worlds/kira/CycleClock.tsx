@@ -13,7 +13,7 @@ import { useReducedMotion } from "@/lib/tier";
  * bespoke visual and this is it.
  *
  * The shape *is* the argument. A rising sawtooth: the reading climbs with
- * everything the sector builds, the world answers, the line falls a little —
+ * everything the sector builds, the world answers, the line falls a little  
  * and then starts climbing again from higher than it started. Nothing about it
  * resolves. That is the whole pitch, and it is the one thing in this category
  * a static world map cannot draw.
@@ -24,7 +24,7 @@ import { useReducedMotion } from "@/lib/tier";
  * reason this reads correctly at 360px, in a screenshot, and in print.
  *
  * The path is derived from a table of points rather than a hand-tuned `d`
- * string — same discipline as the PULSE trace, which measures its own geometry
+ * string   same discipline as the PULSE trace, which measures its own geometry
  * instead of guessing it. Move a peak and the drawing follows.
  */
 
@@ -61,7 +61,7 @@ const TRACE: readonly [number, number][] = [
   [END_X, 24],
 ];
 
-/** The moment the Surge arms — the apex immediately before each fall. */
+/** The moment the Surge arms   the apex immediately before each fall. */
 const SURGES: readonly [number, number][] = [
   [110, 112],
   [230, 88],
@@ -76,7 +76,7 @@ function polyline(points: readonly [number, number][]): string {
 const TRACE_PATH = polyline(TRACE);
 
 const DESCRIPTION =
-  "A threat reading climbing left to right. Four times it is answered by a Surge and falls back — and each time it resumes from higher than it began.";
+  "A threat reading climbing left to right. Four times it is answered by a Surge and falls back   and each time it resumes from higher than it began.";
 
 export function CycleClock({ className = "" }: { className?: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
