@@ -1,99 +1,57 @@
-import { Stamp } from "@/components/fingerprints/Stamp";
+import { Stamp, type StampTone } from "@/components/fingerprints/Stamp";
 import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { Reveal, ScrollTriggerRefresh } from "@/components/system/Reveal";
 import { SignalScene, SignalTriggers } from "@/components/worlds/pulse/SignalScene";
 import { Dashboard } from "@/components/worlds/pulse/Dashboard";
+import {
+  CREATOR_SURFACES,
+  PILLARS,
+  ROADMAP,
+  ROADMAP_STAMP,
+  type RoadmapState,
+} from "@/lib/pulse-platform";
 
 /**
  * ESTABLISHMENT 6   PULSE
  *
- * A live broadcast network. The one page allowed energy: hot red, lower-third
- * chips, LIVE states, the quickest scroll in the building.
+ * A live broadcast network, and   as of this pass   the platform's public
+ * specification and front door. The one page allowed energy: hot red,
+ * lower-third chips, LIVE states, the quickest scroll in the building.
  *
  * The EKG trace behind the page is this establishment's red thread, and it is
  * the only world on the site that *reacts* to the reader rather than being
  * moved by them   sections marked `data-signal` quicken it as they arrive. The
  * number on the attribute is how hard that section hits.
+ *
+ * Section numbering follows the build plan
+ * (`../../../../Next Builds/PULSE/PULSE-BUILD-PLAN.md` §4) rather than the
+ * page's own top-to-bottom order, so later phases slot in without a renumber:
+ *
+ *   I    Hero                              shipped
+ *   II   What PULSE Is   the pillars       shipped
+ *   III  The Position   ecosystem diagram  Track A phase 2
+ *   IV   PULSE ID + the handle queue       Track A phase 3
+ *   V    Spaces                            Track A phase 2
+ *   VI   The Creator Hub                   shipped
+ *   VII  Transmission Schedule             shipped
+ *   VIII Growth Intelligence               shipped, specimen-stamped
+ *   IX   The Doctrine                      Track A phase 2, gated on plan §7.4
+ *   X    Core Statement                    shipped
+ *   XI   CTA                               shipped
+ *
+ * Every state on this page has to be real   plan §7. `ROADMAP` is typed data
+ * in `lib/pulse-platform.ts`, not copy: nothing here carries `tone="live"`
+ * except the establishment's own on-air stamp in the hero, because nothing on
+ * the roadmap is live yet.
  */
 
-const POWERS = [
-  "Creator experiences",
-  "Live events",
-  "Community hubs",
-  "Broadcast systems",
-  "Digital campaigns",
-  "Audience engagement",
-  "Sponsorship opportunities",
-  "Growth analytics",
-];
-
-const CREATOR_NETWORK = [
-  {
-    name: "Creator profiles",
-    note: "One identity that travels with you across the network.",
-  },
-  {
-    name: "Channels",
-    note: "Your own frequency. Programmed by you, carried by us.",
-  },
-  {
-    name: "Content feeds",
-    note: "What your audience sees when they are not looking for you.",
-  },
-  {
-    name: "Community pages",
-    note: "The room your people go to when the broadcast ends.",
-  },
-  {
-    name: "Collaboration spaces",
-    note: "Where two audiences become one for an evening.",
-  },
-];
-
-/** Live experiences, presented the way a network presents a schedule. */
-const SCHEDULE = [
-  {
-    slot: "01",
-    name: "Live events",
-    note: "Scheduled, promoted, and run end to end.",
-    state: "LIVE",
-  },
-  {
-    slot: "02",
-    name: "Broadcasts",
-    note: "Multi-platform, one control room.",
-    state: "LIVE",
-  },
-  {
-    slot: "03",
-    name: "Digital gatherings",
-    note: "Smaller rooms, deliberately. Not everything should scale.",
-    state: "SCHEDULED",
-  },
-  {
-    slot: "04",
-    name: "Interactive experiences",
-    note: "The audience is a participant, not a viewer count.",
-    state: "SCHEDULED",
-  },
-  {
-    slot: "05",
-    name: "Community moments",
-    note: "The unscheduled ones. Usually the ones people remember.",
-    state: "SCHEDULED",
-  },
-];
-
-const FABRIC = [
-  ["Groups", "Standing rooms, organised around a shared interest."],
-  ["Discussions", "Threaded, moderated, and archived rather than lost."],
-  ["Events", "From a community calendar through to the door policy."],
-  ["Shared experiences", "Watch-alongs, launches, and the nights in between."],
-  [
-    "Creator-to-community",
-    "The shortest path between someone making a thing and the people who want it.",
-  ],
-] as const;
+/** Roadmap state -> stamp tone. `"live"` is deliberately never a target here. */
+const ROADMAP_TONE: Record<RoadmapState, StampTone> = {
+  "in-development": "blood",
+  queued: "bone",
+  planned: "bone",
+  later: "bone",
+};
 
 const DISCORD = "https://discord.gg/Fh5qy6tCTc";
 
@@ -123,16 +81,19 @@ export default function PulsePage() {
           </h1>
 
           <p className="mt-6 max-w-3xl text-xl font-medium leading-snug text-bone sm:text-2xl">
-            The Digital Frontline of SATCORP.
+            Your audience. Your community. Your identity. One place.
           </p>
 
           <p className="mt-6 max-w-2xl leading-relaxed text-bone-dim">
-            Pulse connects creators, communities, audiences and experiences
-            through a unified platform built for engagement, interaction and
-            growth. It is where communities gather, events happen, creators
-            connect with audiences, and digital experiences come alive.
+            PULSE is SATCORP&rsquo;s engagement and community platform   the
+            connective layer between creators, audiences, communities, and the
+            experiences they build.
           </p>
 
+          {/* RESERVE YOUR HANDLE lands here as the primary CTA in Track A
+              phase 3, anchored to §IV. Ordering two doors until that section
+              exists is the honest state   a CTA to a form that is not on the
+              page yet is a promise the page cannot keep. */}
           <div className="mt-12 flex flex-wrap gap-3">
             <a
               href={DISCORD}
@@ -151,45 +112,57 @@ export default function PulsePage() {
           </div>
         </section>
 
-        {/* ---------- II. WHAT PULSE IS   lower-third chips ---------- */}
+        {/* ---------- II. WHAT PULSE IS   the pillars ---------- */}
         <section data-signal="0.7" className="border-t border-bone/10 py-20">
           <Reveal>
             <p className="label label-accent">What Pulse Is</p>
             <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
-              SATCORP&rsquo;s community and media ecosystem.
+              SATCORP&rsquo;s engagement and community platform.
             </h2>
           </Reveal>
 
-          <ul className="mt-10 flex flex-wrap gap-px">
-            {POWERS.map((p) => (
+          <ul className="mt-10 grid gap-px sm:grid-cols-2 lg:grid-cols-5">
+            {PILLARS.map((pillar) => (
               <li
-                key={p}
-                className="border-l-2 border-blood-hot bg-ink-raised/80 px-5 py-3 font-mono text-[0.68rem] tracking-wide text-bone-dim backdrop-blur-sm transition-colors hover:text-bone"
+                key={pillar.id}
+                className="border-l-2 border-blood-hot bg-ink-raised/80 px-5 py-4 backdrop-blur-sm"
               >
-                {p}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[0.68rem] tracking-[0.18em] text-bone">
+                    {pillar.name.toUpperCase()}
+                  </span>
+                  {pillar.later && (
+                    <Stamp tone="bone" rotate={1} className="text-[0.5rem]">
+                      LATER PHASE
+                    </Stamp>
+                  )}
+                </div>
+                <p className="mt-2 font-mono text-[0.66rem] leading-relaxed text-bone-dim">
+                  {pillar.line}
+                </p>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* ---------- III. CREATOR NETWORK   the broadcast wall ---------- */}
+        {/* ---------- VI. THE CREATOR HUB   rewrite of Creator Network ---------- */}
         <section data-signal="0.8" className="py-20">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="label label-accent">Creator Network</p>
+                <p className="label label-accent">The Creator Hub</p>
                 <h2 className="mt-4 font-display text-3xl text-bone sm:text-4xl">
-                  Everyone gets a channel.
+                  Everything a creator needs, one hub.
                 </h2>
               </div>
               <p className="max-w-xs font-mono text-[0.68rem] leading-relaxed text-bone-dim">
-                Five surfaces. One identity carried across all of them.
+                Seven surfaces. One hub, carried across all of them.
               </p>
             </div>
           </Reveal>
 
           <ul className="mt-10 grid gap-px sm:grid-cols-2 lg:grid-cols-3">
-            {CREATOR_NETWORK.map((item) => (
+            {CREATOR_SURFACES.map((item) => (
               <li
                 key={item.name}
                 className="group border border-bone/10 bg-ink-raised/70 p-7 backdrop-blur-sm transition-colors hover:border-blood-hot/50"
@@ -204,7 +177,7 @@ export default function PulsePage() {
                   />
                 </div>
                 <p className="mt-4 font-mono text-[0.7rem] leading-relaxed text-bone-dim">
-                  {item.note}
+                  {item.line}
                 </p>
               </li>
             ))}
@@ -218,44 +191,54 @@ export default function PulsePage() {
           </ul>
         </section>
 
-        {/* ---------- IV. LIVE EXPERIENCES   the schedule ---------- */}
+        {/* ---------- VII. TRANSMISSION SCHEDULE   rewrite of Live Experiences
+
+             This was a broadcast schedule wearing costume over a roadmap. It
+             is a roadmap now, in the same idiom: every row is a real
+             development phase, from `ROADMAP` in `lib/pulse-platform.ts`, and
+             every stamp is a state that is actually true. `tone="live"` is
+             reserved for the establishment itself (the hero's ON AIR) until a
+             phase is actually live   plan §7.1. ---------- */}
         <section data-signal="0.9" className="py-20">
           <Reveal>
-            <p className="label label-accent">Live Experiences</p>
+            <p className="label label-accent">Transmission Schedule</p>
             <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
-              Tonight&rsquo;s schedule, and every night after it.
+              The build, on the record.
             </h2>
           </Reveal>
 
-          <ol className="mt-10 divide-y divide-bone/10 border-y border-bone/10">
-            {SCHEDULE.map((item) => {
-              const live = item.state === "LIVE";
-              return (
-                <li
-                  key={item.slot}
-                  className="grid items-baseline gap-2 py-6 transition-colors hover:bg-bone/[0.03] sm:grid-cols-[3rem_16rem_1fr_7rem] sm:gap-8"
-                >
-                  <span className="font-mono text-[0.66rem] text-blood-hot/70">
-                    {item.slot}
-                  </span>
-                  <span className="font-display text-2xl text-bone">
-                    {item.name}
-                  </span>
-                  <span className="font-mono text-[0.7rem] leading-relaxed text-bone-dim">
-                    {item.note}
-                  </span>
-                  <span className="sm:justify-self-end">
-                    <Stamp tone={live ? "live" : "bone"} rotate={live ? -2 : 1}>
-                      {item.state}
-                    </Stamp>
-                  </span>
-                </li>
-              );
-            })}
+          <ol
+            data-roadmap
+            className="mt-10 divide-y divide-bone/10 border-y border-bone/10"
+          >
+            {ROADMAP.map((phase) => (
+              <li
+                key={phase.slot}
+                className="grid items-baseline gap-2 py-6 transition-colors hover:bg-bone/[0.03] sm:grid-cols-[3rem_16rem_1fr_9rem] sm:gap-8"
+              >
+                <span className="font-mono text-[0.66rem] text-blood-hot/70">
+                  {phase.slot}
+                </span>
+                <span className="font-display text-2xl text-bone">
+                  {phase.name}
+                </span>
+                <span className="font-mono text-[0.7rem] leading-relaxed text-bone-dim">
+                  {phase.note}
+                </span>
+                <span className="sm:justify-self-end">
+                  <Stamp
+                    tone={ROADMAP_TONE[phase.state]}
+                    rotate={phase.state === "in-development" ? -2 : 1}
+                  >
+                    {ROADMAP_STAMP[phase.state]}
+                  </Stamp>
+                </span>
+              </li>
+            ))}
           </ol>
         </section>
 
-        {/* ---------- V. GROWTH INTELLIGENCE ---------- */}
+        {/* ---------- VIII. GROWTH INTELLIGENCE ---------- */}
         <section data-signal="1" className="py-20">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <Reveal>
@@ -276,52 +259,33 @@ export default function PulsePage() {
                 >
                   KYRAX
                 </ThreadLink>
-                . PULSE reports; the archive is what notices the pattern.
+                , in a later phase. PULSE will report; the archive is what
+                notices the pattern.
               </p>
             </Reveal>
 
             <Dashboard />
           </div>
         </section>
-
-        {/* ---------- VI. COMMUNITY FABRIC ---------- */}
-        <section data-signal="0.7" className="py-20">
-          <Reveal>
-            <p className="label label-accent">Community Fabric</p>
-            <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
-              What holds once the lights go down.
-            </h2>
-          </Reveal>
-
-          <ul className="mt-10 grid gap-px sm:grid-cols-2 lg:grid-cols-3">
-            {FABRIC.map(([name, note]) => (
-              <li
-                key={name}
-                className="border border-bone/10 bg-ink-raised/70 p-7 backdrop-blur-sm"
-              >
-                <h3 className="font-mono text-[0.66rem] tracking-[0.2em] text-blood-hot">
-                  {name.toUpperCase()}
-                </h3>
-                <p className="mt-4 leading-relaxed text-bone-dim">{note}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
       </div>
 
-      {/* ---------- VII. CORE STATEMENT   the trace swells ---------- */}
+      {/* ---------- X. CORE STATEMENT   the trace swells ---------- */}
       <section
         data-signal="1.5"
         className="relative border-y border-bone/10 py-32 text-center"
       >
         <blockquote className="mx-auto max-w-4xl px-6 font-display text-[clamp(1.5rem,4vw,2.75rem)] leading-[1.3] text-balance text-bone">
-          &ldquo;Pulse is where people connect with ideas, creators and
-          experiences. It is the heartbeat of SATCORP&rsquo;s digital
-          communities.&rdquo;
+          &ldquo;KYRAX is the brain. PULSE is the heartbeat.
+          <br className="hidden sm:block" /> PULSE is where the SATCORP
+          ecosystem becomes social.&rdquo;
         </blockquote>
       </section>
 
-      {/* ---------- VIII. CTA ---------- */}
+      {/* ---------- XI. CTA ----------
+           BEGIN THE BRIEF is removed: someone commissioning agency work is
+           not this page's audience, and the Colophon and the Ledger seal both
+           already reach /engage from every page. RESERVE YOUR HANDLE joins
+           this row in Track A phase 3. ---------- */}
       <div className="relative mx-auto max-w-6xl px-6">
         <section data-signal="0.9" className="py-24 text-center">
           <p className="label label-accent">Get on the frequency</p>
@@ -343,12 +307,6 @@ export default function PulsePage() {
               className="border border-bone/20 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:border-blood-hot"
             >
               BROADCAST WITH US →
-            </ThreadLink>
-            <ThreadLink
-              href="/engage"
-              className="px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone-dim transition-colors hover:text-bone"
-            >
-              BEGIN THE BRIEF
             </ThreadLink>
           </div>
         </section>

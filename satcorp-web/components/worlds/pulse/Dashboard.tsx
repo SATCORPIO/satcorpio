@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/tier";
+import { Stamp } from "@/components/fingerprints/Stamp";
 
 /**
  * GROWTH INTELLIGENCE
@@ -15,6 +16,11 @@ import { useReducedMotion } from "@/lib/tier";
  * is a mock that will eventually be screenshotted mid-shuffle. When PULSE has
  * real telemetry this component takes the same shape of props and nothing in
  * the page changes.
+ *
+ * It is stamped `SPECIMEN` rather than left to read as live. The panel used
+ * to carry a pulsing `STREAMING` dot   the same visual grammar the hero's
+ * on-air stamp uses for something that actually is live   over numbers that
+ * are, by the comment above, a mock. Plan §7.2: every mock is stamped as one.
  */
 
 const SERIES = [
@@ -130,16 +136,16 @@ export function Dashboard() {
       className="border border-bone/10 bg-ink-raised/70 p-6 backdrop-blur-sm sm:p-8"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="font-mono text-[0.62rem] tracking-[0.2em] text-bone-dim">
-          AUDIENCE  /  ROLLING 16
-        </p>
-        <span className="flex items-center gap-2 font-mono text-[0.58rem] tracking-[0.2em] text-blood-hot">
-          <span
-            aria-hidden
-            className="size-1.5 rounded-full bg-current"
-            style={{ animation: "live-pulse 1.6s ease-in-out infinite" }}
-          />
-          STREAMING
+        <div className="flex items-center gap-3">
+          <p className="font-mono text-[0.62rem] tracking-[0.2em] text-bone-dim">
+            AUDIENCE  /  ROLLING 16
+          </p>
+          <Stamp tone="bone" rotate={1} className="text-[0.5rem]">
+            SPECIMEN
+          </Stamp>
+        </div>
+        <span className="font-mono text-[0.58rem] tracking-[0.2em] text-bone-dim/70">
+          NOT LIVE DATA
         </span>
       </div>
 
