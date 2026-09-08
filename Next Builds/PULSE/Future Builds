@@ -1,0 +1,1028 @@
+Based on the current SATCORP site, PULSE is the “heartbeat” of the SATCORP ecosystem. It isn't positioned as just another standalone app—it is the layer meant to connect people, creators, communities, audiences, and experiences. 
+
+PULSE - the heartbeat: community, engagement, interaction, and audience growth. 
+That makes PULSE particularly interesting because it can become the human-facing connective tissue between the other divisions.
+What PULSE intended to do
+
+The site currently describes it as:
+> “Connecting creators, communities, audiences, and experiences through a unified platform built for engagement, interaction, and growth.” 
+
+So I would conceptualize PULSE as something like a SATCORP social/community platform rather than simply a Discord replacement.
+
+For example:
+
+Creator → PULSE → Community → Experience
+
+A creator could have a PULSE presence, publish content, communicate with their audience, organize events, launch projects, and direct people toward experiences.
+
+At the same time, PULSE can feed information upward into KYRAX. SATCORP's KYRAX page specifically identifies “Audience and growth analytics” as one of its connected sources. - place holder this will be apart of a different build phase
+
+That creates a pretty powerful architecture:
+
+SATCORP
+                       │
+                 ┌─────┴─────┐
+                 │   PULSE   │
+                 │  PEOPLE   │
+                 │ COMMUNITY │
+                 │ AUDIENCE  │
+                 └─────┬─────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+    CREATORS        COMMUNITIES     EXPERIENCES
+        │              │              │
+        ▼              ▼              ▼
+   Ki-Ra Studios     PULSE          NAMTAR
+        │                             │
+        └──────────────┬──────────────┘
+                       ▼
+                     KYRAX
+                       │
+              Intelligence Layer
+
+And this is where I think PULSE could become much bigger
+
+If you're building it the way SATCORP's architecture suggests, PULSE could eventually be the account/community identity layer for the entire ecosystem.
+
+Imagine someone creates one PULSE account.
+
+That account could potentially become their identity across:
+
+PULSE → community profile
+→ creator profile
+→ memberships
+→ events
+→ notifications
+→ social activity
+
+Ki-Ra Studios → game communities
+→ developer/creator interaction
+→ game announcements
+→ beta access
+
+NAMTAR → player identity
+→ factions/alliances
+→ community interaction
+→ events
+→ player-generated organizations
+
+KYRAX → personalized recommendations
+→ audience intelligence
+→ automated community systems
+→ moderation/assistance
+→ behavioral insights
+
+And ANU provides the underlying architecture.
+
+That's consistent with SATCORP's stated philosophy of building interconnected systems rather than isolated applications. ANU's page explicitly describes the goal as a unified ecosystem where technology, AI, entertainment, infrastructure, and digital services evolve together. 
+
+The important distinction
+I wouldn't describe PULSE publicly as “SATCORP's social media platform.”
+That makes it sound much smaller than what the architecture implies.
+I'd describe it more like:
+> PULSE is SATCORP's engagement and community platform—the connective layer between creators, audiences, communities, and the experiences they build.
+
+Or, more aggressively:
+> PULSE is where the SATCORP ecosystem becomes social.
+
+That second line is particularly strong because KYRAX is the brain, PULSE is the heartbeat, and the other divisions become the things the organism actually does.
+
+One caveat: the public SATCORP site currently gives us the role and architectural position of PULSE, but it doesn't expose a detailed PULSE feature specification yet. So things like messaging, profiles, feeds, groups, events, creator tools, subscriptions, etc. would be design possibilities, not features yet implemented. 
+
+Based on SATCORP's current architecture, build it as the social/identity/creator layer for the entire SATCORP ecosystem.
+
+That fits the site's current positioning of PULSE as the “heartbeat” connecting creators, communities, audiences, and experiences, while KYRAX is explicitly designed to consume PULSE audience/growth analytics. All KYRAX implications are later phase builds. 
+
+PULSE — The Platform
+The core idea
+PULSE = Identity + Community + Creator + Distribution + Monetization
+Discord is primarily communication.
+Patreon is primarily monetization.
+Linktree is primarily distribution.
+PULSE should combine all three—and then add something none of them fundamentally owns:
+> A persistent identity layer connecting people to the experiences they participate in.
+
+That becomes extremely important for SATCORP because NAMTAR already envisions multiplayer communities, alliances, trading, settlements and persistent player activity. 
+
+1. The PULSE ecosystem
+I'd structure it like this:
+PULSE
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+           IDENTITY     COMMUNITY     CREATOR
+              │            │            │
+              └────────────┼────────────┘
+                           │
+                     EXPERIENCES
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+    SATCORP             Ki-Ra              NAMTAR
+        │               Studios               │
+        │                  │                  │
+        └──────────────────┼──────────────────┘
+                           │
+                         KYRAX
+                           │
+                Intelligence / Automation
+
+ANU then provides the architecture underneath it all, consistent with SATCORP's stated goal of interconnected systems rather than isolated applications. 
+
+2. The PULSE account
+This should be the foundation.
+
+A user creates:
+@username
+That identity becomes their SATCORP identity.
+Profile
+┌──────────────────────────────────────┐
+│              PROFILE                 │
+│                                      │
+│       [Avatar]                       │
+│       @username                      │
+│       Display Name                   │
+│                                      │
+│       Bio                            │
+│                                      │
+│       🔗 Website                    │
+│       🎮 Games                       │
+│       🎥 Content                     │
+│                                      │
+│       Followers   Following          │
+│                                      │
+│       [Follow] [Message]             │
+└──────────────────────────────────────┘
+
+But there's an important distinction:
+PULSE profiles should have identity levels.
+For example:
+Member
+Creator
+Community
+Organization
+Developer
+Business
+Official
+This allows PULSE to become much more than a social profile.
+
+3. PULSE ID
+I'd create:
+PULSE ID
+Something like:
+> pulse.me/username
+But internally:
+PULSE ID
+    │
+    ├── Identity
+    ├── Communities
+    ├── Creator pages
+    ├── Content
+    ├── Products
+    ├── Events
+    ├── Memberships
+    └── Experiences
+
+One account.
+One identity.
+Multiple experiences.
+That becomes particularly powerful when someone enters a Ki-Ra game or eventually NAMTAR.
+
+4. The home feed
+PULSE needs a feed, but don't copy Facebook/X blindly.
+The feed should be interest + community + creator driven.
+Home
+PULSE
+[What's happening?]
+For You
+Following
+Communities
+Creators
+Events
+
+────────────────────
+
+@Creator
+New video / post
+
+[IMAGE]
+
+❤️ 245   💬 32   ↗ Share
+
+────────────────────
+
+NAMTAR Community
+Event starting Friday...
+
+[JOIN EVENT]
+
+────────────────────
+
+The important difference:
+The user controls what enters their feed.
+They can follow:
+people
+creators
+communities
+games
+organizations
+topics
+events
+
+5. Communities
+This is where PULSE begins challenging Discord.
+A community gets its own permanent space.
+For example:
+Ki-Ra Studios
+KI-RA STUDIOS
+Home
+Announcements
+Chat
+Games
+Events
+Media
+Members
+Leaderboard
+But instead of Discord's channel-heavy structure, I'd use modules.
+A community owner chooses what they need.
+Modules
+Feed
+Chat
+Voice
+Events
+Announcements
+Media
+Forums
+Support
+Store
+Memberships
+Leaderboards
+Polls
+Applications
+Documentation
+
+This makes PULSE usable for:
+gaming communities
+creators
+businesses
+clubs
+developers
+brands
+organizations
+
+6. PULSE Chat
+Yes, it needs Discord-level communication.
+Messaging
+DMs
+group DMs
+community chat
+threads
+reactions
+file sharing
+image/video sharing
+mentions
+notifications
+moderation
+voice
+video
+screen sharing
+
+But I'd make chat one component of the platform, rather than the platform itself.
+That's a major strategic distinction.
+
+7. Creator system
+This is where PULSE starts attacking Patreon.
+Every creator gets:
+Creator Hub
+CREATOR STUDIO
+Overview
+Content
+Audience
+Memberships
+Products
+Events
+Analytics
+Messages
+Automations
+Payouts
+Settings
+
+They can publish:
+posts
+videos
+images
+downloads
+articles
+livestreams
+events
+courses
+products
+
+8. Creator memberships
+Patreon functionality should be native.
+Example:
+Creator
+FREE
+$0
+Public posts
+Community access
+Announcements
+
+Supporter
+$5/month
+Exclusive posts
+Private community
+Early access
+
+Insider
+$15/month
+Everything above
+Exclusive events
+Downloads
+Behind-the-scenes
+
+Elite
+$50/month
+Everything above
+Private sessions
+Premium experiences
+
+The creator controls the tiers.
+
+9. Digital storefront
+This is a major opportunity.
+Creators shouldn't need another service to sell things.
+PULSE Store
+Sell:
+digital downloads
+memberships
+courses
+tickets
+game assets
+artwork
+presets
+templates
+software
+physical products through integrations
+
+And eventually:
+PULSE → Shopify
+PULSE → Printify
+PULSE → game marketplaces
+That creates another SATCORP revenue stream.
+
+10. The Linktree killer
+Every PULSE user gets a dynamic landing page.
+Instead of:
+> linktr.ee/name
+
+They get:
+> pulse.satcorp.io/@name
+
+But it isn't just links.
+It's an actual mini-site.
+@Creator
+[Avatar]
+Creator Name
+"Building the future."
+FOLLOW
+
+Latest
+Videos
+Products
+Communities
+Events
+┌─────────────────────┐
+│ Latest Video        │
+└─────────────────────┘
+┌─────────────────────┐
+│ Join My Community   │
+└─────────────────────┘
+┌─────────────────────┐
+│ My Store            │
+└─────────────────────┘
+That alone gives PULSE a strong Linktree competitor.
+
+11. Events
+PULSE should have its own event infrastructure.
+Creators/community owners can create:
+Event
+NAMTAR Community Night
+September 25
+8:00 PM
+500 attending
+[JOIN]
+
+Then:
+reminders
+RSVP
+tickets
+livestream
+chat
+event roles
+recordings
+post-event content
+
+Eventually events can connect directly into games.
+
+12. Reputation
+This is one of the areas I'd make PULSE fundamentally different.
+Users build a PULSE reputation.
+Not just followers.
+Things like:
+Community Member
+Creator
+Moderator
+Developer
+Verified
+Event Host
+Contributor
+Founder
+Partner
+Potentially:
+PULSE REPUTATION
+Communities       12
+Events Hosted      8
+Creator Score     87
+Community Trust   94
+
+But don't turn this into a simplistic "social credit score."
+Keep it contextual.
+A person's reputation in a gaming community shouldn't automatically determine their reputation everywhere.
+
+13. Verification
+I'd create several verification classes.
+PULSE Verified
+Identity/account verification.
+Creator Verified
+Established creator.
+Organization Verified
+Business/organization.
+Official
+SATCORP-controlled official accounts.
+This becomes especially useful for fighting impersonation.
+
+14. Community ownership
+A community should have:
+Owner
+Full control.
+Admin
+Management.
+Moderator
+Moderation.
+Manager
+Events/content.
+Creator
+Content publishing.
+Member
+Standard user.
+Guest
+Limited access.
+But PULSE should allow custom roles.
+
+For example:
+NAMTAR
+Founder
+Council
+Commander
+Moderator
+Faction Leader
+Verified Player
+Member
+Recruit
+
+And those roles can potentially synchronize with game systems.
+
+15. The NAMTAR integration
+This is where PULSE becomes something Discord cannot easily replicate.
+Imagine:
+PULSE profile
+@Vanguard
+PULSE
+────────────
+Creator
+NAMTAR Player
+Ki-Ra Member
+
+NAMTAR
+────────────
+Faction: The Vanguard
+Rank: Commander
+Settlement: New Horizon
+Territory: 14
+Allies: 3
+
+Now your community identity follows you into the experience.
+NAMTAR's planned multiplayer systems include alliances, trading, massive settlements, PvP/PvE and exploration. 
+PULSE can become the social layer surrounding that world.
+
+16. KYRAX integration this will be built at a later development phase
+
+This is probably the most important long-term feature.
+The SATCORP site already explicitly lists:
+> PULSE → Audience and growth analytics
+
+as one of KYRAX's information sources. 
+I'd take that much further.
+PULSE → KYRAX
+PULSE generates signals:
+
+Posts
+Comments
+Likes
+Shares
+Followers
+Retention
+Events
+Memberships
+Purchases
+Community activity
+Creator activity
+Game activity
+
+KYRAX analyzes them.
+
+17. KYRAX Creator Intelligence
+A creator opens:
+KYRAX INSIGHT
+And gets:
+> Your community is most active between 7–10 PM.
+> Gaming posts generate 2.4× more engagement than announcements.
+> Your Tuesday posts have 31% higher retention.
+> Your community has grown 18% this month.
+
+Then KYRAX could suggest:
+> Recommended action:
+Publish a NAMTAR development update tomorrow at 7:30 PM.
+That's extremely valuable.
+
+18. KYRAX Community Intelligence
+Community owners get:
+Health
+COMMUNITY HEALTH
+
+Growth       +18%
+Retention    +12%
+Activity     +27%
+Sentiment    Positive
+Churn        -4%
+HEALTH: 91
+And:
+> "Member activity is declining in the general discussion area but increasing in events."
+
+Then KYRAX can recommend:
+Create event
+Ask community
+Publish announcement
+Invite inactive members
+
+19. KYRAX automation
+Eventually:
+> "KYRAX, announce tomorrow's event."
+And it could:
+1. Generate announcement
+2. Schedule it
+3. Notify members
+4. Post to community
+5. Send reminders
+6. Track attendance
+7. Generate recap
+
+That's where PULSE + KYRAX becomes substantially more powerful than Discord.
+
+20. AI moderation
+KYRAX can assist with:
+spam
+harassment
+scams
+bot detection
+suspicious behavior
+raid detection
+toxic conversations
+inappropriate content
+But I'd make it human-supervised.
+KYRAX recommends.
+Humans retain control.
+
+21. The PULSE API
+This is critical.
+Don't make PULSE a closed ecosystem.
+Build:
+PULSE API
+Developers can integrate:
+GET /users
+GET /communities
+GET /events
+GET /creators
+GET /memberships
+POST /notifications
+POST /events
+And OAuth:
+"Sign in with PULSE"
+This could eventually become a serious developer platform.
+
+22. PULSE bots
+Like Discord bots—but broader.
+Developers create:
+PULSE Apps
+Examples:
+Moderation Bot
+Music Bot
+Game Bot
+Shop Bot
+Analytics Bot
+Ticket Bot
+AI Assistant
+NAMTAR Bot
+Then communities install them.
+
+23. Monetization
+I'd use multiple revenue streams.
+Free
+$0
+Profile
+Following
+Communities
+Basic messaging
+Basic posts
+
+Creator
+$9.99/month
+Creator page
+Analytics
+Memberships
+Store
+Events
+Custom branding
+
+Pro
+$19.99/month
+Advanced analytics
+Automation
+KYRAX tools
+Advanced community features
+Custom domain
+
+Business
+Custom pricing.
+Multiple admins
+Organization accounts
+API
+Advanced permissions
+SSO
+Enterprise support
+
+24. Transaction revenue
+Take a small percentage from:
+Memberships
+Digital products
+Tickets
+Marketplace sales
+For example, conceptually:
+Creator receives 90–95%
+PULSE receives 5–10%
+The exact percentages should be determined after payment processing costs, taxes, chargebacks, and competitive analysis.
+
+25. Don't monetize the wrong thing
+I would not build PULSE around advertising.
+SATCORP's current privacy policy explicitly emphasizes no advertising, analytics, tracking, or sale/sharing of personal information. 
+That gives PULSE a potential positioning advantage:
+> You pay for the platform—not with your privacy.
+
+That's a strong brand proposition.
+
+26. PULSE Premium
+For individuals:
+PULSE+
+Could include:
+custom themes
+advanced profiles
+larger uploads
+custom profile domains
+exclusive badges
+advanced analytics
+enhanced creator tools
+AI tools
+expanded storage
+
+But don't make basic communication paywalled.
+
+27. The killer feature: PULSE Spaces
+I'd introduce something called:
+PULSE SPACES
+A Space is basically a complete digital home.
+For example:
+Ki-Ra Studios Space
+KI-RA STUDIOS
+────────────────────
+
+Feed
+Games
+Communities
+Events
+Developers
+Store
+News
+Media
+
+A creator can have one:
+Creator Space
+A business can have one:
+Business Space
+A game can have one:
+Game Space
+A community can have one:
+Community Space
+This gives PULSE a universal structure.
+
+28. PULSE for businesses
+A business gets:
+Business Space
+Company
+About
+Products
+Community
+Support
+Events
+Jobs
+Announcements
+Store
+Then:
+customers + employees + community + creators
+can all exist within one ecosystem.
+That makes PULSE useful outside gaming.
+
+29. PULSE notifications
+One centralized notification system.
+Instead of:
+Discord notification
+Email
+Patreon notification
+Game notification
+Event notification
+PULSE becomes:
+PULSE Inbox
+TODAY
+NAMTAR
+Your faction has an event.
+Ki-Ra Studios
+New development update.
+Creator
+Your membership renewed.
+Community
+New event announced.
+KYRAX
+Your weekly audience report is ready.
+
+30. PULSE mobile app
+Eventually:
+PULSE
+iOS
+Android
+Web
+Desktop
+The mobile app should focus heavily on:
+Feed
+Chat
+Communities
+Notifications
+Creator tools
+Events
+
+31. PULSE desktop
+Desktop gets:
+┌────────┬──────────────────────────────┐
+│        │                              │
+│ PULSE  │       Community              │
+│        │                              │
+│ Home   │       Feed                   │
+│ Chat   │                              │
+│ Explore│       Posts                  │
+│        │       Events                 │
+│ Spaces │                              │
+│        │                              │
+│        │                              │
+└────────┴──────────────────────────────┘
+But unlike Discord, the primary navigation isn't just servers/channels.
+It's:
+Home
+Explore
+Chat
+Spaces
+Notifications
+Profile
+
+32. Explore
+This is where PULSE becomes a discovery network.
+Explore
+TRENDING
+Creators
+Communities
+Games
+Events
+Topics
+Products
+Streams
+
+KYRAX can personalize recommendations.
+But the user can turn personalization down/off.
+
+33. The creator flywheel
+The entire platform should encourage this:
+Creator
+   ↓
+Content
+   ↓
+Audience
+   ↓
+Community
+   ↓
+Engagement
+   ↓
+Membership
+   ↓
+Revenue
+   ↓
+More content
+And KYRAX sits behind the loop:
+Activity
+   ↓
+KYRAX
+   ↓
+Insight
+   ↓
+Recommendation
+   ↓
+Creator action
+   ↓
+Better engagement
+
+34. The SATCORP flywheel
+This is even more interesting.
+SATCORP
+                      │
+                      ▼
+                    PULSE
+                      │
+            ┌─────────┼─────────┐
+            ▼         ▼         ▼
+         PEOPLE    CREATORS  COMMUNITIES
+            │         │         │
+            └─────────┼─────────┘
+                      ▼
+                 EXPERIENCES
+                      │
+             ┌────────┴────────┐
+             ▼                 ▼
+          Ki-Ra             NAMTAR
+             │                 │
+             └────────┬────────┘
+                      ▼
+                    DATA
+                      │
+                      ▼
+                    KYRAX
+                      │
+                      ▼
+                INTELLIGENCE
+                      │
+                      ▼
+                    PULSE
+
+That's the real opportunity.
+PULSE isn't just another product.
+It becomes the network that makes the other SATCORP products more valuable.
+
+35. What I would build first
+Don't try to build all of this simultaneously.
+I'd break development into phases.
+PHASE 1 — PULSE Core
+MVP
+Authentication
+PULSE ID
+Profiles
+Follow system
+Feed
+Posts
+Comments
+Likes
+Notifications
+Basic messaging
+Communities
+Community roles
+Search
+
+Goal:
+Build the social graph.
+
+PHASE 2 — Community
+Add:
+Voice
+Community chat
+Threads
+Events
+Moderation
+Roles
+Member management
+Community customization
+File/media sharing
+
+Goal:
+Become a legitimate Discord alternative.
+
+PHASE 3 — Creator
+Add:
+Creator profiles
+Creator dashboard
+Memberships
+Paid content
+Digital products
+Events
+Creator analytics
+Payouts
+
+Goal:
+Attack Patreon.
+
+PHASE 4 — Distribution
+Add:
+PULSE pages
+Custom domains
+Link blocks
+Creator websites
+Business pages
+Product pages
+SEO
+Goal:
+Attack Linktree.
+
+PHASE TBD — KYRAX
+Then integrate:
+Audience analytics
+Community health
+AI moderation
+Content recommendations
+Creator recommendations
+Automated announcements
+Automated event management
+Growth intelligence
+Goal:
+Make PULSE smarter than the competition.
+
+PHASE 5 — SATCORP integration
+Then:
+PULSE ID
+connects to:
+Ki-Ra Studios
+NAMTAR
+KYRAX
+ANU
+and eventually other SATCORP services.
+
+36. The competitive positioning
+I'd position it like this:
+Platform	Primary purpose	PULSE advantage
+Discord	Communication	Communication + identity + creators + commerce
+Patreon	Creator monetization	Community + monetization + discovery
+Linktree	Link aggregation	Full creator/business presence
+Reddit	Communities	Identity + communities + creators
+Facebook Groups	Communities	Modern creator/community architecture
+Twitch	Streaming	Broader creator ecosystem
+PULSE	Everything above	Connected ecosystem
+But don't market it as "we replace Discord."
+Market it as:
+> Your audience. Your community. Your identity. One place.
+
+37. The killer differentiator
+There is one feature I'd put near the center of the entire strategy:
+Your PULSE identity travels with you.
+Imagine joining NAMTAR.
+You don't create another account.
+You don't create another profile.
+You don't create another community identity.
+You already have:
+PULSE ID
+And NAMTAR simply says:
+> Continue with PULSE
+Then your social identity, friends, communities, memberships and relevant permissions can connect to the experience.
+That is much more strategically interesting than simply making a better Discord.
+
+38. What PULSE ultimately becomes
+If executed properly, I would define the products like this:
+ANU
+The architecture.
+KYRAX
+The intelligence.
+PULSE
+The people.
+Ki-Ra Studios
+The experiences
+NAMTAR
+The world.
+That is remarkably coherent with the way SATCORP currently describes its five-division structure. 
+And the really ambitious end state is:
+> PULSE becomes the human operating system of SATCORP.
+
+Not literally an operating system—but the identity, social, community, creator and engagement layer that sits between humans and everything SATCORP builds.
+That's the version I would build.
