@@ -15,7 +15,7 @@ import { LEGAL } from "@/lib/legal";
 import { createRateLimit } from "@/lib/rate-limit";
 
 /**
- * FIELD NOTES — the forwarding list for the mobile title.
+ * FIELD NOTES   the forwarding list for the mobile title.
  *
  * Its own pipeline for the same reason the Approach is not a flag on the Brief:
  * this is a standing list that will be written to for years, and mixing it into
@@ -29,7 +29,7 @@ import { createRateLimit } from "@/lib/rate-limit";
  * The durability rule from the other two pipelines applies unchanged, and it
  * matters more here than anywhere else on the site. Every other form ends in a
  * conversation, so a dropped submission surfaces when nobody replies. This one
- * ends in silence *by design* — the next contact might be months away — so a
+ * ends in silence *by design*   the next contact might be months away   so a
  * reader has no way to notice they were never actually added. A list that
  * quietly fails to record people is worse than no list, which is why nothing is
  * reported as taken until at least one durable transport has succeeded.
@@ -65,11 +65,11 @@ function asPlainText(data: NotifyData, ref: string): string {
     `  Consent:  recorded ${new Date().toISOString()}`,
     "",
     "  WHY THEY ARE HERE",
-    `    ${(data.note || "—").replace(/\n/g, "\n    ")}`,
+    `    ${(data.note || " ").replace(/\n/g, "\n    ")}`,
   ].join("\n");
 }
 
-/** Writes the record. Never throws — the caller decides what a failure means. */
+/** Writes the record. Never throws   the caller decides what a failure means. */
 async function fileRecord(
   data: NotifyData,
   ref: string,
@@ -150,7 +150,7 @@ function clamp(text: string, max: number): string {
 
 async function sendDiscord(data: NotifyData, ref: string): Promise<boolean> {
   // Its own webhook, falling back to the brief channel only if one was never
-  // configured — a fresh deployment must not silently drop an address.
+  // configured   a fresh deployment must not silently drop an address.
   const url = process.env.NOTIFY_WEBHOOK_URL ?? process.env.DISCORD_WEBHOOK_URL;
   if (!url) return false;
 
