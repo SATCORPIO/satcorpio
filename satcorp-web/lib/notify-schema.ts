@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 /**
- * FIELD NOTES — shape and rules for the forwarding list.
+ * FIELD NOTES   shape and rules for the forwarding list.
  *
  * The smallest intake on the site, and deliberately so. The Engagement Brief
  * asks a client what they want built; the Approach asks an organisation what it
  * proposes. This asks for one thing: where to send a note when there is
  * something worth sending. Every extra field on a form like this is a reader
- * lost for nothing, because there is nothing here to qualify — the studio is
+ * lost for nothing, because there is nothing here to qualify   the studio is
  * not selecting anybody, it is keeping an address.
  *
  * Two things it does insist on, and both are deliberate:
