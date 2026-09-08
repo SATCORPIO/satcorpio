@@ -1,7 +1,8 @@
 import { Stamp, type StampTone } from "@/components/fingerprints/Stamp";
 import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import { Reveal, ScrollTriggerRefresh } from "@/components/system/Reveal";
-import { SignalScene, SignalTriggers } from "@/components/worlds/pulse/SignalScene";
+import { SignalTriggers } from "@/components/worlds/pulse/SignalScene";
+import { SignalSceneDeferred } from "@/components/worlds/pulse/SignalSceneLoader";
 import { Dashboard } from "@/components/worlds/pulse/Dashboard";
 import { ReservationForm } from "@/components/worlds/pulse/ReservationForm";
 import { Position } from "@/components/worlds/pulse/Position";
@@ -87,8 +88,9 @@ const DISCORD = "https://discord.gg/Fh5qy6tCTc";
 export default function PulsePage() {
   return (
     <div className="relative">
-      {/* The trace, running behind the whole page. */}
-      <SignalScene />
+      {/* The trace, running behind the whole page. Deferred out of the
+          initial bundle   see SignalSceneLoader.tsx. */}
+      <SignalSceneDeferred />
       <SignalTriggers />
       <ScrollTriggerRefresh />
 
