@@ -35,10 +35,12 @@ const SUGGESTIONS = [
   "Can you build a game prototype?",
   "How is my data handled?",
   "Who runs SATCORP?",
+  "What is PULSE ID?",
 ];
 
 const KIND_LABEL: Record<RegistryEntry["kind"], string> = {
   service: "ARRANGEABLE",
+  platform: "PLATFORM",
   division: "OPERATION",
   retainer: "RETAINER",
   engagement: "PROCEDURE",
@@ -87,9 +89,10 @@ export function AskTheRegistry() {
           written down, so the claim cannot drift from the contents. */}
       <p className="mt-4 max-w-2xl font-mono text-[0.7rem] leading-relaxed text-bone-dim">
         Indexed: {HOLDINGS.services} services across {HOLDINGS.sections}{" "}
-        sections, {HOLDINGS.divisions} operations, the retainer classes, the
-        engagement model and the paperwork. Not indexed: clients, figures,
-        anything not already on these pages.
+        sections, {HOLDINGS.divisions} operations, {HOLDINGS.platform} drawers
+        on the PULSE platform, the retainer classes, the engagement model and
+        the paperwork. Not indexed: clients, figures, anything not already on
+        these pages.
       </p>
 
       <form
@@ -265,10 +268,10 @@ function NothingFiled() {
         Nothing filed under that.
       </p>
       <p className="mt-3 font-mono text-[0.68rem] leading-relaxed text-bone-dim">
-        The drawers hold what SATCORP builds, what it costs, how the work runs
-        and what happens to your data. They do not hold client names, live
-        figures, or anything that is not already on these pages   and the
-        archive would rather say so than improvise.
+        The drawers hold what SATCORP builds, what it costs, how the work
+        runs, what happens to your data, and the PULSE platform. They do not
+        hold client names, live figures, or anything that is not already on
+        these pages   and the archive would rather say so than improvise.
       </p>
     </article>
   );

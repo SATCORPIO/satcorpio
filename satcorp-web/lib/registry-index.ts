@@ -1,6 +1,15 @@
 import { LEDGER, RETAINER_CLASSES, TIER_LABELS } from "./ledger-catalog";
 import { DIVISIONS, ENGAGEMENT_MODEL } from "./divisions";
 import { LEGAL, governingLaw } from "./legal";
+import {
+  CREATOR_SURFACES,
+  IDENTITY_LEVELS,
+  ROADMAP,
+  ROADMAP_STAMP,
+  SPACE_KINDS,
+  SPACE_MODULES,
+  VERIFICATION,
+} from "./pulse-platform";
 
 /**
  * THE REGISTRY INDEX
@@ -32,7 +41,8 @@ export type EntryKind =
   | "division"
   | "retainer"
   | "engagement"
-  | "paperwork";
+  | "paperwork"
+  | "platform";
 
 export interface RegistryEntry {
   /** Stable file reference, shown on the card. */
@@ -375,6 +385,118 @@ function buildIndex(): RegistryEntry[] {
     }),
   );
 
+  // --- The PULSE platform. Derived from lib/pulse-platform.ts, the same
+  //     module /pulse and /pulse/specification render from   nothing below
+  //     is a second copy of anything, and adding a field to that module is
+  //     all it takes for the archive to pick it up. Shares one group so five
+  //     PULSE questions cannot crowd out everything else the way five Brand
+  //     & Identity hits once did (see the scorer's own history above). ---
+  entries.push(
+    entry({
+      file: "KX-981",
+      kind: "platform",
+      title: "PULSE ID",
+      summary:
+        "One identity, carried across every experience SATCORP operates   identity levels and verification classes, not just a login.",
+      detail: `Levels: ${IDENTITY_LEVELS.map((l) => l.name).join(", ")}. Verification: ${VERIFICATION.map((v) => v.name).join(", ")}.`,
+      href: "/pulse#pulse-id",
+      group: "PULSE Platform",
+      aliases: [
+        "handle",
+        "@username",
+        "username",
+        "account",
+        "identity",
+        "sign in with pulse",
+        "login",
+        "profile",
+        "verified",
+        "verification",
+        "reserve a handle",
+      ],
+    }),
+    entry({
+      file: "KX-982",
+      kind: "platform",
+      title: "PULSE Spaces",
+      summary:
+        "One structure, four shapes   a creator, a community, a business and a game all get the same fourteen modules, switched on differently.",
+      detail: `Kinds: ${SPACE_KINDS.map((k) => k.name).join(", ")}. Modules: ${SPACE_MODULES.map((m) => m.name).join(", ")}.`,
+      href: "/pulse#spaces",
+      group: "PULSE Platform",
+      aliases: [
+        "community",
+        "communities",
+        "membership",
+        "creator space",
+        "business space",
+        "game space",
+        "modules",
+        "discord alternative",
+        "server",
+      ],
+    }),
+    entry({
+      file: "KX-983",
+      kind: "platform",
+      title: "The Creator Hub",
+      summary:
+        "Seven surfaces for anyone publishing through PULSE   content, audience, memberships, products, events, analytics and payouts.",
+      detail: CREATOR_SURFACES.map((s) => s.name).join(", "),
+      href: "/pulse#creator-hub",
+      group: "PULSE Platform",
+      aliases: [
+        "patreon alternative",
+        "monetise",
+        "monetize",
+        "membership tiers",
+        "creator tools",
+        "payouts",
+        "sell",
+      ],
+    }),
+    entry({
+      file: "KX-984",
+      kind: "platform",
+      title: "The PULSE roadmap",
+      summary:
+        "Six phases, from PULSE Core through Intelligence   each one stamped with the state it is actually in, never a state it is hoping to be in.",
+      detail: ROADMAP.map((p) => `${p.name} (${ROADMAP_STAMP[p.state]})`).join(" · "),
+      href: "/pulse#roadmap",
+      group: "PULSE Platform",
+      aliases: [
+        "when does pulse launch",
+        "is pulse live",
+        "pulse timeline",
+        "release date",
+        "beta",
+        "development status",
+        "roadmap",
+      ],
+    }),
+    entry({
+      file: "KX-985",
+      kind: "platform",
+      title: "The PULSE specification",
+      summary:
+        "The full platform document   identity, Spaces, the Creator Hub, the roadmap in full, and a sketch of the eventual API.",
+      detail:
+        "Public, deliberately: the idea is not the moat. Nothing in the API sketch is callable yet.",
+      href: "/pulse/specification",
+      group: "PULSE Platform",
+      aliases: [
+        "pulse api",
+        "developer",
+        "api",
+        "pulse documentation",
+        "spec",
+        "specification",
+        "oauth",
+        "integrate",
+      ],
+    }),
+  );
+
   return entries;
 }
 
@@ -385,6 +507,7 @@ export const HOLDINGS = {
   services: REGISTRY_INDEX.filter((e) => e.kind === "service").length,
   sections: LEDGER.length,
   divisions: DIVISIONS.length,
+  platform: REGISTRY_INDEX.filter((e) => e.kind === "platform").length,
   total: REGISTRY_INDEX.length,
 };
 

@@ -267,7 +267,11 @@ export default function PulsePage() {
              lines from the original page's Community Fabric section survive
              here as module descriptions   plan §4, "Community Fabric folds
              into V and VI." ---------- */}
-        <section data-signal="0.9" className="border-t border-bone/10 py-20">
+        <section
+          id="spaces"
+          data-signal="0.9"
+          className="scroll-mt-[calc(var(--chrome-h)+2rem)] border-t border-bone/10 py-20"
+        >
           <Reveal>
             <p className="label label-accent">Spaces</p>
             <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
@@ -286,7 +290,11 @@ export default function PulsePage() {
         </section>
 
         {/* ---------- VI. THE CREATOR HUB   rewrite of Creator Network ---------- */}
-        <section data-signal="0.8" className="py-20">
+        <section
+          id="creator-hub"
+          data-signal="0.8"
+          className="scroll-mt-[calc(var(--chrome-h)+2rem)] py-20"
+        >
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
@@ -339,7 +347,11 @@ export default function PulsePage() {
              every stamp is a state that is actually true. `tone="live"` is
              reserved for the establishment itself (the hero's ON AIR) until a
              phase is actually live   plan §7.1. ---------- */}
-        <section data-signal="0.9" className="py-20">
+        <section
+          id="roadmap"
+          data-signal="0.9"
+          className="scroll-mt-[calc(var(--chrome-h)+2rem)] py-20"
+        >
           <Reveal>
             <p className="label label-accent">Transmission Schedule</p>
             <h2 className="mt-4 max-w-2xl font-display text-3xl leading-tight text-bone sm:text-4xl">
