@@ -2,9 +2,7 @@
 
 import { headers } from "next/headers";
 import { promises as fs } from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
 import {
   NOTIFY_MIN_ELAPSED_MS,
   notifySchema,
@@ -13,6 +11,12 @@ import {
 } from "@/lib/notify-schema";
 import { LEGAL } from "@/lib/legal";
 import { createRateLimit } from "@/lib/rate-limit";
+import {
+  buildReference,
+  isEphemeralFilesystem,
+  resolveRecordDir,
+  wasDelivered,
+} from "@/lib/delivery";
 
 /**
  * FIELD NOTES   the forwarding list for the mobile title.
@@ -26,34 +30,28 @@ import { createRateLimit } from "@/lib/rate-limit";
  *   RESEND_API_KEY + NOTIFY_TO_EMAIL   → email
  *   a JSON file on disk                → the record, where the disk persists
  *
- * The durability rule from the other two pipelines applies unchanged, and it
- * matters more here than anywhere else on the site. Every other form ends in a
- * conversation, so a dropped submission surfaces when nobody replies. This one
+ * The durability rule shared across every pipeline (`lib/delivery.ts`) applies
+ * unchanged, and it matters more here than anywhere else on the site. Every
+ * other form ends in a conversation, so a dropped submission surfaces when
+ * nobody replies. This one
  * ends in silence *by design*   the next contact might be months away   so a
  * reader has no way to notice they were never actually added. A list that
  * quietly fails to record people is worse than no list, which is why nothing is
  * reported as taken until at least one durable transport has succeeded.
  */
 
-const EPHEMERAL_FS = Boolean(process.env.VERCEL);
-
-const RECORD_DIR =
-  process.env.NOTIFY_DIR ??
-  (EPHEMERAL_FS
-    ? path.join(os.tmpdir(), "satcorp-notify")
-    : path.join(process.cwd(), ".notify"));
+// Ephemeral-filesystem detection, record-directory resolution, the reference
+// format and the durability decision are shared across every pipeline on the
+// site   see lib/delivery.ts.
+const EPHEMERAL_FS = isEphemeralFilesystem();
+const RECORD_DIR = resolveRecordDir(process.env.NOTIFY_DIR, "notify");
 
 // Looser than the enquiry forms. Two people behind one office address signing
 // up inside a minute is ordinary; two engagement briefs from one address is not.
 const rateLimited = createRateLimit({ windowMs: 60_000, max: 6 });
 
 function reference(): string {
-  const now = new Date();
-  const stamp =
-    `${now.getUTCFullYear()}`.slice(2) +
-    String(now.getUTCMonth() + 1).padStart(2, "0") +
-    String(now.getUTCDate()).padStart(2, "0");
-  return `FN-${stamp}-${randomUUID().slice(0, 4).toUpperCase()}`;
+  return buildReference("FN");
 }
 
 function asPlainText(data: NotifyData, ref: string): string {
@@ -242,7 +240,7 @@ export async function leaveAddress(raw: unknown): Promise<NotifyResult> {
   ]);
 
   // A scratch file on a recycled instance is not a record.
-  const durable = posted || emailed || (filed && !EPHEMERAL_FS);
+  const durable = wasDelivered({ posted, emailed, filed });
 
   if (!durable) {
     console.error(

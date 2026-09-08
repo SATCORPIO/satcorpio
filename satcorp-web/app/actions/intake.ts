@@ -2,9 +2,7 @@
 
 import { headers } from "next/headers";
 import { promises as fs } from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
 import {
   intakeSchema,
   MIN_ELAPSED_MS,
@@ -14,6 +12,12 @@ import {
 import { LEDGER, LEDGER_ITEM_BY_ID } from "@/lib/ledger-catalog";
 import { LEGAL } from "@/lib/legal";
 import { createRateLimit } from "@/lib/rate-limit";
+import {
+  buildReference,
+  isEphemeralFilesystem,
+  resolveRecordDir,
+  wasDelivered,
+} from "@/lib/delivery";
 
 /**
  * THE SEAL   the intake pipeline.
@@ -38,25 +42,14 @@ import { createRateLimit } from "@/lib/rate-limit";
 
 const rateLimited = createRateLimit({ windowMs: 60_000, max: 3 });
 
-/**
- * Serverless platforms mount the deployment read-only and recycle instances
- * without warning, so anything written during a request is a scratch file
- * rather than a record.
- */
-const EPHEMERAL_FS = Boolean(process.env.VERCEL);
-
-const RECORD_DIR =
-  process.env.INTAKE_DIR ??
-  (EPHEMERAL_FS
-    ? path.join(os.tmpdir(), "satcorp-intake")
-    : path.join(process.cwd(), ".intake"));
+// Ephemeral-filesystem detection, record-directory resolution, the reference
+// format and the durability decision are shared with the Approach and the
+// PULSE handle claim   see lib/delivery.ts.
+const EPHEMERAL_FS = isEphemeralFilesystem();
+const RECORD_DIR = resolveRecordDir(process.env.INTAKE_DIR, "intake");
 
 function reference(): string {
-  const now = new Date();
-  const stamp = `${now.getUTCFullYear()}`.slice(2) +
-    String(now.getUTCMonth() + 1).padStart(2, "0") +
-    String(now.getUTCDate()).padStart(2, "0");
-  return `SC-${stamp}-${randomUUID().slice(0, 4).toUpperCase()}`;
+  return buildReference("SC");
 }
 
 function serviceNames(ids: string[]): string[] {
@@ -348,7 +341,7 @@ export async function submitBrief(
   ]);
 
   // A scratch file on a recycled instance is not a record.
-  const durable = posted || emailed || (filed && !EPHEMERAL_FS);
+  const durable = wasDelivered({ posted, emailed, filed });
 
   if (!durable) {
     console.error(

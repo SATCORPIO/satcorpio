@@ -2,9 +2,7 @@
 
 import { headers } from "next/headers";
 import { promises as fs } from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { randomUUID } from "node:crypto";
 import {
   PARTNER_DIVISION_BY_ID,
   PARTNER_MIN_ELAPSED_MS,
@@ -16,6 +14,12 @@ import {
 } from "@/lib/partner-schema";
 import { LEGAL } from "@/lib/legal";
 import { createRateLimit } from "@/lib/rate-limit";
+import {
+  buildReference,
+  isEphemeralFilesystem,
+  resolveRecordDir,
+  wasDelivered,
+} from "@/lib/delivery";
 
 /**
  * THE APPROACH   the partnership intake pipeline.
@@ -30,28 +34,22 @@ import { createRateLimit } from "@/lib/rate-limit";
  *   RESEND_API_KEY + PARTNER_TO_EMAIL   → email
  *   a JSON file on disk                 → the record, where the disk persists
  *
- * The durability rule from the brief pipeline applies unchanged: on a platform
- * with an ephemeral filesystem a write proves nothing, so at least one
- * transport must succeed before an approach is reported as received.
+ * The durability rule shared across every pipeline (`lib/delivery.ts`) applies
+ * unchanged: on a platform with an ephemeral filesystem a write proves
+ * nothing, so at least one transport must succeed before an approach is
+ * reported as received.
  */
 
-const EPHEMERAL_FS = Boolean(process.env.VERCEL);
-
-const RECORD_DIR =
-  process.env.PARTNER_DIR ??
-  (EPHEMERAL_FS
-    ? path.join(os.tmpdir(), "satcorp-partner")
-    : path.join(process.cwd(), ".partner"));
+// Ephemeral-filesystem detection, record-directory resolution, the reference
+// format and the durability decision are shared with the Engagement Brief and
+// the PULSE handle claim   see lib/delivery.ts.
+const EPHEMERAL_FS = isEphemeralFilesystem();
+const RECORD_DIR = resolveRecordDir(process.env.PARTNER_DIR, "partner");
 
 const rateLimited = createRateLimit({ windowMs: 60_000, max: 3 });
 
 function reference(): string {
-  const now = new Date();
-  const stamp =
-    `${now.getUTCFullYear()}`.slice(2) +
-    String(now.getUTCMonth() + 1).padStart(2, "0") +
-    String(now.getUTCDate()).padStart(2, "0");
-  return `SP-${stamp}-${randomUUID().slice(0, 4).toUpperCase()}`;
+  return buildReference("SP");
 }
 
 interface Approach {
@@ -358,7 +356,7 @@ export async function submitApproach(raw: unknown): Promise<PartnerResult> {
   ]);
 
   // A scratch file on a recycled instance is not a record.
-  const durable = posted || emailed || (filed && !EPHEMERAL_FS);
+  const durable = wasDelivered({ posted, emailed, filed });
 
   if (!durable) {
     console.error(
