@@ -28,7 +28,7 @@ export const LEGAL = {
   siteUrl: "https://satcorp.io",
 
   /** Published for privacy requests, legal notices and copyright complaints. */
-  contactEmail: "satcorpvk@gmail.com",
+  contactEmail: "anu@satcorp.io",
 
   /**
    * Governing state. Left unset until SATCORP has a stated principal place of

@@ -1,9 +1,15 @@
 /**
- * The six establishments.
+ * The establishments.
  *
  * Every page is art-directed as its own standalone site. This table holds the
  * handful of values that are allowed to differ   accent, scroll feel, cursor,
  * voice   so the rest of the system can stay identical across all of them.
+ *
+ * NAMTAR RELENTLESS sits here as its own tab, not folded under Ki-Ra's,
+ * because it now needs to be reachable in one click rather than a scroll and
+ * a click through `/kira`. It keeps Ki-Ra's accent (same studio, same teal)
+ * and stays introduced from the `/kira` page as the second feature   this
+ * entry is what makes it a destination in its own right as well.
  */
 
 export type DivisionId =
@@ -12,6 +18,7 @@ export type DivisionId =
   | "kyrax"
   | "kira"
   | "namtar"
+  | "relentless"
   | "pulse";
 
 export type ThemeId = DivisionId | "engage";
@@ -112,6 +119,20 @@ export const DIVISIONS: Division[] = [
     scrollLerp: 0.07,
     cursor: "reticle",
     stamp: "IN DEVELOPMENT",
+  },
+  {
+    id: "relentless",
+    name: "NAMTAR RELENTLESS",
+    tab: "RELENTLESS",
+    href: "/relentless",
+    role: "The second feature",
+    tagline:
+      "A mobile 4X survival strategy game where the world escalates against every outpost on a clock, and the map keeps what the sector held.",
+    establishment: "A second picture, shot on location. Same planet, different camera.",
+    accent: "#1f6f6b",
+    scrollLerp: 0.09,
+    cursor: "reticle",
+    stamp: "PHASE A",
   },
   {
     id: "pulse",

@@ -83,7 +83,7 @@ const ROADMAP_TONE: Record<RoadmapState, StampTone> = {
   later: "bone",
 };
 
-const DISCORD = "https://discord.gg/Fh5qy6tCTc";
+const DISCORD = "https://discord.gg/guDzGUkJSb";
 
 export default function PulsePage() {
   return (

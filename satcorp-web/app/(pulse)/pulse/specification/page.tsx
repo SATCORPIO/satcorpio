@@ -22,7 +22,8 @@ export const metadata: Metadata = {
   // the page and that ancestor has already set its own plain-string title.
   // The pulse layout already has one, so a fragment here would render with
   // no site context at all rather than silently inheriting one. Matches the
-  // convention /kira/relentless already established for a nested route.
+  // convention every division layout already establishes: a flat title
+  // string, not a template fragment.
   title: "PULSE Specification   SATCORP",
   description:
     "The full PULSE platform specification: identity, Spaces, the Creator Hub, the roadmap, the privacy doctrine, and a sketch of the eventual API.",

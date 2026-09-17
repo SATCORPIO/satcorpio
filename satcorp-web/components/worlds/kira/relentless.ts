@@ -36,7 +36,7 @@ export const FILE = "NR-001";
 export const STANDING = "PHASE A · LANDFALL";
 
 /** The studio's room. Shared with the safe houses further down `/kira`. */
-export const DISCORD = "https://discord.gg/Fh5qy6tCTc";
+export const DISCORD = "https://discord.gg/guDzGUkJSb";
 
 /** The external positioning line, verbatim from the vision document. */
 export const POSITIONING =

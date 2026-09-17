@@ -37,7 +37,7 @@ import {
  *
  * The section is an announcement, not a brief. It carries the hook, the
  * disambiguation, and the standing; everything deeper lives at
- * `/kira/relentless` behind one link. Two reasons for the split: a reader
+ * `/relentless` behind one link. Two reasons for the split: a reader
  * scrolling `/kira` is here for the studio, not for one title's design
  * philosophy   and the full brief is where an interested reader can be asked
  * for something, which a section on somebody else's page cannot honestly do.
@@ -199,7 +199,7 @@ export function SecondFeature() {
 
       <div className="mt-10 flex flex-wrap gap-3">
         <ThreadLink
-          href="/kira/relentless"
+          href="/relentless"
           className="inline-block border border-bone/20 px-8 py-3.5 font-mono text-[0.66rem] tracking-[0.24em] text-bone transition-colors hover:border-accent hover:bg-accent hover:text-ink"
         >
           READ THE FULL BRIEF →

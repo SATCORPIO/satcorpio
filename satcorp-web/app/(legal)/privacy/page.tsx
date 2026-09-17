@@ -161,7 +161,7 @@ const SECTIONS: LegalSection[] = [
         <h3>Field Notes</h3>
         <p>
           The forwarding list on{" "}
-          <ThreadLink href="/kira/relentless">/kira/relentless</ThreadLink>{" "}
+          <ThreadLink href="/relentless">/relentless</ThreadLink>{" "}
           collects your preferred contact channel, the address or handle to use,
           an optional one-line note about why you are signing up, and your
           affirmative consent to be contacted about that title.

@@ -188,7 +188,7 @@ const PLATFORMS = [
   ],
 ] as const;
 
-const DISCORD = "https://discord.gg/Fh5qy6tCTc";
+const DISCORD = "https://discord.gg/guDzGUkJSb";
 
 /**
  * A full-width darkening behind a section, faded at both ends. Used where a

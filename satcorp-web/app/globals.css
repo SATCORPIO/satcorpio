@@ -46,7 +46,7 @@
 }
 
 /* ============================================================
-   THE SIX ESTABLISHMENTS
+   THE ESTABLISHMENTS
    Each route group sets data-division; only the accent, texture
    and rhythm change. Black, red and bone carry every page.
    ============================================================ */
@@ -77,6 +77,12 @@
 [data-division="namtar"] {
   --accent: #d97e2f;
   --page-bg: #05060a;
+  --texture-opacity: 0.04;
+}
+
+[data-division="relentless"] {
+  --accent: #1f6f6b;
+  --page-bg: #07090a;
   --texture-opacity: 0.04;
 }
 

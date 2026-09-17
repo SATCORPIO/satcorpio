@@ -12,9 +12,10 @@ import { LEGAL } from "@/lib/legal";
  * update.
  *
  * Routes that are not a division get listed explicitly below   there are few
- * enough of them (the two intake doors, the two legal documents, PULSE's own
- * specification, and Ki-Ra's Relentless announcement) that a derived list
- * would cost more clarity than it saves.
+ * enough of them (the two intake doors, the two legal documents, and PULSE's
+ * own specification) that a derived list would cost more clarity than it
+ * saves. NAMTAR RELENTLESS no longer needs an entry here: it's a division
+ * now, so the loop below picks it up.
  */
 
 const STATIC_ROUTES: Array<{
@@ -25,7 +26,6 @@ const STATIC_ROUTES: Array<{
   { path: "/engage", changeFrequency: "monthly", priority: 0.6 },
   { path: "/partner", changeFrequency: "monthly", priority: 0.6 },
   { path: "/pulse/specification", changeFrequency: "monthly", priority: 0.5 },
-  { path: "/kira/relentless", changeFrequency: "weekly", priority: 0.6 },
   { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms", changeFrequency: "yearly", priority: 0.3 },
 ];

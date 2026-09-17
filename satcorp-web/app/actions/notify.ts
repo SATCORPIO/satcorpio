@@ -80,7 +80,7 @@ async function fileRecord(
       JSON.stringify(
         {
           reference: ref,
-          list: "kira/relentless",
+          list: "relentless",
           receivedAt: new Date().toISOString(),
           ...meta,
           via: data.via,
