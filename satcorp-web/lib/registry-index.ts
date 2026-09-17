@@ -176,6 +176,50 @@ const DIVISION_ALIASES: Record<string, string[]> = {
   kyrax: ["ai", "intelligence", "registry", "archive", "brain", "machine learning"],
   kira: ["studio", "games", "game studio", "ki-ra", "kira", "entertainment"],
   namtar: ["game", "survival", "world", "planet", "ark"],
+  relentless: ["mobile", "phone", "strategy", "4x", "outpost", "sector"],
+  forfeiture: [
+    "crime",
+    "crime game",
+    "police",
+    "detective",
+    "evidence",
+    "city",
+    "investigation",
+    "law",
+    "roleplay",
+    "rp",
+  ],
+  /**
+   * Chosen so as not to overlap the entry above it: "cops" rather than
+   * "police", "seizure" rather than "evidence", and nothing that repeats a word
+   * the other crime title already answers on.
+   *
+   * **What that achieves is narrower than it looks, and the limit is worth
+   * recording rather than discovering.** A division entry indexes its tagline
+   * as well as its aliases, and both of these titles are persistent crime sims
+   * with player police, so both taglines legitimately contain "crime" and
+   * "police" and both will surface on those words however the aliases are
+   * written. The taglines cannot be fixed without describing one of the two
+   * products inaccurately, which is a worse trade than co-retrieval inside a
+   * site-search box.
+   *
+   * So this list does the job it can do   it stops the overlap being *widened*
+   * by hand   and the rest is accepted. Two crime games from one studio both
+   * answering "crime game" in that studio's own archive is a search working,
+   * not a leak.
+   */
+  streetlevel: [
+    "street level",
+    "streetlevel",
+    "crew",
+    "cops",
+    "undercover",
+    "safehouse",
+    "seizure",
+    "pvp",
+    "multiplayer",
+    "shard",
+  ],
   pulse: ["community", "creators", "streaming", "events", "broadcast", "audience"],
 };
 
@@ -242,7 +286,8 @@ function buildIndex(): RegistryEntry[] {
     });
   });
 
-  // --- The six operations. ---
+  // --- The operations. Counted from DIVISIONS, never written down here:
+  //     this comment said "six" through two additions before anyone noticed. ---
   DIVISIONS.forEach((d, i) => {
     entries.push(
       entry({

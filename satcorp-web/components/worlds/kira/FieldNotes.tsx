@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { leaveAddress } from "@/app/actions/notify";
-import { NOTIFY_CHANNELS, type NotifyChannel } from "@/lib/notify-schema";
+import {
+  NOTIFY_CHANNELS,
+  NOTIFY_LIST_PROMPT,
+  type NotifyChannel,
+  type NotifyList,
+} from "@/lib/notify-schema";
 import { Stamp } from "@/components/fingerprints/Stamp";
 import { ThreadLink } from "@/components/fingerprints/CaseFileTransition";
 import {
@@ -23,6 +28,11 @@ import {
  * react-hook-form: a form this small does not earn a resolver, and the same
  * validators run on the server from the same module either way.
  *
+ * The `list` prop is the one thing a caller must get right. More than one
+ * unreleased title now announces from this form, and the lists are not
+ * interchangeable: the id chosen here is what gets written into the stored
+ * consent record as the scope the reader agreed to.
+ *
  * Note what this is *not*: a pre-registration. Pre-registration belongs to a
  * store listing and a launch window, and a reward attached to one now would be
  * a promise made two years early to people who will have changed phones twice.
@@ -39,7 +49,7 @@ function elapsedSince(start: number): number {
   return Date.now() - start;
 }
 
-export function FieldNotes() {
+export function FieldNotes({ list }: { list: NotifyList }) {
   const [form, setForm] = useState(EMPTY);
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
@@ -49,6 +59,9 @@ export function FieldNotes() {
 
   const mountedAt = useRef(0);
   const honeypot = useRef("");
+
+  // What the free-text field asks for is per-list: see NOTIFY_LIST_PROMPT.
+  const prompt = NOTIFY_LIST_PROMPT[list];
 
   // Set in an effect so nothing impure runs during render.
   useEffect(() => {
@@ -64,6 +77,7 @@ export function FieldNotes() {
     setErrors({});
 
     const result = await leaveAddress({
+      list,
       via: form.via,
       contact: form.contact,
       note: form.note,
@@ -146,8 +160,8 @@ export function FieldNotes() {
 
       <div className="mt-7">
         <Field
-          label="Anything you want the studio to know"
-          hint="Optional. If you build these for a living, say so   that is read by a person."
+          label={prompt.label}
+          hint={prompt.hint}
           error={errors.note?.[0]}
         >
           <textarea

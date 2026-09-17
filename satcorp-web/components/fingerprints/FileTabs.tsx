@@ -40,8 +40,21 @@ export function FileTabs() {
           </span>
         </ThreadLink>
 
-        {/* Desktop: the whole drawer, open. */}
-        <ul className="hidden h-full items-end gap-px lg:flex">
+        {/* Desktop: the whole drawer, open.
+
+            Opens at `xl` rather than `lg`, and scrolls if it still has to. The
+            drawer held seven tabs comfortably at 1024px; at nine, with two
+            two-word labels among them, it does not, and the failure mode is a
+            wrapped or clipped primary nav rather than anything graceful. Below
+            `xl` the mobile INDEX drawer takes over, which already works and is
+            already designed for exactly this.
+
+            This is the proportionate fix, not the right one. Four titles from
+            one studio want to be a grouped drawer under that studio's tab
+            instead of four peer tabs, and that is a navigation change with its
+            own design questions   it should be scheduled rather than smuggled
+            into whichever build happens to add the ninth division. */}
+        <ul className="hidden h-full items-end gap-px overflow-x-auto xl:flex">
           {DIVISIONS.map((d) => {
             const isActive = d.id === active.id;
             return (
@@ -69,7 +82,7 @@ export function FileTabs() {
                   {d.tab}
                   <span
                     aria-hidden
-                    className="hidden text-[0.55rem] text-bone-dim/60 xl:inline"
+                    className="hidden text-[0.55rem] text-bone-dim/60 2xl:inline"
                   >
                     {d.role}
                   </span>
@@ -84,7 +97,7 @@ export function FileTabs() {
           type="button"
           onClick={() => setIndexOpen(!indexOpen)}
           aria-expanded={indexOpen}
-          className="ml-auto flex items-center gap-3 px-3 font-mono text-[0.66rem] tracking-[0.22em] text-bone-dim transition-colors hover:text-bone lg:hidden"
+          className="ml-auto flex items-center gap-3 px-3 font-mono text-[0.66rem] tracking-[0.22em] text-bone-dim transition-colors hover:text-bone xl:hidden"
         >
           <span className="text-bone">{active.tab}</span>
           <span aria-hidden className="text-bone-dim/50">/</span>
@@ -93,7 +106,7 @@ export function FileTabs() {
       </nav>
 
       {indexOpen && (
-        <div className="absolute inset-x-0 top-full border-b border-bone/10 bg-ink/95 backdrop-blur-md lg:hidden">
+        <div className="absolute inset-x-0 top-full border-b border-bone/10 bg-ink/95 backdrop-blur-md xl:hidden">
           <ul className="divide-y divide-bone/5">
             {DIVISIONS.map((d) => (
               <li key={d.id}>

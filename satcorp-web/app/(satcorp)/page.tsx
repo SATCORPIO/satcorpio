@@ -11,8 +11,29 @@ import { HeroMark } from "@/components/worlds/satcorp/HeroMark";
  * A shadow holding company's front door: sober, architectural, quietly
  * enormous. Pure black, red and bone; no tinted accent of its own.
  */
+/**
+ * Spelled out because the heading is prose, not data   and derived, because
+ * this line said "Five" over a list of six for as long as there have been six.
+ * A hand-counted number in a headline is a defect waiting on the next
+ * establishment, and there is always a next establishment.
+ */
+const COUNT_WORD = [
+  "No",
+  "One",
+  "Two",
+  "Three",
+  "Four",
+  "Five",
+  "Six",
+  "Seven",
+  "Eight",
+  "Nine",
+  "Ten",
+];
+
 export default function SatcorpPage() {
   const network = DIVISIONS.filter((d) => d.id !== "satcorp");
+  const count = COUNT_WORD[network.length] ?? String(network.length);
 
   return (
     <>
@@ -43,7 +64,7 @@ export default function SatcorpPage() {
         <header>
           <p className="label label-accent">The Network</p>
           <h2 className="mt-3 font-display text-3xl text-bone sm:text-4xl">
-            Five divisions. One operation.
+            {count} divisions. One operation.
           </h2>
         </header>
 

@@ -369,7 +369,7 @@ export default function RelentlessPage() {
               </a>
             </Reveal>
 
-            <FieldNotes />
+            <FieldNotes list="relentless" />
           </div>
         </div>
       </section>

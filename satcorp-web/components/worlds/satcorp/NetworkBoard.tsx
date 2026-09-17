@@ -10,7 +10,7 @@ import { RedThread } from "@/components/fingerprints/RedThread";
  * THE NETWORK
  *
  * An evidence-board constellation: the SATCORP monogram at the centre with the
- * five divisions pinned around it, each joined by a length of red thread.
+ * divisions pinned around it, each joined by a length of red thread.
  * Pointer drift parallaxes the board; dragging rotates it; a node lights its
  * thread and offers passage.
  *
@@ -18,16 +18,26 @@ import { RedThread } from "@/components/fingerprints/RedThread";
  * markup below, so nothing here is load-bearing for keyboard or screen readers.
  */
 
-const NODES = DIVISIONS.filter((d) => d.id !== "satcorp");
-
 /** Pinned positions, deliberately irregular   a board, not a diagram. */
 const LAYOUT: Record<string, [number, number, number]> = {
   anu: [-2.9, 1.35, 0.35],
   kyrax: [2.75, 1.6, -0.3],
   kira: [-3.25, -1.5, -0.25],
   namtar: [3.05, -1.2, 0.4],
+  relentless: [-1.6, 2.15, -0.4],
+  forfeiture: [1.75, -2.4, -0.2],
   pulse: [0.35, -2.35, 0.15],
 };
+
+/**
+ * Only divisions that have somewhere to hang. A pin needs a position on the
+ * board and positions are authored here by hand, so a division added to
+ * `DIVISIONS` without a matching entry is simply not pinned   which is the
+ * correct failure. Previously the filter was on id alone and the lookup
+ * destructured whatever came back, so the first division added without a
+ * LAYOUT entry would have thrown on render.
+ */
+const NODES = DIVISIONS.filter((d) => d.id !== "satcorp" && LAYOUT[d.id]);
 
 export function NetworkBoard({
   onSelect,

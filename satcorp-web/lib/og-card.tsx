@@ -1,5 +1,13 @@
 /**
- * PULSE OG CARD   the shared visual both `opengraph-image.tsx` files render.
+ * THE OG CARD   the shared visual every `opengraph-image.tsx` route renders.
+ *
+ * A link preview is not decoration on a page nobody has visited yet: for a
+ * title with no store page and no trailer, the card *is* the advertisement,
+ * because it is the whole of what a reader sees when somebody pastes the URL
+ * into a Discord they already belong to.
+ *
+ * Generalised from PULSE's own card rather than copied. It takes the
+ * establishment's accent and ground, which is the only thing that differed.
  *
  * `next/og`'s `ImageResponse` runs on Satori, a restricted flexbox-only CSS
  * subset   no Tailwind classes, no CSS grid, inline styles only. Kept as a
@@ -14,21 +22,31 @@
  * keeps this file from growing a font-loading dependency of its own.
  */
 
-const INK = "#0a0708";
-const BLOOD_HOT = "#ff2b3a";
 const BONE = "#e9e1d3";
 const BONE_DIM = "#9c968c";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
-export function pulseOgCard({
+export function ogCard({
   eyebrow,
   title,
   subtitle,
+  footer,
+  accent = "#ff2b3a",
+  background = "#0a0708",
+  /**
+   * The pulsing dot reads as "on air" and belongs to a live establishment.
+   * A title in pre-production must not carry one.
+   */
+  live = true,
 }: {
   eyebrow: string;
   title: string;
   subtitle: string;
+  footer: string;
+  accent?: string;
+  background?: string;
+  live?: boolean;
 }) {
   return (
     <div
@@ -39,7 +57,7 @@ export function pulseOgCard({
         flexDirection: "column",
         justifyContent: "center",
         padding: "80px 96px",
-        backgroundColor: INK,
+        backgroundColor: background,
         position: "relative",
       }}
     >
@@ -53,26 +71,28 @@ export function pulseOgCard({
           right: 0,
           height: 6,
           display: "flex",
-          backgroundColor: BLOOD_HOT,
+          backgroundColor: accent,
         }}
       />
 
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <div
-          style={{
-            display: "flex",
-            width: 10,
-            height: 10,
-            borderRadius: 999,
-            backgroundColor: BLOOD_HOT,
-          }}
-        />
+        {live && (
+          <div
+            style={{
+              display: "flex",
+              width: 10,
+              height: 10,
+              borderRadius: 999,
+              backgroundColor: accent,
+            }}
+          />
+        )}
         <div
           style={{
             display: "flex",
             fontSize: 22,
             letterSpacing: 6,
-            color: BLOOD_HOT,
+            color: accent,
             textTransform: "uppercase",
           }}
         >
@@ -118,7 +138,7 @@ export function pulseOgCard({
           textTransform: "uppercase",
         }}
       >
-        SATCORP / PULSE
+        {footer}
       </div>
     </div>
   );

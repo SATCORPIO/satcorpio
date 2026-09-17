@@ -10,6 +10,8 @@ import {
   WorldDossier,
 } from "@/components/worlds/kira/Programme";
 import { SecondFeature } from "@/components/worlds/kira/SecondFeature";
+import { ThirdFeature } from "@/components/worlds/kira/ThirdFeature";
+import { FirstOnTheBill } from "@/components/worlds/kira/FirstOnTheBill";
 import { DISCORD } from "@/components/worlds/kira/relentless";
 
 /**
@@ -237,6 +239,26 @@ export default function KiraPage() {
           straight after the main picture. It runs plain rather than in a tinted
           band, so the weight on the page still reads flagship-first. */}
       <SecondFeature />
+
+      {/* ---------- THE THIRD FEATURE ----------
+          A different picture entirely: not the shared planet, not a sibling of
+          the two above it. It takes the tinted band the second feature gave up
+          so that three consecutive titles do not read as one undifferentiated
+          run of programme, and so the change of subject is visible before a
+          word of it is read. */}
+      <ThirdFeature />
+
+      {/* ---------- FIRST ON THE BILL ----------
+          Not "the fourth feature". The slate is four titles now, and a fourth
+          number would make the programme read as thin rather than deep   and
+          would narrate a lineage between this title and the one above it that
+          its own naming decision exists to avoid. A billing position says the
+          only thing that separates it from the other three: it is the one a
+          reader will be able to buy first.
+
+          Plain band, holding the page's alternation against the tinted section
+          above. */}
+      <FirstOnTheBill />
 
       {/* ---------- THE SAFE HOUSES ---------- */}
       <section className="mx-auto max-w-6xl px-6 py-24">

@@ -4,9 +4,13 @@ import { headers } from "next/headers";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import {
+  NOTIFY_LIST_LABEL,
+  NOTIFY_LIST_PROMPT,
+  NOTIFY_LIST_SCOPE,
   NOTIFY_MIN_ELAPSED_MS,
   notifySchema,
   type NotifyData,
+  type NotifyList,
   type NotifyResult,
 } from "@/lib/notify-schema";
 import { LEGAL } from "@/lib/legal";
@@ -19,7 +23,7 @@ import {
 } from "@/lib/delivery";
 
 /**
- * FIELD NOTES   the forwarding list for the mobile title.
+ * FIELD NOTES   the forwarding lists for the unreleased titles.
  *
  * Its own pipeline for the same reason the Approach is not a flag on the Brief:
  * this is a standing list that will be written to for years, and mixing it into
@@ -58,11 +62,14 @@ function asPlainText(data: NotifyData, ref: string): string {
   return [
     `SATCORP   KI-RA STUDIOS   FIELD NOTES ${ref}`,
     "",
+    `  List:     ${NOTIFY_LIST_LABEL[data.list]}`,
     `  Via:      ${data.via}`,
     `  Contact:  ${data.contact}`,
     `  Consent:  recorded ${new Date().toISOString()}`,
     "",
-    "  WHY THEY ARE HERE",
+    // The question that was asked, not a fixed heading. The lists no longer
+    // ask the same one.
+    `  ${NOTIFY_LIST_PROMPT[data.list].label.toUpperCase()}`,
     `    ${(data.note || " ").replace(/\n/g, "\n    ")}`,
   ].join("\n");
 }
@@ -80,7 +87,7 @@ async function fileRecord(
       JSON.stringify(
         {
           reference: ref,
-          list: "relentless",
+          list: data.list,
           receivedAt: new Date().toISOString(),
           ...meta,
           via: data.via,
@@ -91,7 +98,7 @@ async function fileRecord(
           consent: {
             given: true,
             at: new Date().toISOString(),
-            scope: "Development notes for the Ki-Ra Studios mobile title.",
+            scope: NOTIFY_LIST_SCOPE[data.list],
           },
         },
         null,
@@ -122,7 +129,7 @@ async function sendEmail(data: NotifyData, ref: string): Promise<boolean> {
       body: JSON.stringify({
         from,
         to: [to],
-        subject: `Field notes ${ref}   ${data.via}`,
+        subject: `Field notes ${ref}   ${NOTIFY_LIST_LABEL[data.list]}   ${data.via}`,
         text: asPlainText(data, ref),
       }),
     });
@@ -138,7 +145,12 @@ async function sendEmail(data: NotifyData, ref: string): Promise<boolean> {
   }
 }
 
-const EMBED_COLOR = 0x1f6f6b; // Ki-Ra teal
+/** Each list's establishment accent, so the studio channel reads at a glance. */
+const EMBED_COLOR: Record<NotifyList, number> = {
+  relentless: 0x1f6f6b, // Ki-Ra teal
+  forfeiture: 0x5a7d94, // FORFEITURE institutional blue
+  streetlevel: 0x6e8c5a, // STREET LEVEL municipal green
+};
 const FIELD_MAX = 1024;
 
 function clamp(text: string, max: number): string {
@@ -158,7 +170,10 @@ async function sendDiscord(data: NotifyData, ref: string): Promise<boolean> {
   ];
   if (data.note) {
     fields.push({
-      name: "Why they are here",
+      // The question that was actually asked, rather than a fixed label. The
+      // lists no longer ask the same one, and a channel that captions every
+      // answer "why they are here" misreports what a reader was responding to.
+      name: NOTIFY_LIST_PROMPT[data.list].label,
       value: clamp(data.note, FIELD_MAX),
       inline: false,
     });
@@ -172,9 +187,11 @@ async function sendDiscord(data: NotifyData, ref: string): Promise<boolean> {
         username: "SATCORP",
         embeds: [
           {
-            author: { name: "KI-RA STUDIOS   FIELD NOTES" },
+            author: {
+              name: `KI-RA STUDIOS   FIELD NOTES   ${NOTIFY_LIST_LABEL[data.list]}`,
+            },
             title: ref,
-            color: EMBED_COLOR,
+            color: EMBED_COLOR[data.list],
             fields,
             footer: { text: `Filed from ${LEGAL.domain} · forwarding list` },
             timestamp: new Date().toISOString(),

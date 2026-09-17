@@ -25,11 +25,86 @@ import { z } from "zod";
 export const NOTIFY_CHANNELS = ["Email", "Discord"] as const;
 export type NotifyChannel = (typeof NOTIFY_CHANNELS)[number];
 
+/**
+ * Which list the address is being left on.
+ *
+ * The studio now announces more than one unreleased title from this form, and
+ * the lists are not interchangeable: somebody who read the FORFEITURE page has
+ * consented to hear about FORFEITURE and nothing else. Without this
+ * discriminator the stored consent record would say the mobile title for every
+ * signup, which is not a cosmetic defect   it is an inaccurate record of what
+ * a person agreed to, on the one form on this site whose whole purpose is to
+ * be written to for years.
+ *
+ * Defaulted rather than required so the existing caller keeps working, and the
+ * scope string lives beside the id so the two can never drift.
+ */
+export const NOTIFY_LISTS = ["relentless", "forfeiture", "streetlevel"] as const;
+export type NotifyList = (typeof NOTIFY_LISTS)[number];
+
+/** What each list's subscriber actually agreed to hear about, verbatim. */
+export const NOTIFY_LIST_SCOPE: Record<NotifyList, string> = {
+  relentless: "Development notes for the Ki-Ra Studios mobile title.",
+  forfeiture: "Development notes for FORFEITURE.",
+  /**
+   * Named as its own title and nothing else. This list must never describe
+   * itself by reference to another Ki-Ra game: the scope string is the durable
+   * record of what a person agreed to, it is read back years later, and the
+   * title it belongs to is isolated from the studio's other crime game by
+   * decision rather than by accident.
+   */
+  streetlevel: "Development notes for STREET LEVEL.",
+};
+
+/** Human label for the studio channel and the subject line. */
+export const NOTIFY_LIST_LABEL: Record<NotifyList, string> = {
+  relentless: "NAMTAR RELENTLESS",
+  forfeiture: "FORFEITURE",
+  streetlevel: "STREET LEVEL",
+};
+
+/**
+ * What the optional free-text field asks for, per list.
+ *
+ * It used to ask the same generic question everywhere, which was fine while the
+ * only thing it collected was goodwill. It is worth more than that.
+ *
+ * STREET LEVEL's design document pre-registers cop supply as the riskiest
+ * number in the whole project   whether players volunteer for the police side
+ * at all, and whether they come back to it   and names its collapse as a
+ * standing risk whose failure mode is an *inconclusive* answer rather than a
+ * no. Asking "crew, or badge?" on the advertising page is a cheap,
+ * directionally useful read on that question months before there is a build to
+ * measure it with, and it costs one string.
+ *
+ * Kept beside the ids so a list can never be added without someone deciding
+ * what its form should ask.
+ */
+export const NOTIFY_LIST_PROMPT: Record<
+  NotifyList,
+  { label: string; hint: string }
+> = {
+  relentless: {
+    label: "Anything you want the studio to know",
+    hint: "Optional. If you build these for a living, say so   that is read by a person.",
+  },
+  forfeiture: {
+    label: "Anything you want the studio to know",
+    hint: "Optional. If you build these for a living, say so   that is read by a person.",
+  },
+  streetlevel: {
+    label: "Crew, or badge?",
+    hint: "Optional, and genuinely useful. Which side you would play first tells the studio something it cannot find out any other way this early. If you build these for a living, say that too.",
+  },
+};
+
 /** Deliberately loose. A validator that rejects real addresses is a bug. */
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export const notifySchema = z
   .object({
+    list: z.enum(NOTIFY_LISTS).default("relentless"),
+
     via: z.enum(NOTIFY_CHANNELS),
 
     contact: z

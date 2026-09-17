@@ -19,6 +19,8 @@ export type DivisionId =
   | "kira"
   | "namtar"
   | "relentless"
+  | "forfeiture"
+  | "streetlevel"
   | "pulse";
 
 export type ThemeId = DivisionId | "engage";
@@ -133,6 +135,64 @@ export const DIVISIONS: Division[] = [
     scrollLerp: 0.09,
     cursor: "reticle",
     stamp: "PHASE A",
+  },
+  {
+    id: "forfeiture",
+    name: "FORFEITURE",
+    tab: "FORFEITURE",
+    href: "/forfeiture",
+    role: "The case",
+    tagline:
+      "A persistent first-person crime simulation. A city that runs while you are logged off, evidence that physically exists, and a law-enforcement career played by other people.",
+    establishment: "An open case file. Procedural, unglamorous, and still running.",
+    /**
+     * Institutional blue-grey, and the one genuinely new decision in this
+     * establishment. The game's art bible rations colour to meaning and
+     * reserves police blue for law-enforcement presence; this page's whole
+     * argument is that law enforcement is real here, so it spends the law's
+     * own colour on itself. It is also the only cold accent on the site apart
+     * from KYRAX's near-white.
+     *
+     * The instinctive pick   sodium-vapour amber, the game's signature night
+     * light   lands within a few degrees of NAMTAR's #d97e2f, which is exactly
+     * the collision to avoid when a third Ki-Ra title joins the slate.
+     */
+    accent: "#5a7d94",
+    scrollLerp: 0.07,
+    cursor: "reticle",
+    stamp: "PRE-PRODUCTION",
+  },
+  {
+    id: "streetlevel",
+    name: "STREET LEVEL",
+    tab: "STREET LEVEL",
+    href: "/streetlevel",
+    role: "First on the bill",
+    tagline:
+      "A persistent online crime sim where you build a production operation with a crew, fight rival crews for the streets, and the police hunting you are other players with careers of their own.",
+    establishment: "A working title, and the first one you will be able to buy.",
+    /**
+     * Municipal green, and the instinctive pick was wrong here in a way that
+     * costs more than usual.
+     *
+     * This game is about police, so police blue is the obvious accent   and
+     * police blue on this site is #5a7d94, one entry above. Taking it would
+     * visually merge the two crime games on the tab bar, in the link-preview
+     * cards, and in every screenshot anybody ever takes of this site. The
+     * game's own design register (`GDD.md` §1.9) isolates this title from the
+     * studio's other one deliberately, so the accent is spent as the cheapest
+     * brand-isolation instrument available rather than as decoration.
+     *
+     * So it is chosen off a different axis entirely. The brief asks for
+     * grounded and unglamorous   municipal paint, a stairwell, old signage,
+     * army surplus   and a desaturated yellow-leaning green is the one thing
+     * on this site that is not a crime-thriller colour. It clears the wheel by
+     * some margin: the Ki-Ra teals sit near 176 degrees and this is near 97.
+     */
+    accent: "#6e8c5a",
+    scrollLerp: 0.08,
+    cursor: "reticle",
+    stamp: "IN DESIGN",
   },
   {
     id: "pulse",
