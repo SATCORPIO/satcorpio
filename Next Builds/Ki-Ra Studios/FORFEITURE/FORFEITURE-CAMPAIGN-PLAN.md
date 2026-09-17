@@ -97,7 +97,7 @@ nobody can play yet.
 
 > Not "be a gangster." That fantasy is already well served, by studios with far
 > bigger budgets than ours, and we would lose.
-> **Operational competence under pressure** — the small-business owner whose
+> **Operational competence under pressure**   the small-business owner whose
 > business happens to be illegal.
 
 Leading with a rejection is unusual and correct here. The audience the page
@@ -546,7 +546,7 @@ actually needs is a better drawing.
 > outside for two days, and the discipline to walk away from a compromised
 > warehouse before the warrant lands.
 
-**The audience block** — five cards, each naming an appetite rather than a
+**The audience block**   five cards, each naming an appetite rather than a
 product, so nothing on the page is somebody else's trademark:
 > Crime roleplay · Production chains · Persistent PvP · Player-driven economies
 > · Investigation
@@ -556,29 +556,29 @@ product, so nothing on the page is somebody else's trademark:
 > other people.
 >
 > Consequence is enforced by the simulation, not by volunteers with moderator
-> powers. There is no application, no whitelist and no appeal thread — and the
+> powers. There is no application, no whitelist and no appeal thread   and the
 > city still works when nobody is moderating it. The other side of the law is a
 > career with a ladder of its own, not a scripted NPC on a patrol route.
 
 **The four pillars**
-> **I — The city runs while you are logged off.** The economy, the rival
+> **I   The city runs while you are logged off.** The economy, the rival
 > organisations and the pressure the police are under all keep moving. Your
-> warehouse can be raided at 4am — but the raid takes real time, makes noise,
+> warehouse can be raided at 4am   but the raid takes real time, makes noise,
 > and can never zero you out.
 >
-> **II — Evidence exists in the world and has to be collected.** Nothing
+> **II   Evidence exists in the world and has to be collected.** Nothing
 > accumulates on its own. Somebody has to find it, bag it and log it, and the
 > chain of custody can break along the way. You can sweep a scene clean before
 > the first unit arrives.
 >
-> **III — There are no wipes and no seasons.** Every war, every notorious player
+> **III   There are no wipes and no seasons.** Every war, every notorious player
 > and every district held since year one stays in the shard's history, and stays
 > there permanently.
 >
-> **IV — Losing costs you property, and at most forty-five minutes.** A
+> **IV   Losing costs you property, and at most forty-five minutes.** A
 > confiscated van, the cash inside it, the warehouse it was parked at. The
-> sentence itself is playable — contacts worth making, contraband worth moving,
-> work that shortens it — and your organisation can bail you, buy you out, or
+> sentence itself is playable   contacts worth making, contraband worth moving,
+> work that shortens it   and your organisation can bail you, buy you out, or
 > come and get you.
 
 **The covenant**   *not page copy. It was built as a section and cut (§2.6).
@@ -590,7 +590,7 @@ Kept here as the checklist it became, for whoever writes the next line:*
 
 **The Chronicle**
 > The wars, the market crashes, the districts held since year one, the longest
-> uncaught criminal career — rendered as a public record that no reset ever
+> uncaught criminal career   rendered as a public record that no reset ever
 > takes away. It writes itself: every input already exists in the ledger, the
 > case files and the territory log.
 >
@@ -612,7 +612,7 @@ Kept here as the checklist it became, for whoever writes the next line:*
 2. **Self-hosting deserves more weight than the brief gives it.** §16 makes the
    dedicated-server binary, configuration layer and scripting API first-class
    and calls community servers "our marketing budget and our long tail." For the
-   FiveM audience — the brief's own beachhead — *you can run your own* may be a
+   FiveM audience   the brief's own beachhead   *you can run your own* may be a
    stronger conversion line than anything about evidence. It is on the page in
    the apparatus block. It may deserve to be a pillar.
 3. **The Discord.** Both surfaces link the studio's existing room, shared with
@@ -620,8 +620,8 @@ Kept here as the checklist it became, for whoever writes the next line:*
    audience in volume, a shared room will not hold. The brief's own rule applies:
    *do not offer a Discord nobody is going to moderate.*
 4. **`forfeiture.game` is available at registration price** (`NAMING.md` §2.3).
-   Nothing in this plan needs it — `satcorp.io/forfeiture` is the right home
-   while the studio is the story — but it is cheap and it will not stay
+   Nothing in this plan needs it   `satcorp.io/forfeiture` is the right home
+   while the studio is the story   but it is cheap and it will not stay
    available forever.
 5. **The Chronicle section ships at half strength** and stays that way until a
    shard has history. It is built so that the day it does, the section becomes a
